@@ -1,326 +1,360 @@
 <html>
-	<head>
-		<meta charset="utf-8">
-		<link type="text/css" rel="stylesheet" href="/style-guide/css/fluig-style-guide.min.css"/>
-		<link type="text/css" rel="stylesheet" href="style.css"/>
-		<link type="text/css" rel="stylesheet" href="select2.min.css"/>
-		
-		<script type="text/javascript" src="/portal/resources/js/jquery/jquery.js"></script>
-		<script type="text/javascript" src="/portal/resources/js/jquery/jquery-ui.min.js"></script>
-		<script type="text/javascript" src="/portal/resources/js/mustache/mustache-min.js"></script>
-		<script type="text/javascript" src="/style-guide/js/fluig-style-guide.min.js" charset="utf-8"></script>
-		<script type="text/javascript" src="/webdesk/vcXMLRPC.js"></script>
-		
-		<script type="text/javascript" src="select2.min.js"></script>
-		<script type="text/javascript" src="tools.js"></script>
-		<script type="text/javascript" src="dinamicas.js"></script>
-		<script type="text/javascript" src="main.js"></script>
-		<script type="text/javascript" src="tools.js"></script>
-		
-	</head>
-	<body>
-		<div class="fluig-style-guide">
-			<form name="form" role="form">
-				<input type="hidden" id="numeroSolicitacao" name="numeroSolicitacao">
-				<input type="hidden" id="numeroSolicitacaoSC" name="numeroSolicitacaoSC">
-				<input type="hidden" id="atividadeAtual" name="atividadeAtual">
-				<input type="hidden" id="atividadeAnterior" name="atividadeAnterior">
-				<input type="hidden" id="ciclo_atual" name="ciclo_atual">
-				<input type="hidden" id="idPastaGED_SC" name="idPastaGED_SC">
-				<input type="hidden" id="idPastaGED" name="idPastaGED">
-				
-				<input type="hidden" id="numIdCot" name="numIdCot">
-				
-				<div class="hide">
-					<input type="hidden" id="idEmpresa" name="idEmpresa">
-					<input type="hidden" id="descricaoEmpresa" name="descricaoEmpresa">
-					<input type="hidden" id="cnpjEmpresa" name="cnpjEmpresa">
-					<input type="hidden" id="cepEmpresaOrigem" name="cepEmpresaOrigem">
-					<input type="hidden" id="estadoEmpresaOrigem" name="estadoEmpresaOrigem">
-					<input type="hidden" id="cidadeEmpresaOrigem" name="cidadeEmpresaOrigem">
-					<input type="hidden" id="bairroEmpresaOrigem" name="bairroEmpresaOrigem">
-					<input type="hidden" id="enderecoEmpresaOrigem" name="enderecoEmpresaOrigem">
-					<input type="hidden" id="telefoneEmpresaOrigem" name="telefoneEmpresaOrigem">
-										
-					<input type="hidden" id="idEmpresaEntrega" name="idEmpresaEntrega">
-					<input type="hidden" id="descricaoEmpresaEntrega" name="descricaoEmpresaEntrega">
-					<input type="hidden" id="cnpjEmpresaEntrega" name="cnpjEmpresaEntrega">
-					<input type="hidden" id="cepEmpresaEntrega" name="cepEmpresaEntrega">
-					<input type="hidden" id="estadoEmpresaEntrega" name="estadoEmpresaEntrega">
-					<input type="hidden" id="cidadeEmpresaEntrega" name="cidadeEmpresaEntrega">
-					<input type="hidden" id="bairroEmpresaEntrega" name="bairroEmpresaEntrega">
-					<input type="hidden" id="enderecoEmpresaEntrega" name="enderecoEmpresaEntrega">
-					<input type="hidden" id="telefoneEmpresaEntrega" name="telefoneEmpresaEntrega">
-					
-					<input type="hidden" id="compradorResponsavel" name="compradorResponsavel">
-					<input type="hidden" id="matCompradorResponsavel" name="matCompradorResponsavel">
-					<input type="hidden" id="telCompradorResponsavel" name="telCompradorResponsavel">
-					<input type="hidden" id="mailCompradorResponsavel" name="mailCompradorResponsavel">
-				</div>
 
-				<div class="panel panel-primary" id="dados_cotacao">
-					<div class="panel-heading">
-						<h3 class="panel-title">Cotação de Compras</h3>
-					</div>
-					<div class="panel-body">
-						<div class="row">
-							<div class="col-md-6 form-group">
-								<label>Comprador responsável</label>
-								<input type="text" class="form-control" name="comprador_responsavel" id="comprador_responsavel" readonly>
-								<input type="hidden" name="mat_comprador_responsavel" id="mat_comprador_responsavel">
-							</div>
-							<div class="col-md-2 form-group">
-								<label>SC</label>
-								<input type="text" class="form-control" name="solicitacao_compra" id="solicitacao_compra" readonly>
-							</div>
-							<div class="col-md-2 form-group">
-								<label>Data abertura</label>
-								<input type="text" class="form-control" name="cotacao_abertura" id="cotacao_abertura" readonly>
-							</div>
-							<div class="col-md-2 form-group">
-								<label>Data encerramento</label>
-								<input type="date" class="form-control" name="cotacao_encerramento" id="cotacao_encerramento">
-								<input type="hidden" name="cotacao_encerramento_antigo" id="cotacao_encerramento_antigo">
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-md-12 form-group">
-								<label>Especificação Técnica</label>
-								<textarea class="form-control" name="especificacao_tecnica" id="especificacao_tecnica" rows="5"></textarea>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-md-12 form-group acompanhamento">
-								<label>Observação</label>
-								<textarea class="form-control" name="obsComprador" id="obsComprador" rows="5"></textarea>
-							</div>
-						</div>
-						<button class="btn" id="btnTES">TES</button>
-					</div>
+<head>
+	<meta charset="utf-8">
+	<link type="text/css" rel="stylesheet" href="/style-guide/css/fluig-style-guide.min.css" />
+	<link type="text/css" rel="stylesheet" href="style.css" />
+	<link type="text/css" rel="stylesheet" href="select2.min.css" />
+
+	<script type="text/javascript" src="/portal/resources/js/jquery/jquery.js"></script>
+	<script type="text/javascript" src="/portal/resources/js/jquery/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="/portal/resources/js/mustache/mustache-min.js"></script>
+	<script type="text/javascript" src="/style-guide/js/fluig-style-guide.min.js" charset="utf-8"></script>
+	<script type="text/javascript" src="/webdesk/vcXMLRPC.js"></script>
+
+	<script type="text/javascript" src="select2.min.js"></script>
+	<script type="text/javascript" src="tools.js"></script>
+	<script type="text/javascript" src="dinamicas.js"></script>
+	<script type="text/javascript" src="main.js"></script>
+	<script type="text/javascript" src="tools.js"></script>
+
+</head>
+
+<body>
+	<div class="fluig-style-guide">
+		<form name="form" role="form">
+			<input type="hidden" id="numeroSolicitacao" name="numeroSolicitacao">
+			<input type="hidden" id="numeroSolicitacaoSC" name="numeroSolicitacaoSC">
+			<input type="hidden" id="atividadeAtual" name="atividadeAtual">
+			<input type="hidden" id="atividadeAnterior" name="atividadeAnterior">
+			<input type="hidden" id="ciclo_atual" name="ciclo_atual">
+			<input type="hidden" id="idPastaGED_SC" name="idPastaGED_SC">
+			<input type="hidden" id="idPastaGED" name="idPastaGED">
+
+			<input type="hidden" id="numIdCot" name="numIdCot">
+
+			<div class="hide">
+				<input type="hidden" id="idEmpresa" name="idEmpresa">
+				<input type="hidden" id="C8_NUM" name="C8_NUM">
+				<input type="hidden" id="docIdFormSC" name="docIdFormSC">
+				<input type="hidden" id="descricaoEmpresa" name="descricaoEmpresa">
+				<input type="hidden" id="cnpjEmpresa" name="cnpjEmpresa">
+				<input type="hidden" id="cepEmpresaOrigem" name="cepEmpresaOrigem">
+				<input type="hidden" id="estadoEmpresaOrigem" name="estadoEmpresaOrigem">
+				<input type="hidden" id="cidadeEmpresaOrigem" name="cidadeEmpresaOrigem">
+				<input type="hidden" id="bairroEmpresaOrigem" name="bairroEmpresaOrigem">
+				<input type="hidden" id="enderecoEmpresaOrigem" name="enderecoEmpresaOrigem">
+				<input type="hidden" id="telefoneEmpresaOrigem" name="telefoneEmpresaOrigem">
+
+				<input type="hidden" id="idEmpresaEntrega" name="idEmpresaEntrega">
+				<input type="hidden" id="descricaoEmpresaEntrega" name="descricaoEmpresaEntrega">
+				<input type="hidden" id="cnpjEmpresaEntrega" name="cnpjEmpresaEntrega">
+				<input type="hidden" id="cepEmpresaEntrega" name="cepEmpresaEntrega">
+				<input type="hidden" id="estadoEmpresaEntrega" name="estadoEmpresaEntrega">
+				<input type="hidden" id="cidadeEmpresaEntrega" name="cidadeEmpresaEntrega">
+				<input type="hidden" id="bairroEmpresaEntrega" name="bairroEmpresaEntrega">
+				<input type="hidden" id="enderecoEmpresaEntrega" name="enderecoEmpresaEntrega">
+				<input type="hidden" id="telefoneEmpresaEntrega" name="telefoneEmpresaEntrega">
+
+				<input type="hidden" id="compradorResponsavel" name="compradorResponsavel">
+				<input type="hidden" id="matCompradorResponsavel" name="matCompradorResponsavel">
+				<input type="hidden" id="telCompradorResponsavel" name="telCompradorResponsavel">
+				<input type="hidden" id="mailCompradorResponsavel" name="mailCompradorResponsavel">
+			</div>
+
+			<div class="panel panel-primary" id="dados_cotacao">
+				<div class="panel-heading">
+					<h3 class="panel-title">Cotação de Compras</h3>
 				</div>
-				<div class="panel panel-primary hide" id="produtos_cotacao">
-					<div class="panel-heading">
-						<h3 class="panel-title">Produtos</h3>
+				<div class="panel-body">
+					<div class="row">
+						<div class="col-md-6 form-group">
+							<label>Comprador responsável</label>
+							<input type="text" class="form-control" name="comprador_responsavel"
+								id="comprador_responsavel" readonly>
+							<input type="hidden" name="mat_comprador_responsavel" id="mat_comprador_responsavel">
+						</div>
+						<div class="col-md-2 form-group">
+							<label>SC</label>
+							<input type="text" class="form-control" name="solicitacao_compra" id="solicitacao_compra"
+								readonly>
+						</div>
+						<div class="col-md-2 form-group">
+							<label>Data abertura</label>
+							<input type="text" class="form-control" name="cotacao_abertura" id="cotacao_abertura"
+								readonly>
+						</div>
+						<div class="col-md-2 form-group">
+							<label>Data encerramento</label>
+							<input type="date" class="form-control" name="cotacao_encerramento"
+								id="cotacao_encerramento">
+							<input type="hidden" name="cotacao_encerramento_antigo" id="cotacao_encerramento_antigo">
+						</div>
 					</div>
-					<div class="panel-body">
-						<table class="table table-stripped" tablename="tabItens" nodeletebutton=true>
-							<thead class="hide"><tr>
+					<div class="row">
+						<div class="col-md-12 form-group">
+							<label>Especificação Técnica</label>
+							<textarea class="form-control" name="especificacao_tecnica" id="especificacao_tecnica"
+								rows="5"></textarea>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-12 form-group acompanhamento">
+							<label>Observação</label>
+							<textarea class="form-control" name="obsComprador" id="obsComprador" rows="5"></textarea>
+						</div>
+					</div>
+					<button class="btn" id="btnTES">TES</button>
+				</div>
+			</div>
+			<div class="panel panel-primary hide" id="produtos_cotacao">
+				<div class="panel-heading">
+					<h3 class="panel-title">Produtos</h3>
+				</div>
+				<div class="panel-body">
+					<table class="table table-stripped" tablename="tabItens" nodeletebutton=true>
+						<thead class="hide">
+							<tr>
 								<th title="">&nbsp;</th>
-							</tr></thead>
-							<tbody><tr>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
 								<td>
 									<div class="row">
 										<div class="col-md-2 form-group">
 											<label>Produto</label>
-											<input type="text" name="produto" id="produto" class="form-control" readonly/>
+											<input type="text" name="produto" id="produto" class="form-control"
+												readonly />
 										</div>
 										<div class="col-md-4 form-group">
 											<label>Descrição</label>
-											<input type="text" name="produto_desc" id="produto_desc" class="form-control" readonly />
+											<input type="text" name="produto_desc" id="produto_desc"
+												class="form-control" readonly />
 										</div>
 										<div class="col-md-4 form-group">
 											<label>Tipo de Compra</label>
-											<input type="text" name="produto_tipo" id="produto_tipo" class="form-control" readonly />
+											<input type="text" name="produto_tipo" id="produto_tipo"
+												class="form-control" readonly />
 										</div>
 										<div class="col-md-2 form-group">
 											<label>Prev. Entrega</label>
-											<input type="date" class="form-control" name="produto_entrega" id="produto_entrega" readonly>
+											<input type="date" class="form-control" name="produto_entrega"
+												id="produto_entrega" readonly>
 										</div>
 									</div>
 									<div class="row">
 										<div class="col-md-2 form-group">
 											<label title="Consulta de Saldo">Saldo</label>
-											<input type="text" class="form-control" name="produto_saldo" id="produto_saldo" readonly>
+											<input type="text" class="form-control" name="produto_saldo"
+												id="produto_saldo" readonly>
 										</div>
 										<div class="col-md-2 form-group">
 											<label title="Unidade de Medida">UM</label>
-											<input type="text" class="form-control" name="produto_um" id="produto_um" readonly>
+											<input type="text" class="form-control" name="produto_um" id="produto_um"
+												readonly>
 										</div>
 										<div class="col-md-2 form-group">
 											<label>Quantidade</label>
-											<input type="text" class="form-control" name="produto_qtd" id="produto_qtd" readonly>
+											<input type="text" class="form-control" name="produto_qtd" id="produto_qtd"
+												readonly>
 										</div>
 										<div class="col-md-6 form-group">
 											<label>Marcas</label>
-											<input type="text" class="form-control" name="produto_marcas" id="produto_marcas" readonly>
+											<input type="text" class="form-control" name="produto_marcas"
+												id="produto_marcas" readonly>
 										</div>
 									</div>
 									<div class="row">
 										<div class="col-md-12 form-group">
 											<label>Observação</label>
-											<textarea class="form-control" name="produto_observacao" id="produto_observacao" readonly></textarea>
+											<textarea class="form-control" name="produto_observacao"
+												id="produto_observacao" readonly></textarea>
 										</div>
 									</div>
 								</td>
-							</tr></tbody>
-						</table>
-					</div>
+							</tr>
+						</tbody>
+					</table>
 				</div>
-				<div class="panel panel-primary hide" id="fornecedores_sugeridos">
-					<div class="panel-heading">
-						<h3 class="panel-title">Fornecedores sugeridos</h3>
-					</div>
-					<div class="panel-body">
-						<table class="table table-striped" tablename="tabFornSugeridos" nodeletebutton=true>
-							<thead><tr><th>Fornecedores</th></tr></thead>
-							<tbody><tr><td><input type="text" class="form-control" name="fornec_sugerido" id="fornec_sugerido" readonly></td></tr></tbody>
-						</table>
-					</div>
+			</div>
+			<div class="panel panel-primary hide" id="fornecedores_sugeridos">
+				<div class="panel-heading">
+					<h3 class="panel-title">Fornecedores sugeridos</h3>
 				</div>
-				<div class="panel panel-primary" id="panelTES" style="display:none">
-					<div class="panel-heading">
-						<h3 class="panel-title">TES</h3>
-					</div>
-					<div class="panel-body">
-						<table class="table table-striped" tablename="tabTES" noaddbutton="true" nodeletebutton="true">
-							<thead>
-								<tr>
-									<th>A2_COD</th>
-									<th>A2_LOJA</th>
-									<th>A2_CGC</th>
-									<th>B1_COD</th>
-									<th>TES_CODIGO</th>
-									<th>TES_COMPRADOR</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<td><input type="text" class="form-control" id="TES_A2_COD" 	name="TES_A2_COD"></td>
-									<td><input type="text" class="form-control" id="TES_A2_LOJA" 	name="TES_A2_LOJA"></td>
-									<td><input type="text" class="form-control" id="TES_A2_CGC" 	name="TES_A2_CGC"></td>
-									<td><input type="text" class="form-control" id="TES_B1_COD" 	name="TES_B1_COD"></td>
-									<td><input type="text" class="form-control" id="TES_CODIGO" 	name="TES_CODIGO"></td>
-									<td><input type="text" class="form-control" id="TES_COMPRADOR" 	name="TES_COMPRADOR"></td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
+				<div class="panel-body">
+					<table class="table table-striped" tablename="tabFornSugeridos" nodeletebutton=true>
+						<thead>
+							<tr>
+								<th>Fornecedores</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td><input type="text" class="form-control" name="fornec_sugerido" id="fornec_sugerido"
+										readonly></td>
+							</tr>
+						</tbody>
+					</table>
 				</div>
-				<div class="panel panel-primary" id="mapa_cotacao">
-					<div class="panel-heading">
-						<h3 class="panel-title">Mapa de Cotação</h3>
-					</div>
-					<div class="panel-body">
-						<div class="row">
-							<div class="col-md-3 form-group">
-								<label for="filtrar_mapa">Filtrar por? <span class="text-danger">*</span></label>
-								<div>
-									<label for="filtrar_mapa_fornecedor">
-										<input type="radio" name="filtrar_mapa" id="filtrar_mapa_fornecedor" value="fornecedor"> Fornecedor
-									</label>
-									<label for="filtrar_mapa_produto">
-										<input type="radio" name="filtrar_mapa" id="filtrar_mapa_produto" value="produto"> Produto
-									</label>
-								</div>
-							</div>
-							<div class="col-md-3 form-group">
-								<label>&nbsp;</label>
-								<select class="form-control" name="complem_mapa" id="complem_mapa" ></select>
-							</div>
-							<div class="col-md-1 form-group">
-								<label>&nbsp;</label>
-								<button class="btn btn-primary" btn-filtrar>Filtrar</button>
+			</div>
+			<div class="panel panel-primary" id="panelTES" style="display:none">
+				<div class="panel-heading">
+					<h3 class="panel-title">TES</h3>
+				</div>
+				<div class="panel-body">
+					<table class="table table-striped" tablename="tabTES" noaddbutton="true" nodeletebutton="true">
+						<thead>
+							<tr>
+								<th>A2_COD</th>
+								<th>A2_LOJA</th>
+								<th>A2_CGC</th>
+								<th>B1_COD</th>
+								<th>TES_CODIGO</th>
+								<th>TES_COMPRADOR</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td><input type="text" class="form-control" id="TES_A2_COD" name="TES_A2_COD"></td>
+								<td><input type="text" class="form-control" id="TES_A2_LOJA" name="TES_A2_LOJA"></td>
+								<td><input type="text" class="form-control" id="TES_A2_CGC" name="TES_A2_CGC"></td>
+								<td><input type="text" class="form-control" id="TES_B1_COD" name="TES_B1_COD"></td>
+								<td><input type="text" class="form-control" id="TES_CODIGO" name="TES_CODIGO"></td>
+								<td><input type="text" class="form-control" id="TES_COMPRADOR" name="TES_COMPRADOR">
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<div class="panel panel-primary" id="mapa_cotacao">
+				<div class="panel-heading">
+					<h3 class="panel-title">Mapa de Cotação</h3>
+				</div>
+				<div class="panel-body">
+					<div class="row">
+						<div class="col-md-3 form-group">
+							<label for="filtrar_mapa">Filtrar por? <span class="text-danger">*</span></label>
+							<div>
+								<label for="filtrar_mapa_fornecedor">
+									<input type="radio" name="filtrar_mapa" id="filtrar_mapa_fornecedor"
+										value="fornecedor"> Fornecedor
+								</label>
+								<label for="filtrar_mapa_produto">
+									<input type="radio" name="filtrar_mapa" id="filtrar_mapa_produto" value="produto">
+									Produto
+								</label>
 							</div>
 						</div>
-						<span id="tabMapa">
-							
-						</span>
+						<div class="col-md-3 form-group">
+							<label>&nbsp;</label>
+							<select class="form-control" name="complem_mapa" id="complem_mapa"></select>
+						</div>
+						<div class="col-md-1 form-group">
+							<label>&nbsp;</label>
+							<button class="btn btn-primary" btn-filtrar>Filtrar</button>
+						</div>
 					</div>
+					<span id="tabMapa">
+
+					</span>
 				</div>
-				<div class="panel panel-primary hide" id="panelProdutos">
-					<div class="panel-heading">
-						<h3 class="panel-title">Produtos</h3>
-					</div>
-					<div class="panel-body">
-						<table class="table" tablename="tabProduto" noaddbutton="true" nodeletebutton="true">
-							<thead>
-								<tr>
-									<th>B1_COD</th>
-									<th>B1_DESC</th>
-									<th>B1_GRUPO</th>
-									<th>B1_LOCPAD</th>
-									<th>B1_MSBLQL</th>
-									<th>B1_TIPO</th>
-									<th>B1_UM</th>
-									<th>B1_ZMARCA</th>
-									<th>ZPM_DESC</th>
-									<th>B1_UPRC</th>
-									<th>B1_UCOM</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<td><input type="text" class="form-control" id="B1_COD" 	name="B1_COD"/><input class="hide" type="text" id="B1_PAI" 	name="B1_PAI"/></td>
-									<td><input type="text" class="form-control" id="B1_DESC" 	name="B1_DESC"></td>
-									<td><input type="text" class="form-control" id="B1_GRUPO" 	name="B1_GRUPO"></td>
-									<td><input type="text" class="form-control" id="B1_LOCPAD" 	name="B1_LOCPAD"></td>
-									<td><input type="text" class="form-control" id="B1_MSBLQL" 	name="B1_MSBLQL"></td>
-									<td><input type="text" class="form-control" id="B1_TIPO" 	name="B1_TIPO"></td>
-									<td><input type="text" class="form-control" id="B1_UM" 		name="B1_UM"></td>
-									<td><input type="text" class="form-control" id="B1_ZMARCA" 	name="B1_ZMARCA"></td>
-									<td><input type="text" class="form-control" id="ZPM_DESC" 	name="ZPM_DESC"></td>
-									<td><input type="text" class="form-control" id="B1_UPRC" 	name="B1_UPRC"></td>
-									<td><input type="text" class="form-control" id="B1_UCOM" 	name="B1_UCOM"></td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
+			</div>
+			<div class="panel panel-primary hide" id="panelProdutos">
+				<div class="panel-heading">
+					<h3 class="panel-title">Produtos</h3>
 				</div>
-				<div class="panel panel-primary hide" id="panelSC">
-					<div class="panel-heading">
-						<h3 class="panel-title">Solicitação de Compra</h3>
-					</div>
-					<div class="panel-body">
-						<table class="table" tablename="tabSC" noaddbutton="true" nodeletebutton="true">
-							<thead>
-								<tr>
-									<th>C1_ITEM</th>
-									<th>C1_PRODUTO</th>
-									<th>C1_UM</th>
-									<th>C1_DESCRI</th>
-									<th>C1_QUANT</th>
-									<th>C1_PRECO</th>
-									<th>C1_TOTAL</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<td><input type="text" class="form-control" id="C1_ITEM" name="C1_ITEM"></td>
-									<td><input type="text" class="form-control" id="C1_PRODUTO" name="C1_PRODUTO"></td>
-									<td><input type="text" class="form-control" id="C1_UM" name="C1_UM"></td>
-									<td><input type="text" class="form-control" id="C1_DESCRI" name="C1_DESCRI"></td>
-									<td><input type="text" class="form-control" id="C1_QUANT" name="C1_QUANT"></td>
-									<td><input type="text" class="form-control" id="C1_PRECO" name="C1_PRECO"></td>
-									<td><input type="text" class="form-control" id="C1_TOTAL" name="C1_TOTAL"></td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
+				<div class="panel-body">
+					<table class="table" tablename="tabProduto" noaddbutton="true" nodeletebutton="true">
+						<thead>
+							<tr>
+								<th>B1_COD</th>
+								<th>B1_DESC</th>
+								<th>B1_GRUPO</th>
+								<th>B1_LOCPAD</th>
+								<th>B1_MSBLQL</th>
+								<th>B1_TIPO</th>
+								<th>B1_UM</th>
+								<th>B1_ZMARCA</th>
+								<th>ZPM_DESC</th>
+								<th>B1_UPRC</th>
+								<th>B1_UCOM</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td><input type="text" class="form-control" id="B1_COD" name="B1_COD" /><input
+										class="hide" type="text" id="B1_PAI" name="B1_PAI" /></td>
+								<td><input type="text" class="form-control" id="B1_DESC" name="B1_DESC"></td>
+								<td><input type="text" class="form-control" id="B1_GRUPO" name="B1_GRUPO"></td>
+								<td><input type="text" class="form-control" id="B1_LOCPAD" name="B1_LOCPAD"></td>
+								<td><input type="text" class="form-control" id="B1_MSBLQL" name="B1_MSBLQL"></td>
+								<td><input type="text" class="form-control" id="B1_TIPO" name="B1_TIPO"></td>
+								<td><input type="text" class="form-control" id="B1_UM" name="B1_UM"></td>
+								<td><input type="text" class="form-control" id="B1_ZMARCA" name="B1_ZMARCA"></td>
+								<td><input type="text" class="form-control" id="ZPM_DESC" name="ZPM_DESC"></td>
+								<td><input type="text" class="form-control" id="B1_UPRC" name="B1_UPRC"></td>
+								<td><input type="text" class="form-control" id="B1_UCOM" name="B1_UCOM"></td>
+							</tr>
+						</tbody>
+					</table>
 				</div>
-				<div class="panel panel-primary hide" id="panelFornecedores">
-					<div class="panel-heading">
-						<h3 class="panel-title">Fornecedores</h3>
-					</div>
-					<div class="panel-body">
-						<table class="table" tablename="tabFornecedor" noaddbutton="true" >
-							<thead>
-								<tr>
-									<th>Código</th>
-									<th>Loja</th>
-									<th>Descrição</th>
-									<th>CNPJ</th>
-									<th>UF</th>
-									<th>COND</th>
-									<th>TP. FRETE</th>
-									<th>FRETE</th>
-									<th>VALIDADE</th>
-									<th>NOTIFICAÇÃO</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<td><input type="zoom" id="A2_COD" name="A2_COD" class="form-control" 
-										data-zoom="{
+			</div>
+			<div class="panel panel-primary hide" id="panelSC">
+				<div class="panel-heading">
+					<h3 class="panel-title">Solicitação de Compra</h3>
+				</div>
+				<div class="panel-body">
+					<table class="table" tablename="tabSC" noaddbutton="true" nodeletebutton="true">
+						<thead>
+							<tr>
+								<th>C1_ITEM</th>
+								<th>C1_PRODUTO</th>
+								<th>C1_UM</th>
+								<th>C1_DESCRI</th>
+								<th>C1_QUANT</th>
+								<th>C1_PRECO</th>
+								<th>C1_TOTAL</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td><input type="text" class="form-control" id="C1_ITEM" name="C1_ITEM"></td>
+								<td><input type="text" class="form-control" id="C1_PRODUTO" name="C1_PRODUTO"></td>
+								<td><input type="text" class="form-control" id="C1_UM" name="C1_UM"></td>
+								<td><input type="text" class="form-control" id="C1_DESCRI" name="C1_DESCRI"></td>
+								<td><input type="text" class="form-control" id="C1_QUANT" name="C1_QUANT"></td>
+								<td><input type="text" class="form-control" id="C1_PRECO" name="C1_PRECO"></td>
+								<td><input type="text" class="form-control" id="C1_TOTAL" name="C1_TOTAL"></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<div class="panel panel-primary hide" id="panelFornecedores">
+				<div class="panel-heading">
+					<h3 class="panel-title">Fornecedores</h3>
+				</div>
+				<div class="panel-body">
+					<table class="table" tablename="tabFornecedor" noaddbutton="true">
+						<thead>
+							<tr>
+								<th>Código</th>
+								<th>Loja</th>
+								<th>Descrição</th>
+								<th>CNPJ</th>
+								<th>UF</th>
+								<th>COND</th>
+								<th>TP. FRETE</th>
+								<th>FRETE</th>
+								<th>VALIDADE</th>
+								<th>NOTIFICAÇÃO</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td><input type="zoom" id="A2_COD" name="A2_COD" class="form-control" data-zoom="{
 											'displayKey':'CODIGO',
 											'datasetId':'ds_consulta_fornecedor',
 											'maximumSelectionLength':'1',
@@ -332,11 +366,9 @@
 												{'field':'CGC','label':'CNPJ'},
 												{'field':'LOJA','label':'LOJA','visible':'false'}
 											]
-										}"
-									/></td>
-									<td><input type="text" class="form-control" id="A2_LOJA" name="A2_LOJA" readonly></td>
-									<td><input type="zoom" id="A2_NOME" name="A2_NOME" class="form-control" 
-										data-zoom="{
+										}" /></td>
+								<td><input type="text" class="form-control" id="A2_LOJA" name="A2_LOJA" readonly></td>
+								<td><input type="zoom" id="A2_NOME" name="A2_NOME" class="form-control" data-zoom="{
 											'displayKey':'DESCRICAO',
 											'datasetId':'ds_consulta_fornecedor',
 											'maximumSelectionLength':'1',
@@ -348,10 +380,8 @@
 												{'field':'CGC','label':'CNPJ'},
 												{'field':'LOJA','label':'LOJA','visible':'false'}
 											]
-										}"
-									/></td>
-									<td><input type="zoom" id="A2_CGC" name="A2_CGC" class="form-control" 
-										data-zoom="{
+										}" /></td>
+								<td><input type="zoom" id="A2_CGC" name="A2_CGC" class="form-control" data-zoom="{
 											'displayKey':'CGC',
 											'datasetId':'ds_consulta_fornecedor',
 											'maximumSelectionLength':'1',
@@ -363,119 +393,122 @@
 												{'field':'CGC','label':'CNPJ'},
 												{'field':'LOJA','label':'LOJA','visible':'false'}
 											]
-										}"
-									/></td>
-									<td><input type="text" class="form-control" id="A2_EST" name="A2_EST"></td>
-									<td><input type="text" class="form-control" id="A2_COND" name="A2_COND" readonly></td>
-									<td><input type="text" class="form-control" id="A2_TPFRETE" name="A2_TPFRETE" readonly></td>
-									<td><input type="text" class="form-control" id="A2_VALFRE" name="A2_VALFRE" readonly></td>
-									<td><input type="text" class="form-control" id="A2_VALIDA" name="A2_VALIDA"></td>
-									<td><input type="text" class="form-control" id="A2_NOTIFICA" name="A2_NOTIFICA"></td>
-								</tr>
-							</tbody>
-						</table>
-						<button class="btn btn-primary hide" id="btnAddFornecedor">Adicionar Fornecedor</button>
-					</div>
+										}" /></td>
+								<td><input type="text" class="form-control" id="A2_EST" name="A2_EST"></td>
+								<td><input type="text" class="form-control" id="A2_COND" name="A2_COND" readonly></td>
+								<td><input type="text" class="form-control" id="A2_TPFRETE" name="A2_TPFRETE" readonly>
+								</td>
+								<td><input type="text" class="form-control" id="A2_VALFRE" name="A2_VALFRE" readonly>
+								</td>
+								<td><input type="text" class="form-control" id="A2_VALIDA" name="A2_VALIDA"></td>
+								<td><input type="text" class="form-control" id="A2_NOTIFICA" name="A2_NOTIFICA"></td>
+							</tr>
+						</tbody>
+					</table>
+					<button class="btn btn-primary hide" id="btnAddFornecedor">Adicionar Fornecedor</button>
 				</div>
-				<div class="panel panel-primary hide" id="panelFornecedorProduto">
-					<div class="panel-heading">
-						<h3 class="panel-title">Fornecedor X Produto</h3>
-					</div>
-					<div class="panel-body">
-						<table class="table" tablename="tabFornecedorProduto" noaddbutton="true" nodeletebutton="true">
-							<thead>
-								<tr>
-									<th>A5_PRODUTO</th>
-									<th>A5_NOMPROD</th>
-									<th>A5_NOMEFOR</th>
-									<th>A5_FORNECE</th>
-									<th>A5_LOJA</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<td><input type="text" class="form-control" id="A5_PRODUTO" 	name="A5_PRODUTO"></td>
-									<td><input type="text" class="form-control" id="A5_NOMPROD" 	name="A5_NOMPROD"></td>
-									<td><input type="text" class="form-control" id="A5_NOMEFOR" 	name="A5_NOMEFOR"></td>
-									<td><input type="text" class="form-control" id="A5_FORNECE" 	name="A5_FORNECE"></td>
-									<td><input type="text" class="form-control" id="A5_LOJA" 		name="A5_LOJA"></td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
+			</div>
+			<div class="panel panel-primary hide" id="panelFornecedorProduto">
+				<div class="panel-heading">
+					<h3 class="panel-title">Fornecedor X Produto</h3>
 				</div>
-				<div class="panel panel-primary hide" id="panelCotacao">
-					<div class="panel-heading">
-						<h3 class="panel-title">Cotação</h3>
-					</div>
-					<div class="panel-body">
-						<table class="table" tablename="tabCotacao" noaddbutton="true" nodeletebutton="true">
-							<thead>
-								<tr>
-									<th>Ciclo</th>
-									<th>Item</th>
-									<th>Produto</th>
-									<th>Un</th>
-									<th>Fornecedor</th>
-									<th>Loja</th>
-									<th>Quantidade</th>
-									<th>Preco</th>
-									<th>Total</th>
-									<th>Condição</th>
-									<th>Prazo</th>
-									<th>Filial entrega</th>
-									<th>Emissão</th>
-									<th>Valor IPI</th>
-									<th>Valor ICMS</th>
-									<th>Valor ISS</th>
-									<th>DIFAL</th>
-									<th>ICMS ST</th>
-									<th>Seguro</th>
-									<th>Despesa</th>
-									<th>Valor Frete</th>
-									<th>Tipo Frete</th>
-									<th>Validade</th>
-									<th>Pedido</th>
-									<th>Item pedido</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<td><input type="text" class="form-control" id="C8_CICLO" name="C8_CICLO"><input type="hidden" name="BEN_FISCAL" id="BEN_FISCAL"></td>
-									<td><input type="text" class="form-control" id="C8_ITEM" name="C8_ITEM"></td>
-									<td><input type="text" class="form-control" id="C8_PRODUTO" name="C8_PRODUTO"></td>
-									<td><input type="text" class="form-control" id="C8_UM" name="C8_UM"></td>
-									<td><input type="text" class="form-control" id="C8_FORNECE" name="C8_FORNECE"><input type="hidden" id="C8_FORNOME" name="C8_FORNOME"></td>
-									<td><input type="text" class="form-control" id="C8_LOJA" name="C8_LOJA"></td>
-									<td><input type="text" class="form-control" id="C8_QUANT" name="C8_QUANT"></td>
-									<td><input type="text" class="form-control" id="C8_PRECO" name="C8_PRECO"></td>
-									<td><input type="text" class="form-control" id="C8_TOTAL" name="C8_TOTAL"></td>
-									<td><input type="text" class="form-control" id="C8_COND" name="C8_COND"></td>
-									<td><input type="text" class="form-control" id="C8_PRAZO" name="C8_PRAZO"></td>
-									<td><input type="text" class="form-control" id="C8_FILENT" name="C8_FILENT"></td>
-									<td><input type="text" class="form-control" id="C8_EMISSAO" name="C8_EMISSAO"></td>
-									<td><input type="text" class="form-control" id="C8_VALIPI" name="C8_VALIPI"></td>
-									<td><input type="text" class="form-control" id="C8_VALICM" name="C8_VALICM"></td>
-									<td><input type="text" class="form-control" id="C8_VALISS" name="C8_VALISS"></td>
-									<td><input type="text" class="form-control" id="C8_DIFAL" name="C8_DIFAL"></td>
-									<td><input type="text" class="form-control" id="C8_VALSOL" name="C8_VALSOL"></td>
-									<td><input type="text" class="form-control" id="C8_SEGURO" name="C8_SEGURO"></td>
-									<td><input type="text" class="form-control" id="C8_DESPESA" name="C8_DESPESA"></td>
-									<td><input type="text" class="form-control" id="C8_VALFRE" name="C8_VALFRE"></td>
-									<td><input type="text" class="form-control" id="C8_TPFRETE" name="C8_TPFRETE"></td>
-									<td><input type="text" class="form-control" id="C8_VALIDA" name="C8_VALIDA"></td>
-									<td><input type="text" class="form-control" id="C8_NUMPED" name="C8_NUMPED"></td>
-									<td><input type="text" class="form-control" id="C8_ITEMPED" name="C8_ITEMPED"></td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
+				<div class="panel-body">
+					<table class="table" tablename="tabFornecedorProduto" noaddbutton="true" nodeletebutton="true">
+						<thead>
+							<tr>
+								<th>A5_PRODUTO</th>
+								<th>A5_NOMPROD</th>
+								<th>A5_NOMEFOR</th>
+								<th>A5_FORNECE</th>
+								<th>A5_LOJA</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td><input type="text" class="form-control" id="A5_PRODUTO" name="A5_PRODUTO"></td>
+								<td><input type="text" class="form-control" id="A5_NOMPROD" name="A5_NOMPROD"></td>
+								<td><input type="text" class="form-control" id="A5_NOMEFOR" name="A5_NOMEFOR"></td>
+								<td><input type="text" class="form-control" id="A5_FORNECE" name="A5_FORNECE"></td>
+								<td><input type="text" class="form-control" id="A5_LOJA" name="A5_LOJA"></td>
+							</tr>
+						</tbody>
+					</table>
 				</div>
-				
-			</form>
-		</div>
-		
-		<script type="text/template" id="tmpl1">
+			</div>
+			<div class="panel panel-primary hide" id="panelCotacao">
+				<div class="panel-heading">
+					<h3 class="panel-title">Cotação</h3>
+				</div>
+				<div class="panel-body">
+					<table class="table" tablename="tabCotacao" noaddbutton="true" nodeletebutton="true">
+						<thead>
+							<tr>
+								<th>Ciclo</th>
+								<th>Item</th>
+								<th>Produto</th>
+								<th>Un</th>
+								<th>Fornecedor</th>
+								<th>Loja</th>
+								<th>Quantidade</th>
+								<th>Preco</th>
+								<th>Total</th>
+								<th>Condição</th>
+								<th>Prazo</th>
+								<th>Filial entrega</th>
+								<th>Emissão</th>
+								<th>Valor IPI</th>
+								<th>Valor ICMS</th>
+								<th>Valor ISS</th>
+								<th>DIFAL</th>
+								<th>ICMS ST</th>
+								<th>Seguro</th>
+								<th>Despesa</th>
+								<th>Valor Frete</th>
+								<th>Tipo Frete</th>
+								<th>Validade</th>
+								<th>Pedido</th>
+								<th>Item pedido</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td><input type="text" class="form-control" id="C8_CICLO" name="C8_CICLO"><input
+										type="hidden" name="BEN_FISCAL" id="BEN_FISCAL"></td>
+								<td><input type="text" class="form-control" id="C8_ITEM" name="C8_ITEM"></td>
+								<td><input type="text" class="form-control" id="C8_PRODUTO" name="C8_PRODUTO"></td>
+								<td><input type="text" class="form-control" id="C8_UM" name="C8_UM"></td>
+								<td><input type="text" class="form-control" id="C8_FORNECE" name="C8_FORNECE"><input
+										type="hidden" id="C8_FORNOME" name="C8_FORNOME"></td>
+								<td><input type="text" class="form-control" id="C8_LOJA" name="C8_LOJA"></td>
+								<td><input type="text" class="form-control" id="C8_QUANT" name="C8_QUANT"></td>
+								<td><input type="text" class="form-control" id="C8_PRECO" name="C8_PRECO"></td>
+								<td><input type="text" class="form-control" id="C8_TOTAL" name="C8_TOTAL"></td>
+								<td><input type="text" class="form-control" id="C8_COND" name="C8_COND"></td>
+								<td><input type="text" class="form-control" id="C8_PRAZO" name="C8_PRAZO"></td>
+								<td><input type="text" class="form-control" id="C8_FILENT" name="C8_FILENT"></td>
+								<td><input type="text" class="form-control" id="C8_EMISSAO" name="C8_EMISSAO"></td>
+								<td><input type="text" class="form-control" id="C8_VALIPI" name="C8_VALIPI"></td>
+								<td><input type="text" class="form-control" id="C8_VALICM" name="C8_VALICM"></td>
+								<td><input type="text" class="form-control" id="C8_VALISS" name="C8_VALISS"></td>
+								<td><input type="text" class="form-control" id="C8_DIFAL" name="C8_DIFAL"></td>
+								<td><input type="text" class="form-control" id="C8_VALSOL" name="C8_VALSOL"></td>
+								<td><input type="text" class="form-control" id="C8_SEGURO" name="C8_SEGURO"></td>
+								<td><input type="text" class="form-control" id="C8_DESPESA" name="C8_DESPESA"></td>
+								<td><input type="text" class="form-control" id="C8_VALFRE" name="C8_VALFRE"></td>
+								<td><input type="text" class="form-control" id="C8_TPFRETE" name="C8_TPFRETE"></td>
+								<td><input type="text" class="form-control" id="C8_VALIDA" name="C8_VALIDA"></td>
+								<td><input type="text" class="form-control" id="C8_NUMPED" name="C8_NUMPED"></td>
+								<td><input type="text" class="form-control" id="C8_ITEMPED" name="C8_ITEMPED"></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+
+		</form>
+	</div>
+
+	<script type="text/template" id="tmpl1">
 			<div class="panel-group" id="accordion">
 				{{#.}}
 				<div class="panel panel-default">
@@ -530,7 +563,7 @@
 				{{/.}}
 			</div>
 		</script>
-		<script type="text/template" id="tmpl2">
+	<script type="text/template" id="tmpl2">
 			<div class="panel-group" id="accordion">
 				{{#.}}
 				<div class="panel panel-default">
@@ -585,7 +618,7 @@
 				{{/.}}
 			</div>
 		</script>
-		<script type="text/template" id="tmpl3">
+	<script type="text/template" id="tmpl3">
 			<table class="table table-striped">
 				<tbody>
 					{{#.}}
@@ -598,7 +631,7 @@
 			</table>
 		</script>
 
-		<script type="text/template" id="tmpl4">
+	<script type="text/template" id="tmpl4">
 			<table class="table table-striped">
 				<tbody>
 					{{#.}}
@@ -610,7 +643,7 @@
 				</tbody>
 			</table>
 		</script>
-		<script type="text/template" id="tmpl5">
+	<script type="text/template" id="tmpl5">
 		<div id="modalTES">
 			<div class="panel-group" id="accordionTES">
 				{{#fornecedores}}
@@ -655,5 +688,6 @@
 			</div>
 		</div>
 	</script>
-	</body>
+</body>
+
 </html>

@@ -29,7 +29,7 @@
     <processDefinitionVersionPK>
       <companyId>1</companyId>
       <processId>Solicitação de Compras</processId>
-      <version>441</version>
+      <version>443</version>
     </processDefinitionVersionPK>
     <versionDescription></versionDescription>
     <formId>27271</formId>
@@ -1261,7 +1261,7 @@
       <notifyRequisitionerFollowUp>false</notifyRequisitionerFollowUp>
       <automatic>false</automatic>
       <positionX>640</positionX>
-      <positionY>310</positionY>
+      <positionY>265</positionY>
       <forecastedEffortType>0</forecastedEffortType>
       <forecastedEffort>0</forecastedEffort>
       <notifyManagerFollowUp>false</notifyManagerFollowUp>
@@ -3340,7 +3340,7 @@
       <notifyRequisitionerFollowUp>false</notifyRequisitionerFollowUp>
       <automatic>false</automatic>
       <positionX>630</positionX>
-      <positionY>337</positionY>
+      <positionY>292</positionY>
       <forecastedEffortType>0</forecastedEffortType>
       <forecastedEffort>0</forecastedEffort>
       <notifyManagerFollowUp>false</notifyManagerFollowUp>
@@ -6558,6 +6558,53 @@
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <version>1</version>
+        <sequence>367</sequence>
+      </processStatePK>
+      <stateName>Intermediário</stateName>
+      <stateDescription>Intermediário</stateDescription>
+      <instruction>Evento intermediário do processo</instruction>
+      <deadlineTime>0</deadlineTime>
+      <joint>false</joint>
+      <agreementPercentage>0</agreementPercentage>
+      <engineAllocationId></engineAllocationId>
+      <engineAllocationConfiguration></engineAllocationConfiguration>
+      <selectColleague>0</selectColleague>
+      <initialState>false</initialState>
+      <notifyAuthorityDelay>true</notifyAuthorityDelay>
+      <notifyRequisitionerDelay>false</notifyRequisitionerDelay>
+      <allowanceAuthorityTime>1</allowanceAuthorityTime>
+      <frequenceAuthorityTime>1</frequenceAuthorityTime>
+      <allowanceRequisitionerTime>0</allowanceRequisitionerTime>
+      <frequenceRequisitionerTime>0</frequenceRequisitionerTime>
+      <transferAttachments>false</transferAttachments>
+      <subProcessId></subProcessId>
+      <formFolder>0</formFolder>
+      <notifyAuthorityFollowUp>true</notifyAuthorityFollowUp>
+      <notifyRequisitionerFollowUp>false</notifyRequisitionerFollowUp>
+      <automatic>true</automatic>
+      <positionX>690</positionX>
+      <positionY>359</positionY>
+      <forecastedEffortType>0</forecastedEffortType>
+      <forecastedEffort>0</forecastedEffort>
+      <notifyManagerFollowUp>false</notifyManagerFollowUp>
+      <notifyManagerDelay>false</notifyManagerDelay>
+      <frequenceManagerTime>0</frequenceManagerTime>
+      <inhibitTransfer>false</inhibitTransfer>
+      <periodId></periodId>
+      <stateType>0</stateType>
+      <bpmnType>32</bpmnType>
+      <signalId>0</signalId>
+      <counterSign>false</counterSign>
+      <openInstances>0</openInstances>
+      <destinationStates/>
+      <digitalSignature>false</digitalSignature>
+      <parentSequence>0</parentSequence>
+    </ProcessState>
+    <ProcessState>
+      <processStatePK>
+        <companyId>1</companyId>
+        <processId>solicitacao_compras</processId>
+        <version>1</version>
         <sequence>97</sequence>
       </processStatePK>
       <stateName>Cotação</stateName>
@@ -7048,7 +7095,7 @@
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <expressionOrder>1</expressionOrder>
-        <version>441</version>
+        <version>443</version>
         <sequence>4</sequence>
       </conditionProcessStatePK>
       <condition>hAPI.getCardValue(&quot;decisaoAprovador&quot;) == &quot;retornar&quot;</condition>
@@ -7060,7 +7107,7 @@
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <expressionOrder>2</expressionOrder>
-        <version>441</version>
+        <version>443</version>
         <sequence>4</sequence>
       </conditionProcessStatePK>
       <condition>hAPI.getCardValue(&quot;decisaoAprovador&quot;) == &quot;nao&quot;</condition>
@@ -7072,7 +7119,7 @@
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <expressionOrder>3</expressionOrder>
-        <version>441</version>
+        <version>443</version>
         <sequence>4</sequence>
       </conditionProcessStatePK>
       <condition>true</condition>
@@ -7084,7 +7131,7 @@
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <expressionOrder>1</expressionOrder>
-        <version>441</version>
+        <version>443</version>
         <sequence>28</sequence>
       </conditionProcessStatePK>
       <condition>hAPI.getCardValue(&quot;ciclo_aprovado&quot;) == &quot;nao&quot;</condition>
@@ -7096,7 +7143,7 @@
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <expressionOrder>2</expressionOrder>
-        <version>441</version>
+        <version>443</version>
         <sequence>28</sequence>
       </conditionProcessStatePK>
       <condition>(hAPI.getCardValue(&quot;ciclo_aprovado&quot;) == &quot;sim&quot; || hAPI.getCardValue(&quot;ciclo_aprovado&quot;) == &quot;&quot;) &amp;&amp; hAPI.getCardValue(&quot;validacao_tecnica_necessaria&quot;) == &quot;true&quot; &amp;&amp; tools.validacaoTecnica.necessario()</condition>
@@ -7108,7 +7155,7 @@
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <expressionOrder>3</expressionOrder>
-        <version>441</version>
+        <version>443</version>
         <sequence>28</sequence>
       </conditionProcessStatePK>
       <condition>hAPI.getCardValue(&quot;ciclo_aprovado&quot;) == &quot;novo&quot;</condition>
@@ -7120,7 +7167,7 @@
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <expressionOrder>4</expressionOrder>
-        <version>441</version>
+        <version>443</version>
         <sequence>28</sequence>
       </conditionProcessStatePK>
       <condition>tools.aprovacao.valorPreAprovadoMenor()</condition>
@@ -7132,7 +7179,7 @@
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <expressionOrder>5</expressionOrder>
-        <version>441</version>
+        <version>443</version>
         <sequence>28</sequence>
       </conditionProcessStatePK>
       <condition>hAPI.getCardValue(&quot;intrack_necessario&quot;) == &quot;true&quot;</condition>
@@ -7144,7 +7191,7 @@
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <expressionOrder>6</expressionOrder>
-        <version>441</version>
+        <version>443</version>
         <sequence>28</sequence>
       </conditionProcessStatePK>
       <condition>true</condition>
@@ -7156,7 +7203,7 @@
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <expressionOrder>1</expressionOrder>
-        <version>441</version>
+        <version>443</version>
         <sequence>41</sequence>
       </conditionProcessStatePK>
       <condition>hAPI.getCardValue(&quot;decisaoAprovadorValorMenor&quot;) == &quot;retornar&quot;</condition>
@@ -7168,7 +7215,7 @@
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <expressionOrder>2</expressionOrder>
-        <version>441</version>
+        <version>443</version>
         <sequence>41</sequence>
       </conditionProcessStatePK>
       <condition>hAPI.getCardValue(&quot;decisaoAprovadorValorMenor&quot;) == &quot;compras&quot;</condition>
@@ -7180,7 +7227,7 @@
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <expressionOrder>3</expressionOrder>
-        <version>441</version>
+        <version>443</version>
         <sequence>41</sequence>
       </conditionProcessStatePK>
       <condition>hAPI.getCardValue(&quot;decisaoAprovadorValorMenor&quot;) == &quot;nao&quot;</condition>
@@ -7192,7 +7239,7 @@
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <expressionOrder>4</expressionOrder>
-        <version>441</version>
+        <version>443</version>
         <sequence>41</sequence>
       </conditionProcessStatePK>
       <condition>hAPI.getCardValue(&quot;aprovacaoProxAprovador&quot;) != &quot;&quot;</condition>
@@ -7204,7 +7251,7 @@
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <expressionOrder>5</expressionOrder>
-        <version>441</version>
+        <version>443</version>
         <sequence>41</sequence>
       </conditionProcessStatePK>
       <condition>hAPI.getCardValue(&quot;intrack_necessario&quot;) == &quot;true&quot;</condition>
@@ -7216,7 +7263,7 @@
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <expressionOrder>6</expressionOrder>
-        <version>441</version>
+        <version>443</version>
         <sequence>41</sequence>
       </conditionProcessStatePK>
       <condition>true</condition>
@@ -7228,7 +7275,7 @@
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <expressionOrder>1</expressionOrder>
-        <version>441</version>
+        <version>443</version>
         <sequence>56</sequence>
       </conditionProcessStatePK>
       <condition>hAPI.getCardValue(&quot;tipo_pc_contrato&quot;) == &quot;pc&quot;</condition>
@@ -7240,7 +7287,7 @@
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <expressionOrder>2</expressionOrder>
-        <version>441</version>
+        <version>443</version>
         <sequence>56</sequence>
       </conditionProcessStatePK>
       <condition>hAPI.getCardValue(&quot;tipoSc&quot;) == &quot;5&quot;</condition>
@@ -7252,7 +7299,7 @@
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <expressionOrder>3</expressionOrder>
-        <version>441</version>
+        <version>443</version>
         <sequence>56</sequence>
       </conditionProcessStatePK>
       <condition>true</condition>
@@ -7264,7 +7311,7 @@
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <expressionOrder>1</expressionOrder>
-        <version>441</version>
+        <version>443</version>
         <sequence>131</sequence>
       </conditionProcessStatePK>
       <condition>hAPI.getCardValue(&quot;tipoSc&quot;) == &quot;5&quot;</condition>
@@ -7276,7 +7323,7 @@
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <expressionOrder>2</expressionOrder>
-        <version>441</version>
+        <version>443</version>
         <sequence>131</sequence>
       </conditionProcessStatePK>
       <condition>true</condition>
@@ -7288,7 +7335,7 @@
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <expressionOrder>1</expressionOrder>
-        <version>441</version>
+        <version>443</version>
         <sequence>167</sequence>
       </conditionProcessStatePK>
       <condition>hAPI.getCardValue(&quot;decisaoComprador&quot;) == &quot;Devolver&quot;</condition>
@@ -7300,7 +7347,7 @@
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <expressionOrder>2</expressionOrder>
-        <version>441</version>
+        <version>443</version>
         <sequence>167</sequence>
       </conditionProcessStatePK>
       <condition>hAPI.getCardValue(&quot;decisaoComprador&quot;) == &quot;Questionar&quot;</condition>
@@ -7312,7 +7359,7 @@
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <expressionOrder>3</expressionOrder>
-        <version>441</version>
+        <version>443</version>
         <sequence>167</sequence>
       </conditionProcessStatePK>
       <condition>hAPI.getCardValue(&quot;decisaoComprador&quot;) == &quot;Prosseguir&quot;</condition>
@@ -7324,7 +7371,7 @@
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <expressionOrder>1</expressionOrder>
-        <version>441</version>
+        <version>443</version>
         <sequence>182</sequence>
       </conditionProcessStatePK>
       <condition>hAPI.getCardValue(&quot;tipoSc&quot;) == &quot;5&quot;</condition>
@@ -7336,7 +7383,7 @@
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <expressionOrder>2</expressionOrder>
-        <version>441</version>
+        <version>443</version>
         <sequence>182</sequence>
       </conditionProcessStatePK>
       <condition>true</condition>
@@ -7348,7 +7395,7 @@
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <expressionOrder>1</expressionOrder>
-        <version>441</version>
+        <version>443</version>
         <sequence>187</sequence>
       </conditionProcessStatePK>
       <condition>hAPI.getCardValue(&quot;aprovacaoProblemaAprovador&quot;) != &quot;&quot;</condition>
@@ -7360,7 +7407,7 @@
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <expressionOrder>2</expressionOrder>
-        <version>441</version>
+        <version>443</version>
         <sequence>187</sequence>
       </conditionProcessStatePK>
       <condition>hAPI.getCardValue(&quot;aprovacaoProxAprovador&quot;) != &quot;&quot;</condition>
@@ -7372,7 +7419,7 @@
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <expressionOrder>3</expressionOrder>
-        <version>441</version>
+        <version>443</version>
         <sequence>187</sequence>
       </conditionProcessStatePK>
       <condition>true</condition>
@@ -7384,7 +7431,7 @@
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <expressionOrder>1</expressionOrder>
-        <version>441</version>
+        <version>443</version>
         <sequence>213</sequence>
       </conditionProcessStatePK>
       <condition>hAPI.getCardValue(&quot;decisaoAprovadorIntrack&quot;) == &quot;nao&quot;</condition>
@@ -7396,7 +7443,7 @@
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <expressionOrder>2</expressionOrder>
-        <version>441</version>
+        <version>443</version>
         <sequence>213</sequence>
       </conditionProcessStatePK>
       <condition>hAPI.getCardValue(&quot;decisaoAprovadorIntrack&quot;) == &quot;retornar&quot;</condition>
@@ -7408,7 +7455,7 @@
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <expressionOrder>3</expressionOrder>
-        <version>441</version>
+        <version>443</version>
         <sequence>213</sequence>
       </conditionProcessStatePK>
       <condition>hAPI.getCardValue(&quot;aprovacaoProxAprovador&quot;) != &quot;&quot;</condition>
@@ -7420,7 +7467,7 @@
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <expressionOrder>4</expressionOrder>
-        <version>441</version>
+        <version>443</version>
         <sequence>213</sequence>
       </conditionProcessStatePK>
       <condition>hAPI.getCardValue(&quot;matLiberaPedido&quot;) != &quot;&quot;</condition>
@@ -7432,7 +7479,7 @@
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <expressionOrder>5</expressionOrder>
-        <version>441</version>
+        <version>443</version>
         <sequence>213</sequence>
       </conditionProcessStatePK>
       <condition>true</condition>
@@ -7444,7 +7491,7 @@
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <expressionOrder>1</expressionOrder>
-        <version>441</version>
+        <version>443</version>
         <sequence>228</sequence>
       </conditionProcessStatePK>
       <condition>hAPI.getCardValue(&quot;decisaoLiberarPedido&quot;) == &quot;sim&quot;</condition>
@@ -7456,7 +7503,7 @@
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <expressionOrder>2</expressionOrder>
-        <version>441</version>
+        <version>443</version>
         <sequence>228</sequence>
       </conditionProcessStatePK>
       <condition>true</condition>
@@ -9748,23 +9795,6 @@
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <version>1</version>
-        <linkSequence>363</linkSequence>
-      </processLinkPK>
-      <actionLabel></actionLabel>
-      <returnPermited>false</returnPermited>
-      <initialStateSequence>144</initialStateSequence>
-      <finalStateSequence>362</finalStateSequence>
-      <returnLabel></returnLabel>
-      <name></name>
-      <automaticLink>false</automaticLink>
-      <defaultLink>false</defaultLink>
-      <type>0</type>
-    </ProcessLink>
-    <ProcessLink>
-      <processLinkPK>
-        <companyId>1</companyId>
-        <processId>solicitacao_compras</processId>
-        <version>1</version>
         <linkSequence>364</linkSequence>
       </processLinkPK>
       <actionLabel></actionLabel>
@@ -9799,7 +9829,41 @@
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <version>1</version>
-        <linkSequence>367</linkSequence>
+        <linkSequence>368</linkSequence>
+      </processLinkPK>
+      <actionLabel></actionLabel>
+      <returnPermited>false</returnPermited>
+      <initialStateSequence>144</initialStateSequence>
+      <finalStateSequence>367</finalStateSequence>
+      <returnLabel></returnLabel>
+      <name></name>
+      <automaticLink>false</automaticLink>
+      <defaultLink>false</defaultLink>
+      <type>0</type>
+    </ProcessLink>
+    <ProcessLink>
+      <processLinkPK>
+        <companyId>1</companyId>
+        <processId>solicitacao_compras</processId>
+        <version>1</version>
+        <linkSequence>369</linkSequence>
+      </processLinkPK>
+      <actionLabel></actionLabel>
+      <returnPermited>false</returnPermited>
+      <initialStateSequence>367</initialStateSequence>
+      <finalStateSequence>362</finalStateSequence>
+      <returnLabel></returnLabel>
+      <name></name>
+      <automaticLink>false</automaticLink>
+      <defaultLink>false</defaultLink>
+      <type>0</type>
+    </ProcessLink>
+    <ProcessLink>
+      <processLinkPK>
+        <companyId>1</companyId>
+        <processId>solicitacao_compras</processId>
+        <version>1</version>
+        <linkSequence>370</linkSequence>
       </processLinkPK>
       <actionLabel></actionLabel>
       <returnPermited>false</returnPermited>
@@ -9815,7 +9879,7 @@
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <version>1</version>
-        <linkSequence>368</linkSequence>
+        <linkSequence>371</linkSequence>
       </processLinkPK>
       <actionLabel></actionLabel>
       <returnPermited>false</returnPermited>
@@ -9831,60 +9895,12 @@
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <version>1</version>
-        <linkSequence>369</linkSequence>
+        <linkSequence>372</linkSequence>
       </processLinkPK>
       <actionLabel></actionLabel>
       <returnPermited>false</returnPermited>
       <initialStateSequence>117</initialStateSequence>
       <finalStateSequence>109</finalStateSequence>
-      <returnLabel></returnLabel>
-      <automaticLink>false</automaticLink>
-      <defaultLink>false</defaultLink>
-      <type>0</type>
-    </ProcessLink>
-    <ProcessLink>
-      <processLinkPK>
-        <companyId>1</companyId>
-        <processId>solicitacao_compras</processId>
-        <version>1</version>
-        <linkSequence>370</linkSequence>
-      </processLinkPK>
-      <actionLabel></actionLabel>
-      <returnPermited>false</returnPermited>
-      <initialStateSequence>135</initialStateSequence>
-      <finalStateSequence>126</finalStateSequence>
-      <returnLabel></returnLabel>
-      <automaticLink>false</automaticLink>
-      <defaultLink>false</defaultLink>
-      <type>0</type>
-    </ProcessLink>
-    <ProcessLink>
-      <processLinkPK>
-        <companyId>1</companyId>
-        <processId>solicitacao_compras</processId>
-        <version>1</version>
-        <linkSequence>371</linkSequence>
-      </processLinkPK>
-      <actionLabel></actionLabel>
-      <returnPermited>false</returnPermited>
-      <initialStateSequence>139</initialStateSequence>
-      <finalStateSequence>137</finalStateSequence>
-      <returnLabel></returnLabel>
-      <automaticLink>false</automaticLink>
-      <defaultLink>false</defaultLink>
-      <type>0</type>
-    </ProcessLink>
-    <ProcessLink>
-      <processLinkPK>
-        <companyId>1</companyId>
-        <processId>solicitacao_compras</processId>
-        <version>1</version>
-        <linkSequence>372</linkSequence>
-      </processLinkPK>
-      <actionLabel></actionLabel>
-      <returnPermited>false</returnPermited>
-      <initialStateSequence>141</initialStateSequence>
-      <finalStateSequence>277</finalStateSequence>
       <returnLabel></returnLabel>
       <automaticLink>false</automaticLink>
       <defaultLink>false</defaultLink>
@@ -9902,7 +9918,7 @@
       <initialStateSequence>135</initialStateSequence>
       <finalStateSequence>126</finalStateSequence>
       <returnLabel></returnLabel>
-      <automaticLink>true</automaticLink>
+      <automaticLink>false</automaticLink>
       <defaultLink>false</defaultLink>
       <type>0</type>
     </ProcessLink>
@@ -9912,6 +9928,54 @@
         <processId>solicitacao_compras</processId>
         <version>1</version>
         <linkSequence>374</linkSequence>
+      </processLinkPK>
+      <actionLabel></actionLabel>
+      <returnPermited>false</returnPermited>
+      <initialStateSequence>139</initialStateSequence>
+      <finalStateSequence>137</finalStateSequence>
+      <returnLabel></returnLabel>
+      <automaticLink>false</automaticLink>
+      <defaultLink>false</defaultLink>
+      <type>0</type>
+    </ProcessLink>
+    <ProcessLink>
+      <processLinkPK>
+        <companyId>1</companyId>
+        <processId>solicitacao_compras</processId>
+        <version>1</version>
+        <linkSequence>375</linkSequence>
+      </processLinkPK>
+      <actionLabel></actionLabel>
+      <returnPermited>false</returnPermited>
+      <initialStateSequence>141</initialStateSequence>
+      <finalStateSequence>277</finalStateSequence>
+      <returnLabel></returnLabel>
+      <automaticLink>false</automaticLink>
+      <defaultLink>false</defaultLink>
+      <type>0</type>
+    </ProcessLink>
+    <ProcessLink>
+      <processLinkPK>
+        <companyId>1</companyId>
+        <processId>solicitacao_compras</processId>
+        <version>1</version>
+        <linkSequence>376</linkSequence>
+      </processLinkPK>
+      <actionLabel></actionLabel>
+      <returnPermited>false</returnPermited>
+      <initialStateSequence>135</initialStateSequence>
+      <finalStateSequence>126</finalStateSequence>
+      <returnLabel></returnLabel>
+      <automaticLink>true</automaticLink>
+      <defaultLink>false</defaultLink>
+      <type>0</type>
+    </ProcessLink>
+    <ProcessLink>
+      <processLinkPK>
+        <companyId>1</companyId>
+        <processId>solicitacao_compras</processId>
+        <version>1</version>
+        <linkSequence>377</linkSequence>
       </processLinkPK>
       <actionLabel></actionLabel>
       <returnPermited>false</returnPermited>
@@ -9927,7 +9991,7 @@
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <version>1</version>
-        <linkSequence>375</linkSequence>
+        <linkSequence>378</linkSequence>
       </processLinkPK>
       <actionLabel></actionLabel>
       <returnPermited>false</returnPermited>
@@ -9943,7 +10007,7 @@
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <version>1</version>
-        <linkSequence>376</linkSequence>
+        <linkSequence>379</linkSequence>
       </processLinkPK>
       <actionLabel></actionLabel>
       <returnPermited>false</returnPermited>
@@ -9959,7 +10023,7 @@
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <version>1</version>
-        <linkSequence>377</linkSequence>
+        <linkSequence>380</linkSequence>
       </processLinkPK>
       <actionLabel></actionLabel>
       <returnPermited>false</returnPermited>
@@ -9975,7 +10039,7 @@
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <version>1</version>
-        <linkSequence>378</linkSequence>
+        <linkSequence>381</linkSequence>
       </processLinkPK>
       <actionLabel></actionLabel>
       <returnPermited>false</returnPermited>
@@ -9991,7 +10055,7 @@
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <version>1</version>
-        <linkSequence>379</linkSequence>
+        <linkSequence>382</linkSequence>
       </processLinkPK>
       <actionLabel></actionLabel>
       <returnPermited>false</returnPermited>
@@ -10007,7 +10071,7 @@
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <version>1</version>
-        <linkSequence>380</linkSequence>
+        <linkSequence>383</linkSequence>
       </processLinkPK>
       <actionLabel></actionLabel>
       <returnPermited>false</returnPermited>
@@ -10023,7 +10087,7 @@
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <version>1</version>
-        <linkSequence>381</linkSequence>
+        <linkSequence>384</linkSequence>
       </processLinkPK>
       <actionLabel></actionLabel>
       <returnPermited>false</returnPermited>
@@ -10039,7 +10103,7 @@
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <version>1</version>
-        <linkSequence>382</linkSequence>
+        <linkSequence>385</linkSequence>
       </processLinkPK>
       <actionLabel></actionLabel>
       <returnPermited>false</returnPermited>
@@ -10055,7 +10119,7 @@
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <version>1</version>
-        <linkSequence>383</linkSequence>
+        <linkSequence>386</linkSequence>
       </processLinkPK>
       <actionLabel></actionLabel>
       <returnPermited>false</returnPermited>
@@ -10071,7 +10135,7 @@
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <version>1</version>
-        <linkSequence>384</linkSequence>
+        <linkSequence>387</linkSequence>
       </processLinkPK>
       <actionLabel></actionLabel>
       <returnPermited>false</returnPermited>
@@ -10087,7 +10151,7 @@
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <version>1</version>
-        <linkSequence>385</linkSequence>
+        <linkSequence>388</linkSequence>
       </processLinkPK>
       <actionLabel></actionLabel>
       <returnPermited>false</returnPermited>
@@ -10103,7 +10167,7 @@
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <version>1</version>
-        <linkSequence>386</linkSequence>
+        <linkSequence>389</linkSequence>
       </processLinkPK>
       <actionLabel></actionLabel>
       <returnPermited>false</returnPermited>
@@ -10119,7 +10183,7 @@
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <version>1</version>
-        <linkSequence>387</linkSequence>
+        <linkSequence>390</linkSequence>
       </processLinkPK>
       <actionLabel></actionLabel>
       <returnPermited>false</returnPermited>
@@ -10135,7 +10199,7 @@
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <version>1</version>
-        <linkSequence>388</linkSequence>
+        <linkSequence>391</linkSequence>
       </processLinkPK>
       <actionLabel></actionLabel>
       <returnPermited>false</returnPermited>
@@ -10151,7 +10215,7 @@
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <version>1</version>
-        <linkSequence>389</linkSequence>
+        <linkSequence>392</linkSequence>
       </processLinkPK>
       <actionLabel></actionLabel>
       <returnPermited>false</returnPermited>
@@ -10167,7 +10231,7 @@
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <version>1</version>
-        <linkSequence>390</linkSequence>
+        <linkSequence>393</linkSequence>
       </processLinkPK>
       <actionLabel></actionLabel>
       <returnPermited>false</returnPermited>
@@ -10183,7 +10247,7 @@
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <version>1</version>
-        <linkSequence>391</linkSequence>
+        <linkSequence>394</linkSequence>
       </processLinkPK>
       <actionLabel></actionLabel>
       <returnPermited>false</returnPermited>
@@ -10199,7 +10263,7 @@
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <version>1</version>
-        <linkSequence>392</linkSequence>
+        <linkSequence>395</linkSequence>
       </processLinkPK>
       <actionLabel></actionLabel>
       <returnPermited>false</returnPermited>
@@ -10215,7 +10279,7 @@
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <version>1</version>
-        <linkSequence>393</linkSequence>
+        <linkSequence>396</linkSequence>
       </processLinkPK>
       <actionLabel></actionLabel>
       <returnPermited>false</returnPermited>
@@ -10231,7 +10295,7 @@
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <version>1</version>
-        <linkSequence>394</linkSequence>
+        <linkSequence>397</linkSequence>
       </processLinkPK>
       <actionLabel></actionLabel>
       <returnPermited>false</returnPermited>
@@ -10247,7 +10311,7 @@
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <version>1</version>
-        <linkSequence>395</linkSequence>
+        <linkSequence>398</linkSequence>
       </processLinkPK>
       <actionLabel></actionLabel>
       <returnPermited>false</returnPermited>
@@ -10263,7 +10327,7 @@
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <version>1</version>
-        <linkSequence>396</linkSequence>
+        <linkSequence>399</linkSequence>
       </processLinkPK>
       <actionLabel></actionLabel>
       <returnPermited>false</returnPermited>
@@ -10279,7 +10343,7 @@
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <version>1</version>
-        <linkSequence>397</linkSequence>
+        <linkSequence>400</linkSequence>
       </processLinkPK>
       <actionLabel></actionLabel>
       <returnPermited>false</returnPermited>
@@ -10295,7 +10359,7 @@
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <version>1</version>
-        <linkSequence>398</linkSequence>
+        <linkSequence>401</linkSequence>
       </processLinkPK>
       <actionLabel></actionLabel>
       <returnPermited>false</returnPermited>
@@ -10311,7 +10375,7 @@
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <version>1</version>
-        <linkSequence>399</linkSequence>
+        <linkSequence>402</linkSequence>
       </processLinkPK>
       <actionLabel></actionLabel>
       <returnPermited>false</returnPermited>
@@ -10327,7 +10391,7 @@
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <version>1</version>
-        <linkSequence>400</linkSequence>
+        <linkSequence>403</linkSequence>
       </processLinkPK>
       <actionLabel></actionLabel>
       <returnPermited>false</returnPermited>
@@ -10343,7 +10407,7 @@
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <version>1</version>
-        <linkSequence>401</linkSequence>
+        <linkSequence>404</linkSequence>
       </processLinkPK>
       <actionLabel></actionLabel>
       <returnPermited>false</returnPermited>
@@ -10359,7 +10423,7 @@
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <version>1</version>
-        <linkSequence>402</linkSequence>
+        <linkSequence>405</linkSequence>
       </processLinkPK>
       <actionLabel></actionLabel>
       <returnPermited>false</returnPermited>
@@ -10375,7 +10439,7 @@
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <version>1</version>
-        <linkSequence>403</linkSequence>
+        <linkSequence>406</linkSequence>
       </processLinkPK>
       <actionLabel></actionLabel>
       <returnPermited>false</returnPermited>
@@ -10391,7 +10455,7 @@
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <version>1</version>
-        <linkSequence>404</linkSequence>
+        <linkSequence>407</linkSequence>
       </processLinkPK>
       <actionLabel></actionLabel>
       <returnPermited>false</returnPermited>
@@ -10407,7 +10471,7 @@
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <version>1</version>
-        <linkSequence>405</linkSequence>
+        <linkSequence>408</linkSequence>
       </processLinkPK>
       <actionLabel></actionLabel>
       <returnPermited>false</returnPermited>
@@ -10423,7 +10487,7 @@
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <version>1</version>
-        <linkSequence>406</linkSequence>
+        <linkSequence>409</linkSequence>
       </processLinkPK>
       <actionLabel></actionLabel>
       <returnPermited>false</returnPermited>
@@ -10439,7 +10503,7 @@
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <version>1</version>
-        <linkSequence>407</linkSequence>
+        <linkSequence>410</linkSequence>
       </processLinkPK>
       <actionLabel></actionLabel>
       <returnPermited>false</returnPermited>
@@ -10455,7 +10519,7 @@
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <version>1</version>
-        <linkSequence>408</linkSequence>
+        <linkSequence>411</linkSequence>
       </processLinkPK>
       <actionLabel></actionLabel>
       <returnPermited>false</returnPermited>
@@ -10471,7 +10535,7 @@
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <version>1</version>
-        <linkSequence>409</linkSequence>
+        <linkSequence>412</linkSequence>
       </processLinkPK>
       <actionLabel></actionLabel>
       <returnPermited>false</returnPermited>
@@ -10487,7 +10551,7 @@
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <version>1</version>
-        <linkSequence>410</linkSequence>
+        <linkSequence>413</linkSequence>
       </processLinkPK>
       <actionLabel></actionLabel>
       <returnPermited>false</returnPermited>
@@ -10503,7 +10567,7 @@
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <version>1</version>
-        <linkSequence>411</linkSequence>
+        <linkSequence>414</linkSequence>
       </processLinkPK>
       <actionLabel></actionLabel>
       <returnPermited>false</returnPermited>
@@ -10519,7 +10583,7 @@
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <version>1</version>
-        <linkSequence>412</linkSequence>
+        <linkSequence>415</linkSequence>
       </processLinkPK>
       <actionLabel></actionLabel>
       <returnPermited>false</returnPermited>
@@ -10535,7 +10599,7 @@
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <version>1</version>
-        <linkSequence>413</linkSequence>
+        <linkSequence>416</linkSequence>
       </processLinkPK>
       <actionLabel></actionLabel>
       <returnPermited>false</returnPermited>
@@ -10551,7 +10615,7 @@
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <version>1</version>
-        <linkSequence>414</linkSequence>
+        <linkSequence>417</linkSequence>
       </processLinkPK>
       <actionLabel></actionLabel>
       <returnPermited>false</returnPermited>
@@ -14088,7 +14152,7 @@ function setCotacao(){
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <propertyId>centroCustoPadrao</propertyId>
-        <version>441</version>
+        <version>443</version>
       </advancedProcessPropertiesPK>
       <propertieValue>101901001</propertieValue>
     </AdvancedProcessProperties>
@@ -14097,7 +14161,7 @@ function setCotacao(){
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <propertyId>formCotacao</propertyId>
-        <version>441</version>
+        <version>443</version>
       </advancedProcessPropertiesPK>
       <propertieValue>36306</propertieValue>
     </AdvancedProcessProperties>
@@ -14106,7 +14170,7 @@ function setCotacao(){
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <propertyId>mlFormCotacao</propertyId>
-        <version>441</version>
+        <version>443</version>
       </advancedProcessPropertiesPK>
       <propertieValue>ML001990</propertieValue>
     </AdvancedProcessProperties>
@@ -14115,7 +14179,7 @@ function setCotacao(){
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <propertyId>mlTabCotacao</propertyId>
-        <version>441</version>
+        <version>443</version>
       </advancedProcessPropertiesPK>
       <propertieValue>ML001991</propertieValue>
     </AdvancedProcessProperties>
@@ -14124,7 +14188,7 @@ function setCotacao(){
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <propertyId>password</propertyId>
-        <version>441</version>
+        <version>443</version>
       </advancedProcessPropertiesPK>
       <propertieValue>2w8lJ6TtQGup0uGA</propertieValue>
     </AdvancedProcessProperties>
@@ -14133,7 +14197,7 @@ function setCotacao(){
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <propertyId>pastaRaiz</propertyId>
-        <version>441</version>
+        <version>443</version>
       </advancedProcessPropertiesPK>
       <propertieValue>29653</propertieValue>
     </AdvancedProcessProperties>
@@ -14142,7 +14206,7 @@ function setCotacao(){
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <propertyId>publisherId</propertyId>
-        <version>441</version>
+        <version>443</version>
       </advancedProcessPropertiesPK>
       <propertieValue>admin</propertieValue>
     </AdvancedProcessProperties>
@@ -14151,7 +14215,7 @@ function setCotacao(){
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <propertyId>username</propertyId>
-        <version>441</version>
+        <version>443</version>
       </advancedProcessPropertiesPK>
       <propertieValue>admin</propertieValue>
     </AdvancedProcessProperties>
@@ -14261,7 +14325,7 @@ function setCotacao(){
       <processLinkBendPK>
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
-        <version>441</version>
+        <version>443</version>
         <linkSequence>9</linkSequence>
         <bendSequence>1</bendSequence>
       </processLinkBendPK>
@@ -14272,7 +14336,7 @@ function setCotacao(){
       <processLinkBendPK>
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
-        <version>441</version>
+        <version>443</version>
         <linkSequence>43</linkSequence>
         <bendSequence>1</bendSequence>
       </processLinkBendPK>
@@ -14283,7 +14347,7 @@ function setCotacao(){
       <processLinkBendPK>
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
-        <version>441</version>
+        <version>443</version>
         <linkSequence>46</linkSequence>
         <bendSequence>1</bendSequence>
       </processLinkBendPK>
@@ -14294,7 +14358,7 @@ function setCotacao(){
       <processLinkBendPK>
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
-        <version>441</version>
+        <version>443</version>
         <linkSequence>59</linkSequence>
         <bendSequence>1</bendSequence>
       </processLinkBendPK>
@@ -14305,7 +14369,7 @@ function setCotacao(){
       <processLinkBendPK>
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
-        <version>441</version>
+        <version>443</version>
         <linkSequence>122</linkSequence>
         <bendSequence>1</bendSequence>
       </processLinkBendPK>
@@ -14316,7 +14380,7 @@ function setCotacao(){
       <processLinkBendPK>
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
-        <version>441</version>
+        <version>443</version>
         <linkSequence>204</linkSequence>
         <bendSequence>1</bendSequence>
       </processLinkBendPK>
@@ -14327,7 +14391,7 @@ function setCotacao(){
       <processLinkBendPK>
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
-        <version>441</version>
+        <version>443</version>
         <linkSequence>296</linkSequence>
         <bendSequence>1</bendSequence>
       </processLinkBendPK>
@@ -14335,13 +14399,27 @@ function setCotacao(){
       <positionY>267</positionY>
     </ProcessLinkBend>
   </list>
-  <list/>
+  <list>
+    <ProcessStateTrigger>
+      <processStateTriggerPK>
+        <companyId>1</companyId>
+        <processId>solicitacao_compras</processId>
+        <version>443</version>
+        <stateSequence>367</stateSequence>
+        <triggerSequence>0</triggerSequence>
+      </processStateTriggerPK>
+      <runType>0</runType>
+      <type>2</type>
+      <timeTrigger>0:0:0</timeTrigger>
+      <frequencia>05</frequencia>
+    </ProcessStateTrigger>
+  </list>
   <list>
     <ExtendedPropertyField>
       <extendedPropertyFieldPK>
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
-        <version>441</version>
+        <version>443</version>
         <stateSequence>0</stateSequence>
         <propertyName>centroCustoPadrao</propertyName>
       </extendedPropertyFieldPK>
@@ -14354,7 +14432,7 @@ function setCotacao(){
       <extendedPropertyFieldPK>
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
-        <version>441</version>
+        <version>443</version>
         <stateSequence>0</stateSequence>
         <propertyName>formCotacao</propertyName>
       </extendedPropertyFieldPK>
@@ -14367,7 +14445,7 @@ function setCotacao(){
       <extendedPropertyFieldPK>
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
-        <version>441</version>
+        <version>443</version>
         <stateSequence>0</stateSequence>
         <propertyName>mlFormCotacao</propertyName>
       </extendedPropertyFieldPK>
@@ -14380,7 +14458,7 @@ function setCotacao(){
       <extendedPropertyFieldPK>
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
-        <version>441</version>
+        <version>443</version>
         <stateSequence>0</stateSequence>
         <propertyName>mlTabCotacao</propertyName>
       </extendedPropertyFieldPK>
@@ -14393,7 +14471,7 @@ function setCotacao(){
       <extendedPropertyFieldPK>
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
-        <version>441</version>
+        <version>443</version>
         <stateSequence>0</stateSequence>
         <propertyName>password</propertyName>
       </extendedPropertyFieldPK>
@@ -14406,7 +14484,7 @@ function setCotacao(){
       <extendedPropertyFieldPK>
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
-        <version>441</version>
+        <version>443</version>
         <stateSequence>0</stateSequence>
         <propertyName>pastaRaiz</propertyName>
       </extendedPropertyFieldPK>
@@ -14419,7 +14497,7 @@ function setCotacao(){
       <extendedPropertyFieldPK>
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
-        <version>441</version>
+        <version>443</version>
         <stateSequence>0</stateSequence>
         <propertyName>publisherId</propertyName>
       </extendedPropertyFieldPK>
@@ -14432,7 +14510,7 @@ function setCotacao(){
       <extendedPropertyFieldPK>
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
-        <version>441</version>
+        <version>443</version>
         <stateSequence>0</stateSequence>
         <propertyName>username</propertyName>
       </extendedPropertyFieldPK>

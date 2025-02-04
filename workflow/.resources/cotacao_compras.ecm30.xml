@@ -1,0 +1,2397 @@
+<list>
+  <ProcessDefinition>
+    <processDefinitionPK>
+      <companyId>1</companyId>
+      <processId>cotacao_compras</processId>
+    </processDefinitionPK>
+    <processDescription>Cotação</processDescription>
+    <instruction></instruction>
+    <active>true</active>
+    <publicProcess>false</publicProcess>
+    <volumeId>Default</volumeId>
+    <categoryId>Suprimentos</categoryId>
+    <managerEngineAllocationId>Grupo</managerEngineAllocationId>
+    <managerEngineAllocationConfiguration>&lt;AssignmentController&gt;&lt;Group&gt;COMPRADORES&lt;/Group&gt;&lt;/AssignmentController&gt;</managerEngineAllocationConfiguration>
+    <snapshotFrequency>0</snapshotFrequency>
+    <baseDay>0</baseDay>
+    <baseMonth>0</baseMonth>
+    <periodId>Default</periodId>
+    <uniqueCardVersion>false</uniqueCardVersion>
+    <keyWord></keyWord>
+    <complementsLevel>1</complementsLevel>
+    <notifyRequisitionerComplements>true</notifyRequisitionerComplements>
+    <notifyManagerComplements>false</notifyManagerComplements>
+    <deadlineTime>0</deadlineTime>
+    <warningDeadlineTime>0</warningDeadlineTime>
+    <notifyAuthorityComplements>true</notifyAuthorityComplements>
+  </ProcessDefinition>
+  <ProcessDefinitionVersion>
+    <processDefinitionVersionPK>
+      <companyId>1</companyId>
+      <processId>Cotação</processId>
+      <version>91</version>
+    </processDefinitionVersionPK>
+    <versionDescription></versionDescription>
+    <formId>27769</formId>
+    <editionMode>true</editionMode>
+    <updateAttachmentsVersion>false</updateAttachmentsVersion>
+    <controlsAttachmentsSecurity>false</controlsAttachmentsSecurity>
+    <active>true</active>
+    <blockedVersion>false</blockedVersion>
+    <counterSign>false</counterSign>
+    <openInstances>0</openInstances>
+    <bpmnVersion>2</bpmnVersion>
+    <processStates/>
+    <favorito>false</favorito>
+    <inheritFormSecurity>false</inheritFormSecurity>
+    <mobileReady>false</mobileReady>
+  </ProcessDefinitionVersion>
+  <list>
+    <ProcessState>
+      <processStatePK>
+        <companyId>1</companyId>
+        <processId>cotacao_compras</processId>
+        <version>1</version>
+        <sequence>15</sequence>
+      </processStatePK>
+      <stateName>Início</stateName>
+      <stateDescription>Início</stateDescription>
+      <instruction></instruction>
+      <deadlineTime>0</deadlineTime>
+      <joint>false</joint>
+      <agreementPercentage>0</agreementPercentage>
+      <engineAllocationId></engineAllocationId>
+      <engineAllocationConfiguration></engineAllocationConfiguration>
+      <selectColleague>1</selectColleague>
+      <initialState>true</initialState>
+      <notifyAuthorityDelay>true</notifyAuthorityDelay>
+      <notifyRequisitionerDelay>false</notifyRequisitionerDelay>
+      <allowanceAuthorityTime>3600</allowanceAuthorityTime>
+      <frequenceAuthorityTime>3600</frequenceAuthorityTime>
+      <allowanceRequisitionerTime>0</allowanceRequisitionerTime>
+      <frequenceRequisitionerTime>0</frequenceRequisitionerTime>
+      <transferAttachments>false</transferAttachments>
+      <subProcessId></subProcessId>
+      <formFolder>0</formFolder>
+      <notifyAuthorityFollowUp>false</notifyAuthorityFollowUp>
+      <notifyRequisitionerFollowUp>false</notifyRequisitionerFollowUp>
+      <automatic>false</automatic>
+      <positionX>265</positionX>
+      <positionY>102</positionY>
+      <forecastedEffortType>0</forecastedEffortType>
+      <forecastedEffort>0</forecastedEffort>
+      <notifyManagerFollowUp>false</notifyManagerFollowUp>
+      <notifyManagerDelay>false</notifyManagerDelay>
+      <allowanceManagerTime>0</allowanceManagerTime>
+      <frequenceManagerTime>0</frequenceManagerTime>
+      <inhibitTransfer>false</inhibitTransfer>
+      <periodId></periodId>
+      <stateType>0</stateType>
+      <bpmnType>10</bpmnType>
+      <signalId>0</signalId>
+      <counterSign>false</counterSign>
+      <openInstances>0</openInstances>
+      <noticeExpirationAuthorityTime>0</noticeExpirationAuthorityTime>
+      <noticeExpirationRequisitionerTime>0</noticeExpirationRequisitionerTime>
+      <noticeExpirationManagerTime>0</noticeExpirationManagerTime>
+      <destinationStates/>
+      <digitalSignature>false</digitalSignature>
+    </ProcessState>
+    <ProcessState>
+      <processStatePK>
+        <companyId>1</companyId>
+        <processId>cotacao_compras</processId>
+        <version>1</version>
+        <sequence>3</sequence>
+      </processStatePK>
+      <stateName>Notifica fornecedores</stateName>
+      <stateDescription>Notifica fornecedores</stateDescription>
+      <instruction></instruction>
+      <deadlineTime>0</deadlineTime>
+      <deadlineFieldName></deadlineFieldName>
+      <joint>false</joint>
+      <agreementPercentage>0</agreementPercentage>
+      <selectColleague>1</selectColleague>
+      <initialState>false</initialState>
+      <notifyAuthorityDelay>true</notifyAuthorityDelay>
+      <notifyRequisitionerDelay>false</notifyRequisitionerDelay>
+      <allowanceAuthorityTime>3600</allowanceAuthorityTime>
+      <frequenceAuthorityTime>3600</frequenceAuthorityTime>
+      <allowanceRequisitionerTime>0</allowanceRequisitionerTime>
+      <frequenceRequisitionerTime>0</frequenceRequisitionerTime>
+      <transferAttachments>false</transferAttachments>
+      <subProcessId></subProcessId>
+      <formFolder>0</formFolder>
+      <notifyAuthorityFollowUp>true</notifyAuthorityFollowUp>
+      <notifyRequisitionerFollowUp>false</notifyRequisitionerFollowUp>
+      <automatic>false</automatic>
+      <positionX>400</positionX>
+      <positionY>301</positionY>
+      <forecastedEffortType>0</forecastedEffortType>
+      <forecastedEffort>0</forecastedEffort>
+      <notifyManagerFollowUp>false</notifyManagerFollowUp>
+      <notifyManagerDelay>false</notifyManagerDelay>
+      <allowanceManagerTime>0</allowanceManagerTime>
+      <frequenceManagerTime>0</frequenceManagerTime>
+      <inhibitTransfer>false</inhibitTransfer>
+      <periodId></periodId>
+      <stateType>0</stateType>
+      <bpmnType>82</bpmnType>
+      <signalId>0</signalId>
+      <counterSign>false</counterSign>
+      <openInstances>0</openInstances>
+      <noticeExpirationAuthorityTime>0</noticeExpirationAuthorityTime>
+      <noticeExpirationRequisitionerTime>0</noticeExpirationRequisitionerTime>
+      <noticeExpirationManagerTime>0</noticeExpirationManagerTime>
+      <destinationStates/>
+      <digitalSignature>false</digitalSignature>
+      <executionType>1</executionType>
+    </ProcessState>
+    <ProcessState>
+      <processStatePK>
+        <companyId>1</companyId>
+        <processId>cotacao_compras</processId>
+        <version>1</version>
+        <sequence>5</sequence>
+      </processStatePK>
+      <stateName>Aguarda prazo da cotação</stateName>
+      <stateDescription>Aguarda prazo da cotação</stateDescription>
+      <instruction></instruction>
+      <deadlineTime>0</deadlineTime>
+      <deadlineFieldName>cotacao_encerramento</deadlineFieldName>
+      <joint>false</joint>
+      <agreementPercentage>0</agreementPercentage>
+      <engineAllocationId>mec_comprador_responsavel</engineAllocationId>
+      <engineAllocationConfiguration></engineAllocationConfiguration>
+      <selectColleague>1</selectColleague>
+      <initialState>false</initialState>
+      <notifyAuthorityDelay>true</notifyAuthorityDelay>
+      <notifyRequisitionerDelay>false</notifyRequisitionerDelay>
+      <allowanceAuthorityTime>3600</allowanceAuthorityTime>
+      <frequenceAuthorityTime>3600</frequenceAuthorityTime>
+      <allowanceRequisitionerTime>0</allowanceRequisitionerTime>
+      <frequenceRequisitionerTime>0</frequenceRequisitionerTime>
+      <transferAttachments>false</transferAttachments>
+      <subProcessId></subProcessId>
+      <formFolder>0</formFolder>
+      <notifyAuthorityFollowUp>true</notifyAuthorityFollowUp>
+      <notifyRequisitionerFollowUp>false</notifyRequisitionerFollowUp>
+      <automatic>false</automatic>
+      <positionX>400</positionX>
+      <positionY>84</positionY>
+      <forecastedEffortType>0</forecastedEffortType>
+      <forecastedEffort>0</forecastedEffort>
+      <notifyManagerFollowUp>false</notifyManagerFollowUp>
+      <notifyManagerDelay>false</notifyManagerDelay>
+      <allowanceManagerTime>0</allowanceManagerTime>
+      <frequenceManagerTime>0</frequenceManagerTime>
+      <inhibitTransfer>false</inhibitTransfer>
+      <periodId></periodId>
+      <stateType>0</stateType>
+      <bpmnType>80</bpmnType>
+      <signalId>0</signalId>
+      <counterSign>false</counterSign>
+      <openInstances>0</openInstances>
+      <noticeExpirationAuthorityTime>25200</noticeExpirationAuthorityTime>
+      <noticeExpirationRequisitionerTime>0</noticeExpirationRequisitionerTime>
+      <noticeExpirationManagerTime>0</noticeExpirationManagerTime>
+      <destinationStates/>
+      <digitalSignature>false</digitalSignature>
+      <executionType>0</executionType>
+    </ProcessState>
+    <ProcessState>
+      <processStatePK>
+        <companyId>1</companyId>
+        <processId>cotacao_compras</processId>
+        <version>1</version>
+        <sequence>11</sequence>
+      </processStatePK>
+      <stateName>Verificar erros</stateName>
+      <stateDescription>Verificar erros</stateDescription>
+      <instruction></instruction>
+      <deadlineTime>0</deadlineTime>
+      <deadlineFieldName></deadlineFieldName>
+      <joint>false</joint>
+      <agreementPercentage>0</agreementPercentage>
+      <engineAllocationId>Pool Grupo</engineAllocationId>
+      <engineAllocationConfiguration>&lt;AssignmentController&gt;&lt;Group&gt;TI&lt;/Group&gt;&lt;/AssignmentController&gt;</engineAllocationConfiguration>
+      <selectColleague>1</selectColleague>
+      <initialState>false</initialState>
+      <notifyAuthorityDelay>true</notifyAuthorityDelay>
+      <notifyRequisitionerDelay>false</notifyRequisitionerDelay>
+      <allowanceAuthorityTime>3600</allowanceAuthorityTime>
+      <frequenceAuthorityTime>3600</frequenceAuthorityTime>
+      <allowanceRequisitionerTime>0</allowanceRequisitionerTime>
+      <frequenceRequisitionerTime>0</frequenceRequisitionerTime>
+      <transferAttachments>false</transferAttachments>
+      <subProcessId></subProcessId>
+      <formFolder>0</formFolder>
+      <notifyAuthorityFollowUp>true</notifyAuthorityFollowUp>
+      <notifyRequisitionerFollowUp>false</notifyRequisitionerFollowUp>
+      <automatic>false</automatic>
+      <positionX>560</positionX>
+      <positionY>308</positionY>
+      <forecastedEffortType>0</forecastedEffortType>
+      <forecastedEffort>0</forecastedEffort>
+      <notifyManagerFollowUp>false</notifyManagerFollowUp>
+      <notifyManagerDelay>false</notifyManagerDelay>
+      <allowanceManagerTime>0</allowanceManagerTime>
+      <frequenceManagerTime>0</frequenceManagerTime>
+      <inhibitTransfer>false</inhibitTransfer>
+      <periodId></periodId>
+      <stateType>0</stateType>
+      <bpmnType>80</bpmnType>
+      <signalId>0</signalId>
+      <counterSign>false</counterSign>
+      <openInstances>0</openInstances>
+      <noticeExpirationAuthorityTime>0</noticeExpirationAuthorityTime>
+      <noticeExpirationRequisitionerTime>0</noticeExpirationRequisitionerTime>
+      <noticeExpirationManagerTime>0</noticeExpirationManagerTime>
+      <destinationStates/>
+      <digitalSignature>false</digitalSignature>
+      <executionType>0</executionType>
+    </ProcessState>
+    <ProcessState>
+      <processStatePK>
+        <companyId>1</companyId>
+        <processId>cotacao_compras</processId>
+        <version>1</version>
+        <sequence>16</sequence>
+      </processStatePK>
+      <stateName>Carrega dados da solicitação principal</stateName>
+      <stateDescription>Carrega dados da solicitação principal</stateDescription>
+      <instruction></instruction>
+      <deadlineTime>0</deadlineTime>
+      <deadlineFieldName></deadlineFieldName>
+      <joint>false</joint>
+      <agreementPercentage>0</agreementPercentage>
+      <selectColleague>1</selectColleague>
+      <initialState>false</initialState>
+      <notifyAuthorityDelay>true</notifyAuthorityDelay>
+      <notifyRequisitionerDelay>false</notifyRequisitionerDelay>
+      <allowanceAuthorityTime>3600</allowanceAuthorityTime>
+      <frequenceAuthorityTime>3600</frequenceAuthorityTime>
+      <allowanceRequisitionerTime>0</allowanceRequisitionerTime>
+      <frequenceRequisitionerTime>0</frequenceRequisitionerTime>
+      <transferAttachments>false</transferAttachments>
+      <subProcessId></subProcessId>
+      <formFolder>0</formFolder>
+      <notifyAuthorityFollowUp>true</notifyAuthorityFollowUp>
+      <notifyRequisitionerFollowUp>false</notifyRequisitionerFollowUp>
+      <automatic>false</automatic>
+      <positionX>230</positionX>
+      <positionY>294</positionY>
+      <forecastedEffortType>0</forecastedEffortType>
+      <forecastedEffort>0</forecastedEffort>
+      <notifyManagerFollowUp>false</notifyManagerFollowUp>
+      <notifyManagerDelay>false</notifyManagerDelay>
+      <allowanceManagerTime>0</allowanceManagerTime>
+      <frequenceManagerTime>0</frequenceManagerTime>
+      <inhibitTransfer>false</inhibitTransfer>
+      <periodId></periodId>
+      <stateType>0</stateType>
+      <bpmnType>82</bpmnType>
+      <signalId>0</signalId>
+      <counterSign>false</counterSign>
+      <openInstances>0</openInstances>
+      <noticeExpirationAuthorityTime>0</noticeExpirationAuthorityTime>
+      <noticeExpirationRequisitionerTime>0</noticeExpirationRequisitionerTime>
+      <noticeExpirationManagerTime>0</noticeExpirationManagerTime>
+      <destinationStates/>
+      <digitalSignature>false</digitalSignature>
+      <executionType>1</executionType>
+    </ProcessState>
+    <ProcessState>
+      <processStatePK>
+        <companyId>1</companyId>
+        <processId>cotacao_compras</processId>
+        <version>1</version>
+        <sequence>19</sequence>
+      </processStatePK>
+      <stateName>Verificar erros</stateName>
+      <stateDescription>Verificar erros</stateDescription>
+      <instruction></instruction>
+      <deadlineTime>0</deadlineTime>
+      <deadlineFieldName></deadlineFieldName>
+      <joint>false</joint>
+      <agreementPercentage>0</agreementPercentage>
+      <engineAllocationId>Pool Grupo</engineAllocationId>
+      <engineAllocationConfiguration>&lt;AssignmentController&gt;&lt;Group&gt;TI&lt;/Group&gt;&lt;/AssignmentController&gt;</engineAllocationConfiguration>
+      <selectColleague>1</selectColleague>
+      <initialState>false</initialState>
+      <notifyAuthorityDelay>true</notifyAuthorityDelay>
+      <notifyRequisitionerDelay>false</notifyRequisitionerDelay>
+      <allowanceAuthorityTime>3600</allowanceAuthorityTime>
+      <frequenceAuthorityTime>3600</frequenceAuthorityTime>
+      <allowanceRequisitionerTime>0</allowanceRequisitionerTime>
+      <frequenceRequisitionerTime>0</frequenceRequisitionerTime>
+      <transferAttachments>false</transferAttachments>
+      <subProcessId></subProcessId>
+      <formFolder>0</formFolder>
+      <notifyAuthorityFollowUp>true</notifyAuthorityFollowUp>
+      <notifyRequisitionerFollowUp>false</notifyRequisitionerFollowUp>
+      <automatic>false</automatic>
+      <positionX>80</positionX>
+      <positionY>308</positionY>
+      <forecastedEffortType>0</forecastedEffortType>
+      <forecastedEffort>0</forecastedEffort>
+      <notifyManagerFollowUp>false</notifyManagerFollowUp>
+      <notifyManagerDelay>false</notifyManagerDelay>
+      <allowanceManagerTime>0</allowanceManagerTime>
+      <frequenceManagerTime>0</frequenceManagerTime>
+      <inhibitTransfer>false</inhibitTransfer>
+      <periodId></periodId>
+      <stateType>0</stateType>
+      <bpmnType>80</bpmnType>
+      <signalId>0</signalId>
+      <counterSign>false</counterSign>
+      <openInstances>0</openInstances>
+      <noticeExpirationAuthorityTime>0</noticeExpirationAuthorityTime>
+      <noticeExpirationRequisitionerTime>0</noticeExpirationRequisitionerTime>
+      <noticeExpirationManagerTime>0</noticeExpirationManagerTime>
+      <destinationStates/>
+      <digitalSignature>false</digitalSignature>
+      <executionType>0</executionType>
+    </ProcessState>
+    <ProcessState>
+      <processStatePK>
+        <companyId>1</companyId>
+        <processId>cotacao_compras</processId>
+        <version>1</version>
+        <sequence>23</sequence>
+      </processStatePK>
+      <stateName>Preencher TES</stateName>
+      <stateDescription>Preencher TES</stateDescription>
+      <instruction></instruction>
+      <deadlineTime>3600</deadlineTime>
+      <deadlineFieldName></deadlineFieldName>
+      <joint>false</joint>
+      <agreementPercentage>0</agreementPercentage>
+      <engineAllocationId>mec_comprador_responsavel</engineAllocationId>
+      <selectColleague>1</selectColleague>
+      <initialState>false</initialState>
+      <notifyAuthorityDelay>true</notifyAuthorityDelay>
+      <notifyRequisitionerDelay>false</notifyRequisitionerDelay>
+      <allowanceAuthorityTime>3600</allowanceAuthorityTime>
+      <frequenceAuthorityTime>3600</frequenceAuthorityTime>
+      <allowanceRequisitionerTime>0</allowanceRequisitionerTime>
+      <frequenceRequisitionerTime>0</frequenceRequisitionerTime>
+      <transferAttachments>false</transferAttachments>
+      <subProcessId></subProcessId>
+      <formFolder>0</formFolder>
+      <notifyAuthorityFollowUp>true</notifyAuthorityFollowUp>
+      <notifyRequisitionerFollowUp>false</notifyRequisitionerFollowUp>
+      <automatic>false</automatic>
+      <positionX>585</positionX>
+      <positionY>160</positionY>
+      <forecastedEffortType>0</forecastedEffortType>
+      <forecastedEffort>0</forecastedEffort>
+      <notifyManagerFollowUp>false</notifyManagerFollowUp>
+      <notifyManagerDelay>false</notifyManagerDelay>
+      <allowanceManagerTime>0</allowanceManagerTime>
+      <frequenceManagerTime>0</frequenceManagerTime>
+      <inhibitTransfer>false</inhibitTransfer>
+      <periodId></periodId>
+      <stateType>0</stateType>
+      <bpmnType>80</bpmnType>
+      <signalId>0</signalId>
+      <counterSign>false</counterSign>
+      <openInstances>0</openInstances>
+      <noticeExpirationAuthorityTime>0</noticeExpirationAuthorityTime>
+      <noticeExpirationRequisitionerTime>0</noticeExpirationRequisitionerTime>
+      <noticeExpirationManagerTime>0</noticeExpirationManagerTime>
+      <destinationStates/>
+      <digitalSignature>false</digitalSignature>
+      <executionType>0</executionType>
+    </ProcessState>
+    <ProcessState>
+      <processStatePK>
+        <companyId>1</companyId>
+        <processId>cotacao_compras</processId>
+        <version>1</version>
+        <sequence>30</sequence>
+      </processStatePK>
+      <stateName>Regularizar Dados</stateName>
+      <stateDescription>Regularizar Dados</stateDescription>
+      <instruction></instruction>
+      <deadlineTime>0</deadlineTime>
+      <deadlineFieldName></deadlineFieldName>
+      <joint>false</joint>
+      <agreementPercentage>0</agreementPercentage>
+      <selectColleague>1</selectColleague>
+      <initialState>false</initialState>
+      <notifyAuthorityDelay>false</notifyAuthorityDelay>
+      <notifyRequisitionerDelay>false</notifyRequisitionerDelay>
+      <allowanceAuthorityTime>0</allowanceAuthorityTime>
+      <frequenceAuthorityTime>0</frequenceAuthorityTime>
+      <allowanceRequisitionerTime>0</allowanceRequisitionerTime>
+      <frequenceRequisitionerTime>0</frequenceRequisitionerTime>
+      <transferAttachments>false</transferAttachments>
+      <subProcessId></subProcessId>
+      <formFolder>0</formFolder>
+      <notifyAuthorityFollowUp>true</notifyAuthorityFollowUp>
+      <notifyRequisitionerFollowUp>false</notifyRequisitionerFollowUp>
+      <automatic>false</automatic>
+      <positionX>780</positionX>
+      <positionY>301</positionY>
+      <forecastedEffortType>0</forecastedEffortType>
+      <forecastedEffort>0</forecastedEffort>
+      <notifyManagerFollowUp>false</notifyManagerFollowUp>
+      <notifyManagerDelay>false</notifyManagerDelay>
+      <allowanceManagerTime>0</allowanceManagerTime>
+      <frequenceManagerTime>0</frequenceManagerTime>
+      <inhibitTransfer>false</inhibitTransfer>
+      <periodId></periodId>
+      <stateType>0</stateType>
+      <bpmnType>82</bpmnType>
+      <signalId>0</signalId>
+      <counterSign>false</counterSign>
+      <openInstances>0</openInstances>
+      <noticeExpirationAuthorityTime>0</noticeExpirationAuthorityTime>
+      <noticeExpirationRequisitionerTime>0</noticeExpirationRequisitionerTime>
+      <noticeExpirationManagerTime>0</noticeExpirationManagerTime>
+      <destinationStates/>
+      <digitalSignature>false</digitalSignature>
+      <executionType>1</executionType>
+    </ProcessState>
+    <ProcessState>
+      <processStatePK>
+        <companyId>1</companyId>
+        <processId>cotacao_compras</processId>
+        <version>1</version>
+        <sequence>32</sequence>
+      </processStatePK>
+      <stateName>Verificar erros</stateName>
+      <stateDescription>Verificar erros</stateDescription>
+      <instruction></instruction>
+      <deadlineTime>0</deadlineTime>
+      <deadlineFieldName></deadlineFieldName>
+      <joint>false</joint>
+      <agreementPercentage>0</agreementPercentage>
+      <engineAllocationId>Pool Papel</engineAllocationId>
+      <engineAllocationConfiguration>&lt;AssignmentController&gt;&lt;Role&gt;admin&lt;/Role&gt;&lt;/AssignmentController&gt;</engineAllocationConfiguration>
+      <selectColleague>1</selectColleague>
+      <initialState>false</initialState>
+      <notifyAuthorityDelay>true</notifyAuthorityDelay>
+      <notifyRequisitionerDelay>false</notifyRequisitionerDelay>
+      <allowanceAuthorityTime>3600</allowanceAuthorityTime>
+      <frequenceAuthorityTime>3600</frequenceAuthorityTime>
+      <allowanceRequisitionerTime>0</allowanceRequisitionerTime>
+      <frequenceRequisitionerTime>0</frequenceRequisitionerTime>
+      <transferAttachments>false</transferAttachments>
+      <subProcessId></subProcessId>
+      <formFolder>0</formFolder>
+      <notifyAuthorityFollowUp>true</notifyAuthorityFollowUp>
+      <notifyRequisitionerFollowUp>false</notifyRequisitionerFollowUp>
+      <automatic>false</automatic>
+      <positionX>610</positionX>
+      <positionY>380</positionY>
+      <forecastedEffortType>0</forecastedEffortType>
+      <forecastedEffort>0</forecastedEffort>
+      <notifyManagerFollowUp>false</notifyManagerFollowUp>
+      <notifyManagerDelay>false</notifyManagerDelay>
+      <allowanceManagerTime>0</allowanceManagerTime>
+      <frequenceManagerTime>0</frequenceManagerTime>
+      <inhibitTransfer>false</inhibitTransfer>
+      <periodId></periodId>
+      <stateType>0</stateType>
+      <bpmnType>80</bpmnType>
+      <signalId>0</signalId>
+      <counterSign>false</counterSign>
+      <openInstances>0</openInstances>
+      <noticeExpirationAuthorityTime>0</noticeExpirationAuthorityTime>
+      <noticeExpirationRequisitionerTime>0</noticeExpirationRequisitionerTime>
+      <noticeExpirationManagerTime>0</noticeExpirationManagerTime>
+      <destinationStates/>
+      <digitalSignature>false</digitalSignature>
+      <executionType>0</executionType>
+    </ProcessState>
+    <ProcessState>
+      <processStatePK>
+        <companyId>1</companyId>
+        <processId>cotacao_compras</processId>
+        <version>1</version>
+        <sequence>10</sequence>
+      </processStatePK>
+      <stateName>Intermediário</stateName>
+      <stateDescription>Intermediário</stateDescription>
+      <instruction>Evento intermediário do processo</instruction>
+      <deadlineTime>0</deadlineTime>
+      <joint>false</joint>
+      <agreementPercentage>0</agreementPercentage>
+      <engineAllocationId></engineAllocationId>
+      <engineAllocationConfiguration></engineAllocationConfiguration>
+      <selectColleague>0</selectColleague>
+      <initialState>false</initialState>
+      <notifyAuthorityDelay>true</notifyAuthorityDelay>
+      <notifyRequisitionerDelay>false</notifyRequisitionerDelay>
+      <allowanceAuthorityTime>1</allowanceAuthorityTime>
+      <frequenceAuthorityTime>1</frequenceAuthorityTime>
+      <allowanceRequisitionerTime>0</allowanceRequisitionerTime>
+      <frequenceRequisitionerTime>0</frequenceRequisitionerTime>
+      <transferAttachments>false</transferAttachments>
+      <subProcessId></subProcessId>
+      <formFolder>0</formFolder>
+      <notifyAuthorityFollowUp>true</notifyAuthorityFollowUp>
+      <notifyRequisitionerFollowUp>false</notifyRequisitionerFollowUp>
+      <automatic>false</automatic>
+      <positionX>500</positionX>
+      <positionY>361</positionY>
+      <forecastedEffortType>0</forecastedEffortType>
+      <forecastedEffort>0</forecastedEffort>
+      <notifyManagerFollowUp>false</notifyManagerFollowUp>
+      <notifyManagerDelay>false</notifyManagerDelay>
+      <frequenceManagerTime>0</frequenceManagerTime>
+      <inhibitTransfer>false</inhibitTransfer>
+      <periodId></periodId>
+      <stateType>0</stateType>
+      <bpmnType>43</bpmnType>
+      <signalId>0</signalId>
+      <counterSign>false</counterSign>
+      <openInstances>0</openInstances>
+      <destinationStates/>
+      <digitalSignature>false</digitalSignature>
+      <parentSequence>3</parentSequence>
+    </ProcessState>
+    <ProcessState>
+      <processStatePK>
+        <companyId>1</companyId>
+        <processId>cotacao_compras</processId>
+        <version>1</version>
+        <sequence>18</sequence>
+      </processStatePK>
+      <stateName>Intermediário</stateName>
+      <stateDescription>Intermediário</stateDescription>
+      <instruction>Evento intermediário do processo</instruction>
+      <deadlineTime>0</deadlineTime>
+      <joint>false</joint>
+      <agreementPercentage>0</agreementPercentage>
+      <engineAllocationId></engineAllocationId>
+      <engineAllocationConfiguration></engineAllocationConfiguration>
+      <selectColleague>0</selectColleague>
+      <initialState>false</initialState>
+      <notifyAuthorityDelay>true</notifyAuthorityDelay>
+      <notifyRequisitionerDelay>false</notifyRequisitionerDelay>
+      <allowanceAuthorityTime>1</allowanceAuthorityTime>
+      <frequenceAuthorityTime>1</frequenceAuthorityTime>
+      <allowanceRequisitionerTime>0</allowanceRequisitionerTime>
+      <frequenceRequisitionerTime>0</frequenceRequisitionerTime>
+      <transferAttachments>false</transferAttachments>
+      <subProcessId></subProcessId>
+      <formFolder>0</formFolder>
+      <notifyAuthorityFollowUp>true</notifyAuthorityFollowUp>
+      <notifyRequisitionerFollowUp>false</notifyRequisitionerFollowUp>
+      <automatic>false</automatic>
+      <positionX>230</positionX>
+      <positionY>364</positionY>
+      <forecastedEffortType>0</forecastedEffortType>
+      <forecastedEffort>0</forecastedEffort>
+      <notifyManagerFollowUp>false</notifyManagerFollowUp>
+      <notifyManagerDelay>false</notifyManagerDelay>
+      <frequenceManagerTime>0</frequenceManagerTime>
+      <inhibitTransfer>false</inhibitTransfer>
+      <periodId></periodId>
+      <stateType>0</stateType>
+      <bpmnType>43</bpmnType>
+      <signalId>0</signalId>
+      <counterSign>false</counterSign>
+      <openInstances>0</openInstances>
+      <destinationStates/>
+      <digitalSignature>false</digitalSignature>
+      <parentSequence>16</parentSequence>
+    </ProcessState>
+    <ProcessState>
+      <processStatePK>
+        <companyId>1</companyId>
+        <processId>cotacao_compras</processId>
+        <version>1</version>
+        <sequence>31</sequence>
+      </processStatePK>
+      <stateName>Intermediário</stateName>
+      <stateDescription>Intermediário</stateDescription>
+      <instruction>Evento intermediário do processo</instruction>
+      <deadlineTime>0</deadlineTime>
+      <joint>false</joint>
+      <agreementPercentage>0</agreementPercentage>
+      <engineAllocationId></engineAllocationId>
+      <engineAllocationConfiguration></engineAllocationConfiguration>
+      <selectColleague>0</selectColleague>
+      <initialState>false</initialState>
+      <notifyAuthorityDelay>true</notifyAuthorityDelay>
+      <notifyRequisitionerDelay>false</notifyRequisitionerDelay>
+      <allowanceAuthorityTime>1</allowanceAuthorityTime>
+      <frequenceAuthorityTime>1</frequenceAuthorityTime>
+      <allowanceRequisitionerTime>0</allowanceRequisitionerTime>
+      <frequenceRequisitionerTime>0</frequenceRequisitionerTime>
+      <transferAttachments>false</transferAttachments>
+      <subProcessId></subProcessId>
+      <formFolder>0</formFolder>
+      <notifyAuthorityFollowUp>true</notifyAuthorityFollowUp>
+      <notifyRequisitionerFollowUp>false</notifyRequisitionerFollowUp>
+      <automatic>false</automatic>
+      <positionX>760</positionX>
+      <positionY>340</positionY>
+      <forecastedEffortType>0</forecastedEffortType>
+      <forecastedEffort>0</forecastedEffort>
+      <notifyManagerFollowUp>false</notifyManagerFollowUp>
+      <notifyManagerDelay>false</notifyManagerDelay>
+      <frequenceManagerTime>0</frequenceManagerTime>
+      <inhibitTransfer>false</inhibitTransfer>
+      <periodId></periodId>
+      <stateType>0</stateType>
+      <bpmnType>43</bpmnType>
+      <signalId>0</signalId>
+      <counterSign>false</counterSign>
+      <openInstances>0</openInstances>
+      <destinationStates/>
+      <digitalSignature>false</digitalSignature>
+      <parentSequence>30</parentSequence>
+    </ProcessState>
+    <ProcessState>
+      <processStatePK>
+        <companyId>1</companyId>
+        <processId>cotacao_compras</processId>
+        <version>1</version>
+        <sequence>8</sequence>
+      </processStatePK>
+      <stateName>Fim</stateName>
+      <stateDescription>Fim</stateDescription>
+      <instruction>Atividade final do processo</instruction>
+      <deadlineTime>0</deadlineTime>
+      <joint>false</joint>
+      <agreementPercentage>0</agreementPercentage>
+      <engineAllocationId></engineAllocationId>
+      <engineAllocationConfiguration></engineAllocationConfiguration>
+      <selectColleague>0</selectColleague>
+      <initialState>false</initialState>
+      <notifyAuthorityDelay>true</notifyAuthorityDelay>
+      <notifyRequisitionerDelay>false</notifyRequisitionerDelay>
+      <allowanceAuthorityTime>0</allowanceAuthorityTime>
+      <frequenceAuthorityTime>1</frequenceAuthorityTime>
+      <allowanceRequisitionerTime>0</allowanceRequisitionerTime>
+      <frequenceRequisitionerTime>0</frequenceRequisitionerTime>
+      <transferAttachments>false</transferAttachments>
+      <subProcessId></subProcessId>
+      <formFolder>0</formFolder>
+      <notifyAuthorityFollowUp>false</notifyAuthorityFollowUp>
+      <notifyRequisitionerFollowUp>false</notifyRequisitionerFollowUp>
+      <automatic>false</automatic>
+      <positionX>900</positionX>
+      <positionY>85</positionY>
+      <forecastedEffortType>0</forecastedEffortType>
+      <forecastedEffort>0</forecastedEffort>
+      <notifyManagerFollowUp>false</notifyManagerFollowUp>
+      <notifyManagerDelay>false</notifyManagerDelay>
+      <allowanceManagerTime>0</allowanceManagerTime>
+      <frequenceManagerTime>0</frequenceManagerTime>
+      <inhibitTransfer>false</inhibitTransfer>
+      <periodId></periodId>
+      <stateType>6</stateType>
+      <bpmnType>60</bpmnType>
+      <signalId>0</signalId>
+      <counterSign>false</counterSign>
+      <openInstances>0</openInstances>
+      <destinationStates/>
+      <digitalSignature>false</digitalSignature>
+    </ProcessState>
+  </list>
+  <list/>
+  <list>
+    <ProcessLink>
+      <processLinkPK>
+        <companyId>1</companyId>
+        <processId>cotacao_compras</processId>
+        <version>1</version>
+        <linkSequence>6</linkSequence>
+      </processLinkPK>
+      <actionLabel></actionLabel>
+      <returnPermited>false</returnPermited>
+      <initialStateSequence>3</initialStateSequence>
+      <finalStateSequence>5</finalStateSequence>
+      <returnLabel></returnLabel>
+      <name></name>
+      <automaticLink>false</automaticLink>
+      <defaultLink>false</defaultLink>
+      <type>0</type>
+    </ProcessLink>
+    <ProcessLink>
+      <processLinkPK>
+        <companyId>1</companyId>
+        <processId>cotacao_compras</processId>
+        <version>1</version>
+        <linkSequence>7</linkSequence>
+      </processLinkPK>
+      <actionLabel>Notificar fornecedores</actionLabel>
+      <returnPermited>false</returnPermited>
+      <initialStateSequence>5</initialStateSequence>
+      <finalStateSequence>3</finalStateSequence>
+      <returnLabel></returnLabel>
+      <name></name>
+      <automaticLink>false</automaticLink>
+      <defaultLink>false</defaultLink>
+      <type>0</type>
+    </ProcessLink>
+    <ProcessLink>
+      <processLinkPK>
+        <companyId>1</companyId>
+        <processId>cotacao_compras</processId>
+        <version>1</version>
+        <linkSequence>12</linkSequence>
+      </processLinkPK>
+      <actionLabel></actionLabel>
+      <returnPermited>false</returnPermited>
+      <initialStateSequence>10</initialStateSequence>
+      <finalStateSequence>11</finalStateSequence>
+      <returnLabel></returnLabel>
+      <name></name>
+      <automaticLink>false</automaticLink>
+      <defaultLink>false</defaultLink>
+      <type>0</type>
+    </ProcessLink>
+    <ProcessLink>
+      <processLinkPK>
+        <companyId>1</companyId>
+        <processId>cotacao_compras</processId>
+        <version>1</version>
+        <linkSequence>13</linkSequence>
+      </processLinkPK>
+      <actionLabel></actionLabel>
+      <returnPermited>false</returnPermited>
+      <initialStateSequence>11</initialStateSequence>
+      <finalStateSequence>3</finalStateSequence>
+      <returnLabel></returnLabel>
+      <name></name>
+      <automaticLink>false</automaticLink>
+      <defaultLink>false</defaultLink>
+      <type>0</type>
+    </ProcessLink>
+    <ProcessLink>
+      <processLinkPK>
+        <companyId>1</companyId>
+        <processId>cotacao_compras</processId>
+        <version>1</version>
+        <linkSequence>17</linkSequence>
+      </processLinkPK>
+      <actionLabel></actionLabel>
+      <returnPermited>false</returnPermited>
+      <initialStateSequence>15</initialStateSequence>
+      <finalStateSequence>16</finalStateSequence>
+      <returnLabel></returnLabel>
+      <name></name>
+      <automaticLink>false</automaticLink>
+      <defaultLink>false</defaultLink>
+      <type>0</type>
+      <movementTitle></movementTitle>
+      <movementDescription></movementDescription>
+      <movementAccessLinkDescription></movementAccessLinkDescription>
+    </ProcessLink>
+    <ProcessLink>
+      <processLinkPK>
+        <companyId>1</companyId>
+        <processId>cotacao_compras</processId>
+        <version>1</version>
+        <linkSequence>20</linkSequence>
+      </processLinkPK>
+      <actionLabel></actionLabel>
+      <returnPermited>false</returnPermited>
+      <initialStateSequence>18</initialStateSequence>
+      <finalStateSequence>19</finalStateSequence>
+      <returnLabel></returnLabel>
+      <name></name>
+      <automaticLink>false</automaticLink>
+      <defaultLink>false</defaultLink>
+      <type>0</type>
+    </ProcessLink>
+    <ProcessLink>
+      <processLinkPK>
+        <companyId>1</companyId>
+        <processId>cotacao_compras</processId>
+        <version>1</version>
+        <linkSequence>21</linkSequence>
+      </processLinkPK>
+      <actionLabel></actionLabel>
+      <returnPermited>false</returnPermited>
+      <initialStateSequence>19</initialStateSequence>
+      <finalStateSequence>16</finalStateSequence>
+      <returnLabel></returnLabel>
+      <name></name>
+      <automaticLink>false</automaticLink>
+      <defaultLink>false</defaultLink>
+      <type>0</type>
+    </ProcessLink>
+    <ProcessLink>
+      <processLinkPK>
+        <companyId>1</companyId>
+        <processId>cotacao_compras</processId>
+        <version>1</version>
+        <linkSequence>22</linkSequence>
+      </processLinkPK>
+      <actionLabel></actionLabel>
+      <returnPermited>false</returnPermited>
+      <initialStateSequence>16</initialStateSequence>
+      <finalStateSequence>3</finalStateSequence>
+      <returnLabel></returnLabel>
+      <name></name>
+      <automaticLink>false</automaticLink>
+      <defaultLink>false</defaultLink>
+      <type>0</type>
+    </ProcessLink>
+    <ProcessLink>
+      <processLinkPK>
+        <companyId>1</companyId>
+        <processId>cotacao_compras</processId>
+        <version>1</version>
+        <linkSequence>24</linkSequence>
+      </processLinkPK>
+      <actionLabel></actionLabel>
+      <returnPermited>false</returnPermited>
+      <initialStateSequence>5</initialStateSequence>
+      <finalStateSequence>23</finalStateSequence>
+      <returnLabel></returnLabel>
+      <name></name>
+      <automaticLink>true</automaticLink>
+      <defaultLink>false</defaultLink>
+      <type>0</type>
+    </ProcessLink>
+    <ProcessLink>
+      <processLinkPK>
+        <companyId>1</companyId>
+        <processId>cotacao_compras</processId>
+        <version>1</version>
+        <linkSequence>26</linkSequence>
+      </processLinkPK>
+      <actionLabel>Reabrir</actionLabel>
+      <returnPermited>false</returnPermited>
+      <initialStateSequence>23</initialStateSequence>
+      <finalStateSequence>3</finalStateSequence>
+      <returnLabel></returnLabel>
+      <name></name>
+      <automaticLink>false</automaticLink>
+      <defaultLink>false</defaultLink>
+      <type>0</type>
+    </ProcessLink>
+    <ProcessLink>
+      <processLinkPK>
+        <companyId>1</companyId>
+        <processId>cotacao_compras</processId>
+        <version>1</version>
+        <linkSequence>28</linkSequence>
+      </processLinkPK>
+      <actionLabel></actionLabel>
+      <returnPermited>false</returnPermited>
+      <initialStateSequence>5</initialStateSequence>
+      <finalStateSequence>30</finalStateSequence>
+      <returnLabel></returnLabel>
+      <name></name>
+      <automaticLink>false</automaticLink>
+      <defaultLink>false</defaultLink>
+      <type>0</type>
+    </ProcessLink>
+    <ProcessLink>
+      <processLinkPK>
+        <companyId>1</companyId>
+        <processId>cotacao_compras</processId>
+        <version>1</version>
+        <linkSequence>29</linkSequence>
+      </processLinkPK>
+      <actionLabel></actionLabel>
+      <returnPermited>false</returnPermited>
+      <initialStateSequence>30</initialStateSequence>
+      <finalStateSequence>8</finalStateSequence>
+      <returnLabel></returnLabel>
+      <name></name>
+      <automaticLink>false</automaticLink>
+      <defaultLink>false</defaultLink>
+      <type>0</type>
+    </ProcessLink>
+    <ProcessLink>
+      <processLinkPK>
+        <companyId>1</companyId>
+        <processId>cotacao_compras</processId>
+        <version>1</version>
+        <linkSequence>33</linkSequence>
+      </processLinkPK>
+      <actionLabel></actionLabel>
+      <returnPermited>false</returnPermited>
+      <initialStateSequence>31</initialStateSequence>
+      <finalStateSequence>32</finalStateSequence>
+      <returnLabel></returnLabel>
+      <name></name>
+      <automaticLink>false</automaticLink>
+      <defaultLink>false</defaultLink>
+      <type>0</type>
+    </ProcessLink>
+    <ProcessLink>
+      <processLinkPK>
+        <companyId>1</companyId>
+        <processId>cotacao_compras</processId>
+        <version>1</version>
+        <linkSequence>34</linkSequence>
+      </processLinkPK>
+      <actionLabel></actionLabel>
+      <returnPermited>false</returnPermited>
+      <initialStateSequence>32</initialStateSequence>
+      <finalStateSequence>30</finalStateSequence>
+      <returnLabel></returnLabel>
+      <name></name>
+      <automaticLink>false</automaticLink>
+      <defaultLink>false</defaultLink>
+      <type>0</type>
+    </ProcessLink>
+    <ProcessLink>
+      <processLinkPK>
+        <companyId>1</companyId>
+        <processId>cotacao_compras</processId>
+        <version>1</version>
+        <linkSequence>35</linkSequence>
+      </processLinkPK>
+      <actionLabel></actionLabel>
+      <returnPermited>false</returnPermited>
+      <initialStateSequence>23</initialStateSequence>
+      <finalStateSequence>30</finalStateSequence>
+      <returnLabel></returnLabel>
+      <name></name>
+      <automaticLink>false</automaticLink>
+      <defaultLink>false</defaultLink>
+      <type>0</type>
+    </ProcessLink>
+  </list>
+  <list/>
+  <list>
+    <WorkflowProcessEvent>
+      <workflowProcessEventPK>
+        <companyId>1</companyId>
+        <eventId>servicetask16</eventId>
+        <processId>cotacao_compras</processId>
+        <version>1</version>
+      </workflowProcessEventPK>
+      <eventDescription>function servicetask16(attempt, message) {
+	log.info(&quot;&gt;&gt; servicetask16 &lt;&lt;&quot;);
+
+	var WKNumProces = getValue(&quot;WKNumProces&quot;);
+	log.info(&quot;-- WKNumProces: &quot; + WKNumProces);
+	var parentInstance = hAPI.getParentInstance(WKNumProces);
+	log.info(&quot;-- parentInstance: &quot; + parentInstance);
+	//var map 			= hAPI.getCardData(parentInstance);
+	var formPrincipal = tools.SQL.exec(
+		&quot;SELECT dataInicioSolicitacaoCotacao, dataTerminoSolicitacaoCotacao, numeroSolicitacao, compradorResponsavel, matCompradorResponsavel, matCompradorResponsavel, telCompradorResponsavel, obsComprador, especificacao_tecnica, ciclo_atual, idPastaGED, idEmpresa, descricaoEmpresa, cnpjEmpresa, cepEmpresaOrigem, estadoEmpresaOrigem, cidadeEmpresaOrigem, bairroEmpresaOrigem, enderecoEmpresaOrigem, telefone_empresa, idEmpresaEntrega, descricaoEmpresaEntrega, cnpjEmpresaEntrega, cepEmpresaEntrega, estadoEmpresaEntrega, cidadeEmpresaEntrega, bairroEmpresaEntrega, enderecoEmpresaEntrega, telefoneEmpresaEntrega, C8_NUM \
+							FROM &quot;+ hAPI.getAdvancedProperty(&quot;formPrincipal&quot;) + &quot; ML \
+							INNER JOIN DOCUMENTO DOC ON DOC.NR_DOCUMENTO = ML.DOCUMENTID AND DOC.NR_VERSAO = ML.VERSION \
+							INNER JOIN PROCES_WORKFLOW PW ON PW.NR_DOCUMENTO_CARD = DOC.NR_DOCUMENTO \
+							WHERE PW.NUM_PROCES = &quot;+ parentInstance + &quot; AND DOC.VERSAO_ATIVA = 1&quot;
+	)
+
+	if (formPrincipal.length &gt; 0) {
+		var map = formPrincipal[0];
+		log.dir(map);
+
+		hAPI.setCardValue(&quot;cotacao_abertura&quot;, map[&quot;dataInicioSolicitacaoCotacao&quot;]);
+		hAPI.setCardValue(&quot;C8_NUM&quot;, map[&quot;C8_NUM&quot;]);
+		hAPI.setCardValue(&quot;cotacao_encerramento&quot;, map[&quot;dataTerminoSolicitacaoCotacao&quot;]);
+		hAPI.setCardValue(&quot;solicitacao_compra&quot;, map[&quot;numeroSolicitacao&quot;]);
+		hAPI.setCardValue(&quot;numeroSolicitacao&quot;, getValue(&quot;WKNumProces&quot;).toString());
+		hAPI.setCardValue(&quot;compradorResponsavel&quot;, map[&quot;compradorResponsavel&quot;]);
+		hAPI.setCardValue(&quot;matCompradorResponsavel&quot;, map[&quot;matCompradorResponsavel&quot;]);
+		hAPI.setCardValue(&quot;mailCompradorResponsavel&quot;, tools.getEmail(map[&quot;matCompradorResponsavel&quot;]));
+		hAPI.setCardValue(&quot;telCompradorResponsavel&quot;, map[&quot;telCompradorResponsavel&quot;]);
+		hAPI.setCardValue(&quot;obsComprador&quot;, map[&quot;obsComprador&quot;]);
+		hAPI.setCardValue(&quot;especificacao_tecnica&quot;, map[&quot;especificacao_tecnica&quot;]);
+		hAPI.setCardValue(&quot;ciclo_atual&quot;, map[&quot;ciclo_atual&quot;]);
+		hAPI.setCardValue(&quot;idPastaGED_SC&quot;, map[&quot;idPastaGED&quot;]);
+		hAPI.setCardValue(&quot;idPastaGED&quot;, anexos.criaPasta(getValue(&quot;WKNumProces&quot;).toString(), map[&quot;idPastaGED&quot;]));
+
+		hAPI.setCardValue(&quot;idEmpresa&quot;, map[&quot;idEmpresa&quot;]);
+		hAPI.setCardValue(&quot;descricaoEmpresa&quot;, map[&quot;descricaoEmpresa&quot;]);
+		hAPI.setCardValue(&quot;cnpjEmpresa&quot;, map[&quot;cnpjEmpresa&quot;]);
+		hAPI.setCardValue(&quot;cepEmpresaOrigem&quot;, map[&quot;cepEmpresaOrigem&quot;]);
+		hAPI.setCardValue(&quot;estadoEmpresaOrigem&quot;, map[&quot;estadoEmpresaOrigem&quot;]);
+		hAPI.setCardValue(&quot;cidadeEmpresaOrigem&quot;, map[&quot;cidadeEmpresaOrigem&quot;]);
+		hAPI.setCardValue(&quot;bairroEmpresaOrigem&quot;, map[&quot;bairroEmpresaOrigem&quot;]);
+		hAPI.setCardValue(&quot;enderecoEmpresaOrigem&quot;, map[&quot;enderecoEmpresaOrigem&quot;]);
+		hAPI.setCardValue(&quot;telefoneEmpresaOrigem&quot;, map[&quot;telefone_empresa&quot;]);
+		hAPI.setCardValue(&quot;idEmpresaEntrega&quot;, map[&quot;idEmpresaEntrega&quot;]);
+		hAPI.setCardValue(&quot;descricaoEmpresaEntrega&quot;, map[&quot;descricaoEmpresaEntrega&quot;]);
+		hAPI.setCardValue(&quot;cnpjEmpresaEntrega&quot;, map[&quot;cnpjEmpresaEntrega&quot;]);
+		hAPI.setCardValue(&quot;cepEmpresaEntrega&quot;, map[&quot;cepEmpresaEntrega&quot;]);
+		hAPI.setCardValue(&quot;estadoEmpresaEntrega&quot;, map[&quot;estadoEmpresaEntrega&quot;]);
+		hAPI.setCardValue(&quot;cidadeEmpresaEntrega&quot;, map[&quot;cidadeEmpresaEntrega&quot;]);
+		hAPI.setCardValue(&quot;bairroEmpresaEntrega&quot;, map[&quot;bairroEmpresaEntrega&quot;]);
+		hAPI.setCardValue(&quot;enderecoEmpresaEntrega&quot;, map[&quot;enderecoEmpresaEntrega&quot;]);
+		hAPI.setCardValue(&quot;telefoneEmpresaEntrega&quot;, map[&quot;telefoneEmpresaEntrega&quot;]);
+
+		var dataSource = &quot;jdbc/AppDS&quot;;
+		var ic = new javax.naming.InitialContext();
+		var ds = ic.lookup(dataSource);
+
+		try {
+			var conn = ds.getConnection();
+			var stmt = conn.createStatement();
+			//var rs = stmt.executeQuery(query);
+
+			var rsTES = stmt.executeQuery(
+				&quot;SELECT ML.* FROM &quot; + hAPI.getAdvancedProperty(&quot;tabTES&quot;) + &quot; ML \
+	    			INNER JOIN DOCUMENTO DOC ON DOC.NR_DOCUMENTO = ML.DOCUMENTID AND DOC.NR_VERSAO = ML.VERSION \
+	    			INNER JOIN PROCES_WORKFLOW PW ON PW.NR_DOCUMENTO_CARD = DOC.NR_DOCUMENTO \
+	    			WHERE PW.NUM_PROCES = &quot;+ parentInstance + &quot; AND DOC.VERSAO_ATIVA = 1&quot;
+			);
+
+			while (rsTES.next()) {
+				var childData = new java.util.HashMap();
+				childData.put(&quot;TES_A2_COD&quot;, &quot;&quot; + rsTES.getObject(&quot;TES_A2_COD&quot;) ? rsTES.getObject(&quot;TES_A2_COD&quot;) : &quot;&quot;);
+				childData.put(&quot;TES_A2_LOJA&quot;, &quot;&quot; + rsTES.getObject(&quot;TES_A2_LOJA&quot;) ? rsTES.getObject(&quot;TES_A2_LOJA&quot;) : &quot;&quot;);
+				childData.put(&quot;TES_A2_CGC&quot;, &quot;&quot; + rsTES.getObject(&quot;TES_A2_CGC&quot;) ? rsTES.getObject(&quot;TES_A2_CGC&quot;) : &quot;&quot;);
+				childData.put(&quot;TES_B1_COD&quot;, &quot;&quot; + rsTES.getObject(&quot;TES_B1_COD&quot;) ? rsTES.getObject(&quot;TES_B1_COD&quot;) : &quot;&quot;);
+				childData.put(&quot;TES_CODIGO&quot;, &quot;&quot; + rsTES.getObject(&quot;TES_CODIGO&quot;) ? rsTES.getObject(&quot;TES_CODIGO&quot;) : &quot;&quot;);
+				childData.put(&quot;TES_COMPRADOR&quot;, &quot;&quot; + rsTES.getObject(&quot;TES_COMPRADOR&quot;) ? rsTES.getObject(&quot;TES_COMPRADOR&quot;) : &quot;&quot;);
+				hAPI.addCardChild(&quot;tabTES&quot;, childData);
+			}
+
+			log.info(&quot;-- fim rsTES&quot;);
+
+			var rsProduto = stmt.executeQuery(
+				&quot;SELECT ML.* FROM &quot; + hAPI.getAdvancedProperty(&quot;tabProduto&quot;) + &quot; ML \
+	    			INNER JOIN DOCUMENTO DOC ON DOC.NR_DOCUMENTO = ML.DOCUMENTID AND DOC.NR_VERSAO = ML.VERSION \
+	    			INNER JOIN PROCES_WORKFLOW PW ON PW.NR_DOCUMENTO_CARD = DOC.NR_DOCUMENTO \
+	    			WHERE PW.NUM_PROCES = &quot;+ parentInstance + &quot; AND DOC.VERSAO_ATIVA = 1&quot;
+			);
+
+			while (rsProduto.next()) {
+				var childData = new java.util.HashMap();
+				childData.put(&quot;B1_COD&quot;, &quot;&quot; + rsProduto.getObject(&quot;B1_COD&quot;) ? rsProduto.getObject(&quot;B1_COD&quot;) : &quot;&quot;);
+				childData.put(&quot;B1_DESC&quot;, &quot;&quot; + rsProduto.getObject(&quot;B1_DESC&quot;) ? rsProduto.getObject(&quot;B1_DESC&quot;) : &quot;&quot;);
+				childData.put(&quot;B1_GRUPO&quot;, &quot;&quot; + rsProduto.getObject(&quot;B1_GRUPO&quot;) ? rsProduto.getObject(&quot;B1_GRUPO&quot;) : &quot;&quot;);
+				childData.put(&quot;B1_LOCPAD&quot;, &quot;&quot; + rsProduto.getObject(&quot;B1_LOCPAD&quot;) ? rsProduto.getObject(&quot;B1_LOCPAD&quot;) : &quot;&quot;);
+				childData.put(&quot;B1_MSBLQL&quot;, &quot;&quot; + rsProduto.getObject(&quot;B1_MSBLQL&quot;) ? rsProduto.getObject(&quot;B1_MSBLQL&quot;) : &quot;&quot;);
+				childData.put(&quot;B1_TIPO&quot;, &quot;&quot; + rsProduto.getObject(&quot;B1_TIPO&quot;) ? rsProduto.getObject(&quot;B1_TIPO&quot;) : &quot;&quot;);
+				childData.put(&quot;B1_UM&quot;, &quot;&quot; + rsProduto.getObject(&quot;B1_UM&quot;) ? rsProduto.getObject(&quot;B1_UM&quot;) : &quot;&quot;);
+				childData.put(&quot;B1_ZMARCA&quot;, &quot;&quot; + rsProduto.getObject(&quot;B1_ZMARCA&quot;) ? rsProduto.getObject(&quot;B1_ZMARCA&quot;) : &quot;&quot;);
+				childData.put(&quot;ZPM_DESC&quot;, &quot;&quot; + rsProduto.getObject(&quot;ZPM_DESC&quot;) ? rsProduto.getObject(&quot;ZPM_DESC&quot;) : &quot;&quot;);
+				childData.put(&quot;B1_UPRC&quot;, &quot;&quot; + rsProduto.getObject(&quot;B1_UPRC&quot;) ? rsProduto.getObject(&quot;B1_UPRC&quot;) : &quot;&quot;);
+				childData.put(&quot;B1_PAI&quot;, &quot;&quot; + rsProduto.getObject(&quot;B1_PAI&quot;) ? rsProduto.getObject(&quot;B1_PAI&quot;) : &quot;&quot;);
+				hAPI.addCardChild(&quot;tabProduto&quot;, childData);
+			}
+
+			log.info(&quot;-- fim rsProduto&quot;);
+
+			var rsFornProd = stmt.executeQuery(
+				&quot;SELECT ML.* FROM &quot; + hAPI.getAdvancedProperty(&quot;tabFornecedorProduto&quot;) + &quot; ML \
+	    			INNER JOIN DOCUMENTO DOC ON DOC.NR_DOCUMENTO = ML.DOCUMENTID AND DOC.NR_VERSAO = ML.VERSION \
+	    			INNER JOIN PROCES_WORKFLOW PW ON PW.NR_DOCUMENTO_CARD = DOC.NR_DOCUMENTO \
+	    			WHERE PW.NUM_PROCES = &quot;+ parentInstance + &quot; AND DOC.VERSAO_ATIVA = 1&quot;
+			);
+
+			while (rsFornProd.next()) {
+				var childData = new java.util.HashMap();
+				childData.put(&quot;A5_PRODUTO&quot;, &quot;&quot; + rsFornProd.getObject(&quot;A5_PRODUTO&quot;) ? rsFornProd.getObject(&quot;A5_PRODUTO&quot;) : &quot;&quot;);
+				childData.put(&quot;A5_NOMPROD&quot;, &quot;&quot; + rsFornProd.getObject(&quot;A5_NOMPROD&quot;) ? rsFornProd.getObject(&quot;A5_NOMPROD&quot;) : &quot;&quot;);
+				childData.put(&quot;A5_NOMEFOR&quot;, &quot;&quot; + rsFornProd.getObject(&quot;A5_NOMEFOR&quot;) ? rsFornProd.getObject(&quot;A5_NOMEFOR&quot;) : &quot;&quot;);
+				childData.put(&quot;A5_FORNECE&quot;, &quot;&quot; + rsFornProd.getObject(&quot;A5_FORNECE&quot;) ? rsFornProd.getObject(&quot;A5_FORNECE&quot;) : &quot;&quot;);
+				childData.put(&quot;A5_LOJA&quot;, &quot;&quot; + rsFornProd.getObject(&quot;A5_LOJA&quot;) ? rsFornProd.getObject(&quot;A5_LOJA&quot;) : &quot;&quot;);
+				hAPI.addCardChild(&quot;tabFornecedorProduto&quot;, childData);
+			}
+
+			log.info(&quot;-- fim rsFornProd&quot;);
+
+			var rsFornecedor = stmt.executeQuery(
+				&quot;SELECT ML.* FROM &quot; + hAPI.getAdvancedProperty(&quot;tabFornecedor&quot;) + &quot; ML \
+	    			INNER JOIN DOCUMENTO DOC ON DOC.NR_DOCUMENTO = ML.DOCUMENTID AND DOC.NR_VERSAO = ML.VERSION \
+	    			INNER JOIN PROCES_WORKFLOW PW ON PW.NR_DOCUMENTO_CARD = DOC.NR_DOCUMENTO \
+	    			WHERE PW.NUM_PROCES = &quot;+ parentInstance + &quot; AND DOC.VERSAO_ATIVA = 1 AND (ML.CICLO_REMOVIDO = &apos;&apos; OR ML.CICLO_REMOVIDO IS NULL)&quot;
+			);
+
+			while (rsFornecedor.next()) {
+				var childData = new java.util.HashMap();
+				childData.put(&quot;A2_COD&quot;, &quot;&quot; + rsFornecedor.getObject(&quot;A2_COD&quot;) ? rsFornecedor.getObject(&quot;A2_COD&quot;) : &quot;&quot;);
+				childData.put(&quot;A2_LOJA&quot;, &quot;&quot; + rsFornecedor.getObject(&quot;A2_LOJA&quot;) ? rsFornecedor.getObject(&quot;A2_LOJA&quot;) : &quot;&quot;);
+				childData.put(&quot;A2_NOME&quot;, &quot;&quot; + rsFornecedor.getObject(&quot;A2_NOME&quot;) ? rsFornecedor.getObject(&quot;A2_NOME&quot;) : &quot;&quot;);
+				childData.put(&quot;A2_CGC&quot;, &quot;&quot; + rsFornecedor.getObject(&quot;A2_CGC&quot;) ? rsFornecedor.getObject(&quot;A2_CGC&quot;) : &quot;&quot;);
+				childData.put(&quot;A2_EST&quot;, &quot;&quot; + rsFornecedor.getObject(&quot;A2_EST&quot;) ? rsFornecedor.getObject(&quot;A2_EST&quot;) : &quot;&quot;);
+				childData.put(&quot;A2_COND&quot;, &quot;&quot; + rsFornecedor.getObject(&quot;A2_COND&quot;) ? rsFornecedor.getObject(&quot;A2_COND&quot;) : &quot;&quot;);
+				childData.put(&quot;A2_TPFRETE&quot;, &quot;&quot; + rsFornecedor.getObject(&quot;A2_TPFRETE&quot;) ? rsFornecedor.getObject(&quot;A2_TPFRETE&quot;) : &quot;&quot;);
+				childData.put(&quot;A2_VALFRE&quot;, &quot;&quot; + rsFornecedor.getObject(&quot;A2_VALFRE&quot;) ? rsFornecedor.getObject(&quot;A2_VALFRE&quot;) : &quot;&quot;);
+				childData.put(&quot;A2_VALIDA&quot;, &quot;&quot; + rsFornecedor.getObject(&quot;A2_VALIDA&quot;) ? rsFornecedor.getObject(&quot;A2_VALIDA&quot;) : &quot;&quot;);
+				hAPI.addCardChild(&quot;tabFornecedor&quot;, childData);
+			}
+
+			log.info(&quot;-- fim rsFornecedor&quot;);
+
+			var rsSC = stmt.executeQuery(
+				&quot;SELECT ML.* FROM &quot; + hAPI.getAdvancedProperty(&quot;tabSC&quot;) + &quot; ML \
+	    			INNER JOIN DOCUMENTO DOC ON DOC.NR_DOCUMENTO = ML.DOCUMENTID AND DOC.NR_VERSAO = ML.VERSION \
+	    			INNER JOIN PROCES_WORKFLOW PW ON PW.NR_DOCUMENTO_CARD = DOC.NR_DOCUMENTO \
+	    			WHERE PW.NUM_PROCES = &quot;+ parentInstance + &quot; AND DOC.VERSAO_ATIVA = 1&quot;
+			);
+
+			while (rsSC.next()) {
+				var childData = new java.util.HashMap();
+				childData.put(&quot;C1_ITEM&quot;, &quot;&quot; + rsSC.getObject(&quot;C1_ITEM&quot;) ? rsSC.getObject(&quot;C1_ITEM&quot;) : &quot;&quot;);
+				childData.put(&quot;C1_PRODUTO&quot;, &quot;&quot; + rsSC.getObject(&quot;C1_PRODUTO&quot;) ? rsSC.getObject(&quot;C1_PRODUTO&quot;) : &quot;&quot;);
+				childData.put(&quot;C1_UM&quot;, &quot;&quot; + rsSC.getObject(&quot;C1_UM&quot;) ? rsSC.getObject(&quot;C1_UM&quot;) : &quot;&quot;);
+				childData.put(&quot;C1_DESCRI&quot;, &quot;&quot; + rsSC.getObject(&quot;C1_DESCRI&quot;) ? rsSC.getObject(&quot;C1_DESCRI&quot;) : &quot;&quot;);
+				childData.put(&quot;C1_QUANT&quot;, &quot;&quot; + rsSC.getObject(&quot;C1_QUANT&quot;) ? rsSC.getObject(&quot;C1_QUANT&quot;) : &quot;&quot;);
+				childData.put(&quot;C1_PRECO&quot;, &quot;&quot; + rsSC.getObject(&quot;C1_PRECO&quot;) ? rsSC.getObject(&quot;C1_PRECO&quot;) : &quot;&quot;);
+				childData.put(&quot;C1_TOTAL&quot;, &quot;&quot; + rsSC.getObject(&quot;C1_TOTAL&quot;) ? rsSC.getObject(&quot;C1_TOTAL&quot;) : &quot;&quot;);
+				hAPI.addCardChild(&quot;tabSC&quot;, childData);
+			}
+
+			log.info(&quot;-- fim rsSC&quot;);
+
+			var rsCotacao = stmt.executeQuery(
+				&quot;SELECT COT.VENCEDOR, COT.VENCEDOR_COMPRADOR, COT.COMPRADOR, COT.QTD_COMPRADOR, COT.COMPRADOR_JUSTIFICATIVA, COT.C8_ITEM, COT.C8_PRODUTO, COT.C8_UM, COT.C8_FORNECE, COT.C8_LOJA, COT.C8_QUANT, COT.C8_PRECO, COT.C8_TOTAL, COT.C8_PRAZO, COT.C8_FILENT, COT.C8_VALIPI, COT.C8_VALICM, COT.C8_VALISS, COT.C8_DIFAL, COT.C8_VALSOL, COT.C8_VALIDA \
+					 FROM &quot;+ hAPI.getAdvancedProperty(&quot;mlFormCotacao&quot;) + &quot; ML \
+					INNER JOIN DOCUMENTO DOC ON DOC.NR_DOCUMENTO = ML.DOCUMENTID AND DOC.NR_VERSAO = ML.VERSION \
+					INNER JOIN &quot;+ hAPI.getAdvancedProperty(&quot;mlTabCotacao&quot;) + &quot; COT ON COT.DOCUMENTID = ML.DOCUMENTID AND COT.VERSION = ML.VERSION \
+				WHERE ML.C8_NUM = &apos;&quot;+ map[&quot;C8_NUM&quot;] + &quot;&apos; AND ML.idEmpresa = &apos;&quot; + map[&quot;idEmpresa&quot;] + &quot;&apos; AND ML.C8_CICLO = &apos;&quot; + map[&quot;ciclo_atual&quot;] + &quot;&apos; AND DOC.VERSAO_ATIVA = 1&quot;
+			);
+			/*
+			var rsCotacao = stmt.executeQuery(
+					&quot;SELECT * FROM &quot;+hAPI.getAdvancedProperty(&quot;tabCotacao&quot;)+&quot; ML \
+					INNER JOIN DOCUMENTO DOC ON DOC.NR_DOCUMENTO = ML.DOCUMENTID AND DOC.NR_VERSAO = ML.VERSION \
+					INNER JOIN PROCES_WORKFLOW PW ON PW.NR_DOCUMENTO_CARD = DOC.NR_DOCUMENTO \
+					WHERE PW.NUM_PROCES = &quot;+parentInstance+&quot; AND DOC.VERSAO_ATIVA = 1 AND ML.C8_CICLO = &apos;&quot;+map[&quot;ciclo_atual&quot;]+&quot;&apos;&quot;
+			);
+			*/
+
+			/*
+			while (rsCotacao.next()) {
+				var childData = new java.util.HashMap();
+				childData.put(&quot;C8_CICLO&quot;	, map[&quot;ciclo_atual&quot;]);
+				childData.put(&quot;C8_ITEM&quot;		, &quot;&quot;+rsCotacao.getObject(&quot;C8_ITEM&quot;) ? rsCotacao.getObject(&quot;C8_ITEM&quot;) : &quot;&quot;);
+				childData.put(&quot;C8_QUANT&quot;	, &quot;&quot;+rsCotacao.getObject(&quot;C8_QUANT&quot;) ? tools.confirmaValor(rsCotacao.getObject(&quot;C8_QUANT&quot;)) : &quot;&quot;);
+				childData.put(&quot;C8_PRECO&quot;	, &quot;&quot;+rsCotacao.getObject(&quot;C8_PRECO&quot;) ? tools.confirmaValor(rsCotacao.getObject(&quot;C8_PRECO&quot;)) : &quot;&quot;);
+				childData.put(&quot;C8_TOTAL&quot;	, &quot;&quot;+rsCotacao.getObject(&quot;C8_TOTAL&quot;) ? tools.confirmaValor(rsCotacao.getObject(&quot;C8_TOTAL&quot;)) : &quot;&quot;);
+				childData.put(&quot;C8_PRAZO&quot;	, &quot;&quot;+rsCotacao.getObject(&quot;C8_PRAZO&quot;) ? tools.confirmaValor(rsCotacao.getObject(&quot;C8_PRAZO&quot;)) : &quot;&quot;);
+				childData.put(&quot;C8_VALIPI&quot;	, &quot;&quot;+rsCotacao.getObject(&quot;C8_VALIPI&quot;) ? tools.confirmaValor(rsCotacao.getObject(&quot;C8_VALIPI&quot;)) : &quot;&quot;);
+				childData.put(&quot;C8_VALICM&quot;	, &quot;&quot;+rsCotacao.getObject(&quot;C8_VALICM&quot;) ? tools.confirmaValor(rsCotacao.getObject(&quot;C8_VALICM&quot;)) : &quot;&quot;);
+				childData.put(&quot;C8_VALISS&quot;	, &quot;&quot;+rsCotacao.getObject(&quot;C8_VALISS&quot;) ? tools.confirmaValor(rsCotacao.getObject(&quot;C8_VALISS&quot;)) : &quot;&quot;);
+				childData.put(&quot;C8_VALIDA&quot;	, &quot;&quot;+rsCotacao.getObject(&quot;C8_VALIDA&quot;) ? tools.confirmaValor(rsCotacao.getObject(&quot;C8_VALIDA&quot;)) : &quot;&quot;);
+				childData.put(&quot;C8_PRODUTO&quot;	, &quot;&quot;+rsCotacao.getObject(&quot;C8_PRODUTO&quot;) ? rsCotacao.getObject(&quot;C8_PRODUTO&quot;) : &quot;&quot;);
+				childData.put(&quot;C8_UM&quot;		, &quot;&quot;+rsCotacao.getObject(&quot;C8_UM&quot;) ? rsCotacao.getObject(&quot;C8_UM&quot;) : &quot;&quot;);
+				childData.put(&quot;C8_FORNECE&quot;	, &quot;&quot;+rsCotacao.getObject(&quot;C8_FORNECE&quot;) ? rsCotacao.getObject(&quot;C8_FORNECE&quot;) : &quot;&quot;);
+				childData.put(&quot;C8_LOJA&quot;		, &quot;&quot;+rsCotacao.getObject(&quot;C8_LOJA&quot;) ? rsCotacao.getObject(&quot;C8_LOJA&quot;) : &quot;&quot;);
+				childData.put(&quot;C8_PRAZO&quot;	, &quot;&quot;+rsCotacao.getObject(&quot;C8_PRAZO&quot;) ? rsCotacao.getObject(&quot;C8_PRAZO&quot;) : &quot;&quot;);
+				childData.put(&quot;C8_FILENT&quot;	, &quot;&quot;+rsCotacao.getObject(&quot;C8_FILENT&quot;) ? rsCotacao.getObject(&quot;C8_FILENT&quot;) : &quot;&quot;);
+				hAPI.addCardChild(&quot;tabCotacao&quot;, childData);
+			}
+			*/
+
+
+			//preenche formualario de cotação
+
+
+			log.info(&quot;-- rsCotacao&quot;);
+			log.dir(rsCotacao)
+
+			var idx = 1;
+			var cotacaoFields = { &quot;values&quot;: [] };
+
+			while (rsCotacao.next()) {
+
+				cotacaoFields.values.push(tools.createCardField(&quot;C8_CICLO&quot; + &quot;___&quot; + idx,
+					map[&quot;ciclo_atual&quot;]));
+				cotacaoFields.values.push(tools.createCardField(&quot;C8_ITEM&quot; + &quot;___&quot; + idx,
+					rsCotacao.getObject(&quot;C8_ITEM&quot;) ? rsCotacao.getObject(&quot;C8_ITEM&quot;) : &quot;&quot;));
+				cotacaoFields.values.push(tools.createCardField(&quot;C8_PRODUTO&quot; + &quot;___&quot; + idx,
+					rsCotacao.getObject(&quot;C8_PRODUTO&quot;) ? rsCotacao.getObject(&quot;C8_PRODUTO&quot;) : &quot;&quot;));
+				cotacaoFields.values.push(tools.createCardField(&quot;C8_UM&quot; + &quot;___&quot; + idx,
+					rsCotacao.getObject(&quot;C8_UM&quot;) ? rsCotacao.getObject(&quot;C8_UM&quot;) : &quot;&quot;));
+				cotacaoFields.values.push(tools.createCardField(&quot;C8_FORNECE&quot; + &quot;___&quot; + idx,
+					rsCotacao.getObject(&quot;C8_FORNECE&quot;) ? rsCotacao.getObject(&quot;C8_FORNECE&quot;) : &quot;&quot;));
+				cotacaoFields.values.push(tools.createCardField(&quot;C8_LOJA&quot; + &quot;___&quot; + idx,
+					rsCotacao.getObject(&quot;C8_LOJA&quot;) ? rsCotacao.getObject(&quot;C8_LOJA&quot;) : &quot;&quot;));
+				cotacaoFields.values.push(tools.createCardField(&quot;C8_QUANT&quot; + &quot;___&quot; + idx,
+					(rsCotacao.getObject(&quot;C8_QUANT&quot;) != null &amp;&amp; rsCotacao.getObject(&quot;C8_QUANT&quot;) != &quot;null&quot;) ? tools.confirmaValor(rsCotacao.getObject(&quot;C8_QUANT&quot;)) : &quot;&quot;));
+				cotacaoFields.values.push(tools.createCardField(&quot;C8_PRECO&quot; + &quot;___&quot; + idx,
+					(rsCotacao.getObject(&quot;C8_PRECO&quot;) != null &amp;&amp; rsCotacao.getObject(&quot;C8_PRECO&quot;) != &quot;null&quot;) ? tools.confirmaValor(rsCotacao.getObject(&quot;C8_PRECO&quot;)) : &quot;&quot;));
+				cotacaoFields.values.push(tools.createCardField(&quot;C8_TOTAL&quot; + &quot;___&quot; + idx,
+					(rsCotacao.getObject(&quot;C8_TOTAL&quot;) != null &amp;&amp; rsCotacao.getObject(&quot;C8_TOTAL&quot;) != &quot;null&quot;) ? tools.confirmaValor(rsCotacao.getObject(&quot;C8_TOTAL&quot;)) : &quot;&quot;));
+				cotacaoFields.values.push(tools.createCardField(&quot;C8_PRAZO&quot; + &quot;___&quot; + idx,
+					(rsCotacao.getObject(&quot;C8_PRAZO&quot;) != null &amp;&amp; rsCotacao.getObject(&quot;C8_PRAZO&quot;) != &quot;null&quot;) ? tools.confirmaValor(rsCotacao.getObject(&quot;C8_PRAZO&quot;)) : &quot;&quot;));
+				cotacaoFields.values.push(tools.createCardField(&quot;C8_VALIPI&quot; + &quot;___&quot; + idx,
+					(rsCotacao.getObject(&quot;C8_VALIPI&quot;) != null &amp;&amp; rsCotacao.getObject(&quot;C8_VALIPI&quot;) != &quot;null&quot;) ? tools.confirmaValor(rsCotacao.getObject(&quot;C8_VALIPI&quot;)) : &quot;&quot;));
+				cotacaoFields.values.push(tools.createCardField(&quot;C8_VALICM&quot; + &quot;___&quot; + idx,
+					(rsCotacao.getObject(&quot;C8_VALICM&quot;) != null &amp;&amp; rsCotacao.getObject(&quot;C8_VALICM&quot;) != &quot;null&quot;) ? tools.confirmaValor(rsCotacao.getObject(&quot;C8_VALICM&quot;)) : &quot;&quot;));
+				cotacaoFields.values.push(tools.createCardField(&quot;C8_VALISS&quot; + &quot;___&quot; + idx,
+					(rsCotacao.getObject(&quot;C8_VALISS&quot;) != null &amp;&amp; rsCotacao.getObject(&quot;C8_VALISS&quot;) != &quot;null&quot;) ? tools.confirmaValor(rsCotacao.getObject(&quot;C8_VALISS&quot;)) : &quot;&quot;));
+				cotacaoFields.values.push(tools.createCardField(&quot;C8_VALIDA&quot; + &quot;___&quot; + idx,
+					(rsCotacao.getObject(&quot;C8_VALIDA&quot;) != null &amp;&amp; rsCotacao.getObject(&quot;C8_VALIDA&quot;) != &quot;null&quot;) ? tools.confirmaValor(rsCotacao.getObject(&quot;C8_VALIDA&quot;)) : &quot;&quot;));
+
+				cotacaoFields.values.push(tools.createCardField(&quot;C8_PRAZO&quot; + &quot;___&quot; + idx,
+					(rsCotacao.getObject(&quot;C8_PRAZO&quot;) != null &amp;&amp; rsCotacao.getObject(&quot;C8_PRAZO&quot;) != &quot;null&quot;) ? rsCotacao.getObject(&quot;C8_PRAZO&quot;) : &quot;&quot;));
+				cotacaoFields.values.push(tools.createCardField(&quot;C8_FILENT&quot; + &quot;___&quot; + idx,
+					(rsCotacao.getObject(&quot;C8_FILENT&quot;) != null &amp;&amp; rsCotacao.getObject(&quot;C8_FILENT&quot;) != &quot;null&quot;) ? rsCotacao.getObject(&quot;C8_FILENT&quot;) : &quot;&quot;));
+
+				idx++
+			}
+
+			tools.createFormCotacaoAux(cotacaoFields)
+			log.info(&quot;-- fim rsCotacao&quot;);
+
+		} catch (e) {
+			log.error(&quot;ERRO==============&gt; &quot; + e.message != undefined ? e.message : e);
+			throw e.message
+		} finally {
+			if (stmt != null) stmt.close();
+			if (conn != null) conn.close();
+		}
+
+	}
+	else {
+		throw &quot;Não foi localizado dados do processo principal!&quot;
+	}
+
+}</eventDescription>
+    </WorkflowProcessEvent>
+    <WorkflowProcessEvent>
+      <workflowProcessEventPK>
+        <companyId>1</companyId>
+        <eventId>beforeTaskSave</eventId>
+        <processId>cotacao_compras</processId>
+        <version>1</version>
+      </workflowProcessEventPK>
+      <eventDescription>function beforeTaskSave(colleagueId,nextSequenceId,userList){
+    if(!hAPI.getCardValue(&apos;numeroSolicitacao&apos;)) hAPI.setCardValue(&apos;numeroSolicitacao&apos;, getValue(&quot;WKNumProces&quot;))
+}</eventDescription>
+    </WorkflowProcessEvent>
+    <WorkflowProcessEvent>
+      <workflowProcessEventPK>
+        <companyId>1</companyId>
+        <eventId>onNotify</eventId>
+        <processId>cotacao_compras</processId>
+        <version>1</version>
+      </workflowProcessEventPK>
+      <eventDescription>function onNotify(subject, receivers, template, params){&#xd;
+	if(getValue(&quot;WKNumState&quot;) == 5 &amp;&amp; template == &quot;TPLTASK_WILL_EXPIRE&quot;){&#xd;
+		receivers.clear();&#xd;
+		&#xd;
+		var cotacao_encerramento 		= hAPI.getCardValue(&quot;cotacao_encerramento&quot;);&#xd;
+		var ciclo 						= hAPI.getCardValue(&quot;ciclo_atual&quot;);&#xd;
+		var especificacao_tecnica 		= hAPI.getCardValue(&quot;especificacao_tecnica&quot;);&#xd;
+		&#xd;
+		hAPI.getChildrenIndexes(&quot;tabFornecedor&quot;).forEach(function(idx){&#xd;
+			var A2_COD 	= hAPI.getCardValue(&quot;A2_COD&quot;+&quot;___&quot;+idx);&#xd;
+			var A2_LOJA = hAPI.getCardValue(&quot;A2_LOJA&quot;+&quot;___&quot;+idx);&#xd;
+			var A2_NOME = hAPI.getCardValue(&quot;A2_NOME&quot;+&quot;___&quot;+idx);&#xd;
+			&#xd;
+			var dsEmails = DatasetFactory.getDataset(&#xd;
+				&quot;DS_COMPRAS_FORNECEDOR_GET-ACESSO&quot;,&#xd;
+				null,&#xd;
+				[&#xd;
+					DatasetFactory.createConstraint(&quot;A2_COD&quot;	,A2_COD		,A2_COD		,ConstraintType.MUST),&#xd;
+					DatasetFactory.createConstraint(&quot;A2_LOJA&quot;	,A2_LOJA	,A2_LOJA	,ConstraintType.MUST)&#xd;
+				],&#xd;
+				null&#xd;
+			)&#xd;
+			&#xd;
+			if(dsEmails != null &amp;&amp; dsEmails.rowsCount &gt; 0 &amp;&amp; !dsEmails.columnsName.toArray().includes(&quot;ERROR&quot;)){&#xd;
+				var parametros = [&#xd;
+					{&quot;id&quot;:&quot;INSTANCEID&quot;		, &quot;value&quot;: getValue(&quot;WKNumProces&quot;).toString()},&#xd;
+					{&quot;id&quot;:&quot;A2_NOME&quot;			, &quot;value&quot;: A2_NOME},&#xd;
+					{&quot;id&quot;:&quot;PRAZO&quot;			, &quot;value&quot;: cotacao_encerramento},&#xd;
+				]&#xd;
+				&#xd;
+				var destinatarios = [];&#xd;
+				for(var i = 0 ; i &lt; dsEmails.rowsCount ; i++){&#xd;
+					destinarios.push(dsEmails.getValue(i,&quot;emailRegister&quot;))&#xd;
+				}&#xd;
+				&#xd;
+				tools.sendMail(&#xd;
+					&quot;TEMPLATE_COMPRAS_COTACAO_PRAZO&quot;,&#xd;
+					&quot;Notificação de Encerramento de Prazo para Cotar&quot;,&#xd;
+					destinatarios,&#xd;
+					parametros&#xd;
+				)&#xd;
+				&#xd;
+				hAPI.setCardValue(&quot;A2_NOTIFICA___&quot;+idx,&quot;Enviado&quot;)&#xd;
+			}&#xd;
+			else if(dsEmails.columnsName.toArray().includes(&quot;ERROR&quot;)){&#xd;
+				hAPI.setCardValue(&quot;A2_NOTIFICA___&quot;+idx, dsEmails.getValue(0,&quot;ERROR&quot;))&#xd;
+			}&#xd;
+			else{&#xd;
+				hAPI.setCardValue(&quot;A2_NOTIFICA___&quot;+idx, &quot;Não localizado&quot;)&#xd;
+			}&#xd;
+		})&#xd;
+	}&#xd;
+}</eventDescription>
+    </WorkflowProcessEvent>
+    <WorkflowProcessEvent>
+      <workflowProcessEventPK>
+        <companyId>1</companyId>
+        <eventId>integra</eventId>
+        <processId>cotacao_compras</processId>
+        <version>1</version>
+      </workflowProcessEventPK>
+      <eventDescription>var integra = {&#xd;
+	postFluig: function (endpoint, params) {&#xd;
+		log.info(&quot;&gt;&gt; integra.postFormFluig &lt;&lt;&quot;);&#xd;
+		//log.info(&quot;-- endpoint: &quot; + endpoint);&#xd;
+		//log.dir(params)&#xd;
+&#xd;
+		var obj = { &quot;ok&quot;: false };&#xd;
+&#xd;
+		try {&#xd;
+&#xd;
+			var data = {&#xd;
+				companyId: getValue(&quot;WKCompany&quot;) + &apos;&apos;,&#xd;
+				serviceCode: &apos;FLUIG_REST&apos;,&#xd;
+				endpoint: endpoint,&#xd;
+				method: &apos;post&apos;,&#xd;
+				timeout: 60000,&#xd;
+				async: false,&#xd;
+				params: params,&#xd;
+				headers: {&#xd;
+					&apos;Content-Type&apos;: &apos;application/json&apos;&#xd;
+				}&#xd;
+			}&#xd;
+&#xd;
+			var clientService = fluigAPI.getAuthorizeClientService();&#xd;
+&#xd;
+			var result = clientService.invoke(new org.json.JSONObject(data).toString());&#xd;
+			//log.info(&quot;&lt;&lt;&lt;&lt;&lt;&lt;&lt;LOGDIR&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&quot;)&#xd;
+			//log.dir(result);&#xd;
+			if (result.getHttpStatusResult() &gt;= 200 &amp;&amp; result.getHttpStatusResult() &lt; 300) {&#xd;
+				if (result.getResult() != null &amp;&amp; !result.getResult().isEmpty()) {&#xd;
+&#xd;
+					if (result.getResult().indexOf(&quot;com.fluig.authorize.client.exception.ClientBasicAuthorizeException: java.net.SocketTimeoutException: Read timed out&quot;) &gt; 0) {&#xd;
+						obj[&quot;ok&quot;] = false;&#xd;
+						obj[&quot;error&quot;] = result.getResult();&#xd;
+					}&#xd;
+					else if (JSON.parse(result.getResult()).errorMessage != undefined) {&#xd;
+						obj[&quot;ok&quot;] = false;&#xd;
+						obj[&quot;error&quot;] = JSON.parse(result.getResult()).errorMessage;&#xd;
+					}&#xd;
+					else {&#xd;
+						obj[&quot;ok&quot;] = true;&#xd;
+						obj[&quot;retorno&quot;] = JSON.parse(result.getResult());&#xd;
+					}&#xd;
+				} else {&#xd;
+					obj[&quot;error&quot;] = &quot;Não encontrou nenhum registro para a consulta!&quot;;&#xd;
+				}&#xd;
+			} else {&#xd;
+				obj[&quot;ok&quot;] = false;&#xd;
+				obj[&quot;error&quot;] = result.getResult()&#xd;
+			}&#xd;
+		} catch (e) {&#xd;
+			obj[&quot;error&quot;] = (e.message != undefined &amp;&amp; e.message != null) ? e.message : e;&#xd;
+		}&#xd;
+&#xd;
+		//log.dir(obj);&#xd;
+		log.info(&quot;** integra.postFormFluig **&quot;);&#xd;
+		return obj;&#xd;
+&#xd;
+	},&#xd;
+	putFluig: function (endpoint, params) {&#xd;
+		log.info(&quot;&gt;&gt; integra.putFormFluig &lt;&lt;&quot;);&#xd;
+		//log.info(&quot;-- endpoint: &quot; + endpoint);&#xd;
+		//log.dir(params)&#xd;
+&#xd;
+		var obj = { &quot;ok&quot;: false };&#xd;
+&#xd;
+		try {&#xd;
+&#xd;
+			var data = {&#xd;
+				companyId: getValue(&quot;WKCompany&quot;) + &apos;&apos;,&#xd;
+				serviceCode: &apos;FLUIG_REST&apos;,&#xd;
+				endpoint: endpoint,&#xd;
+				method: &apos;put&apos;,&#xd;
+				timeout: 60000,&#xd;
+				async: false,&#xd;
+				params: params,&#xd;
+				headers: {&#xd;
+					&apos;Content-Type&apos;: &apos;application/json&apos;&#xd;
+				}&#xd;
+			}&#xd;
+&#xd;
+			var clientService = fluigAPI.getAuthorizeClientService();&#xd;
+&#xd;
+			var result = clientService.invoke(new org.json.JSONObject(data).toString());&#xd;
+			//log.info(&quot;&lt;&lt;&lt;&lt;&lt;&lt;&lt;LOGDIR&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&quot;)&#xd;
+			//log.dir(result);&#xd;
+			if (result.getHttpStatusResult() &gt;= 200 &amp;&amp; result.getHttpStatusResult() &lt; 300) {&#xd;
+				if (result.getResult() != null &amp;&amp; !result.getResult().isEmpty()) {&#xd;
+&#xd;
+					if (result.getResult().indexOf(&quot;com.fluig.authorize.client.exception.ClientBasicAuthorizeException: java.net.SocketTimeoutException: Read timed out&quot;) &gt; 0) {&#xd;
+						obj[&quot;ok&quot;] = false;&#xd;
+						obj[&quot;error&quot;] = result.getResult();&#xd;
+					}&#xd;
+					else if (JSON.parse(result.getResult()).errorMessage != undefined) {&#xd;
+						obj[&quot;ok&quot;] = false;&#xd;
+						obj[&quot;error&quot;] = JSON.parse(result.getResult()).errorMessage;&#xd;
+					}&#xd;
+					else {&#xd;
+						obj[&quot;ok&quot;] = true;&#xd;
+						obj[&quot;retorno&quot;] = JSON.parse(result.getResult());&#xd;
+					}&#xd;
+				} else {&#xd;
+					obj[&quot;error&quot;] = &quot;Não encontrou nenhum registro para a consulta!&quot;;&#xd;
+				}&#xd;
+			} else {&#xd;
+				obj[&quot;ok&quot;] = false;&#xd;
+				obj[&quot;error&quot;] = result.getResult()&#xd;
+			}&#xd;
+		} catch (e) {&#xd;
+			obj[&quot;error&quot;] = (e.message != undefined &amp;&amp; e.message != null) ? e.message : e;&#xd;
+		}&#xd;
+&#xd;
+		//log.dir(obj);&#xd;
+		log.info(&quot;** integra.putFormFluig **&quot;);&#xd;
+		return obj;&#xd;
+&#xd;
+	},&#xd;
+	deleteFluig: function (endpoint) {&#xd;
+		log.info(&quot;&gt;&gt; integra.delete &lt;&lt;&quot;);&#xd;
+		//log.info(&quot;-- endpoint: &quot; + endpoint);&#xd;
+		//log.dir(params)&#xd;
+&#xd;
+		var obj = { &quot;ok&quot;: false };&#xd;
+&#xd;
+		try {&#xd;
+&#xd;
+			var data = {&#xd;
+				companyId: getValue(&quot;WKCompany&quot;) + &apos;&apos;,&#xd;
+				serviceCode: &apos;FLUIG_REST&apos;,&#xd;
+				endpoint: endpoint,&#xd;
+				method: &apos;DELETE&apos;,&#xd;
+				timeout: 60000,&#xd;
+				async: false,&#xd;
+				headers: {&#xd;
+					&apos;Content-Type&apos;: &apos;application/json&apos;&#xd;
+				}&#xd;
+			}&#xd;
+&#xd;
+			var clientService = fluigAPI.getAuthorizeClientService();&#xd;
+&#xd;
+			var result = clientService.invoke(new org.json.JSONObject(data).toString());&#xd;
+			//log.info(&quot;&lt;&lt;&lt;&lt;&lt;&lt;&lt;LOGDIR&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&quot;)&#xd;
+			//log.dir(result);&#xd;
+			if (result.getHttpStatusResult() &gt;= 200 &amp;&amp; result.getHttpStatusResult() &lt; 300) {&#xd;
+				if (result.getResult() != null &amp;&amp; !result.getResult().isEmpty()) {&#xd;
+&#xd;
+					if (result.getResult().indexOf(&quot;com.fluig.authorize.client.exception.ClientBasicAuthorizeException: java.net.SocketTimeoutException: Read timed out&quot;) &gt; 0) {&#xd;
+						obj[&quot;ok&quot;] = false;&#xd;
+						obj[&quot;error&quot;] = result.getResult();&#xd;
+					}&#xd;
+					else if (JSON.parse(result.getResult()).errorMessage != undefined) {&#xd;
+						obj[&quot;ok&quot;] = false;&#xd;
+						obj[&quot;error&quot;] = JSON.parse(result.getResult()).errorMessage;&#xd;
+					}&#xd;
+					else {&#xd;
+						obj[&quot;ok&quot;] = true;&#xd;
+						obj[&quot;retorno&quot;] = JSON.parse(result.getResult());&#xd;
+					}&#xd;
+				} else {&#xd;
+					obj[&quot;error&quot;] = &quot;Não encontrou nenhum registro para a consulta!&quot;;&#xd;
+				}&#xd;
+			} else {&#xd;
+				obj[&quot;ok&quot;] = false;&#xd;
+				obj[&quot;error&quot;] = result.getResult()&#xd;
+			}&#xd;
+		} catch (e) {&#xd;
+			obj[&quot;error&quot;] = (e.message != undefined &amp;&amp; e.message != null) ? e.message : e;&#xd;
+		}&#xd;
+&#xd;
+		//log.dir(obj);&#xd;
+		log.info(&quot;** integra.delete **&quot;);&#xd;
+		return obj;&#xd;
+&#xd;
+	}&#xd;
+}</eventDescription>
+    </WorkflowProcessEvent>
+    <WorkflowProcessEvent>
+      <workflowProcessEventPK>
+        <companyId>1</companyId>
+        <eventId>anexos</eventId>
+        <processId>cotacao_compras</processId>
+        <version>1</version>
+      </workflowProcessEventPK>
+      <eventDescription>var anexos = {&#xd;
+	buscaPasta: function (descricaoPasta, pastaRaiz) {&#xd;
+		var cPasta = DatasetFactory.createConstraint(&quot;documentDescription&quot;, descricaoPasta, descricaoPasta, ConstraintType.MUST);&#xd;
+		var cPastaPai = DatasetFactory.createConstraint(&quot;parentDocumentId&quot;, pastaRaiz, pastaRaiz, ConstraintType.MUST);&#xd;
+		var cActive = DatasetFactory.createConstraint(&quot;activeVersion&quot;, true, true, ConstraintType.MUST);&#xd;
+&#xd;
+		var dsPasta = DatasetFactory.getDataset(&quot;document&quot;, null, [cPasta, cPastaPai, cActive], null);&#xd;
+&#xd;
+		if (dsPasta != null &amp;&amp; dsPasta.rowsCount &gt; 0) {&#xd;
+			&#xd;
+			log.info(&quot;descricaoPasta 	-&gt; &quot;+descricaoPasta );&#xd;
+			log.info(&quot;documentId 		-&gt; &quot;+dsPasta.getValue(0, &quot;documentPK.documentId&quot;) );&#xd;
+			&#xd;
+			return dsPasta.getValue(0, &quot;documentPK.documentId&quot;);&#xd;
+		} else {&#xd;
+			return anexos.criaPasta(descricaoPasta, pastaRaiz);&#xd;
+		}&#xd;
+&#xd;
+	},&#xd;
+&#xd;
+	criaPasta: function (txtDescricao, pastaPai) {&#xd;
+&#xd;
+		var supplierService 	= ServiceManager.getService(&apos;ECMFolderService&apos;);&#xd;
+		var serviceHelper 		= supplierService.getBean();&#xd;
+		var serviceLocator 		= serviceHelper.instantiate(&apos;com.totvs.technology.ecm.dm.ws.ECMFolderServiceService&apos;);&#xd;
+		var service 			= serviceLocator.getFolderServicePort();&#xd;
+		&#xd;
+		var customClient = serviceHelper.getCustomClient(&#xd;
+			service, &#xd;
+			&quot;com.totvs.technology.ecm.dm.ws.FolderService&quot;, &#xd;
+			{&#xd;
+				&quot;disable.chunking&quot;	: &quot;true&quot;,&#xd;
+				&quot;log.soap.messages&quot;	: &quot;true&quot;,&#xd;
+				&quot;receive.timeout&quot;	: &quot;60000&quot;&#xd;
+			}&#xd;
+		);&#xd;
+&#xd;
+		var retorno = customClient.createSimpleFolder(&#xd;
+			hAPI.getAdvancedProperty(&quot;username&quot;),				//username&#xd;
+			hAPI.getAdvancedProperty(&quot;password&quot;),				//password&#xd;
+			getValue(&quot;WKCompany&quot;),								//companyId&#xd;
+			parseInt(pastaPai),									//parentDocumentId&#xd;
+			hAPI.getAdvancedProperty(&quot;publisherId&quot;),			//publisherId&#xd;
+			txtDescricao										//documentDescription&#xd;
+		);&#xd;
+&#xd;
+		return retorno.getItem().get(0).getDocumentId();&#xd;
+	},&#xd;
+&#xd;
+	publica: function (idParent) {&#xd;
+		var docs = hAPI.listAttachments();&#xd;
+		&#xd;
+		for (var i = 0; i &lt; docs.size(); i++) {&#xd;
+			var doc = docs.get(i);&#xd;
+			&#xd;
+			var descricaoFile = doc.getDocumentDescription();&#xd;
+&#xd;
+			doc = anexos.handleDocDto(doc, idParent, descricaoFile)&#xd;
+&#xd;
+			hAPI.publishWorkflowAttachment(doc);&#xd;
+&#xd;
+		}&#xd;
+		&#xd;
+	},&#xd;
+	&#xd;
+	handleDocDto: function (doc, idParent, descricaoFile) {&#xd;
+		var calendar = java.util.Calendar.getInstance().getTime();&#xd;
+		&#xd;
+		doc.setParentDocumentId(parseInt(idParent));&#xd;
+		doc.setVersionDescription(&quot;Processo: &quot; + getValue(&quot;WKNumProces&quot;));&#xd;
+		doc.setExpires(false);&#xd;
+		doc.setCreateDate(calendar);&#xd;
+		doc.setInheritSecurity(true);&#xd;
+		doc.setTopicId(1);&#xd;
+		doc.setUserNotify(false);&#xd;
+		doc.setValidationStartDate(calendar);&#xd;
+		doc.setVersionOption(&quot;0&quot;);&#xd;
+		doc.setUpdateIsoProperties(true);&#xd;
+		if (descricaoFile != &apos;&apos;)&#xd;
+			doc.setDocumentDescription(descricaoFile);&#xd;
+&#xd;
+		return doc&#xd;
+	}&#xd;
+}&#xd;
+</eventDescription>
+    </WorkflowProcessEvent>
+    <WorkflowProcessEvent>
+      <workflowProcessEventPK>
+        <companyId>1</companyId>
+        <eventId>servicetask30</eventId>
+        <processId>cotacao_compras</processId>
+        <version>1</version>
+      </workflowProcessEventPK>
+      <eventDescription>function servicetask30(attempt, message) {
+    tools.log(&quot;--servicetask30&quot;);
+
+    var dataSource = &quot;jdbc/AppDS&quot;;
+    var ic = new javax.naming.InitialContext();
+    var ds = ic.lookup(dataSource);
+    var ciclo_atual = hAPI.getCardValue(&quot;ciclo_atual&quot;);
+    var C8_NUM = hAPI.getCardValue(&quot;C8_NUM&quot;);
+    var idEmpresa = hAPI.getCardValue(&quot;idEmpresa&quot;);
+    var docId = hAPI.getCardValue(&quot;numIdCot&quot;);
+    var S_COTACAO = hAPI.getCardValue(&quot;numeroSolicitacao&quot;);
+
+    tools.log(&quot;docId: &quot; + docId)
+
+    try {
+        var conn = ds.getConnection();
+        var stmt = conn.createStatement();
+
+        var rsCotacao = stmt.executeQuery(
+            &quot;SELECT COT.documentid,COT.version, COT.C8_CICLO, COT.BEN_FISCAL, COT.C8_ITEM, COT.C8_PRODUTO, COT.C8_UM, COT.C8_FORNECE, COT.C8_FORNOME, COT.C8_LOJA, COT.C8_QUANT, COT.C8_PRECO, COT.C8_TOTAL, COT.C8_COND, COT.C8_PRAZO, COT.C8_FILENT, COT.C8_EMISSAO, COT.C8_VALIPI, COT.C8_VALICM, COT.C8_VALISS, COT.C8_DIFAL, COT.C8_VALSOL, COT.C8_SEGURO, COT.C8_DESPESA, COT.C8_VALFRE, COT.C8_TPFRETE, COT.C8_VALIDA, COT.C8_NUMPED, COT.C8_ITEMPED \
+                FROM &quot;+ hAPI.getAdvancedProperty(&quot;mlFormCotCotacao&quot;) + &quot; ML \
+                INNER JOIN DOCUMENTO DOC ON DOC.NR_DOCUMENTO = ML.DOCUMENTID AND DOC.NR_VERSAO = ML.VERSION \
+                INNER JOIN &quot;+ hAPI.getAdvancedProperty(&quot;mlTabCotCotacao&quot;)
+            + &quot; COT ON COT.DOCUMENTID = ML.DOCUMENTID AND COT.VERSION = ML.VERSION \
+            WHERE ML.numeroSolicitacao = &apos;&quot;+ S_COTACAO + &quot;&apos; \
+            AND ML.idEmpresa = &apos;&quot; + idEmpresa + &quot;&apos; \
+            AND COT.C8_CICLO = &apos;&quot; + ciclo_atual + &quot;&apos; \
+            AND DOC.VERSAO_ATIVA = 1&quot;
+        );
+
+        tools.log(&quot;-- rsCotacao&quot;);
+
+        var idx = 1;
+        var cotacaoFields = { &quot;values&quot;: [] };
+
+        while (rsCotacao.next()) {
+
+            var C8_PRECO = ((rsCotacao.getObject(&quot;C8_PRECO&quot;) != null
+                &amp;&amp; rsCotacao.getObject(&quot;C8_PRECO&quot;) != &quot;null&quot;) ?
+                tools.confirmaValor(rsCotacao.getObject(&quot;C8_PRECO&quot;)) : &quot;&quot;);
+            tools.log(&quot; c8_preco &gt;&gt;&quot; + rsCotacao.getObject(&quot;C8_PRECO&quot;) + &quot;: &quot; + tools.confirmaValor(rsCotacao.getObject(&quot;C8_PRECO&quot;)) + &quot;&gt;&quot; + C8_PRECO)
+
+            if (C8_PRECO != &quot;&quot;) {
+                cotacaoFields.values.push(tools.createCardField(&quot;C8_CICLO&quot; + &quot;___&quot; + idx,
+                    ciclo_atual));
+                cotacaoFields.values.push(tools.createCardField(&quot;C8_ITEM&quot; + &quot;___&quot; + idx,
+                    rsCotacao.getObject(&quot;C8_ITEM&quot;) ? rsCotacao.getObject(&quot;C8_ITEM&quot;) : &quot;&quot;));
+                cotacaoFields.values.push(tools.createCardField(&quot;C8_PRODUTO&quot; + &quot;___&quot; + idx,
+                    rsCotacao.getObject(&quot;C8_PRODUTO&quot;) ? rsCotacao.getObject(&quot;C8_PRODUTO&quot;) : &quot;&quot;));
+                cotacaoFields.values.push(tools.createCardField(&quot;C8_UM&quot; + &quot;___&quot; + idx,
+                    rsCotacao.getObject(&quot;C8_UM&quot;) ? rsCotacao.getObject(&quot;C8_UM&quot;) : &quot;&quot;));
+                cotacaoFields.values.push(tools.createCardField(&quot;C8_FORNECE&quot; + &quot;___&quot; + idx,
+                    rsCotacao.getObject(&quot;C8_FORNECE&quot;) ? rsCotacao.getObject(&quot;C8_FORNECE&quot;) : &quot;&quot;));
+                cotacaoFields.values.push(tools.createCardField(&quot;C8_LOJA&quot; + &quot;___&quot; + idx,
+                    rsCotacao.getObject(&quot;C8_LOJA&quot;) ? rsCotacao.getObject(&quot;C8_LOJA&quot;) : &quot;&quot;));
+                cotacaoFields.values.push(tools.createCardField(&quot;C8_QUANT&quot; + &quot;___&quot; + idx,
+                    (rsCotacao.getObject(&quot;C8_QUANT&quot;) != null &amp;&amp; rsCotacao.getObject(&quot;C8_QUANT&quot;) != &quot;null&quot;) ? tools.confirmaValor(rsCotacao.getObject(&quot;C8_QUANT&quot;)) : &quot;&quot;));
+                cotacaoFields.values.push(tools.createCardField(&quot;C8_PRECO&quot; + &quot;___&quot; + idx,
+                    (rsCotacao.getObject(&quot;C8_PRECO&quot;) != null &amp;&amp; rsCotacao.getObject(&quot;C8_PRECO&quot;) != &quot;null&quot;) ? tools.confirmaValor(rsCotacao.getObject(&quot;C8_PRECO&quot;)) : &quot;&quot;));
+                cotacaoFields.values.push(tools.createCardField(&quot;C8_TOTAL&quot; + &quot;___&quot; + idx,
+                    (rsCotacao.getObject(&quot;C8_TOTAL&quot;) != null &amp;&amp; rsCotacao.getObject(&quot;C8_TOTAL&quot;) != &quot;null&quot;) ? tools.confirmaValor(rsCotacao.getObject(&quot;C8_TOTAL&quot;)) : &quot;&quot;));
+                cotacaoFields.values.push(tools.createCardField(&quot;C8_PRAZO&quot; + &quot;___&quot; + idx,
+                    (rsCotacao.getObject(&quot;C8_PRAZO&quot;) != null &amp;&amp; rsCotacao.getObject(&quot;C8_PRAZO&quot;) != &quot;null&quot;) ? tools.confirmaValor(rsCotacao.getObject(&quot;C8_PRAZO&quot;)) : &quot;&quot;));
+                cotacaoFields.values.push(tools.createCardField(&quot;C8_VALIPI&quot; + &quot;___&quot; + idx,
+                    (rsCotacao.getObject(&quot;C8_VALIPI&quot;) != null &amp;&amp; rsCotacao.getObject(&quot;C8_VALIPI&quot;) != &quot;null&quot;) ? tools.confirmaValor(rsCotacao.getObject(&quot;C8_VALIPI&quot;)) : &quot;&quot;));
+                cotacaoFields.values.push(tools.createCardField(&quot;C8_VALICM&quot; + &quot;___&quot; + idx,
+                    (rsCotacao.getObject(&quot;C8_VALICM&quot;) != null &amp;&amp; rsCotacao.getObject(&quot;C8_VALICM&quot;) != &quot;null&quot;) ? tools.confirmaValor(rsCotacao.getObject(&quot;C8_VALICM&quot;)) : &quot;&quot;));
+                cotacaoFields.values.push(tools.createCardField(&quot;C8_VALISS&quot; + &quot;___&quot; + idx,
+                    (rsCotacao.getObject(&quot;C8_VALISS&quot;) != null &amp;&amp; rsCotacao.getObject(&quot;C8_VALISS&quot;) != &quot;null&quot;) ? tools.confirmaValor(rsCotacao.getObject(&quot;C8_VALISS&quot;)) : &quot;&quot;));
+                cotacaoFields.values.push(tools.createCardField(&quot;C8_VALIDA&quot; + &quot;___&quot; + idx,
+                    (rsCotacao.getObject(&quot;C8_VALIDA&quot;) != null &amp;&amp; rsCotacao.getObject(&quot;C8_VALIDA&quot;) != &quot;null&quot;) ? tools.confirmaValor(rsCotacao.getObject(&quot;C8_VALIDA&quot;)) : &quot;&quot;));
+                cotacaoFields.values.push(tools.createCardField(&quot;C8_PRAZO&quot; + &quot;___&quot; + idx,
+                    (rsCotacao.getObject(&quot;C8_PRAZO&quot;) != null &amp;&amp; rsCotacao.getObject(&quot;C8_PRAZO&quot;) != &quot;null&quot;) ? rsCotacao.getObject(&quot;C8_PRAZO&quot;) : &quot;&quot;));
+                cotacaoFields.values.push(tools.createCardField(&quot;C8_FILENT&quot; + &quot;___&quot; + idx,
+                    (rsCotacao.getObject(&quot;C8_FILENT&quot;) != null &amp;&amp; rsCotacao.getObject(&quot;C8_FILENT&quot;) != &quot;null&quot;) ? rsCotacao.getObject(&quot;C8_FILENT&quot;) : &quot;&quot;));
+
+                idx++
+            }
+        }
+        tools.createFormCotacaoAux(cotacaoFields)
+        tools.log(&quot;-- fim rsCotacao&quot;);
+        tools.log(&quot;-- deleted&quot;);
+        var deleted = integra.deleteFluig(&quot;/ecm-forms/api/v2/cardindex/&quot; + hAPI.getAdvancedProperty(&quot;formCotacaoAux&quot;) + &quot;/cards/&quot; + docId)
+        log.dir(deleted);
+
+    } catch (error) {
+        log.error(&quot;ERRO==============&gt; &quot; + error.message != undefined ?
+            error.message : error);
+        throw error.message
+    } finally {
+        if (stmt != null) stmt.close();
+        if (conn != null) conn.close();
+    }
+}</eventDescription>
+    </WorkflowProcessEvent>
+    <WorkflowProcessEvent>
+      <workflowProcessEventPK>
+        <companyId>1</companyId>
+        <eventId>beforeStateEntry</eventId>
+        <processId>cotacao_compras</processId>
+        <version>1</version>
+      </workflowProcessEventPK>
+      <eventDescription>function beforeStateEntry(sequenceId){
+    var WKNumProces = getValue(&apos;WKNumState&apos;);
+    
+    if(sequenceId == 5 || sequenceId == 23){
+    	hAPI.setCardValue(&quot;atividadeAtual&quot;		, String(sequenceId));
+    	hAPI.setCardValue(&quot;atividadeAnterior&quot;	, String(WKNumProces));
+    }
+    if(sequenceId == 5) hAPI.setCardValue(&quot;cotacao_encerramento_antigo&quot;, hAPI.getCardValue(&quot;cotacao_encerramento&quot;))
+}</eventDescription>
+    </WorkflowProcessEvent>
+    <WorkflowProcessEvent>
+      <workflowProcessEventPK>
+        <companyId>1</companyId>
+        <eventId>servicetask3</eventId>
+        <processId>cotacao_compras</processId>
+        <version>1</version>
+      </workflowProcessEventPK>
+      <eventDescription>function servicetask3(attempt, message) {
+	var cotacao_encerramento 		= hAPI.getCardValue(&quot;cotacao_encerramento&quot;);
+	var cotacao_encerramento_antigo = hAPI.getCardValue(&quot;cotacao_encerramento_antigo&quot;);
+	var ciclo 						= hAPI.getCardValue(&quot;ciclo_atual&quot;);
+	var especificacao_tecnica 		= hAPI.getCardValue(&quot;especificacao_tecnica&quot;);
+	
+	hAPI.getChildrenIndexes(&quot;tabFornecedor&quot;).forEach(function(idx){
+		var A2_COD 	= hAPI.getCardValue(&quot;A2_COD&quot;+&quot;___&quot;+idx);
+		var A2_LOJA = hAPI.getCardValue(&quot;A2_LOJA&quot;+&quot;___&quot;+idx);
+		var A2_NOME = hAPI.getCardValue(&quot;A2_NOME&quot;+&quot;___&quot;+idx);
+		
+		var dsEmails = DatasetFactory.getDataset(
+			&quot;DS_COMPRAS_FORNECEDOR_GET-ACESSO&quot;,
+			null,
+			[
+				DatasetFactory.createConstraint(&quot;A2_COD&quot;	,A2_COD		,A2_COD		,ConstraintType.MUST),
+				DatasetFactory.createConstraint(&quot;A2_LOJA&quot;	,A2_LOJA	,A2_LOJA	,ConstraintType.MUST)
+			],
+			null
+		)
+		
+		if(dsEmails != null &amp;&amp; dsEmails.rowsCount &gt; 0 &amp;&amp; dsEmails.columnsName.indexOf(&quot;ERROR&quot;) &lt; 0){
+			var destinatarios = [];
+			var parametros = [
+				{&quot;id&quot;:&quot;INSTANCEID&quot;				, &quot;value&quot;: getValue(&quot;WKNumProces&quot;).toString()},
+				{&quot;id&quot;:&quot;RODADA&quot;					, &quot;value&quot;: ciclo},
+				{&quot;id&quot;:&quot;A2_NOME&quot;					, &quot;value&quot;: A2_NOME.trim()},
+				{&quot;id&quot;:&quot;ESPECIFICACAO_TECNICA&quot;	, &quot;value&quot;: especificacao_tecnica},
+				{&quot;id&quot;:&quot;PRAZO&quot;					, &quot;value&quot;: cotacao_encerramento},
+			]
+			for(var i = 0 ; i &lt; dsEmails.rowsCount ; i++){
+				destinatarios.push(dsEmails.getValue(i,&quot;emailRegister&quot;))
+			}
+			
+			tools.sendMail(
+				cotacao_encerramento_antigo == &quot;&quot; ? ciclo == &quot;1&quot; ? &quot;TEMPLATE_COMPRAS_COTACAO_NOVA&quot; : &quot;TEMPLATE_COMPRAS_COTACAO_NOVA-RODADA&quot; : &quot;TEMPLATE_COMPRAS_COTACAO_PRAZO&quot;,
+				cotacao_encerramento_antigo == &quot;&quot; ? ciclo == &quot;1&quot; ? &quot;Nova Cotação Disponível&quot; : &quot;Nova Rodada de Cotações&quot; : &quot;Notificação de Encerramento de Prazo para Cotar&quot;,
+				destinatarios,
+				parametros
+			)
+			
+			hAPI.setCardValue(&quot;A2_NOTIFICA___&quot;+idx,&quot;Enviado&quot;)
+		}
+		else if(!dsEmails.columnsName.indexOf(&quot;ERROR&quot;) &lt; 0){
+			hAPI.setCardValue(&quot;A2_NOTIFICA___&quot;+idx, dsEmails.getValue(0,&quot;ERROR&quot;))
+		}
+		else{
+			hAPI.setCardValue(&quot;A2_NOTIFICA___&quot;+idx, &quot;Não localizado&quot;)
+		}
+	})
+	
+}</eventDescription>
+    </WorkflowProcessEvent>
+    <WorkflowProcessEvent>
+      <workflowProcessEventPK>
+        <companyId>1</companyId>
+        <eventId>tools</eventId>
+        <processId>cotacao_compras</processId>
+        <version>1</version>
+      </workflowProcessEventPK>
+      <eventDescription>var tools = {&#xd;
+	log: function (mensagem) {&#xd;
+		var WKNumProces = getValue(&quot;WKNumProces&quot;)&#xd;
+&#xd;
+		log.info(WKNumProces + &quot;: &quot; + mensagem);&#xd;
+	},&#xd;
+	confirmaValor: function (oldValue) {&#xd;
+		return [&quot;&quot;, &quot;null&quot;, &quot;0.00&quot;, &quot;0,00&quot;].indexOf(oldValue) &lt; 0 ? oldValue : &quot;&quot;&#xd;
+	},&#xd;
+	getEmail: function (colleagueId) {&#xd;
+		var ds = DatasetFactory.getDataset(&#xd;
+			&quot;colleague&quot;,&#xd;
+			null,&#xd;
+			[&#xd;
+				DatasetFactory.createConstraint(&quot;colleaguePK.colleagueId&quot;, colleagueId, colleagueId, ConstraintType.MUST)&#xd;
+			],&#xd;
+			null&#xd;
+		)&#xd;
+		return ds != null &amp;&amp; ds.rowsCount &gt; 0 ? ds.getValue(0, &quot;mail&quot;) : &quot;&quot;&#xd;
+	},&#xd;
+	sendMail: function (template, subject, destinatarios, parametros) {&#xd;
+		log.warn(&quot;&gt;&gt;&gt; tools.sendMail&quot;);&#xd;
+		log.info(template)&#xd;
+		log.info(subject)&#xd;
+		log.dir(destinatarios)&#xd;
+		log.dir(parametros)&#xd;
+&#xd;
+		var receivers = new java.util.ArrayList();&#xd;
+		var params = new java.util.HashMap();&#xd;
+&#xd;
+		destinatarios.forEach(function (email) {&#xd;
+			receivers.add(email);&#xd;
+		})&#xd;
+&#xd;
+		params.put(&quot;subject&quot;, subject);&#xd;
+		parametros.forEach(function (param) {&#xd;
+			params.put(param.id, param.value);&#xd;
+		})&#xd;
+&#xd;
+		notifier.notify(&quot;admin&quot;, template, params, receivers, &quot;text/html&quot;);&#xd;
+&#xd;
+		receivers.clear()&#xd;
+	},&#xd;
+	createCardField: function (field, valor) {&#xd;
+		return {&#xd;
+			&quot;fieldId&quot;: field,&#xd;
+			&quot;value&quot;: valor&#xd;
+		}&#xd;
+	},&#xd;
+	createFormCotacaoAux: function (retornoCotacao) {&#xd;
+		tools.log(&quot;-- geraFormCotacaoAux&quot;);&#xd;
+		log.dir(retornoCotacao)&#xd;
+&#xd;
+		var cardCreated = integra.postFluig(&quot;/ecm-forms/api/v2/cardindex/&quot; + hAPI.getAdvancedProperty(&quot;formCotacaoAux&quot;) + &quot;/cards&quot;, {&#xd;
+			&quot;values&quot;: [&#xd;
+				{&#xd;
+					&quot;fieldId&quot;: &quot;idEmpresa&quot;,&#xd;
+					&quot;value&quot;: hAPI.getCardValue(&quot;idEmpresa&quot;)&#xd;
+				}&#xd;
+				,&#xd;
+				{&#xd;
+					&quot;fieldId&quot;: &quot;solCompras&quot;,&#xd;
+					&quot;value&quot;: hAPI.getCardValue(&quot;solicitacao_compra&quot;)&#xd;
+				}&#xd;
+				,&#xd;
+				{&#xd;
+					&quot;fieldId&quot;: &quot;numeroSolicitacao&quot;,&#xd;
+					&quot;value&quot;: hAPI.getCardValue(&quot;numeroSolicitacao&quot;)&#xd;
+				}&#xd;
+&#xd;
+			]&#xd;
+		})&#xd;
+&#xd;
+		tools.log(&quot;-- cardCreated&quot;);&#xd;
+		log.dir(cardCreated.retorno);&#xd;
+&#xd;
+		hAPI.setCardValue(&quot;numIdCot&quot;, cardCreated.retorno.cardId);&#xd;
+&#xd;
+&#xd;
+		tools.log(&quot;&gt;&gt; updateCotacoes &lt;&lt;&quot;)&#xd;
+		log.dir(retornoCotacao);&#xd;
+&#xd;
+		var formAtualizado = tools.atualizaForm(cardCreated.retorno.cardId, retornoCotacao);&#xd;
+		if (!formAtualizado.ok) {&#xd;
+			throw &quot;Erro na atualização do formulário &gt; &quot; + formAtualizado.error;&#xd;
+		}&#xd;
+&#xd;
+		tools.log(&quot;&gt;&gt; fim geraFormCotacaoAux&quot;);&#xd;
+&#xd;
+	},&#xd;
+	atualizaForm: function (cardID, formFields) {&#xd;
+		log.info(&quot;&gt;&gt; tools.cotacao.atualizaForm&quot;); //Atualiza o formulário auxililar da cotação&#xd;
+		var obj = { &quot;ok&quot;: false, &quot;error&quot;: &quot;&quot; };&#xd;
+&#xd;
+		obj = integra.putFluig(&quot;/ecm-forms/api/v2/cardindex/&quot; + hAPI.getAdvancedProperty(&quot;formCotacaoAux&quot;) + &quot;/cards/&quot; + cardID, formFields);&#xd;
+&#xd;
+		return obj;&#xd;
+	},&#xd;
+	SQL: {&#xd;
+		exec: function (query) {&#xd;
+			var dataSource = &quot;jdbc/AppDS&quot;;&#xd;
+			var newDataset = [];&#xd;
+			var ic = new javax.naming.InitialContext();&#xd;
+			var ds = ic.lookup(dataSource);&#xd;
+			var created = false;&#xd;
+			try {&#xd;
+				var conn = ds.getConnection();&#xd;
+				var stmt = conn.createStatement();&#xd;
+				var rs = stmt.executeQuery(query);&#xd;
+				var columnCount = rs.getMetaData().getColumnCount();&#xd;
+				while (rs.next()) {&#xd;
+					var tmp = {};&#xd;
+					for (var i = 1; i &lt;= columnCount; i++) {&#xd;
+						var obj = rs.getObject(rs.getMetaData().getColumnName(i));&#xd;
+						if (null != obj) {&#xd;
+							tmp[rs.getMetaData().getColumnName(i)] = rs.getObject(rs.getMetaData().getColumnName(i)).toString();&#xd;
+						} else {&#xd;
+							tmp[rs.getMetaData().getColumnName(i)] = &quot;null&quot;;&#xd;
+						}&#xd;
+					}&#xd;
+					newDataset.push(tmp);&#xd;
+				}&#xd;
+			} catch (e) {&#xd;
+				log.error(&quot;ERRO==============&gt; &quot; + e.message);&#xd;
+			} finally {&#xd;
+				if (stmt != null) stmt.close();&#xd;
+				if (conn != null) conn.close();&#xd;
+			}&#xd;
+			return newDataset;&#xd;
+		}&#xd;
+	}&#xd;
+}</eventDescription>
+    </WorkflowProcessEvent>
+  </list>
+  <list>
+    <AdvancedProcessProperties>
+      <advancedProcessPropertiesPK>
+        <companyId>1</companyId>
+        <processId>cotacao_compras</processId>
+        <propertyId>formCotacaoAux</propertyId>
+        <version>91</version>
+      </advancedProcessPropertiesPK>
+      <propertieValue>41603</propertieValue>
+    </AdvancedProcessProperties>
+    <AdvancedProcessProperties>
+      <advancedProcessPropertiesPK>
+        <companyId>1</companyId>
+        <processId>cotacao_compras</processId>
+        <propertyId>formPrincipal</propertyId>
+        <version>91</version>
+      </advancedProcessPropertiesPK>
+      <propertieValue>ML001601</propertieValue>
+    </AdvancedProcessProperties>
+    <AdvancedProcessProperties>
+      <advancedProcessPropertiesPK>
+        <companyId>1</companyId>
+        <processId>cotacao_compras</processId>
+        <propertyId>mlFormCotacao</propertyId>
+        <version>91</version>
+      </advancedProcessPropertiesPK>
+      <propertieValue>ML001990</propertieValue>
+    </AdvancedProcessProperties>
+    <AdvancedProcessProperties>
+      <advancedProcessPropertiesPK>
+        <companyId>1</companyId>
+        <processId>cotacao_compras</processId>
+        <propertyId>mlTabCotacao</propertyId>
+        <version>91</version>
+      </advancedProcessPropertiesPK>
+      <propertieValue>ML001991</propertieValue>
+    </AdvancedProcessProperties>
+    <AdvancedProcessProperties>
+      <advancedProcessPropertiesPK>
+        <companyId>1</companyId>
+        <processId>cotacao_compras</processId>
+        <propertyId>password</propertyId>
+        <version>91</version>
+      </advancedProcessPropertiesPK>
+      <propertieValue>2w8lJ6TtQGup0uGA</propertieValue>
+    </AdvancedProcessProperties>
+    <AdvancedProcessProperties>
+      <advancedProcessPropertiesPK>
+        <companyId>1</companyId>
+        <processId>cotacao_compras</processId>
+        <propertyId>publisherId</propertyId>
+        <version>91</version>
+      </advancedProcessPropertiesPK>
+      <propertieValue>admin</propertieValue>
+    </AdvancedProcessProperties>
+    <AdvancedProcessProperties>
+      <advancedProcessPropertiesPK>
+        <companyId>1</companyId>
+        <processId>cotacao_compras</processId>
+        <propertyId>tabCotacao</propertyId>
+        <version>91</version>
+      </advancedProcessPropertiesPK>
+      <propertieValue>ML001791</propertieValue>
+    </AdvancedProcessProperties>
+    <AdvancedProcessProperties>
+      <advancedProcessPropertiesPK>
+        <companyId>1</companyId>
+        <processId>cotacao_compras</processId>
+        <propertyId>tabFornecedor</propertyId>
+        <version>91</version>
+      </advancedProcessPropertiesPK>
+      <propertieValue>ML001789</propertieValue>
+    </AdvancedProcessProperties>
+    <AdvancedProcessProperties>
+      <advancedProcessPropertiesPK>
+        <companyId>1</companyId>
+        <processId>cotacao_compras</processId>
+        <propertyId>tabFornecedorProduto</propertyId>
+        <version>91</version>
+      </advancedProcessPropertiesPK>
+      <propertieValue>ML001790</propertieValue>
+    </AdvancedProcessProperties>
+    <AdvancedProcessProperties>
+      <advancedProcessPropertiesPK>
+        <companyId>1</companyId>
+        <processId>cotacao_compras</processId>
+        <propertyId>tabProduto</propertyId>
+        <version>91</version>
+      </advancedProcessPropertiesPK>
+      <propertieValue>ML001787</propertieValue>
+    </AdvancedProcessProperties>
+    <AdvancedProcessProperties>
+      <advancedProcessPropertiesPK>
+        <companyId>1</companyId>
+        <processId>cotacao_compras</processId>
+        <propertyId>tabSC</propertyId>
+        <version>91</version>
+      </advancedProcessPropertiesPK>
+      <propertieValue>ML001788</propertieValue>
+    </AdvancedProcessProperties>
+    <AdvancedProcessProperties>
+      <advancedProcessPropertiesPK>
+        <companyId>1</companyId>
+        <processId>cotacao_compras</processId>
+        <propertyId>tabTES</propertyId>
+        <version>91</version>
+      </advancedProcessPropertiesPK>
+      <propertieValue>ML001826</propertieValue>
+    </AdvancedProcessProperties>
+    <AdvancedProcessProperties>
+      <advancedProcessPropertiesPK>
+        <companyId>1</companyId>
+        <processId>cotacao_compras</processId>
+        <propertyId>username</propertyId>
+        <version>91</version>
+      </advancedProcessPropertiesPK>
+      <propertieValue>admin</propertieValue>
+    </AdvancedProcessProperties>
+    <AdvancedProcessProperties>
+      <advancedProcessPropertiesPK>
+        <companyId>1</companyId>
+        <processId>cotacao_compras</processId>
+        <propertyId>mlFormCotCotacao</propertyId>
+        <version>91</version>
+      </advancedProcessPropertiesPK>
+      <propertieValue>ML0011106</propertieValue>
+    </AdvancedProcessProperties>
+    <AdvancedProcessProperties>
+      <advancedProcessPropertiesPK>
+        <companyId>1</companyId>
+        <processId>cotacao_compras</processId>
+        <propertyId>mlTabCotCotacao</propertyId>
+        <version>91</version>
+      </advancedProcessPropertiesPK>
+      <propertieValue>ML0011107</propertieValue>
+    </AdvancedProcessProperties>
+  </list>
+  <list>
+    <SwimLane>
+      <color>FFFFFF</color>
+      <height>431</height>
+      <width>971</width>
+      <positionX>10</positionX>
+      <positionY>10</positionY>
+      <stateName>Cotação</stateName>
+      <type>1</type>
+      <parentSequence>0</parentSequence>
+      <swimLanePK>
+        <companyId>1</companyId>
+        <processId>cotacao_compras</processId>
+        <version>1</version>
+        <sequence>1</sequence>
+      </swimLanePK>
+    </SwimLane>
+    <SwimLane>
+      <color>82b0b7</color>
+      <height>215</height>
+      <width>941</width>
+      <positionX>40</positionX>
+      <positionY>10</positionY>
+      <stateName>Compras</stateName>
+      <type>2</type>
+      <parentSequence>1</parentSequence>
+      <swimLanePK>
+        <companyId>1</companyId>
+        <processId>cotacao_compras</processId>
+        <version>1</version>
+        <sequence>2</sequence>
+      </swimLanePK>
+    </SwimLane>
+    <SwimLane>
+      <color>adc9ac</color>
+      <height>216</height>
+      <width>941</width>
+      <positionX>40</positionX>
+      <positionY>225</positionY>
+      <stateName>Fluig</stateName>
+      <type>2</type>
+      <parentSequence>1</parentSequence>
+      <swimLanePK>
+        <companyId>1</companyId>
+        <processId>cotacao_compras</processId>
+        <version>1</version>
+        <sequence>3</sequence>
+      </swimLanePK>
+    </SwimLane>
+  </list>
+  <list/>
+  <list/>
+  <list>
+    <ProcessLinkBend>
+      <processLinkBendPK>
+        <companyId>1</companyId>
+        <processId>cotacao_compras</processId>
+        <version>91</version>
+        <linkSequence>28</linkSequence>
+        <bendSequence>1</bendSequence>
+      </processLinkBendPK>
+      <positionX>832</positionX>
+      <positionY>118</positionY>
+    </ProcessLinkBend>
+    <ProcessLinkBend>
+      <processLinkBendPK>
+        <companyId>1</companyId>
+        <processId>cotacao_compras</processId>
+        <version>91</version>
+        <linkSequence>29</linkSequence>
+        <bendSequence>1</bendSequence>
+      </processLinkBendPK>
+      <positionX>915</positionX>
+      <positionY>335</positionY>
+    </ProcessLinkBend>
+    <ProcessLinkBend>
+      <processLinkBendPK>
+        <companyId>1</companyId>
+        <processId>cotacao_compras</processId>
+        <version>91</version>
+        <linkSequence>33</linkSequence>
+        <bendSequence>1</bendSequence>
+      </processLinkBendPK>
+      <positionX>677</positionX>
+      <positionY>354</positionY>
+    </ProcessLinkBend>
+    <ProcessLinkBend>
+      <processLinkBendPK>
+        <companyId>1</companyId>
+        <processId>cotacao_compras</processId>
+        <version>91</version>
+        <linkSequence>34</linkSequence>
+        <bendSequence>1</bendSequence>
+      </processLinkBendPK>
+      <positionX>832</positionX>
+      <positionY>407</positionY>
+    </ProcessLinkBend>
+    <ProcessLinkBend>
+      <processLinkBendPK>
+        <companyId>1</companyId>
+        <processId>cotacao_compras</processId>
+        <version>91</version>
+        <linkSequence>35</linkSequence>
+        <bendSequence>1</bendSequence>
+      </processLinkBendPK>
+      <positionX>832</positionX>
+      <positionY>188</positionY>
+    </ProcessLinkBend>
+  </list>
+  <list/>
+  <list>
+    <ExtendedPropertyField>
+      <extendedPropertyFieldPK>
+        <companyId>1</companyId>
+        <processId>cotacao_compras</processId>
+        <version>91</version>
+        <stateSequence>0</stateSequence>
+        <propertyName>formCotacaoAux</propertyName>
+      </extendedPropertyFieldPK>
+      <propertyType>0</propertyType>
+      <propertyDescription>formCotacaoAux</propertyDescription>
+      <propertyValue>41603</propertyValue>
+      <isDefaultProperty>false</isDefaultProperty>
+    </ExtendedPropertyField>
+    <ExtendedPropertyField>
+      <extendedPropertyFieldPK>
+        <companyId>1</companyId>
+        <processId>cotacao_compras</processId>
+        <version>91</version>
+        <stateSequence>0</stateSequence>
+        <propertyName>formPrincipal</propertyName>
+      </extendedPropertyFieldPK>
+      <propertyType>0</propertyType>
+      <propertyDescription>formPrincipal</propertyDescription>
+      <propertyValue>ML001601</propertyValue>
+      <isDefaultProperty>false</isDefaultProperty>
+    </ExtendedPropertyField>
+    <ExtendedPropertyField>
+      <extendedPropertyFieldPK>
+        <companyId>1</companyId>
+        <processId>cotacao_compras</processId>
+        <version>91</version>
+        <stateSequence>0</stateSequence>
+        <propertyName>mlFormCotacao</propertyName>
+      </extendedPropertyFieldPK>
+      <propertyType>0</propertyType>
+      <propertyDescription>mlFormCotacao</propertyDescription>
+      <propertyValue>ML001990</propertyValue>
+      <isDefaultProperty>false</isDefaultProperty>
+    </ExtendedPropertyField>
+    <ExtendedPropertyField>
+      <extendedPropertyFieldPK>
+        <companyId>1</companyId>
+        <processId>cotacao_compras</processId>
+        <version>91</version>
+        <stateSequence>0</stateSequence>
+        <propertyName>mlTabCotacao</propertyName>
+      </extendedPropertyFieldPK>
+      <propertyType>0</propertyType>
+      <propertyDescription>mlTabCotacao</propertyDescription>
+      <propertyValue>ML001991</propertyValue>
+      <isDefaultProperty>false</isDefaultProperty>
+    </ExtendedPropertyField>
+    <ExtendedPropertyField>
+      <extendedPropertyFieldPK>
+        <companyId>1</companyId>
+        <processId>cotacao_compras</processId>
+        <version>91</version>
+        <stateSequence>0</stateSequence>
+        <propertyName>password</propertyName>
+      </extendedPropertyFieldPK>
+      <propertyType>0</propertyType>
+      <propertyDescription>password</propertyDescription>
+      <propertyValue>2w8lJ6TtQGup0uGA</propertyValue>
+      <isDefaultProperty>false</isDefaultProperty>
+    </ExtendedPropertyField>
+    <ExtendedPropertyField>
+      <extendedPropertyFieldPK>
+        <companyId>1</companyId>
+        <processId>cotacao_compras</processId>
+        <version>91</version>
+        <stateSequence>0</stateSequence>
+        <propertyName>publisherId</propertyName>
+      </extendedPropertyFieldPK>
+      <propertyType>0</propertyType>
+      <propertyDescription>publisherId</propertyDescription>
+      <propertyValue>admin</propertyValue>
+      <isDefaultProperty>false</isDefaultProperty>
+    </ExtendedPropertyField>
+    <ExtendedPropertyField>
+      <extendedPropertyFieldPK>
+        <companyId>1</companyId>
+        <processId>cotacao_compras</processId>
+        <version>91</version>
+        <stateSequence>0</stateSequence>
+        <propertyName>tabCotacao</propertyName>
+      </extendedPropertyFieldPK>
+      <propertyType>0</propertyType>
+      <propertyDescription>tabCotacao</propertyDescription>
+      <propertyValue>ML001791</propertyValue>
+      <isDefaultProperty>false</isDefaultProperty>
+    </ExtendedPropertyField>
+    <ExtendedPropertyField>
+      <extendedPropertyFieldPK>
+        <companyId>1</companyId>
+        <processId>cotacao_compras</processId>
+        <version>91</version>
+        <stateSequence>0</stateSequence>
+        <propertyName>tabFornecedor</propertyName>
+      </extendedPropertyFieldPK>
+      <propertyType>0</propertyType>
+      <propertyDescription>tabFornecedor</propertyDescription>
+      <propertyValue>ML001789</propertyValue>
+      <isDefaultProperty>false</isDefaultProperty>
+    </ExtendedPropertyField>
+    <ExtendedPropertyField>
+      <extendedPropertyFieldPK>
+        <companyId>1</companyId>
+        <processId>cotacao_compras</processId>
+        <version>91</version>
+        <stateSequence>0</stateSequence>
+        <propertyName>tabFornecedorProduto</propertyName>
+      </extendedPropertyFieldPK>
+      <propertyType>0</propertyType>
+      <propertyDescription>tabFornecedorProduto</propertyDescription>
+      <propertyValue>ML001790</propertyValue>
+      <isDefaultProperty>false</isDefaultProperty>
+    </ExtendedPropertyField>
+    <ExtendedPropertyField>
+      <extendedPropertyFieldPK>
+        <companyId>1</companyId>
+        <processId>cotacao_compras</processId>
+        <version>91</version>
+        <stateSequence>0</stateSequence>
+        <propertyName>tabProduto</propertyName>
+      </extendedPropertyFieldPK>
+      <propertyType>0</propertyType>
+      <propertyDescription>tabProduto</propertyDescription>
+      <propertyValue>ML001787</propertyValue>
+      <isDefaultProperty>false</isDefaultProperty>
+    </ExtendedPropertyField>
+    <ExtendedPropertyField>
+      <extendedPropertyFieldPK>
+        <companyId>1</companyId>
+        <processId>cotacao_compras</processId>
+        <version>91</version>
+        <stateSequence>0</stateSequence>
+        <propertyName>tabSC</propertyName>
+      </extendedPropertyFieldPK>
+      <propertyType>0</propertyType>
+      <propertyDescription>tabSC</propertyDescription>
+      <propertyValue>ML001788</propertyValue>
+      <isDefaultProperty>false</isDefaultProperty>
+    </ExtendedPropertyField>
+    <ExtendedPropertyField>
+      <extendedPropertyFieldPK>
+        <companyId>1</companyId>
+        <processId>cotacao_compras</processId>
+        <version>91</version>
+        <stateSequence>0</stateSequence>
+        <propertyName>tabTES</propertyName>
+      </extendedPropertyFieldPK>
+      <propertyType>0</propertyType>
+      <propertyDescription>tabTES</propertyDescription>
+      <propertyValue>ML001826</propertyValue>
+      <isDefaultProperty>false</isDefaultProperty>
+    </ExtendedPropertyField>
+    <ExtendedPropertyField>
+      <extendedPropertyFieldPK>
+        <companyId>1</companyId>
+        <processId>cotacao_compras</processId>
+        <version>91</version>
+        <stateSequence>0</stateSequence>
+        <propertyName>username</propertyName>
+      </extendedPropertyFieldPK>
+      <propertyType>0</propertyType>
+      <propertyDescription>username</propertyDescription>
+      <propertyValue>admin</propertyValue>
+      <isDefaultProperty>false</isDefaultProperty>
+    </ExtendedPropertyField>
+    <ExtendedPropertyField>
+      <extendedPropertyFieldPK>
+        <companyId>1</companyId>
+        <processId>cotacao_compras</processId>
+        <version>91</version>
+        <stateSequence>0</stateSequence>
+        <propertyName>mlFormCotCotacao</propertyName>
+      </extendedPropertyFieldPK>
+      <propertyType>0</propertyType>
+      <propertyDescription>mlFormCotCotacao</propertyDescription>
+      <propertyValue>ML0011106</propertyValue>
+      <isDefaultProperty>false</isDefaultProperty>
+    </ExtendedPropertyField>
+    <ExtendedPropertyField>
+      <extendedPropertyFieldPK>
+        <companyId>1</companyId>
+        <processId>cotacao_compras</processId>
+        <version>91</version>
+        <stateSequence>0</stateSequence>
+        <propertyName>mlTabCotCotacao</propertyName>
+      </extendedPropertyFieldPK>
+      <propertyType>0</propertyType>
+      <propertyDescription>mlTabCotCotacao</propertyDescription>
+      <propertyValue>ML0011107</propertyValue>
+      <isDefaultProperty>false</isDefaultProperty>
+    </ExtendedPropertyField>
+  </list>
+  <list/>
+  <list>
+    <ProcessStateService>
+      <companyId>1</companyId>
+      <processId>cotacao_compras</processId>
+      <version>1</version>
+      <sequence>3</sequence>
+      <attempts>0</attempts>
+      <sucessFullMessage>Integração executada com sucesso</sucessFullMessage>
+      <serviceName></serviceName>
+      <frequency>1</frequency>
+      <frequencyType>0</frequencyType>
+    </ProcessStateService>
+    <ProcessStateService>
+      <companyId>1</companyId>
+      <processId>cotacao_compras</processId>
+      <version>1</version>
+      <sequence>16</sequence>
+      <attempts>0</attempts>
+      <sucessFullMessage>Integração executada com sucesso</sucessFullMessage>
+      <serviceName></serviceName>
+      <frequency>1</frequency>
+      <frequencyType>0</frequencyType>
+    </ProcessStateService>
+    <ProcessStateService>
+      <companyId>1</companyId>
+      <processId>cotacao_compras</processId>
+      <version>1</version>
+      <sequence>30</sequence>
+      <attempts>5</attempts>
+      <sucessFullMessage>Integração executada com sucesso</sucessFullMessage>
+      <serviceName></serviceName>
+      <frequency>3</frequency>
+      <frequencyType>0</frequencyType>
+    </ProcessStateService>
+  </list>
+  <list/>
+  <list/>
+  <list/>
+  <list/>
+</list>

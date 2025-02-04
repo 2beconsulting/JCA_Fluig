@@ -1,0 +1,111 @@
+<html>
+	<head>
+		<link type="text/css" rel="stylesheet" href="/style-guide/css/fluig-style-guide.min.css"/>
+		<script type="text/javascript" src="/portal/resources/js/jquery/jquery.js"></script>
+		<script type="text/javascript" src="/portal/resources/js/jquery/jquery-ui.min.js"></script>
+		<script type="text/javascript" src="/portal/resources/js/mustache/mustache-min.js"></script>
+		<script type="text/javascript" src="/style-guide/js/fluig-style-guide.min.js" charset="utf-8"></script>
+	</head>
+	<body>
+		<div class="fluig-style-guide">
+			<form name="form" role="form">
+				<div class="row">
+					<div class="col-md-4 form-group">
+						<label>idEmpresa</label>
+						<input type="text" class="form-control" name="idEmpresa" id="idEmpresa">
+					</div>
+					<div class="col-md-4 form-group">
+						<label>C8_NUM</label>
+						<input type="text" class="form-control" name="C8_NUM" id="C8_NUM">
+					</div>
+					<div class="col-md-4 form-group">
+						<label>C8_CICLO</label>
+						<input type="text" class="form-control" name="C8_CICLO" id="C8_CICLO">
+					</div>
+				</div>
+				<div>
+					<table class="table" tablename="tabCotacao" noaddbutton="true" nodeletebutton="true">
+						<thead>
+							<tr>
+								<th>C8_ITEM</th>
+								<th>C8_PRODUTO</th>
+								<th>C8_UM</th>
+								<th>C8_FORNECE</th>
+								<th>C8_LOJA</th>
+								<th>C8_QUANT</th>
+								<th>C8_PRECO</th>
+								<th>C8_TOTAL</th>
+								<th>C8_PRAZO</th>
+								<th>C8_FILENT</th>
+								<th>C8_VALIPI</th>
+								<th>C8_VALICM</th>
+								<th>C8_VALISS</th>
+								<th>C8_DIFAL</th>
+								<th>C8_VALSOL</th>
+								<th>C8_VALIDA</th>
+								<!--
+								<th>C8_EMISSAO</th>
+								<th>C8_COND</th>
+								<th>C8_VALFRE</th>
+								<th>C8_TPFRETE</th>
+								<th>C8_SEGURO</th>
+								<th>C8_DESPESA</th>
+								<th>C8_NUMPED</th>
+								<th>C8_ITEMPED</th>
+								-->
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>
+									<input type="hidden" name="VENCEDOR" 				id="VENCEDOR">
+									<input type="hidden" name="VENCEDOR_COMPRADOR" 		id="VENCEDOR_COMPRADOR">
+									<input type="hidden" name="COMPRADOR" 				id="COMPRADOR">
+									<input type="hidden" name="QTD_COMPRADOR" 			id="QTD_COMPRADOR">
+									<input type="hidden" name="COMPRADOR_JUSTIFICATIVA" id="COMPRADOR_JUSTIFICATIVA">
+									<!--
+									<input type="hidden" name="BEN_FISCAL" id="BEN_FISCAL">
+									<input type="hidden" name="VALIDACAO_TECNICA" id="VALIDACAO_TECNICA">
+									<input type="hidden" name="RESP_VALIDACAO" id="RESP_VALIDACAO">
+									-->
+									<input type="text" class="form-control" id="C8_ITEM" name="C8_ITEM">
+								</td>
+								<td><input type="text" class="form-control" id="C8_PRODUTO" name="C8_PRODUTO"></td>
+								<td><input type="text" class="form-control" id="C8_UM" name="C8_UM"></td>
+								<td>
+									<input type="text" class="form-control" id="C8_FORNECE" name="C8_FORNECE">
+									<!--<input type="hidden" id="C8_FORNOME" name="C8_FORNOME">-->
+								</td>
+								<td><input type="text" class="form-control" id="C8_LOJA" name="C8_LOJA"></td>
+								<td><input type="text" class="form-control" id="C8_QUANT" name="C8_QUANT"></td>
+								<td><input type="text" class="form-control" id="C8_PRECO" name="C8_PRECO"></td>
+								<td><input type="text" class="form-control" id="C8_TOTAL" name="C8_TOTAL"></td>
+								<td><input type="text" class="form-control" id="C8_PRAZO" name="C8_PRAZO"></td>
+								<td><input type="text" class="form-control" id="C8_FILENT" name="C8_FILENT"></td>
+								<td><input type="text" class="form-control" id="C8_VALIPI" name="C8_VALIPI"></td>
+								<td><input type="text" class="form-control" id="C8_VALICM" name="C8_VALICM"></td>
+								<td><input type="text" class="form-control" id="C8_VALISS" name="C8_VALISS"></td>
+								<td><input type="text" class="form-control" id="C8_DIFAL" name="C8_DIFAL"></td>
+								<td><input type="text" class="form-control" id="C8_VALSOL" name="C8_VALSOL"></td>
+								<td><input type="text" class="form-control" id="C8_VALIDA" name="C8_VALIDA"></td>
+								<!--
+								<td><input type="text" class="form-control" id="C8_EMISSAO" name="C8_EMISSAO"></td>
+								<td><input type="text" class="form-control" id="C8_COND" name="C8_COND"></td>
+								<td><input type="text" class="form-control" id="C8_VALFRE" name="C8_VALFRE"></td>
+								<td><input type="text" class="form-control" id="C8_TPFRETE" name="C8_TPFRETE"></td>
+								<td><input type="text" class="form-control" id="C8_SEGURO" name="C8_SEGURO"></td>
+								<td><input type="text" class="form-control" id="C8_DESPESA" name="C8_DESPESA"></td>
+								<td>
+									<input type="text" class="form-control" id="C8_NUMPED" name="C8_NUMPED">
+									<input type="hidden" name="IDPEDIDO" id="IDPEDIDO">
+								</td>
+								<td><input type="text" class="form-control" id="C8_ITEMPED" name="C8_ITEMPED"></td>
+								-->
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</form>
+		</div>
+	</body>
+</html>

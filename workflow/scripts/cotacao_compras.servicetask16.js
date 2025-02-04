@@ -19,6 +19,7 @@ function servicetask16(attempt, message) {
 		log.dir(map);
 
 		hAPI.setCardValue("cotacao_abertura", map["dataInicioSolicitacaoCotacao"]);
+		hAPI.setCardValue("C8_NUM", map["C8_NUM"]);
 		hAPI.setCardValue("cotacao_encerramento", map["dataTerminoSolicitacaoCotacao"]);
 		hAPI.setCardValue("solicitacao_compra", map["numeroSolicitacao"]);
 		hAPI.setCardValue("numeroSolicitacao", getValue("WKNumProces").toString());
@@ -52,7 +53,6 @@ function servicetask16(attempt, message) {
 		hAPI.setCardValue("telefoneEmpresaEntrega", map["telefoneEmpresaEntrega"]);
 
 		var dataSource = "jdbc/AppDS";
-		var newDataset = DatasetBuilder.newDataset();
 		var ic = new javax.naming.InitialContext();
 		var ds = ic.lookup(dataSource);
 
@@ -215,85 +215,54 @@ function servicetask16(attempt, message) {
 			log.info("-- rsCotacao");
 			log.dir(rsCotacao)
 
-			var cardCreated = integra.postFluig("/ecm-forms/api/v2/cardindex/" + hAPI.getAdvancedProperty("formCotacaoAux") + "/cards", {
-				"values": [
-					{
-						"fieldId": "idEmpresa",
-						"value": hAPI.getCardValue("idEmpresa")
-					}
-					,
-					{
-						"fieldId": "solCompras",
-						"value": hAPI.getCardValue("solicitacao_compra")
-					}
-					,
-					{
-						"fieldId": "numeroSolicitacao",
-						"value": hAPI.getCardValue("numeroSolicitacao")
-					}
-
-				]
-			})
-
-			log.info("-- cardCreated");
-			log.dir(cardCreated);
-
-			hAPI.setCardValue("numIdCot", cardCreated.retorno.cardId);
-
-			var updateCotacoes = {};
 			var idx = 1;
+			var cotacaoFields = { "values": [] };
+
 			while (rsCotacao.next()) {
 
-				updateCotacoes["C8_CICLO" + "___" + idx] = map["ciclo_atual"];
-				updateCotacoes["C8_ITEM" + "___" + idx] = rsCotacao.getObject("C8_ITEM") ? rsCotacao.getObject("C8_ITEM") : "";
-				updateCotacoes["C8_PRODUTO" + "___" + idx] = rsCotacao.getObject("C8_PRODUTO") ? rsCotacao.getObject("C8_PRODUTO") : "";
-				updateCotacoes["C8_UM" + "___" + idx] = rsCotacao.getObject("C8_UM") ? rsCotacao.getObject("C8_UM") : "";
-				updateCotacoes["C8_FORNECE" + "___" + idx] = rsCotacao.getObject("C8_FORNECE") ? rsCotacao.getObject("C8_FORNECE") : "";
-				updateCotacoes["C8_LOJA" + "___" + idx] = rsCotacao.getObject("C8_LOJA") ? rsCotacao.getObject("C8_LOJA") : "";
+				cotacaoFields.values.push(tools.createCardField("C8_CICLO" + "___" + idx,
+					map["ciclo_atual"]));
+				cotacaoFields.values.push(tools.createCardField("C8_ITEM" + "___" + idx,
+					rsCotacao.getObject("C8_ITEM") ? rsCotacao.getObject("C8_ITEM") : ""));
+				cotacaoFields.values.push(tools.createCardField("C8_PRODUTO" + "___" + idx,
+					rsCotacao.getObject("C8_PRODUTO") ? rsCotacao.getObject("C8_PRODUTO") : ""));
+				cotacaoFields.values.push(tools.createCardField("C8_UM" + "___" + idx,
+					rsCotacao.getObject("C8_UM") ? rsCotacao.getObject("C8_UM") : ""));
+				cotacaoFields.values.push(tools.createCardField("C8_FORNECE" + "___" + idx,
+					rsCotacao.getObject("C8_FORNECE") ? rsCotacao.getObject("C8_FORNECE") : ""));
+				cotacaoFields.values.push(tools.createCardField("C8_LOJA" + "___" + idx,
+					rsCotacao.getObject("C8_LOJA") ? rsCotacao.getObject("C8_LOJA") : ""));
+				cotacaoFields.values.push(tools.createCardField("C8_QUANT" + "___" + idx,
+					(rsCotacao.getObject("C8_QUANT") != null && rsCotacao.getObject("C8_QUANT") != "null") ? tools.confirmaValor(rsCotacao.getObject("C8_QUANT")) : ""));
+				cotacaoFields.values.push(tools.createCardField("C8_PRECO" + "___" + idx,
+					(rsCotacao.getObject("C8_PRECO") != null && rsCotacao.getObject("C8_PRECO") != "null") ? tools.confirmaValor(rsCotacao.getObject("C8_PRECO")) : ""));
+				cotacaoFields.values.push(tools.createCardField("C8_TOTAL" + "___" + idx,
+					(rsCotacao.getObject("C8_TOTAL") != null && rsCotacao.getObject("C8_TOTAL") != "null") ? tools.confirmaValor(rsCotacao.getObject("C8_TOTAL")) : ""));
+				cotacaoFields.values.push(tools.createCardField("C8_PRAZO" + "___" + idx,
+					(rsCotacao.getObject("C8_PRAZO") != null && rsCotacao.getObject("C8_PRAZO") != "null") ? tools.confirmaValor(rsCotacao.getObject("C8_PRAZO")) : ""));
+				cotacaoFields.values.push(tools.createCardField("C8_VALIPI" + "___" + idx,
+					(rsCotacao.getObject("C8_VALIPI") != null && rsCotacao.getObject("C8_VALIPI") != "null") ? tools.confirmaValor(rsCotacao.getObject("C8_VALIPI")) : ""));
+				cotacaoFields.values.push(tools.createCardField("C8_VALICM" + "___" + idx,
+					(rsCotacao.getObject("C8_VALICM") != null && rsCotacao.getObject("C8_VALICM") != "null") ? tools.confirmaValor(rsCotacao.getObject("C8_VALICM")) : ""));
+				cotacaoFields.values.push(tools.createCardField("C8_VALISS" + "___" + idx,
+					(rsCotacao.getObject("C8_VALISS") != null && rsCotacao.getObject("C8_VALISS") != "null") ? tools.confirmaValor(rsCotacao.getObject("C8_VALISS")) : ""));
+				cotacaoFields.values.push(tools.createCardField("C8_VALIDA" + "___" + idx,
+					(rsCotacao.getObject("C8_VALIDA") != null && rsCotacao.getObject("C8_VALIDA") != "null") ? tools.confirmaValor(rsCotacao.getObject("C8_VALIDA")) : ""));
 
-				updateCotacoes["C8_QUANT" + "___" + idx] = (rsCotacao.getObject("C8_QUANT") != null && rsCotacao.getObject("C8_QUANT") != "null") ? tools.confirmaValor(rsCotacao.getObject("C8_QUANT")) : "";
-				updateCotacoes["C8_PRECO" + "___" + idx] = (rsCotacao.getObject("C8_PRECO") != null && rsCotacao.getObject("C8_PRECO") != "null") ? tools.confirmaValor(rsCotacao.getObject("C8_PRECO")) : "";
-				updateCotacoes["C8_TOTAL" + "___" + idx] = (rsCotacao.getObject("C8_TOTAL") != null && rsCotacao.getObject("C8_TOTAL") != "null") ? tools.confirmaValor(rsCotacao.getObject("C8_TOTAL")) : "";
-				updateCotacoes["C8_PRAZO" + "___" + idx] = (rsCotacao.getObject("C8_PRAZO") != null && rsCotacao.getObject("C8_PRAZO") != "null") ? tools.confirmaValor(rsCotacao.getObject("C8_PRAZO")) : "";
-				updateCotacoes["C8_VALIPI" + "___" + idx] = (rsCotacao.getObject("C8_VALIPI") != null && rsCotacao.getObject("C8_VALIPI") != "null") ? tools.confirmaValor(rsCotacao.getObject("C8_VALIPI")) : "";
-				updateCotacoes["C8_VALICM" + "___" + idx] = (rsCotacao.getObject("C8_VALICM") != null && rsCotacao.getObject("C8_VALICM") != "null") ? tools.confirmaValor(rsCotacao.getObject("C8_VALICM")) : "";
-				updateCotacoes["C8_VALISS" + "___" + idx] = (rsCotacao.getObject("C8_VALISS") != null && rsCotacao.getObject("C8_VALISS") != "null") ? tools.confirmaValor(rsCotacao.getObject("C8_VALISS")) : "";
-				updateCotacoes["C8_VALIDA" + "___" + idx] = (rsCotacao.getObject("C8_VALIDA") != null && rsCotacao.getObject("C8_VALIDA") != "null") ? tools.confirmaValor(rsCotacao.getObject("C8_VALIDA")) : "";
-
-				updateCotacoes["C8_PRAZO" + "___" + idx] = (rsCotacao.getObject("C8_PRAZO") != null && rsCotacao.getObject("C8_PRAZO") != "null") ? rsCotacao.getObject("C8_PRAZO") : "";
-				updateCotacoes["C8_FILENT" + "___" + idx] = (rsCotacao.getObject("C8_FILENT") != null && rsCotacao.getObject("C8_FILENT") != "null") ? rsCotacao.getObject("C8_FILENT") : "";
+				cotacaoFields.values.push(tools.createCardField("C8_PRAZO" + "___" + idx,
+					(rsCotacao.getObject("C8_PRAZO") != null && rsCotacao.getObject("C8_PRAZO") != "null") ? rsCotacao.getObject("C8_PRAZO") : ""));
+				cotacaoFields.values.push(tools.createCardField("C8_FILENT" + "___" + idx,
+					(rsCotacao.getObject("C8_FILENT") != null && rsCotacao.getObject("C8_FILENT") != "null") ? rsCotacao.getObject("C8_FILENT") : ""));
 
 				idx++
 			}
 
-			log.info(">> updateCotacoes <<")
-			log.dir(updateCotacoes);
-
-			if (Object.keys(updateCotacoes).length > 0) {
-				var cotacaoFields = { "values": [] };
-
-				Object.keys(updateCotacoes).forEach(function (id) {
-					if (updateCotacoes[id] != undefined) {
-						cotacaoFields.values.push({
-							"fieldId": id,
-							"value": updateCotacoes[id]
-						})
-					}
-				})
-
-				log.info(">> cotacaoFields <<");
-				log.dir(cotacaoFields);
-			}
-
-			var formAtualizado = tools.atualizaForm(cardCreated.retorno.cardId, cotacaoFields);
-			if (!formAtualizado.ok) {
-				throw "Erro na atualização do formulário > " + formAtualizado.error;
-			}
-
+			tools.createFormCotacaoAux(cotacaoFields)
 			log.info("-- fim rsCotacao");
 
 		} catch (e) {
 			log.error("ERRO==============> " + e.message != undefined ? e.message : e);
+			throw e.message
 		} finally {
 			if (stmt != null) stmt.close();
 			if (conn != null) conn.close();
@@ -303,147 +272,5 @@ function servicetask16(attempt, message) {
 	else {
 		throw "Não foi localizado dados do processo principal!"
 	}
-
-	/*
-	var iterator 		= map.keySet().iterator();
-	
-	while (iterator.hasNext()) {
-		var id = "" + iterator.next();
-		log.info("++ id: " + id);
-		log.info("map.get " + id + " : " + map.get(id));
-	    
-		if(id.indexOf("produto___") == 0){
-			var childData = new java.util.HashMap();
-			childData.put("produto"				, ""+map.get("codigoProduto"+"___"+idx));
-			childData.put("produto_desc"		, ""+map.get("produto"+"___"+idx));
-			childData.put("produto_entrega"		, ""+map.get("produto_entrega"+"___"+idx));
-			childData.put("produto_saldo"		, ""+map.get("produto_saldo"+"___"+idx));
-			childData.put("produto_um"			, ""+map.get("unidadeMedidaProduto"+"___"+idx));
-			childData.put("produto_qtd"			, ""+map.get("produto_qtd"+"___"+idx));
-			childData.put("produto_marcas"		, ""+map.get("produto_marcas"+"___"+idx));
-			childData.put("produto_observacao"	, ""+map.get("produto_observacao"+"___"+idx));
-			hAPI.addCardChild("tabItens", childData);
-		}
-		else if(id.indexOf("TES_A2_COD___") == 0){
-			log.info(">> id: " + id)
-			var idx = id.replace("TES_A2_COD___","");
-			log.info(">> idx: " + idx);
-			
-			var childData = new java.util.HashMap();
-			childData.put("TES_A2_COD"	, ""+map.get("TES_A2_COD"+"___"+idx));
-			childData.put("TES_A2_LOJA"	, ""+map.get("TES_A2_LOJA"+"___"+idx));
-			childData.put("TES_A2_CGC"	, ""+map.get("TES_A2_CGC"+"___"+idx));
-			childData.put("TES_B1_COD"	, ""+map.get("TES_B1_COD"+"___"+idx));
-			childData.put("TES_CODIGO"	, ""+map.get("TES_CODIGO"+"___"+idx));
-			childData.put("TES_COMPRADOR"	, ""+map.get("TES_COMPRADOR"+"___"+idx));
-			hAPI.addCardChild("tabTES", childData);
-			
-		}
-		else if(id.indexOf("A2_COD___") == 0){
-			log.info(">> id: " + id)
-			var idx = id.replace("A2_COD___","");
-			log.info(">> idx: " + idx);
-			
-			if(map.get("CICLO_REMOVIDO"+"___"+idx) == ""){
-				var childData = new java.util.HashMap();
-				childData.put("A2_COD"		, ""+map.get("A2_COD"+"___"+idx));
-				childData.put("A2_LOJA"		, ""+map.get("A2_LOJA"+"___"+idx));
-				childData.put("A2_NOME"		, ""+map.get("A2_NOME"+"___"+idx));
-				childData.put("A2_CGC"		, ""+map.get("A2_CGC"+"___"+idx));
-				childData.put("A2_EST"		, ""+map.get("A2_EST"+"___"+idx));
-				childData.put("A2_COND"		, ""+map.get("A2_COND"+"___"+idx));
-				childData.put("A2_TPFRETE"	, ""+map.get("A2_TPFRETE"+"___"+idx));
-				childData.put("A2_VALFRE"	, ""+map.get("A2_VALFRE"+"___"+idx));
-				childData.put("A2_VALIDA"	, ""+map.get("A2_VALIDA"+"___"+idx));
-				hAPI.addCardChild("tabFornecedor", childData);
-			}
-			
-		}
-	    
-		else if(id.indexOf("B1_COD___") == 0){
-			var idx = id.replace("B1_COD___","");
-			
-			var childData = new java.util.HashMap();
-			childData.put("B1_COD"		, ""+map.get("B1_COD"+"___"+idx));
-			childData.put("B1_DESC"		, ""+map.get("B1_DESC"+"___"+idx));
-			childData.put("B1_GRUPO"	, ""+map.get("B1_GRUPO"+"___"+idx));
-			childData.put("B1_LOCPAD"	, ""+map.get("B1_LOCPAD"+"___"+idx));
-			childData.put("B1_MSBLQL"	, ""+map.get("B1_MSBLQL"+"___"+idx));
-			childData.put("B1_TIPO"		, ""+map.get("B1_TIPO"+"___"+idx));
-			childData.put("B1_UM"		, ""+map.get("B1_UM"+"___"+idx));
-			childData.put("B1_ZMARCA"	, ""+map.get("B1_ZMARCA"+"___"+idx));
-			childData.put("ZPM_DESC"	, ""+map.get("ZPM_DESC"+"___"+idx));
-			childData.put("B1_UPRC"		, ""+map.get("B1_UPRC"+"___"+idx));
-			childData.put("B1_PAI"		, ""+map.get("B1_PAI"+"___"+idx));
-			hAPI.addCardChild("tabProduto", childData);
-		}
-	    
-		else if(id.indexOf("A5_PRODUTO___") == 0){
-			var idx = id.replace("A5_PRODUTO___","");
-			
-			var childData = new java.util.HashMap();
-			childData.put("A5_PRODUTO"	, ""+map.get("A5_PRODUTO"+"___"+idx));
-			childData.put("A5_NOMPROD"	, ""+map.get("A5_NOMPROD"+"___"+idx));
-			childData.put("A5_NOMEFOR"	, ""+map.get("A5_NOMEFOR"+"___"+idx));
-			childData.put("A5_FORNECE"	, ""+map.get("A5_FORNECE"+"___"+idx));
-			childData.put("A5_LOJA"		, ""+map.get("A5_LOJA"+"___"+idx));
-			hAPI.addCardChild("tabFornecedorProduto", childData);
-		}
-	    
-		else if(id.indexOf("C1_ITEM___") == 0){
-			var idx = id.replace("C1_ITEM___","");
-			
-			var childData = new java.util.HashMap();
-			childData.put("C1_ITEM"		, ""+map.get("C1_ITEM"+"___"+idx));
-			childData.put("C1_PRODUTO"	, ""+map.get("C1_PRODUTO"+"___"+idx));
-			childData.put("C1_UM"		, ""+map.get("C1_UM"+"___"+idx));
-			childData.put("C1_DESCRI"	, ""+map.get("C1_DESCRI"+"___"+idx));
-			childData.put("C1_QUANT"	, ""+map.get("C1_QUANT"+"___"+idx));
-			childData.put("C1_PRECO"	, ""+map.get("C1_PRECO"+"___"+idx));
-			childData.put("C1_TOTAL"	, ""+map.get("C1_TOTAL"+"___"+idx));
-			hAPI.addCardChild("tabSC", childData);
-		}
-	    
-		else if(id.indexOf("C8_CICLO___") == 0){
-			var idx = id.replace("C8_CICLO___","");
-			
-			if(map.get(id) == map.get("CICLO_ATUAL")){
-				
-				var childData = new java.util.HashMap();
-				childData.put("C8_CICLO"	, ""+map.get("C8_CICLO"+"___"+idx));
-				childData.put("BEN_FISCAL"	, ""+map.get("BEN_FISCAL"+"___"+idx));
-				childData.put("C8_ITEM"		, ""+map.get("C8_ITEM"+"___"+idx));
-				childData.put("C8_QUANT"	, ""+map.get("C8_QUANT"+"___"+idx));
-				childData.put("C8_PRECO"	, ""+map.get("C8_PRECO"+"___"+idx));
-				childData.put("C8_TOTAL"	, ""+map.get("C8_TOTAL"+"___"+idx));
-				childData.put("C8_COND"		, ""+map.get("C8_COND"+"___"+idx));
-				childData.put("C8_PRAZO"	, ""+map.get("C8_PRAZO"+"___"+idx));
-				childData.put("C8_VALIPI"	, ""+map.get("C8_VALIPI"+"___"+idx));
-				childData.put("C8_VALICM"	, ""+map.get("C8_VALICM"+"___"+idx));
-				childData.put("C8_VALISS"	, ""+map.get("C8_VALISS"+"___"+idx));
-				childData.put("C8_SEGURO"	, ""+map.get("C8_SEGURO"+"___"+idx));
-				childData.put("C8_DESPESA"	, ""+map.get("C8_DESPESA"+"___"+idx));
-				childData.put("C8_VALFRE"	, ""+map.get("C8_VALFRE"+"___"+idx));
-				childData.put("C8_TPFRETE"	, ""+map.get("C8_TPFRETE"+"___"+idx));
-				childData.put("C8_VALIDA"	, ""+map.get("C8_VALIDA"+"___"+idx));
-				childData.put("BEN_FISCAL"	, ""+map.get("BEN_FISCAL"+"___"+idx));
-				childData.put("C8_PRODUTO"	, ""+map.get("C8_PRODUTO"+"___"+idx));
-				childData.put("C8_UM"		, ""+map.get("C8_UM"+"___"+idx));
-				childData.put("C8_FORNECE"	, ""+map.get("C8_FORNECE"+"___"+idx));
-				childData.put("C8_LOJA"		, ""+map.get("C8_LOJA"+"___"+idx));
-				childData.put("C8_QUANT"	, ""+map.get("C8_QUANT"+"___"+idx));
-				childData.put("C8_PRECO"	, ""+map.get("C8_PRECO"+"___"+idx));
-				childData.put("C8_TOTAL"	, ""+map.get("C8_TOTAL"+"___"+idx));
-				childData.put("C8_COND"		, ""+map.get("C8_COND"+"___"+idx));
-				childData.put("C8_PRAZO"	, ""+map.get("C8_PRAZO"+"___"+idx));
-				childData.put("C8_FILENT"	, ""+map.get("C8_FILENT"+"___"+idx));
-				childData.put("C8_EMISSAO"	, ""+map.get("C8_EMISSAO"+"___"+idx));
-
-				hAPI.addCardChild("tabCotacao", childData);
-			}
-			
-		}
-	}
-	*/
 
 }
