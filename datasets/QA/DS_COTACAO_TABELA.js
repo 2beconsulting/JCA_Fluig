@@ -87,3 +87,10 @@ function createDataset(fields, constraints, sortFields) {
 
   return dataset;
 }
+
+
+item.reduce((acc, elem) => {
+  if (acc.indexOf(elem.FORNECE) == -1)
+    acc.push(elem.FORNECE)
+  return acc
+}, [])

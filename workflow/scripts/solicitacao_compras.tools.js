@@ -745,6 +745,8 @@ var tools = {
 				//log.dir(filtered);
 
 				if (el.C8_PRECO != "") {
+					/** @todo identificar se, quando o cara incluir a cotação numa rodada seguinte, se vai descer. 
+					 * Neste caso, parece que, como não tinha a cotação, o protheus não devolve e consequentemente vai ser o registro  */
 					if (filtered.length > 0) {
 						filtered[0]["ITEM"].push({
 							"C8_PRODUTO": el.C8_PRODUTO.trim(),
@@ -755,6 +757,7 @@ var tools = {
 						})
 					}
 				} else {
+					/** @todo aqui para não enviar o registro da cotação sem preço */
 					if (filtered.length > 0) {
 						filtered[0]["ITEM"].push({
 							"C8_PRODUTO": el.C8_PRODUTO.trim(),
@@ -1175,6 +1178,7 @@ var tools = {
 					log.dir(obj);
 					log.info("-- obj");
 					log.info(">> tools.cotacao.getData [#1159]")
+					/** @todo puxar aqui a mudança para regularizar a rodada dois, com os fornecedores em branco */
 					if (obj.dados.length > 0) {
 
 						var updateFields = {};
@@ -1184,8 +1188,6 @@ var tools = {
 						log.dir(cotacoes)
 						for (var i = 0; i < cotacoes.rowsCount; i++) {
 							var idx = 1 * cotacoes.getValue(i, "idx");
-							log.info(">> indexesChildren linha: " + idx)
-							log.info(" || C8_PRODUTO: " + cotacoes.getValue(i, "C8_PRODUTO") + " || C8_FORNECE: " + cotacoes.getValue(i, "C8_FORNECE") + " || C8_LOJA: " + cotacoes.getValue(i, "C8_LOJA"))
 							var dataFiltered = obj.dados.filter(function (el) { return el.C8_PRODUTO == cotacoes.getValue(i, "C8_PRODUTO") && el.C8_FORNECE == cotacoes.getValue(i, "C8_FORNECE") && el.C8_LOJA == cotacoes.getValue(i, "C8_LOJA") });
 							if (dataFiltered.length > 0 /*&& dataFiltered[0]["C8_PRECO"] != "" && dataFiltered[0]["C8_PRECO"] != "0.00 && dataFiltered[0]["C8_PRECO"] != "0.000000"*/) {
 								log.info(">> dataFiltered <<");
