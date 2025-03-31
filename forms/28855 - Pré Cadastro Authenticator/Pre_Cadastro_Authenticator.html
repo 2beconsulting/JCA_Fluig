@@ -1,0 +1,304 @@
+<html>
+  <head>
+    <link
+      type="text/css"
+      rel="stylesheet"
+      href="/style-guide/css/fluig-style-guide.min.css"
+    />
+    <script
+      type="text/javascript"
+      src="/portal/resources/js/jquery/jquery.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="/portal/resources/js/jquery/jquery-ui.min.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="/portal/resources/js/mustache/mustache-min.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="/style-guide/js/fluig-style-guide.min.js"
+      charset="utf-8"
+    ></script>
+    <link rel="stylesheet" href="main.css" />
+  </head>
+  <body>
+    <script type="text/javascript" src="main.js"></script>
+    <script type="text/javascript" src="zoom.js"></script>
+
+    <div class="fluig-style-guide">
+      <form name="form" role="form">
+        <div class="row" style="margin-top: 10px">
+          <div class="form-group col-md-3" style="display: none">
+            <label for="lastAcess">Último Acesso</label>
+            <input
+              type="text"
+              class="form-control"
+              id="lastAcess"
+              name="lastAcess"
+              readonly
+            />
+          </div>
+        </div>
+        <div class="row" style="margin-top: 10px">
+          <div class="form-group col-md-3" style="display: none">
+            <label for="tokenRegister">Token</label>
+            <input
+              type="text"
+              class="form-control"
+              id="tokenRegister"
+              name="tokenRegister"
+              readonly
+            />
+          </div>
+        </div>
+
+        <div class="panel panel-primary">
+          <div
+            class="panel-heading"
+            style="display: flex; align-items: baseline"
+          >
+            <h3 class="panel-title">Cadastro de Conta</h3>
+          </div>
+
+          <div class="panel-body">
+            <div class="row">
+              <div class="form-group col-md-4">
+                <label for="emailRegister"
+                  >E-mail<span style="color: red" class="fs-color-danger"
+                    >*</span
+                  ></label
+                >
+                <input
+                  type="email"
+                  class="form-control"
+                  id="emailRegister"
+                  name="emailRegister"
+                />
+              </div>
+              <div class="form-group col-md-4">
+                <label for="password"
+                  >Senha<span style="color: red" class="fs-color-danger"
+                    >*</span
+                  ></label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="passwordRegister"
+                  name="passwordRegister"
+                />
+              </div>
+              <div class="form-group col-md-4">
+                <label for="validitySession"
+                  >Validade Sessão<span
+                    style="color: red"
+                    class="fs-color-danger"
+                    >*</span
+                  ></label
+                >
+                <input
+                  type="date"
+                  class="form-control"
+                  id="validitySession"
+                  name="validitySession"
+                />
+              </div>
+              <!-- <div class="form-group col-md-3">
+                <label for="suppliersRegister"
+                  >Fornecedores<span style="color: red" class="fs-color-danger"
+                    >*</span
+                  ></label
+                >
+                <input
+                  type="zoom"
+                  class="form-control"
+                  id="suppliersRegister"
+                  name="suppliersRegister"
+                  data-zoom="{
+            'displayKey':'Nome',
+            'datasetId':'DS_COTACAO_FORN',
+            'maximumSelectionLength':'100',
+            'fields':[
+              {
+                'field':'Cod',
+                'label':'CÓDIGO'
+              },
+              {
+                'field':'Nome',
+                'label':'NOME'
+              }
+            ]
+          }"
+                />
+              </div> -->
+              <!-- <div class="form-group col-md-2">
+                <label for="password"
+                  >Nome Fluig<span style="color: red" class="fs-color-danger"
+                    >*</span
+                  ></label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="nameFluig"
+                  name="nameFluig"
+                />
+              </div> -->
+            </div>
+
+            <br />
+            <hr />
+            <br />
+
+            <div class="row">
+              <div class="col-md-12" id="btnAddTableForn">
+                <button
+                  class="btn btn-primary"
+                  id="btnAddFornecedor"
+                  name="btnAddFornecedor"
+                  type="button"
+                >
+                  Adicionar Fornecedor
+                </button>
+              </div>
+
+              <br />
+
+              <table
+                class="table"
+                id="tabFornecedor"
+                tablename="tabFornecedor"
+                noaddbutton="true"
+                nodeletebutton="true"
+              >
+                <thead>
+                  <tr data-indice="0" style="font-weight: bold">
+                    <td></td>
+                    <td>
+                      Código<span style="color: red" class="fs-color-danger"
+                        >*</span
+                      >
+                    </td>
+                    <td>
+                      Loja<span style="color: red" class="fs-color-danger"
+                        >*</span
+                      >
+                    </td>
+                    <td>
+                      Descrição<span style="color: red" class="fs-color-danger"
+                        >*</span
+                      >
+                    </td>
+                    <td>
+                      CNPJ<span style="color: red" class="fs-color-danger"
+                        >*</span
+                      >
+                    </td>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr id="tabFornecedorItem">
+                    <td>
+                      <span
+                        id="btnDelete"
+                        class="btnDelete"
+                        onclick="deleteRow(this)"
+                        ><i
+                          class="flaticon flaticon-trash icon-lg"
+                          aria-hidden="true"
+                        ></i>
+                      </span>
+                    </td>
+                    <td>
+                      <input
+                        type="zoom"
+                        id="A2_COD"
+                        name="A2_COD"
+                        class="form-control"
+                        data-zoom="{
+                        'displayKey':'CODIGO',
+                        'datasetId':'ds_consulta_fornecedor',
+                        'maximumSelectionLength':'1',
+                        'filterValues':'tipoConsulta,codigo',
+                        'fields':[
+                          {'field':'CODIGO','label':'CÓDIGO'},
+                          {'field':'DESCRICAO','label':'DESCRIÇÃO'},
+                          {'field':'CGC','label':'CNPJ'},
+                          {'field':'LOJA','label':'LOJA','visible':'false'}
+                        ]
+                      }"
+                      />
+                    </td>
+                    <td>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="A2_LOJA"
+                        name="A2_LOJA"
+                        readonly
+                      />
+                    </td>
+                    <td>
+                      <input
+                        type="zoom"
+                        id="A2_NOME"
+                        name="A2_NOME"
+                        class="form-control"
+                        data-zoom="{
+											'displayKey':'DESCRICAO',
+											'datasetId':'ds_consulta_fornecedor',
+											'maximumSelectionLength':'1',
+											'filterValues':'tipoConsulta,descricao',
+											'fields':[
+												{'field':'CODIGO','label':'CÓDIGO'},
+												{'field':'DESCRICAO','label':'DESCRIÇÃO'},
+												{'field':'CGC','label':'CNPJ'},
+												{'field':'LOJA','label':'LOJA','visible':'false'}
+											]
+										}"
+                      />
+                    </td>
+                    <td>
+                      <input
+                        type="zoom"
+                        id="A2_CGC"
+                        name="A2_CGC"
+                        class="form-control"
+                        data-zoom="{
+                        'displayKey':'A2_CGC',
+                        'datasetId':'ds_consulta_fornecedor',
+                        'maximumSelectionLength':'1',
+                        'placeholder':'Selecione o fornecedor',
+                        'filterValues':'tipoConsulta,cpfCNPJ',
+                        'fields':[
+                          {'field':'A2_COD','label':'CÓDIGO'},
+                          {'field':'A2_NOME','label':'DESCRIÇÃO'},
+                          {'field':'A2_CGC','label':'CNPJ'},
+                          {'field':'A2_LOJA','label':'LOJA','visible':'false'}
+                        ]
+                      }"
+                      />
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <div class="row" id="noResult" name="noResult">
+                <span
+                  id="resultF"
+                  name="resultF"
+                  style="font-weight: 600; margin-top: 5px; font-size: 13px"
+                  class="required-table"
+                  >Nenhum fornecedor adicionado.</span
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </body>
+</html>

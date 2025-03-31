@@ -1,57 +1,57 @@
 function createDataset(fields, constraints, sortFields) {
-	
-	try{
-		var jConstr = constraintToJson(constraints);
-		log.dir(jConstr);
-		var mlFormCotacao 		= "ML0011106";
-		var mlTabCotacao 		= "ML0011107";
-		var S_COTACAO			= jConstr.S_COTACAO;
-		var idEmpresa			= jConstr.IDEMPRESA;
-		var S_COMPRA			= jConstr.S_COMPRA;
-		
-		if(idEmpresa != undefined && S_COTACAO != undefined && S_COMPRA != undefined){
-			var txtQuery = 	"SELECT COT.documentid,COT.version, COT.C8_CICLO, COT.BEN_FISCAL, COT.C8_ITEM, COT.C8_PRODUTO, COT.C8_UM, COT.C8_FORNECE, COT.C8_FORNOME, COT.C8_LOJA, COT.C8_QUANT, COT.C8_PRECO, COT.C8_TOTAL, COT.C8_COND, COT.C8_PRAZO, COT.C8_FILENT, COT.C8_EMISSAO, COT.C8_VALIPI, COT.C8_VALICM, COT.C8_VALISS, COT.C8_DIFAL, COT.C8_VALSOL, COT.C8_SEGURO, COT.C8_DESPESA, COT.C8_VALFRE, COT.C8_TPFRETE, COT.C8_VALIDA, COT.C8_NUMPED, COT.C8_ITEMPED FROM "+mlFormCotacao+" ML \
+
+    try {
+        var jConstr = constraintToJson(constraints);
+        log.dir(jConstr);
+        var mlFormCotacao = "ML001740";
+        var mlTabCotacao = "ML001741";
+        var S_COTACAO = jConstr.S_COTACAO;
+        var idEmpresa = jConstr.IDEMPRESA;
+        var S_COMPRA = jConstr.S_COMPRA;
+
+        if (idEmpresa != undefined && S_COTACAO != undefined && S_COMPRA != undefined) {
+            var txtQuery = "SELECT COT.documentid,COT.version, COT.C8_CICLO, COT.BEN_FISCAL, COT.C8_ITEM, COT.C8_PRODUTO, COT.C8_UM, COT.C8_FORNECE, COT.C8_FORNOME, COT.C8_LOJA, COT.C8_QUANT, COT.C8_PRECO, COT.C8_TOTAL, COT.C8_COND, COT.C8_PRAZO, COT.C8_FILENT, COT.C8_EMISSAO, COT.C8_VALIPI, COT.C8_VALICM, COT.C8_VALISS, COT.C8_DIFAL, COT.C8_VALSOL, COT.C8_SEGURO, COT.C8_DESPESA, COT.C8_VALFRE, COT.C8_TPFRETE, COT.C8_VALIDA, COT.C8_NUMPED, COT.C8_ITEMPED FROM " + mlFormCotacao + " ML \
 								INNER JOIN DOCUMENTO DOC ON DOC.NR_DOCUMENTO = ML.DOCUMENTID AND DOC.NR_VERSAO = ML.VERSION \
-								INNER JOIN "+mlTabCotacao+" COT ON COT.DOCUMENTID = ML.DOCUMENTID AND COT.VERSION = ML.VERSION \
-							WHERE ML.numeroSolicitacao = '"+S_COTACAO+"' AND ML.idEmpresa = '"+idEmpresa+"' AND ML.solCompras = '"+S_COMPRA+"' AND DOC.VERSAO_ATIVA = 1"
-			
-			log.info(txtQuery);
-			return Exec(txtQuery);
-		}
-		else{
-			return dsError("As constraints 'idEmpresa' , 'S_COMPRA' e 'SOL COTACAO' são obrigatórias!",["idEmpresa","S_COMPRA","COTACAO"])
-		}
-	}
-	catch(e){
-		return dsError(e.message != undefined ? e.message : e, [])
-	}
-	
+								INNER JOIN "+ mlTabCotacao + " COT ON COT.DOCUMENTID = ML.DOCUMENTID AND COT.VERSION = ML.VERSION \
+							WHERE ML.numeroSolicitacao = '"+ S_COTACAO + "' AND ML.idEmpresa = '" + idEmpresa + "' AND ML.solCompras = '" + S_COMPRA + "' AND DOC.VERSAO_ATIVA = 1"
+
+            log.info(txtQuery);
+            return Exec(txtQuery);
+        }
+        else {
+            return dsError("As constraints 'idEmpresa' , 'S_COMPRA' e 'SOL COTACAO' são obrigatórias!", ["idEmpresa", "S_COMPRA", "COTACAO"])
+        }
+    }
+    catch (e) {
+        return dsError(e.message != undefined ? e.message : e, [])
+    }
+
 }
 
-function dsError(msgError, fieldsRequired){
-	var ds = DatasetBuilder.newDataset();
-	ds.addColumn("ERROR");
-	fieldsRequired.forEach(function(field){ds.addColumn(field)});
-	
-	var arr = [msgError];
-	fieldsRequired.forEach(function(field){arr.push("")});
-	
-	ds.addRow(arr);
-	return ds;
+function dsError(msgError, fieldsRequired) {
+    var ds = DatasetBuilder.newDataset();
+    ds.addColumn("ERROR");
+    fieldsRequired.forEach(function (field) { ds.addColumn(field) });
+
+    var arr = [msgError];
+    fieldsRequired.forEach(function (field) { arr.push("") });
+
+    ds.addRow(arr);
+    return ds;
 }
 
-function constraintToJson(constraints){
-	var obj = {};
-	if (constraints != null){
-		for(var i = 0 ; i < constraints.length ; i++){
-			obj[constraints[i].fieldName.toUpperCase()] =  ""+constraints[i].initialValue
-		}
-	}
-	return obj;
+function constraintToJson(constraints) {
+    var obj = {};
+    if (constraints != null) {
+        for (var i = 0; i < constraints.length; i++) {
+            obj[constraints[i].fieldName.toUpperCase()] = "" + constraints[i].initialValue
+        }
+    }
+    return obj;
 }
 
 function Exec(minhaQuery) {
-	log.info("DS_CONSULTA_AUXILIAR_COTACAO > minhaQuery: \n" + minhaQuery)
+    log.info("DS_CONSULTA_AUXILIAR_COTACAO > minhaQuery: \n" + minhaQuery)
     var dataSource = "jdbc/AppDS";
     var newDataset = DatasetBuilder.newDataset();
     var ic = new javax.naming.InitialContext();
@@ -66,7 +66,7 @@ function Exec(minhaQuery) {
         log.warn("=== inicio processa retorno ===")
         while (rs.next()) {
             if (!created) {
-            	newDataset.addColumn("idx")
+                newDataset.addColumn("idx")
                 for (var i = 1; i <= columnCount; i++) {
                     newDataset.addColumn(rs.getMetaData().getColumnName(i));
                 }
@@ -85,7 +85,7 @@ function Exec(minhaQuery) {
             }
             newDataset.addRow(Arr);
         }
-        
+
         log.warn("=== fim processa retorno ===")
     } catch (e) {
         log.error("ERRO==============> " + e.message);

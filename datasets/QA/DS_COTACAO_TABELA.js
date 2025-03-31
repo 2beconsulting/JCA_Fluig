@@ -1,96 +1,106 @@
 function createDataset(fields, constraints, sortFields) {
+
+  var jConstr = constraintToJson(constraints);
+  var mlFormCotacao = "ML001744";
+  var mlTabFornecedor = "ML001750";
+  var cnstFornecedores = jConstr.FORNECEDORES;
+
+
+  var txtQuery = "SELECT PW.NUM_PROCES , FORN.DOCUMENTID  , \
+    FORN.A2_CGC  , FORN.A2_COD  , \
+  FORN.A2_LOJA  , FORN.A2_NOME , ML.version  \
+  FROM " + mlFormCotacao + " ML \
+                INNER JOIN "+ mlTabFornecedor + " FORN ON FORN.DOCUMENTID = ML.DOCUMENTID \
+                AND FORN.VERSION = ML.VERSION \
+                AND ML.VERSION  = (SELECT MAX(VERSION) FROM " + mlFormCotacao + " MLVERS WHERE MLVERS.DOCUMENTID = ML.DOCUMENTID) \
+                INNER JOIN PROCES_WORKFLOW PW ON PW.NR_DOCUMENTO_CARD = ML.DOCUMENTID                \
+                AND PW.STATUS = '0'  \
+                INNER JOIN HISTOR_PROCES HP ON HP.NUM_PROCES = PW.NUM_PROCES \
+                AND HP.NUM_SEQ_ESTADO = '5' \
+          WHERE FORN.A2_CGC IN ('"+ cnstFornecedores + "')";
+
+
   var dataset = DatasetBuilder.newDataset();
-  dataset.addColumn("NumProcesso");
-  dataset.addColumn("NumFormulario");
-  dataset.addColumn("Id");
-  dataset.addColumn("Nome");
-  dataset.addColumn("Loja");
-  dataset.addColumn("Cod");
-  dataset.addColumn("CNPJ");
+  if (cnstFornecedores == undefined)
+    return dataset;
 
-  var constraints = new Array();
-  constraints.push(
-    DatasetFactory.createConstraint(
-      "metadata#active",
-      true,
-      true,
-      ConstraintType.MUST
-    )
-  );
-
-  var datasetPrincipal = DatasetFactory.getDataset(
-    "DSFormulariodoProcessodeCotacao",
-    null,
-    constraints,
-    null
-  );
-
-  for (var i = 0; i < datasetPrincipal.rowsCount; i++) {
-    var WKNumProces = datasetPrincipal.getValue(i, "WKNumProces");
-    var documentId = datasetPrincipal.getValue(i, "metadata#id");
-    var documentVersion = datasetPrincipal.getValue(i, "metadata#version");
-
-    var constraintsFilhos = new Array();
-
-    constraintsFilhos.push(
-      DatasetFactory.createConstraint(
-        "tablename",
-        "tabFornecedor",
-        "tabFornecedor",
-        ConstraintType.MUST
-      )
-    );
-
-    constraintsFilhos.push(
-      DatasetFactory.createConstraint(
-        "metadata#id",
-        documentId,
-        documentId,
-        ConstraintType.MUST
-      )
-    );
-
-    constraintsFilhos.push(
-      DatasetFactory.createConstraint(
-        "metadata#version",
-        documentVersion,
-        documentVersion,
-        ConstraintType.MUST
-      )
-    );
-
-    var datasetFilhos = DatasetFactory.getDataset(
-      "DSFormulariodoProcessodeCotacao",
-      null,
-      constraintsFilhos,
-      null
-    );
-
-    for (var j = 0; j < datasetFilhos.rowsCount; j++) {
-      var A2_CGC = datasetFilhos.getValue(j, "A2_CGC");
-
-      if (A2_CGC && A2_CGC != "" && A2_CGC != null) {
-        dataset.addRow(
-          new Array(
-            WKNumProces,
-            documentId,
-            datasetFilhos.getValue(j, "wdk_sequence_id"),
-            datasetFilhos.getValue(j, "A2_NOME"),
-            datasetFilhos.getValue(j, "A2_LOJA"),
-            datasetFilhos.getValue(j, "A2_COD"),
-            datasetFilhos.getValue(j, "A2_CGC")
-          )
-        );
-      }
+  return Exec(txtQuery, dataset);
+}
+function constraintToJson(constraints) {
+  var obj = {};
+  if (constraints != null) {
+    for (var i = 0; i < constraints.length; i++) {
+      obj[constraints[i].fieldName.toUpperCase()] = "" + constraints[i].initialValue
     }
   }
+  return obj;
+}
 
-  return dataset;
+function retornoNomeColuna(colunaRetorno) {
+  if (colunaRetorno == "NUM_PROCES") {
+    return "NumProcesso"
+
+  } if (colunaRetorno == "DOCUMENTID") {
+    return "NumFormulario"
+  } if (colunaRetorno == "documentid") {
+    return "NumFormulario"
+  } if (colunaRetorno == "A2_CGC") {
+    return "CNPJ"
+  } if (colunaRetorno == "A2_COD") {
+    return "Cod"
+  } if (colunaRetorno == "A2_LOJA") {
+    return "Loja"
+  } if (colunaRetorno == "A2_NOME") {
+    return "Nome"
+  } if (colunaRetorno == "version") {
+    return "Id"
+  }
+  return colunaRetorno
 }
 
 
-item.reduce((acc, elem) => {
-  if (acc.indexOf(elem.FORNECE) == -1)
-    acc.push(elem.FORNECE)
-  return acc
-}, [])
+function Exec(minhaQuery, newDataset) {
+  log.info("DS_CONSULTA_COTACOES > minhaQuery: \n" + minhaQuery)
+  var dataSource = "jdbc/AppDS";
+  var ic = new javax.naming.InitialContext();
+  var ds = ic.lookup(dataSource);
+  var created = false;
+  try {
+    var conn = ds.getConnection();
+    var stmt = conn.createStatement();
+    var rs = stmt.executeQuery(minhaQuery);
+    var columnCount = rs.getMetaData().getColumnCount();
+    var seq = 0;
+    log.warn("=== inicio processa retorno ===")
+    log.dir(rs.getMetaData())
+    while (rs.next()) {
+      if (!created) {
+        newDataset.addColumn("idx")
+        for (var i = 1; i <= columnCount; i++) {
+          newDataset.addColumn(retornoNomeColuna(rs.getMetaData().getColumnName(i)));
+        }
+        created = true;
+      }
+      var Arr = [];
+      seq = seq + 1;
+      Arr.push(seq.toString());
+      for (var i = 1; i <= columnCount; i++) {
+        var obj = rs.getObject(rs.getMetaData().getColumnName(i));
+        if (null != obj) {
+          Arr.push(rs.getObject(rs.getMetaData().getColumnName(i)).toString());
+        } else {
+          Arr.push("null");
+        }
+      }
+      newDataset.addRow(Arr);
+    }
+
+    log.warn("=== fim processa retorno ===")
+  } catch (e) {
+    log.error("ERRO==============> " + e.message);
+  } finally {
+    if (stmt != null) stmt.close();
+    if (conn != null) conn.close();
+  }
+  return newDataset;
+}

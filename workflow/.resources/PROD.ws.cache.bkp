@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<java version="1.8.0_431" class="java.beans.XMLDecoder">
+ <object class="java.util.HashMap">
+  <void method="put">
+   <string>volume</string>
+   <array class="java.lang.String" length="1">
+    <void index="0">
+     <string>Default</string>
+    </void>
+   </array>
+  </void>
+  <void method="put">
+   <string>mecanismo</string>
+   <array class="[Ljava.lang.Object;" length="28">
+    <void index="0">
+     <array class="java.lang.Object" length="2">
+      <void index="0">
+       <string>alcada_RHFERIAS_DIRGER</string>
+      </void>
+      <void index="1">
+       <string>alcada_RHFERIAS_DIRGER</string>
+      </void>
+     </array>
+    </void>
+    <void index="1">
+     <array class="java.lang.Object" length="2">
+      <void index="0">
+       <string>Atribuição por Associação</string>
+      </void>
+      <void index="1">
+       <string>Associado</string>
+      </void>
+     </array>
+    </void>
+    <void index="2">
+     <array class="java.lang.Object" length="2">
+      <void index="0">
+       <string>Atribuição por Campo de Formulário</string>
+      </void>
+      <void index="1">
+       <string>Campo Formulário</string>
+      </void>
+     </array>
+    </void>
+    <void index="3">
+     <array class="java.lang.Object" length="2">
+      <void index="0">
+       <string>dpf_002_ad_emp_filial</string>
+      </void>
+      <void index="1">
+       <string>dpf_002_ad_emp_filial</string>
+      </void>
+     </array>
+    </void>
+    <void index="4">
+     <array class="java.lang.Object" length="2">
+      <void index="0">
+       <string>DPRH_GESTORES_GENERICO</string>
+      </void>
+      <void index="1">
+       <string>DPRH_GESTORES_GENERICO</string>
+      </void>
+     </array>
+    </void>
+    <void index="5">
+     <array class="java.lang.Object" length="2">
+      <void index="0">
+       <string>Atribuição por Executor de Atividade</string>
+      </void>
+      <void index="1">
+       <string>Executor Atividade</string>
+      </void>
+     </array>
+    </void>
+    <void index="6">
+     <array class="java.lang.Object" length="2">
+      <void index="0">
+       <string>Atribuição por Grupo</string>
+      </void>
+      <void index="1">
+       <string>Grupo</string>
+      </void>
+     </array>
+    </void>
+    <void index="7">
+     <array class="java.lang.Object" length="2">
+      <void index="0">
+       <string>Atribuição por Grupos do Colaborador</string>
+      </void>
+      <void index="1">
+       <string>Grupos Colaborador</string>
+      </void>
+     </array>
+    </void>
+    <void index="8">
+     <array class="java.lang.Object" length="2">
+      <void index="0">
+       <string>mecComprasLiberarPedido</string>
+      </void>
+      <void index="1">
+       <string>mecComprasLiberarPedido</string>
+      </void>
+     </array>
+    </void>
+    <void index="9">
+     <array class="java.lang.Object" length="2">
+      <void index="0">
+       <string>mec_comprador_responsavel</string>
+      </void>
+      <void index="1">
+       <string>mec_comprador_responsavel</string>
+      </void>
+     </array>
+    </void>
+    <void index="10">
+     <array class="java.lang.Object" length="2">
+      <void index="0">
+       <string>Atribuição por Papel</string>
+      </void>
+      <void index="1">
+       <string>Papel</string>
+      </void>
+     </array>
+    </void>
+    <void index="11">
+     <array class="java.lang.Object" length="2">
+      <void index="0">
+       <string>Atribuição para um Grupo</string>
+      </void>
+      <void index="1">
+       <string>Pool Grupo</string>
+      </void>
+     </array>
+    </void>
+    <void index="12">
+     <array class="java.lang.Object" length="2">
+      <void index="0">
+       <string>Atribuição para um Papel</string>
+      </void>
+      <void index="1">
+       <string>Pool Papel</string>
+      </void>
+     </array>
+    </void>
+    <void index="13">
+     <array class="java.lang.Object" length="2">
+      <void index="0">
+       <string>RH-DP_E_GESTORES</string>
+      </void>
+      <void index="1">
+       <string>RH-DP_E_GESTORES</string>
+      </void>
+     </array>
+    </void>
+    <void index="14">
+     <array class="java.lang.Object" length="2">
+      <void index="0">
+       <string>RH-DP_RH_E_GESTORES</string>
+      </void>
+      <void index="1">
+       <string>RH-DP_RH_E_GESTORES</string>
+      </void>
+     </array>
+    </void>
+    <void index="15">
+     <array class="java.lang.Object" length="2">
+      <void index="0">
+       <string>RH-DP_RH_E_GESTORES_MEDIC</string>
+      </void>
+      <void index="1">
+       <string>RH-DP_RH_E_GESTORES_MEDIC</string>
+      </void>
+     </array>
+    </void>
+    <void index="16">
+     <array class="java.lang.Object" length="2">
+      <void index="0">
+       <string>RH-DP_RH_E_GEST_N_GENERIC</string>
+      </void>
+      <void index="1">
+       <string>RH-DP_RH_E_GEST_N_GENERIC</string>
+      </void>
+     </array>
+    </void>
+    <void index="17">
+     <array class="java.lang.Object" length="2">
+      <void index="0">
+       <string>RH-DP_RH_SEG_TRAB_E_GEST</string>
+      </void>
+      <void index="1">
+       <string>RH-DP_RH_SEG_TRAB_E_GEST</string>
+      </void>
+     </array>
+    </void>
+    <void index="18">
+     <array class="java.lang.Object" length="2">
+      <void index="0">
+       <string>RH-GEST_ALMOX_E_SEGUR</string>
+      </void>
+      <void index="1">
+       <string>RH-GEST_ALMOX_E_SEGUR</string>
+      </void>
+     </array>
+    </void>
+    <void index="19">
+     <array class="java.lang.Object" length="2">
+      <void index="0">
+       <string>RH-MEDICINA_DP_E_GESTORES</string>
+      </void>
+      <void index="1">
+       <string>RH-MEDICINA_DP_E_GESTORES</string>
+      </void>
+     </array>
+    </void>
+    <void index="20">
+     <array class="java.lang.Object" length="2">
+      <void index="0">
+       <string>RH-MEDICINA_RH_E_GESTORES</string>
+      </void>
+      <void index="1">
+       <string>RH-MEDICINA_RH_E_GESTORES</string>
+      </void>
+     </array>
+    </void>
+    <void index="21">
+     <array class="java.lang.Object" length="2">
+      <void index="0">
+       <string>RH-RH_E_GESTORES</string>
+      </void>
+      <void index="1">
+       <string>RH-RH_E_GESTORES</string>
+      </void>
+     </array>
+    </void>
+    <void index="22">
+     <array class="java.lang.Object" length="2">
+      <void index="0">
+       <string>RH-RH_SEG_TRAB_E_GESTORES</string>
+      </void>
+      <void index="1">
+       <string>RH-RH_SEG_TRAB_E_GESTORES</string>
+      </void>
+     </array>
+    </void>
+    <void index="23">
+     <array class="java.lang.Object" length="2">
+      <void index="0">
+       <string>RH-SESMT_E_GESTORES</string>
+      </void>
+      <void index="1">
+       <string>RH-SESMT_E_GESTORES</string>
+      </void>
+     </array>
+    </void>
+    <void index="24">
+     <array class="java.lang.Object" length="2">
+      <void index="0">
+       <string>RH-SUPRIM_E_SEGUR</string>
+      </void>
+      <void index="1">
+       <string>RH-SUPRIM_E_SEGUR</string>
+      </void>
+     </array>
+    </void>
+    <void index="25">
+     <array class="java.lang.Object" length="2">
+      <void index="0">
+       <string>SESMT-ALMOXARIFADO_QSMA</string>
+      </void>
+      <void index="1">
+       <string>SESMT-ALMOXARIFADO_QSMA</string>
+      </void>
+     </array>
+    </void>
+    <void index="26">
+     <array class="java.lang.Object" length="2">
+      <void index="0">
+       <string>SESMT-DP_ADMINISTRATIVO_JURIDICO</string>
+      </void>
+      <void index="1">
+       <string>SESMT-DP_ADMIN_JURIDICO</string>
+      </void>
+     </array>
+    </void>
+    <void index="27">
+     <array class="java.lang.Object" length="2">
+      <void index="0">
+       <string>Atribuição por Usuário</string>
+      </void>
+      <void index="1">
+       <string>Usuário</string>
+      </void>
+     </array>
+    </void>
+   </array>
+  </void>
+ </object>
+</java>

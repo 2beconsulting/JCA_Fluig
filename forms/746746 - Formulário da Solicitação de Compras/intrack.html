@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>InTrack</title>
+    <meta charset="utf-8">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/mustache@4.2.0/mustache.min.js"></script>
+</head>
+
+<body>
+    <div class="output"></div>
+</body>
+
+</html>
+
+<script>
+    var data = {
+        "anexos": [
+            {
+                "nome_arquivo": "Proposta_AG_Capital.pdf",
+                "descricao_arquivo": "Proposta AG Capital Inicial"
+            },
+            {
+                "nome_arquivo": "Proposta_AG_Capital_VF.pdf",
+                "descricao_arquivo": "Proposta AG Capital Final"
+            },
+            {
+                "nome_arquivo": "Proposta_MCS.pdf",
+                "descricao_arquivo": "Proposta MCS Markup"
+            },
+            {
+                "nome_arquivo": "Chamado_1236224_-_Manifestacao_de_Inconformidade.pdf",
+                "descricao_arquivo": "Chamado portal"
+            }
+        ],
+        "fornecedor_recomendado": "AG CAPITAL A CONSULTORIA E ASSESSORIA EMPRESARIAL S/A",
+        "tipo_baseline": "Menor Proposta Equalizada",
+        "baseline": "35.000,00",
+        "proposta_final": "30.000,00",
+        "cost_avoidance": "0,00",
+        "tco": "0,00",
+        "saving": "5.000,00",
+        "economia": "14,29",
+        "vigencia_dias": "365",
+        "numero_processo": "2023.12.005",
+        "tipo": "Nova Contratação (Spot)",
+        "valor_total": "30.000,00",
+        "variacao_valor": "0,00",
+        "data_inicio": "30/11/2023",
+        "data_fim": "29/11/2024",
+        "variacao_data": "0,00",
+        "processo_saving": "2023.12.005",
+        "saving_2023": "424,66",
+        "saving_2024": "4.575,34",
+        "aprovacao_suprimentos": [
+            {
+                "aprovador": "Andre Viana",
+                "participacao": "Coordenador",
+                "nivel": "",
+                "data_aprovacao": ""
+            },
+            {
+                "aprovador": "Fábio Roza",
+                "participacao": "Gerente",
+                "nivel": "",
+                "data_aprovacao": ""
+            },
+            {
+                "aprovador": "Luis Baleiro",
+                "participacao": "Diretor",
+                "nivel": "",
+                "data_aprovacao": ""
+            },
+            {
+                "aprovador": "Gustavo Rodrigues",
+                "participacao": "CEO",
+                "nivel": "",
+                "data_aprovacao": ""
+            }
+        ],
+        "historico_aprovacao_processo": [
+            {
+                "aprovador": "Andre Viana",
+                "acao": "Reprovação",
+                "justificativa": "Acrescentar ao histórico o valor dos processos e os limites possíveis de custos com os recursos (R$ +3k) e o valor máximo de success fee.",
+                "data": "12/12/2023 09:57:59"
+            }
+        ],
+        "gestor_contrato": "Valesca Santos",
+        "cargo_gestor": "Gerente",
+        "descricao": "Regularização - Serviços de elaboração de Manifestação de Inconformidade",
+        "justificativa": "A solicitação foi aberta através do chamado 1236224 e aprovada por Simone Poubel e Luis Balieiro, com o orçamento de R$ 35k.",
+        "historico_processo": "O escopo dos serviços prevê a análise dos procedimentos do tomador de crédito, a fim de que se somem às razões de direito quanto à causa das duas rubricas (Aviso Prévio Indenizado, Compensação FAP e Licença Médica) objeto do aproveitamento de créditos e compõe a defesa da empresa (Manifestação de Inconformidade - '1ª instância administrativa') a ser protocolada até o dia 11/12/2023 e acompanhada até o final de sua discussão nas esferas competentes (Combinação Administrativa de Recursos Fiscais - CARF - '2ª instância administrativa'). Neste primeiro momento, o escopo prevê 6 Processos Administrativos Fiscais com a proposta inicial no valor de R$ 45k. A abordagem técnica inicial foi realizada diretamente pela área requisitante, em consulta e aprovação negociada com o fornecedor AG Capital. A proposta foi apresentada no valor final de R$ 35k para a prestação dos serviços acordados em duas etapas (8% ou R$ 3k) pelos serviços sobre o valor previsto de restituição 45%. Desta forma, o custo total da proposta poderá chegar até R$ 69k. No referido chamado, o Diretor Luís Balieiro solicitou a Suprimentos que realizasse uma cotação com a empresa MCS Markup, empresa contratada para realizar auditoria na Folha de Pagamento do Grupo. Entramos em contato com a MCS que apresentou proposta comercial no valor final de R$ 36k para o escopo apresentado, com percentual de êxito sobre o sucesso, podendo chegar ao valor total de R$ 72k. Suprimentos promoveu uma nova rodada de negociação com a AG Capital, onde foi apresentada uma nova proposta final de R$ 30k, sem R$ 15k (vencimento em 08/12/2023 e R$ 15k com vencimento em 08/01/2024), e o percentual de 8% sobre o sucesso, podendo chegar ao valor total de R$ 64k. Dessa forma, alcançamos aprovação para contratação do fornecedor AG Capital referente aos serviços de elaboração de Manifestação de Inconformidade para 6 processos administrativos fiscais federais, no valor de R$ 30.000,00.",
+        "saving_negociado": "14% (R$5.000,00)",
+        "outros_fatos_relevantes": "O pagamento será efetuado em 2 parcelas, sendo: (i) R$ 15.000,00 com vencimento em 08/12/2023 e (ii) R$ 15.000,00 com vencimento em 08/01/2024.",
+        "conduzido_pelo_ariba": "Não",
+        "responsavel": "Catharina Reis Bulhosa",
+        "portal_globlus_num": "1236224",
+        "data_abertura": "28/11/2023",
+        "aprovado_por": "Luis Balieiro",
+        "processo_base": "Nenhum Proposta Equalizada",
+        "item": "0001",
+        "descricao_item": "Manifestação de Inconformidade",
+        "consumo": "Previsto",
+        "quantidade": "1",
+        "valor_unitario": "35.000,00",
+        "razao_social": "AG CAPITAL A CONSULTORIA E ASSESSORIA EMPRESARIAL S/A",
+        "nome_fantasia": "AG CAPITAL A CONSULTORIA E ASSESSORIA EMPRESARIAL S/A",
+        "contato": "Adriano",
+        "telefone": "(48) 3028-1897",
+        "email": "adriano@agcapital.com.br",
+        "cnpj_duns": "12.538.254/0001-47",
+        "razao_social_2": "MCS MARKUP CONSULTORIA, AUDITORIA E M&A LTDA",
+        "nome_fantasia_2": "MCS MARKUP",
+        "contato_2": "Juliana Kyle",
+        "telefone_2": "(21) 96011-3032",
+        "email_2": "juliana@mcsmarkup.com.br",
+        "cnpj_duns_2": "26.551.902/0001-00",
+        "etapa": "Análise / RFQ",
+        "data_acordada": "09/12/2023",
+        "data_realizada": "28/11/2023",
+        "etapa_2": "Recebimento da Proposta",
+        "data_acordada_2": "14/12/2023",
+        "data_realizada_2": "28/11/2023",
+        "etapa_3": "Equalização Comercial",
+        "data_acordada_3": "22/12/2023",
+        "data_realizada_3": "29/11/2023",
+        "etapa_4": "Negociação Comercial",
+        "data_acordada_4": "08/01/2024",
+        "data_realizada_4": "29/11/2023",
+        "etapa_5": "Homologação do Processo",
+        "data_acordada_5": "14/01/2024",
+        "data_realizada_5": "06/12/2023",
+        "etapa_6": "Assinatura Contrato / Cadastro ERP",
+        "data_acordada_6": "26/01/2024",
+        "data_realizada_6": "12/12/2023",
+        "fornecedor": "AG CAPITAL A CONSULTORIA E ASSESSORIA EMPRESARIAL S/A",
+        "aprovado": "Sim",
+        "primeira_proposta": "35.000,00",
+        "segunda_proposta": "30.000,00",
+        "proposta_final": "30.000,00",
+        "evolucao_proposta": "-14,29",
+        "fornecedor_2": "MCS MARKUP CONSULTORIA, AUDITORIA E M&A LTDA",
+        "aprovado_2": "Não",
+        "primeira_proposta_2": "36.000,00",
+        "segunda_proposta_2": "36.000,00",
+        "proposta_final_2": "36.000,00",
+        "evolucao_proposta_2": "0,00",
+        "fornecedor_resultado": "AG CAPITAL A CONSULTORIA E ASSESSORIA EMPRESARIAL S/A",
+        "qualificado_ariba": "Sim",
+        "baseline_resultado": "35.000,00",
+        "saving_resultado": "5.000,00",
+        "cost_avoidance": "0,00",
+        "tco": "0,00",
+        "economia_total": "5.000,00",
+        "fornecedor_resultado_2": "MCS MARKUP CONSULTORIA, AUDITORIA E M&A LTDA",
+        "qualificado_ariba_2": "Não",
+        "baseline_resultado_2": "35.000,00",
+        "saving_resultado_2": "-1.000,00",
+        "cost_avoidance_2": "0,00",
+        "tco_2": "0,00",
+        "economia_total_2": "-1.000,00",
+        "fornecedor_contratacao": "AG CAPITAL A CONSULTORIA E ASSESSORIA EMPRESARIAL S/A",
+        "data_inicio": "30/11/2023",
+        "vigencia": "365",
+        "data_fim": "29/11/2024",
+        "indice_reajuste": "na",
+        "fornecedor_empresa": "AG CAPITAL A CONSULTORIA E ASSESSORIA EMPRESARIAL S/A",
+        "proposta_final_empresa": "30.000,00",
+        "baseline_empresa": "35.000,00",
+        "saving_empresa": "5.000,00",
+        "cost_avoidance_empresa": "0,00",
+        "tco_empresa": "0,00",
+        "economia_total_empresa": "5.000,00",
+        "outros_fatos_relevantes": "O pagamento será efetuado em 2 parcelas, sendo: (i) R$ 15.000,00 com vencimento em 08/12/2023 e (ii) R$ 15.000,00 com vencimento em 08/01/2024.",
+        "anualizavel": "Sim",
+        "responsavel": "Catharina Reis Bulhosa",
+        "portalGlobus": "1236224",
+        "tipoProcesso": "Nova Contratação (Spot)",
+        "tipoItem": "Serviço",
+        "tipoRenovavel": "Não",
+        "processoAnterior": "Não",
+        "servicoMaterial": "Serviço",
+        "frota": "Não",
+        "categoria": "Serviços de Consultoria",
+        "contaDRC": "123456",
+        "dataAbertura": "28/11/2023",
+        "aprovacaoSolicitacao": "Sim",
+        "empresa": "AG CAPITAL A CONSULTORIA E ASSESSORIA EMPRESARIAL S/A",
+        "orcamento": "35.000,00",
+        "aprovadoPor": "Luis Balieiro",
+        "orcadoDRI": "35.000,00",
+        "contratacaoDireta": "Sim",
+        "processoBase": "Nenhum Proposta Equalizada",
+        "fornecedorBase": "AG CAPITAL A CONSULTORIA E ASSESSORIA EMPRESARIAL S/A",
+        "baselineTipo": "Menor Proposta Equalizada",
+        "baselineDescric": "Menor Proposta Equalizada com saving de R$ 5.000,00"
+    }
+
+    var template =
+        `
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2 form-group">
+                <label for="numProcesso">Núm. Proc. </label>
+                <input type="text" class="form-control" name="numProcesso" id="numProcesso" readonly
+                    value="{{numero_processo}}">
+            </div>
+            <div class="col-md-3 form-group">
+                <label for="gestContrato">Gestor do Contrato </label>
+                <input type="text" class="form-control" name="gestContrato" id="gestContrato" readonly
+                    value="{{gestor_contrato}}">
+            </div>
+            <div class="col-md-3 form-group">
+                <label for="cargoGestor">Cargo Gestor </label>
+                <input type="text" class="form-control" name="cargoGestor" id="cargoGestor" readonly
+                    value="{{cargo_gestor}}">
+            </div>
+            <div class="col-md-4 form-group">
+                <label for="descric">Descrição </label>
+                <input type="text" class="form-control" name="descric" id="descric" readonly value="{{descricao}}">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 form-group">
+                <label for="justificativa">Justificativa </label>
+                <input type="text" class="form-control" name="justificativa" id="justificativa" readonly
+                    value="{{justificativa}}">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 form-group">
+                <label for="histProcesso">Histórico do Processo </label>
+                <textarea class="form-control" name="histProcesso" id="histProcesso" cols="30" rows="10"
+                    style="resize: none;" value="{{historico_processo}}"></textarea>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 form-group">
+                <label for="resultAlavUtil">Resultados e Alavancas Utilizadas </label>
+                <input type="text" class="form-control" name="resultAlavUtil" id="resultAlavUtil" readonly
+                    value="{{saving_negociado}}">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 form-group">
+                <label for="outrosFatosRel">Outros Fatos Relevantes</label>
+                <input type="text" class="form-control" name="outrosFatosRel" id="outrosFatosRel" readonly
+                    value="{{outros_fatos_relevantes}}">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3 form-group">
+                <label for="conduzAriba">Conduzido Ariba </label>
+                <input type="text" class="form-control" name="conduzAriba" id="conduzAriba" readonly
+                    value="{{conduzido_pelo_ariba}}">
+            </div>
+            <div class="col-md-3 form-group">
+                <label for="anualizavel">Anualizável </label>
+                <input type="text" class="form-control" name="anualizavel" id="anualizavel" readonly
+                    value="{{anualizavel}}">
+            </div>
+            <div class="col-md-3 form-group">
+                <label for="responsavel">Responsável </label>
+                <input type="text" class="form-control" name="responsavel" id="responsavel" readonly
+                    value="{{responsavel}}">
+            </div>
+            <div class="col-md-3 form-group">
+                <label for="portalGlobus">Portal/Globus Nº </label>
+                <input type="text" class="form-control" name="portalGlobus" id="portalGlobus" readonly
+                    value="{{portalGlobus}}">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3 form-group">
+                <label for="tipoProcesso">Tipo de Processo </label>
+                <input type="text" class="form-control" name="tipoProcesso" id="tipoProcesso" readonly
+                    value="{{tipoProcesso}}">
+            </div>
+            <div class="col-md-3 form-group">
+                <label for="tipoItem">Tipo de Item </label>
+                <input type="text" class="form-control" name="tipoItem" id="tipoItem" readonly value="{{tipoItem}}">
+            </div>
+            <div class="col-md-3 form-group">
+                <label for="tipoRenovavel">Tipo Renovável </label>
+                <input type="text" class="form-control" name="tipoRenovavel" id="tipoRenovavel" readonly
+                    value="{{tipoRenovavel}}">
+            </div>
+            <div class="col-md-3 form-group">
+                <label for="processoAnterior">Processo Anterior </label>
+                <input type="text" class="form-control" name="processoAnterior" id="processoAnterior" readonly
+                    value="{{processoAnterior}}">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3 form-group">
+                <label for="servicoMaterial">Serviço/Material </label>
+                <input type="text" class="form-control" name="servicoMaterial" id="servicoMaterial" readonly
+                    value="{{servicoMaterial}}">
+            </div>
+            <div class="col-md-3 form-group">
+                <label for="frota">Frota </label>
+                <input type="text" class="form-control" name="frota" id="frota" readonly value="{{frota}}">
+            </div>
+            <div class="col-md-3 form-group">
+                <label for="categoria">Categoria </label>
+                <input type="text" class="form-control" name="categoria" id="categoria" readonly value="{{categoria}}">
+            </div>
+            <div class="col-md-3 form-group">
+                <label for="contaDRC">Conta (DRC)</label>
+                <input type="text" class="form-control" name="contaDRC" id="contaDRC" readonly value="{{contaDRC}}">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3 form-group">
+                <label for="dataAbertura">Data de Abertura </label>
+                <input type="text" class="form-control" name="dataAbertura" id="dataAbertura" readonly
+                    value="{{dataAbertura}}">
+            </div>
+            <div class="col-md-3 form-group">
+                <label for="aprovacaoSolicitacao">Aprovação da Solic. </label>
+                <input type="text" class="form-control" name="aprovacaoSolicitacao" id="aprovacaoSolicitacao" readonly
+                    value="{{aprovacaoSolicitacao}}">
+            </div>
+            <div class="col-md-3 form-group">
+                <label for="empresa">Empresa(s) </label>
+                <input type="text" class="form-control" name="empresa" id="empresa" readonly value="{{empresa}}">
+            </div>
+            <div class="col-md-3 form-group">
+                <label for="orcamento">Orçamento</label>
+                <input type="text" class="form-control" name="orcamento" id="orcamento" readonly value="{{orcamento}}">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3 form-group">
+                <label for="aprovadoPor">Aprovado por </label>
+                <input type="text" class="form-control" name="aprovadoPor" id="aprovadoPor" readonly
+                    value="{{aprovadoPor}}">
+            </div>
+            <div class="col-md-3 form-group">
+                <label for="orcadoDRI">Orçado DRI </label>
+                <input type="text" class="form-control" name="orcadoDRI" id="orcadoDRI" readonly value="{{orcadoDRI}}">
+            </div>
+            <div class="col-md-3 form-group">
+                <label for="contratacaoDireta">Contratação Direta </label>
+                <input type="text" class="form-control" name="contratacaoDireta" id="contratacaoDireta" readonly
+                    value="{{contratacaoDireta}}">
+            </div>
+        </div>
+
+        <div class="info-historica">
+            <div class="row">
+                <div class="col-md-3 form-group">
+                    <label for="processoBase">Processo base </label>
+                    <input type="text" class="form-control" name="processoBase" id="processoBase" readonly
+                        value="{{processoBase}}">
+                </div>
+                <div class="col-md-3 form-group">
+                    <label for="fornecedorBase">Fornecedor base </label>
+                    <input type="text" class="form-control" name="fornecedorBase" id="fornecedorBase" readonly
+                        value="{{fornecedorBase}}">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3 form-group">
+                    <label for="baselineTipo">Baseline (Tipo) </label>
+                    <input type="text" class="form-control" name="baselineTipo" id="baselineTipo" readonly
+                        value="{{baselineTipo}}">
+                </div>
+                <div class="col-md-3 form-group">
+                    <label for="baselineDescric">Baseline (Descrição) </label>
+                    <input type="text" class="form-control" name="baselineDescric" id="baselineDescric" readonly
+                        value="{{baselineDescric}}">
+                </div>
+            </div>
+
+
+            <h2 class="mt-5">Informações Históricas</h2>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Processo Base</th>
+                        <th>Baseline</th>
+                        <th>Item</th>
+                        <th>Descrição</th>
+                        <th>Consumo</th>
+                        <th>Quantidade</th>
+                        <th>Valor Unitário</th>
+                        <th>Valor Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{processo_base}}</td>
+                        <td>{{baseline}}</td>
+                        <td>{{item}}</td>
+                        <td>{{descricao_item}}</td>
+                        <td>{{consumo}}</td>
+                        <td>{{quantidade}}</td>
+                        <td>{{valor_unitario}}</td>
+                        <td>{{valor_total}}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2 class="mt-5">Vendor List</h2>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Razão Social</th>
+                        <th>Nome Fantasia</th>
+                        <th>Contato</th>
+                        <th>Telefone</th>
+                        <th>Email</th>
+                        <th>CNPJ/DUNS</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{razao_social}}</td>
+                        <td>{{nome_fantasia}}</td>
+                        <td>{{contato}}</td>
+                        <td>{{telefone}}</td>
+                        <td>{{email}}</td>
+                        <td>{{cnpj_duns}}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2 class="mt-5">Prazos</h2>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Etapa</th>
+                        <th>Data Acordada</th>
+                        <th>Data Realizada</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{etapa}}</td>
+                        <td>{{data_acordada}}</td>
+                        <td>{{data_realizada}}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2 class="mt-5">Propostas</h2>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Fornecedor</th>
+                        <th>Aprovado</th>
+                        <th>1ª Proposta</th>
+                        <th>2ª Proposta</th>
+                        <th>Proposta Final</th>
+                        <th>Evolução Proposta (%)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{fornecedor}}</td>
+                        <td>{{aprovado}}</td>
+                        <td>{{primeira_proposta}}</td>
+                        <td>{{segunda_proposta}}</td>
+                        <td>{{proposta_final}}</td>
+                        <td>{{evolucao_proposta}}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2 class="mt-5">Resultados</h2>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Fornecedor</th>
+                        <th>Qualificado no Ariba</th>
+                        <th>Baseline</th>
+                        <th>Saving</th>
+                        <th>Cost Avoidance</th>
+                        <th>TCO</th>
+                        <th>Economia Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{fornecedor_resultado}}</td>
+                        <td>{{qualificado_ariba}}</td>
+                        <td>{{baseline_resultado}}</td>
+                        <td>{{saving_resultado}}</td>
+                        <td>{{cost_avoidance}}</td>
+                        <td>{{tco}}</td>
+                        <td>{{economia_total}}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2 class="mt-5">Contratação Recomendada</h2>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Fornecedor</th>
+                        <th>Data Início</th>
+                        <th>Vigência</th>
+                        <th>Data Fim</th>
+                        <th>Índice Reajuste</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{fornecedor_contratacao}}</td>
+                        <td>{{data_inicio}}</td>
+                        <td>{{vigencia}}</td>
+                        <td>{{data_fim}}</td>
+                        <td>{{indice_reajuste}}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2 class="mt-5">Resultado por Empresa</h2>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Fornecedor</th>
+                        <th>Proposta Final</th>
+                        <th>Baseline</th>
+                        <th>Saving</th>
+                        <th>Cost Avoidance</th>
+                        <th>TCO</th>
+                        <th>Economia Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{fornecedor_empresa}}</td>
+                        <td>{{proposta_final_empresa}}</td>
+                        <td>{{baseline_empresa}}</td>
+                        <td>{{saving_empresa}}</td>
+                        <td>{{cost_avoidance_empresa}}</td>
+                        <td>{{tco_empresa}}</td>
+                        <td>{{economia_total_empresa}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h2>Anexos</h2>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Nome do arquivo</th>
+                    <th>Descrição do arquivo</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#anexos}}
+                <tr>
+                    <td>{{nome_arquivo}}</td>
+                    <td>{{descricao_arquivo}}</td>
+                </tr>
+                {{/anexos}}
+            </tbody>
+        </table>
+
+        <h2>Resultados</h2>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Fornecedor Recomendado</th>
+                    <th>Tipo Baseline</th>
+                    <th>Baseline</th>
+                    <th>Proposta Final</th>
+                    <th>Cost Avoidance</th>
+                    <th>TCO</th>
+                    <th>Saving</th>
+                    <th>Economia (%)</th>
+                    <th>Vigência (Dias)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{fornecedor_recomendado}}</td>
+                    <td>{{tipo_baseline}}</td>
+                    <td>{{baseline}}</td>
+                    <td>{{proposta_final}}</td>
+                    <td>{{cost_avoidance}}</td>
+                    <td>{{tco}}</td>
+                    <td>{{saving}}</td>
+                    <td>{{economia}}</td>
+                    <td>{{vigencia_dias}}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>Histórico do Contrato</h2>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Número Processo</th>
+                    <th>Tipo</th>
+                    <th>Valor Total</th>
+                    <th>Variação Valor (%)</th>
+                    <th>Data Início</th>
+                    <th>Data Fim</th>
+                    <th>Variação Data (%)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{numero_processo}}</td>
+                    <td>{{tipo}}</td>
+                    <td>{{valor_total}}</td>
+                    <td>{{variacao_valor}}</td>
+                    <td>{{data_inicio}}</td>
+                    <td>{{data_fim}}</td>
+                    <td>{{variacao_data}}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>Resultado por Período (Saving)</h2>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Processo</th>
+                    <th>2023</th>
+                    <th>2024</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{processo_saving}}</td>
+                    <td>{{saving_2023}}</td>
+                    <td>{{saving_2024}}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>Aprovação Suprimentos</h2>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Aprovador</th>
+                    <th>Participação</th>
+                    <th>Nível</th>
+                    <th>Data de Aprovação / Reprovação</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#aprovacao_suprimentos}}
+                <tr>
+                    <td>{{aprovador}}</td>
+                    <td>{{participacao}}</td>
+                    <td>{{nivel}}</td>
+                    <td>{{data_aprovacao}}</td>
+                </tr>
+                {{/aprovacao_suprimentos}}
+            </tbody>
+        </table>
+
+        <h2>Histórico Aprovação Processo</h2>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Aprovador</th>
+                    <th>Ação</th>
+                    <th>Justificativa</th>
+                    <th>Data</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#historico_aprovacao_processo}}
+                <tr>
+                    <td>{{aprovador}}</td>
+                    <td>{{acao}}</td>
+                    <td>{{justificativa}}</td>
+                    <td>{{data}}</td>
+                </tr>
+                {{/historico_aprovacao_processo}}
+            </tbody>
+        </table>
+    </div>
+    `
+
+    var output = Mustache.render(template, data);
+    document.querySelector('.output').innerHTML = output;
+
+</script>

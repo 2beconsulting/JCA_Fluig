@@ -1,0 +1,104 @@
+.fs-color-danger {
+  color: red !important;
+}
+
+.btnDelete,
+.btnDeleteForn {
+  color: red;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.hideTable {
+  display: none !important;
+}
+
+.required {
+  font-weight: bold !important;
+}
+
+#tableProcessDirection_length {
+  display: none !important;
+}
+
+.buttons-excel {
+  top: 15px !important;
+}
+
+#noResultProduto,
+#noResultFornecedor {
+  margin-right: 0px !important;
+  margin-left: 0px !important;
+}
+
+.required-table {
+  font-weight: bold !important;
+  color: #dadada !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.fluig-style-guide .alert-warning:before {
+  color: #000 !important;
+  background-color: #ffecab !important;
+}
+
+.fluig-style-guide .alert-warning {
+  background-color: #fff2e2b3 !important;
+  backdrop-filter: blur(8px) !important;
+  font-weight: bold !important;
+  color: #cc8925 !important;
+}
+
+.fluig-style-guide .alert-warning:before {
+  color: #cc8925 !important;
+  background-color: #fff2e200 !important;
+  border-left: 5px solid #cc8925 !important;
+}
+
+.fluig-style-guide .alert-info {
+  background-color: #dbeafeb3 !important;
+  backdrop-filter: blur(8px) !important;
+  font-weight: bold !important;
+  color: #3b82f6 !important;
+}
+
+.fluig-style-guide .alert-info .close > span:after {
+  background-color: #dbeafe00 !important;
+  color: #3b82f6 !important;
+  font-weight: bold !important;
+}
+
+.fluig-style-guide .alert-info:before {
+  color: #3b82f6 !important;
+  background-color: #dbeafe00 !important;
+  border-left: 5px solid #3b82f6 !important;
+}
+
+.fluig-style-guide .alert-success {
+  background-color: #dbfeebb3 !important;
+  backdrop-filter: blur(8px) !important;
+  font-weight: bold !important;
+  color: #16a34a !important;
+}
+
+.fluig-style-guide .alert-success .close > span:after {
+  background-color: #dbfeea00 !important;
+  color: #16a34a !important;
+  font-weight: bold !important;
+}
+
+.fluig-style-guide .alert-success:before {
+  color: #16a34a !important;
+  background-color: #dbfeea00 !important;
+  border-left: 5px solid #16a34a !important;
+}
+
+.fluig-style-guide .alert-warning .close > span:after {
+  background-color: #fff2e200 !important;
+}
+
+.fluig-style-guide .alert-dismissible .close > span {
+  color: #cc8925 !important;
+}

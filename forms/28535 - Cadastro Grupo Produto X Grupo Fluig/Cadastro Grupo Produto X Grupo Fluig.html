@@ -1,0 +1,57 @@
+<html>
+	<head>
+		<link type="text/css" rel="stylesheet" href="/style-guide/css/fluig-style-guide.min.css"/>
+		<script type="text/javascript" src="/portal/resources/js/jquery/jquery.js"></script>
+		<script type="text/javascript" src="/portal/resources/js/jquery/jquery-ui.min.js"></script>
+		<script type="text/javascript" src="/portal/resources/js/mustache/mustache-min.js"></script>
+		<script type="text/javascript" src="/style-guide/js/fluig-style-guide.min.js" charset="utf-8"></script>
+		
+		<script type="text/javascript" src="custom.js"></script>
+	</head>
+	<body>
+		<div class="fluig-style-guide">
+			<form name="form" role="form">
+				<input type="hidden" name="descritor" id="descritor">
+				<div class="panel panel-primary">
+					<div class="panel-heading">
+						<h3 class="panel-title">Grupo Produto X Grupo Fluig</h3>
+					</div>
+					<div class="panel-body">
+						<div class="row">
+							<div class="col-md-6 form-group">
+								<label>Grupo do Produto</label>
+								<input type="zoom" name="BM_DESC" id="BM_DESC" class="form-control" data-zoom="{
+			                            'displayKey':'BM_DESC',
+			                            'datasetId':'DS_Consulta_B1_GRUPO',
+			                            'maximumSelectionLength':'1',
+			                            'placeholder':'Selecione o Grupo de Produto',
+			                            'fields':[
+			                                {'field':'BM_GRUPO','label':'Código'},
+			                                {'field':'BM_DESC','label':'Descrição'},
+			                                {'field':'BM_CONTA','visible':'false'}
+			                            ]
+			                    	}" />
+			                    <input type="hidden" name="BM_GRUPO" id="BM_GRUPO">
+			                    <input type="hidden" name="BM_CONTA" id="BM_CONTA">
+							</div>
+							<div class="col-md-6 form-group">
+								<label>Grupo do Fluig</label>
+								<input type="zoom" name="groupDescription" id="groupDescription" class="form-control" data-zoom="{
+			                            'displayKey':'groupDescription',
+			                            'datasetId':'group',
+			                            'maximumSelectionLength':'1',
+			                            'placeholder':'Selecione o Grupo de Produto',
+			                            'fields':[
+			                                {'field':'groupId','label':'Código'},
+			                                {'field':'groupDescription','label':'Descrição'}
+			                            ]
+			                    	}" />
+			                    <input type="hidden" name="groupId" id="groupId">
+							</div>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+	</body>
+</html>

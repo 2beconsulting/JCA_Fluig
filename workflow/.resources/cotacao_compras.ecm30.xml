@@ -11,7 +11,7 @@
     <volumeId>Default</volumeId>
     <categoryId>Suprimentos</categoryId>
     <managerEngineAllocationId>Grupo</managerEngineAllocationId>
-    <managerEngineAllocationConfiguration>&lt;AssignmentController&gt;&lt;Group&gt;COMPRADORES&lt;/Group&gt;&lt;/AssignmentController&gt;</managerEngineAllocationConfiguration>
+    <managerEngineAllocationConfiguration>&lt;AssignmentController&gt;&lt;Group&gt;COMPRAS_COMPRADORES&lt;/Group&gt;&lt;/AssignmentController&gt;</managerEngineAllocationConfiguration>
     <snapshotFrequency>0</snapshotFrequency>
     <baseDay>0</baseDay>
     <baseMonth>0</baseMonth>
@@ -29,10 +29,10 @@
     <processDefinitionVersionPK>
       <companyId>1</companyId>
       <processId>Cotação</processId>
-      <version>91</version>
+      <version>1</version>
     </processDefinitionVersionPK>
     <versionDescription></versionDescription>
-    <formId>27769</formId>
+    <formId>746757</formId>
     <editionMode>true</editionMode>
     <updateAttachmentsVersion>false</updateAttachmentsVersion>
     <controlsAttachmentsSecurity>false</controlsAttachmentsSecurity>
@@ -721,7 +721,7 @@
         <version>1</version>
         <linkSequence>7</linkSequence>
       </processLinkPK>
-      <actionLabel>Notificar fornecedores</actionLabel>
+      <actionLabel>2. Notificar fornecedores</actionLabel>
       <returnPermited>false</returnPermited>
       <initialStateSequence>5</initialStateSequence>
       <finalStateSequence>3</finalStateSequence>
@@ -860,7 +860,7 @@
         <version>1</version>
         <linkSequence>26</linkSequence>
       </processLinkPK>
-      <actionLabel>Reabrir</actionLabel>
+      <actionLabel>2. Reabrir</actionLabel>
       <returnPermited>false</returnPermited>
       <initialStateSequence>23</initialStateSequence>
       <finalStateSequence>3</finalStateSequence>
@@ -877,7 +877,7 @@
         <version>1</version>
         <linkSequence>28</linkSequence>
       </processLinkPK>
-      <actionLabel></actionLabel>
+      <actionLabel>1. Finalizar Rodada</actionLabel>
       <returnPermited>false</returnPermited>
       <initialStateSequence>5</initialStateSequence>
       <finalStateSequence>30</finalStateSequence>
@@ -945,7 +945,7 @@
         <version>1</version>
         <linkSequence>35</linkSequence>
       </processLinkPK>
-      <actionLabel></actionLabel>
+      <actionLabel>1. Finalizar Rodada</actionLabel>
       <returnPermited>false</returnPermited>
       <initialStateSequence>23</initialStateSequence>
       <finalStateSequence>30</finalStateSequence>
@@ -1717,56 +1717,56 @@
         <version>1</version>
       </workflowProcessEventPK>
       <eventDescription>function servicetask3(attempt, message) {
-	var cotacao_encerramento 		= hAPI.getCardValue(&quot;cotacao_encerramento&quot;);
+	var cotacao_encerramento = hAPI.getCardValue(&quot;cotacao_encerramento&quot;);
 	var cotacao_encerramento_antigo = hAPI.getCardValue(&quot;cotacao_encerramento_antigo&quot;);
-	var ciclo 						= hAPI.getCardValue(&quot;ciclo_atual&quot;);
-	var especificacao_tecnica 		= hAPI.getCardValue(&quot;especificacao_tecnica&quot;);
-	
-	hAPI.getChildrenIndexes(&quot;tabFornecedor&quot;).forEach(function(idx){
-		var A2_COD 	= hAPI.getCardValue(&quot;A2_COD&quot;+&quot;___&quot;+idx);
-		var A2_LOJA = hAPI.getCardValue(&quot;A2_LOJA&quot;+&quot;___&quot;+idx);
-		var A2_NOME = hAPI.getCardValue(&quot;A2_NOME&quot;+&quot;___&quot;+idx);
-		
+	var ciclo = hAPI.getCardValue(&quot;ciclo_atual&quot;);
+	var especificacao_tecnica = hAPI.getCardValue(&quot;especificacao_tecnica&quot;);
+
+	hAPI.getChildrenIndexes(&quot;tabFornecedor&quot;).forEach(function (idx) {
+		var A2_COD = hAPI.getCardValue(&quot;A2_COD&quot; + &quot;___&quot; + idx);
+		var A2_LOJA = hAPI.getCardValue(&quot;A2_LOJA&quot; + &quot;___&quot; + idx);
+		var A2_NOME = hAPI.getCardValue(&quot;A2_NOME&quot; + &quot;___&quot; + idx);
+
 		var dsEmails = DatasetFactory.getDataset(
 			&quot;DS_COMPRAS_FORNECEDOR_GET-ACESSO&quot;,
 			null,
 			[
-				DatasetFactory.createConstraint(&quot;A2_COD&quot;	,A2_COD		,A2_COD		,ConstraintType.MUST),
-				DatasetFactory.createConstraint(&quot;A2_LOJA&quot;	,A2_LOJA	,A2_LOJA	,ConstraintType.MUST)
+				DatasetFactory.createConstraint(&quot;A2_COD&quot;, A2_COD, A2_COD, ConstraintType.MUST),
+				DatasetFactory.createConstraint(&quot;A2_LOJA&quot;, A2_LOJA, A2_LOJA, ConstraintType.MUST)
 			],
 			null
 		)
-		
-		if(dsEmails != null &amp;&amp; dsEmails.rowsCount &gt; 0 &amp;&amp; dsEmails.columnsName.indexOf(&quot;ERROR&quot;) &lt; 0){
+
+		if (dsEmails != null &amp;&amp; dsEmails.rowsCount &gt; 0 &amp;&amp; dsEmails.columnsName.indexOf(&quot;ERROR&quot;) &lt; 0) {
 			var destinatarios = [];
 			var parametros = [
-				{&quot;id&quot;:&quot;INSTANCEID&quot;				, &quot;value&quot;: getValue(&quot;WKNumProces&quot;).toString()},
-				{&quot;id&quot;:&quot;RODADA&quot;					, &quot;value&quot;: ciclo},
-				{&quot;id&quot;:&quot;A2_NOME&quot;					, &quot;value&quot;: A2_NOME.trim()},
-				{&quot;id&quot;:&quot;ESPECIFICACAO_TECNICA&quot;	, &quot;value&quot;: especificacao_tecnica},
-				{&quot;id&quot;:&quot;PRAZO&quot;					, &quot;value&quot;: cotacao_encerramento},
+				{ &quot;id&quot;: &quot;INSTANCEID&quot;, &quot;value&quot;: getValue(&quot;WKNumProces&quot;).toString() },
+				{ &quot;id&quot;: &quot;RODADA&quot;, &quot;value&quot;: ciclo },
+				{ &quot;id&quot;: &quot;A2_NOME&quot;, &quot;value&quot;: A2_NOME.trim() },
+				{ &quot;id&quot;: &quot;ESPECIFICACAO_TECNICA&quot;, &quot;value&quot;: especificacao_tecnica },
+				{ &quot;id&quot;: &quot;PRAZO&quot;, &quot;value&quot;: cotacao_encerramento },
 			]
-			for(var i = 0 ; i &lt; dsEmails.rowsCount ; i++){
-				destinatarios.push(dsEmails.getValue(i,&quot;emailRegister&quot;))
+			for (var i = 0; i &lt; dsEmails.rowsCount; i++) {
+				destinatarios.push(dsEmails.getValue(i, &quot;emailRegister&quot;))
 			}
-			
+
 			tools.sendMail(
 				cotacao_encerramento_antigo == &quot;&quot; ? ciclo == &quot;1&quot; ? &quot;TEMPLATE_COMPRAS_COTACAO_NOVA&quot; : &quot;TEMPLATE_COMPRAS_COTACAO_NOVA-RODADA&quot; : &quot;TEMPLATE_COMPRAS_COTACAO_PRAZO&quot;,
 				cotacao_encerramento_antigo == &quot;&quot; ? ciclo == &quot;1&quot; ? &quot;Nova Cotação Disponível&quot; : &quot;Nova Rodada de Cotações&quot; : &quot;Notificação de Encerramento de Prazo para Cotar&quot;,
 				destinatarios,
 				parametros
 			)
-			
-			hAPI.setCardValue(&quot;A2_NOTIFICA___&quot;+idx,&quot;Enviado&quot;)
+
+			hAPI.setCardValue(&quot;A2_NOTIFICA___&quot; + idx, &quot;Enviado&quot;)
 		}
-		else if(!dsEmails.columnsName.indexOf(&quot;ERROR&quot;) &lt; 0){
-			hAPI.setCardValue(&quot;A2_NOTIFICA___&quot;+idx, dsEmails.getValue(0,&quot;ERROR&quot;))
+		else if (!dsEmails.columnsName.indexOf(&quot;ERROR&quot;) &lt; 0) {
+			hAPI.setCardValue(&quot;A2_NOTIFICA___&quot; + idx, dsEmails.getValue(0, &quot;ERROR&quot;))
 		}
-		else{
-			hAPI.setCardValue(&quot;A2_NOTIFICA___&quot;+idx, &quot;Não localizado&quot;)
+		else {
+			hAPI.setCardValue(&quot;A2_NOTIFICA___&quot; + idx, &quot;Não localizado&quot;)
 		}
 	})
-	
+
 }</eventDescription>
     </WorkflowProcessEvent>
     <WorkflowProcessEvent>
@@ -1916,43 +1916,61 @@
         <companyId>1</companyId>
         <processId>cotacao_compras</processId>
         <propertyId>formCotacaoAux</propertyId>
-        <version>91</version>
+        <version>1</version>
       </advancedProcessPropertiesPK>
-      <propertieValue>41603</propertieValue>
+      <propertieValue>746754</propertieValue>
     </AdvancedProcessProperties>
     <AdvancedProcessProperties>
       <advancedProcessPropertiesPK>
         <companyId>1</companyId>
         <processId>cotacao_compras</processId>
         <propertyId>formPrincipal</propertyId>
-        <version>91</version>
+        <version>1</version>
       </advancedProcessPropertiesPK>
-      <propertieValue>ML001601</propertieValue>
+      <propertieValue>ML001722</propertieValue>
     </AdvancedProcessProperties>
     <AdvancedProcessProperties>
       <advancedProcessPropertiesPK>
         <companyId>1</companyId>
         <processId>cotacao_compras</processId>
         <propertyId>mlFormCotacao</propertyId>
-        <version>91</version>
+        <version>1</version>
       </advancedProcessPropertiesPK>
-      <propertieValue>ML001990</propertieValue>
+      <propertieValue>ML001742</propertieValue>
+    </AdvancedProcessProperties>
+    <AdvancedProcessProperties>
+      <advancedProcessPropertiesPK>
+        <companyId>1</companyId>
+        <processId>cotacao_compras</processId>
+        <propertyId>mlFormCotCotacao</propertyId>
+        <version>1</version>
+      </advancedProcessPropertiesPK>
+      <propertieValue>ML001740</propertieValue>
     </AdvancedProcessProperties>
     <AdvancedProcessProperties>
       <advancedProcessPropertiesPK>
         <companyId>1</companyId>
         <processId>cotacao_compras</processId>
         <propertyId>mlTabCotacao</propertyId>
-        <version>91</version>
+        <version>1</version>
       </advancedProcessPropertiesPK>
-      <propertieValue>ML001991</propertieValue>
+      <propertieValue>ML001743</propertieValue>
+    </AdvancedProcessProperties>
+    <AdvancedProcessProperties>
+      <advancedProcessPropertiesPK>
+        <companyId>1</companyId>
+        <processId>cotacao_compras</processId>
+        <propertyId>mlTabCotCotacao</propertyId>
+        <version>1</version>
+      </advancedProcessPropertiesPK>
+      <propertieValue>ML001741</propertieValue>
     </AdvancedProcessProperties>
     <AdvancedProcessProperties>
       <advancedProcessPropertiesPK>
         <companyId>1</companyId>
         <processId>cotacao_compras</processId>
         <propertyId>password</propertyId>
-        <version>91</version>
+        <version>1</version>
       </advancedProcessPropertiesPK>
       <propertieValue>2w8lJ6TtQGup0uGA</propertieValue>
     </AdvancedProcessProperties>
@@ -1961,7 +1979,7 @@
         <companyId>1</companyId>
         <processId>cotacao_compras</processId>
         <propertyId>publisherId</propertyId>
-        <version>91</version>
+        <version>1</version>
       </advancedProcessPropertiesPK>
       <propertieValue>admin</propertieValue>
     </AdvancedProcessProperties>
@@ -1970,81 +1988,63 @@
         <companyId>1</companyId>
         <processId>cotacao_compras</processId>
         <propertyId>tabCotacao</propertyId>
-        <version>91</version>
+        <version>1</version>
       </advancedProcessPropertiesPK>
-      <propertieValue>ML001791</propertieValue>
+      <propertieValue>ML001738</propertieValue>
     </AdvancedProcessProperties>
     <AdvancedProcessProperties>
       <advancedProcessPropertiesPK>
         <companyId>1</companyId>
         <processId>cotacao_compras</processId>
         <propertyId>tabFornecedor</propertyId>
-        <version>91</version>
+        <version>1</version>
       </advancedProcessPropertiesPK>
-      <propertieValue>ML001789</propertieValue>
+      <propertieValue>ML001727</propertieValue>
     </AdvancedProcessProperties>
     <AdvancedProcessProperties>
       <advancedProcessPropertiesPK>
         <companyId>1</companyId>
         <processId>cotacao_compras</processId>
         <propertyId>tabFornecedorProduto</propertyId>
-        <version>91</version>
+        <version>1</version>
       </advancedProcessPropertiesPK>
-      <propertieValue>ML001790</propertieValue>
+      <propertieValue>ML001737</propertieValue>
     </AdvancedProcessProperties>
     <AdvancedProcessProperties>
       <advancedProcessPropertiesPK>
         <companyId>1</companyId>
         <processId>cotacao_compras</processId>
         <propertyId>tabProduto</propertyId>
-        <version>91</version>
+        <version>1</version>
       </advancedProcessPropertiesPK>
-      <propertieValue>ML001787</propertieValue>
+      <propertieValue>ML001735</propertieValue>
     </AdvancedProcessProperties>
     <AdvancedProcessProperties>
       <advancedProcessPropertiesPK>
         <companyId>1</companyId>
         <processId>cotacao_compras</processId>
         <propertyId>tabSC</propertyId>
-        <version>91</version>
+        <version>1</version>
       </advancedProcessPropertiesPK>
-      <propertieValue>ML001788</propertieValue>
+      <propertieValue>ML001736</propertieValue>
     </AdvancedProcessProperties>
     <AdvancedProcessProperties>
       <advancedProcessPropertiesPK>
         <companyId>1</companyId>
         <processId>cotacao_compras</processId>
         <propertyId>tabTES</propertyId>
-        <version>91</version>
+        <version>1</version>
       </advancedProcessPropertiesPK>
-      <propertieValue>ML001826</propertieValue>
+      <propertieValue>ML001739</propertieValue>
     </AdvancedProcessProperties>
     <AdvancedProcessProperties>
       <advancedProcessPropertiesPK>
         <companyId>1</companyId>
         <processId>cotacao_compras</processId>
         <propertyId>username</propertyId>
-        <version>91</version>
+        <version>1</version>
       </advancedProcessPropertiesPK>
       <propertieValue>admin</propertieValue>
-    </AdvancedProcessProperties>
-    <AdvancedProcessProperties>
-      <advancedProcessPropertiesPK>
-        <companyId>1</companyId>
-        <processId>cotacao_compras</processId>
-        <propertyId>mlFormCotCotacao</propertyId>
-        <version>91</version>
-      </advancedProcessPropertiesPK>
-      <propertieValue>ML0011106</propertieValue>
-    </AdvancedProcessProperties>
-    <AdvancedProcessProperties>
-      <advancedProcessPropertiesPK>
-        <companyId>1</companyId>
-        <processId>cotacao_compras</processId>
-        <propertyId>mlTabCotCotacao</propertyId>
-        <version>91</version>
-      </advancedProcessPropertiesPK>
-      <propertieValue>ML0011107</propertieValue>
     </AdvancedProcessProperties>
   </list>
   <list>
@@ -2104,7 +2104,7 @@
       <processLinkBendPK>
         <companyId>1</companyId>
         <processId>cotacao_compras</processId>
-        <version>91</version>
+        <version>1</version>
         <linkSequence>28</linkSequence>
         <bendSequence>1</bendSequence>
       </processLinkBendPK>
@@ -2115,7 +2115,7 @@
       <processLinkBendPK>
         <companyId>1</companyId>
         <processId>cotacao_compras</processId>
-        <version>91</version>
+        <version>1</version>
         <linkSequence>29</linkSequence>
         <bendSequence>1</bendSequence>
       </processLinkBendPK>
@@ -2126,7 +2126,7 @@
       <processLinkBendPK>
         <companyId>1</companyId>
         <processId>cotacao_compras</processId>
-        <version>91</version>
+        <version>1</version>
         <linkSequence>33</linkSequence>
         <bendSequence>1</bendSequence>
       </processLinkBendPK>
@@ -2137,7 +2137,7 @@
       <processLinkBendPK>
         <companyId>1</companyId>
         <processId>cotacao_compras</processId>
-        <version>91</version>
+        <version>1</version>
         <linkSequence>34</linkSequence>
         <bendSequence>1</bendSequence>
       </processLinkBendPK>
@@ -2148,7 +2148,7 @@
       <processLinkBendPK>
         <companyId>1</companyId>
         <processId>cotacao_compras</processId>
-        <version>91</version>
+        <version>1</version>
         <linkSequence>35</linkSequence>
         <bendSequence>1</bendSequence>
       </processLinkBendPK>
@@ -2162,59 +2162,85 @@
       <extendedPropertyFieldPK>
         <companyId>1</companyId>
         <processId>cotacao_compras</processId>
-        <version>91</version>
+        <version>1</version>
         <stateSequence>0</stateSequence>
         <propertyName>formCotacaoAux</propertyName>
       </extendedPropertyFieldPK>
       <propertyType>0</propertyType>
       <propertyDescription>formCotacaoAux</propertyDescription>
-      <propertyValue>41603</propertyValue>
+      <propertyValue>746754</propertyValue>
       <isDefaultProperty>false</isDefaultProperty>
     </ExtendedPropertyField>
     <ExtendedPropertyField>
       <extendedPropertyFieldPK>
         <companyId>1</companyId>
         <processId>cotacao_compras</processId>
-        <version>91</version>
+        <version>1</version>
         <stateSequence>0</stateSequence>
         <propertyName>formPrincipal</propertyName>
       </extendedPropertyFieldPK>
       <propertyType>0</propertyType>
       <propertyDescription>formPrincipal</propertyDescription>
-      <propertyValue>ML001601</propertyValue>
+      <propertyValue>ML001722</propertyValue>
       <isDefaultProperty>false</isDefaultProperty>
     </ExtendedPropertyField>
     <ExtendedPropertyField>
       <extendedPropertyFieldPK>
         <companyId>1</companyId>
         <processId>cotacao_compras</processId>
-        <version>91</version>
+        <version>1</version>
         <stateSequence>0</stateSequence>
         <propertyName>mlFormCotacao</propertyName>
       </extendedPropertyFieldPK>
       <propertyType>0</propertyType>
       <propertyDescription>mlFormCotacao</propertyDescription>
-      <propertyValue>ML001990</propertyValue>
+      <propertyValue>ML001742</propertyValue>
       <isDefaultProperty>false</isDefaultProperty>
     </ExtendedPropertyField>
     <ExtendedPropertyField>
       <extendedPropertyFieldPK>
         <companyId>1</companyId>
         <processId>cotacao_compras</processId>
-        <version>91</version>
+        <version>1</version>
+        <stateSequence>0</stateSequence>
+        <propertyName>mlFormCotCotacao</propertyName>
+      </extendedPropertyFieldPK>
+      <propertyType>0</propertyType>
+      <propertyDescription>mlFormCotCotacao</propertyDescription>
+      <propertyValue>ML001740</propertyValue>
+      <isDefaultProperty>false</isDefaultProperty>
+    </ExtendedPropertyField>
+    <ExtendedPropertyField>
+      <extendedPropertyFieldPK>
+        <companyId>1</companyId>
+        <processId>cotacao_compras</processId>
+        <version>1</version>
         <stateSequence>0</stateSequence>
         <propertyName>mlTabCotacao</propertyName>
       </extendedPropertyFieldPK>
       <propertyType>0</propertyType>
       <propertyDescription>mlTabCotacao</propertyDescription>
-      <propertyValue>ML001991</propertyValue>
+      <propertyValue>ML001743</propertyValue>
       <isDefaultProperty>false</isDefaultProperty>
     </ExtendedPropertyField>
     <ExtendedPropertyField>
       <extendedPropertyFieldPK>
         <companyId>1</companyId>
         <processId>cotacao_compras</processId>
-        <version>91</version>
+        <version>1</version>
+        <stateSequence>0</stateSequence>
+        <propertyName>mlTabCotCotacao</propertyName>
+      </extendedPropertyFieldPK>
+      <propertyType>0</propertyType>
+      <propertyDescription>mlTabCotCotacao</propertyDescription>
+      <propertyValue>ML001741</propertyValue>
+      <isDefaultProperty>false</isDefaultProperty>
+    </ExtendedPropertyField>
+    <ExtendedPropertyField>
+      <extendedPropertyFieldPK>
+        <companyId>1</companyId>
+        <processId>cotacao_compras</processId>
+        <version>1</version>
         <stateSequence>0</stateSequence>
         <propertyName>password</propertyName>
       </extendedPropertyFieldPK>
@@ -2227,7 +2253,7 @@
       <extendedPropertyFieldPK>
         <companyId>1</companyId>
         <processId>cotacao_compras</processId>
-        <version>91</version>
+        <version>1</version>
         <stateSequence>0</stateSequence>
         <propertyName>publisherId</propertyName>
       </extendedPropertyFieldPK>
@@ -2240,117 +2266,91 @@
       <extendedPropertyFieldPK>
         <companyId>1</companyId>
         <processId>cotacao_compras</processId>
-        <version>91</version>
+        <version>1</version>
         <stateSequence>0</stateSequence>
         <propertyName>tabCotacao</propertyName>
       </extendedPropertyFieldPK>
       <propertyType>0</propertyType>
       <propertyDescription>tabCotacao</propertyDescription>
-      <propertyValue>ML001791</propertyValue>
+      <propertyValue>ML001738</propertyValue>
       <isDefaultProperty>false</isDefaultProperty>
     </ExtendedPropertyField>
     <ExtendedPropertyField>
       <extendedPropertyFieldPK>
         <companyId>1</companyId>
         <processId>cotacao_compras</processId>
-        <version>91</version>
+        <version>1</version>
         <stateSequence>0</stateSequence>
         <propertyName>tabFornecedor</propertyName>
       </extendedPropertyFieldPK>
       <propertyType>0</propertyType>
       <propertyDescription>tabFornecedor</propertyDescription>
-      <propertyValue>ML001789</propertyValue>
+      <propertyValue>ML001727</propertyValue>
       <isDefaultProperty>false</isDefaultProperty>
     </ExtendedPropertyField>
     <ExtendedPropertyField>
       <extendedPropertyFieldPK>
         <companyId>1</companyId>
         <processId>cotacao_compras</processId>
-        <version>91</version>
+        <version>1</version>
         <stateSequence>0</stateSequence>
         <propertyName>tabFornecedorProduto</propertyName>
       </extendedPropertyFieldPK>
       <propertyType>0</propertyType>
       <propertyDescription>tabFornecedorProduto</propertyDescription>
-      <propertyValue>ML001790</propertyValue>
+      <propertyValue>ML001737</propertyValue>
       <isDefaultProperty>false</isDefaultProperty>
     </ExtendedPropertyField>
     <ExtendedPropertyField>
       <extendedPropertyFieldPK>
         <companyId>1</companyId>
         <processId>cotacao_compras</processId>
-        <version>91</version>
+        <version>1</version>
         <stateSequence>0</stateSequence>
         <propertyName>tabProduto</propertyName>
       </extendedPropertyFieldPK>
       <propertyType>0</propertyType>
       <propertyDescription>tabProduto</propertyDescription>
-      <propertyValue>ML001787</propertyValue>
+      <propertyValue>ML001735</propertyValue>
       <isDefaultProperty>false</isDefaultProperty>
     </ExtendedPropertyField>
     <ExtendedPropertyField>
       <extendedPropertyFieldPK>
         <companyId>1</companyId>
         <processId>cotacao_compras</processId>
-        <version>91</version>
+        <version>1</version>
         <stateSequence>0</stateSequence>
         <propertyName>tabSC</propertyName>
       </extendedPropertyFieldPK>
       <propertyType>0</propertyType>
       <propertyDescription>tabSC</propertyDescription>
-      <propertyValue>ML001788</propertyValue>
+      <propertyValue>ML001736</propertyValue>
       <isDefaultProperty>false</isDefaultProperty>
     </ExtendedPropertyField>
     <ExtendedPropertyField>
       <extendedPropertyFieldPK>
         <companyId>1</companyId>
         <processId>cotacao_compras</processId>
-        <version>91</version>
+        <version>1</version>
         <stateSequence>0</stateSequence>
         <propertyName>tabTES</propertyName>
       </extendedPropertyFieldPK>
       <propertyType>0</propertyType>
       <propertyDescription>tabTES</propertyDescription>
-      <propertyValue>ML001826</propertyValue>
+      <propertyValue>ML001739</propertyValue>
       <isDefaultProperty>false</isDefaultProperty>
     </ExtendedPropertyField>
     <ExtendedPropertyField>
       <extendedPropertyFieldPK>
         <companyId>1</companyId>
         <processId>cotacao_compras</processId>
-        <version>91</version>
+        <version>1</version>
         <stateSequence>0</stateSequence>
         <propertyName>username</propertyName>
       </extendedPropertyFieldPK>
       <propertyType>0</propertyType>
       <propertyDescription>username</propertyDescription>
       <propertyValue>admin</propertyValue>
-      <isDefaultProperty>false</isDefaultProperty>
-    </ExtendedPropertyField>
-    <ExtendedPropertyField>
-      <extendedPropertyFieldPK>
-        <companyId>1</companyId>
-        <processId>cotacao_compras</processId>
-        <version>91</version>
-        <stateSequence>0</stateSequence>
-        <propertyName>mlFormCotCotacao</propertyName>
-      </extendedPropertyFieldPK>
-      <propertyType>0</propertyType>
-      <propertyDescription>mlFormCotCotacao</propertyDescription>
-      <propertyValue>ML0011106</propertyValue>
-      <isDefaultProperty>false</isDefaultProperty>
-    </ExtendedPropertyField>
-    <ExtendedPropertyField>
-      <extendedPropertyFieldPK>
-        <companyId>1</companyId>
-        <processId>cotacao_compras</processId>
-        <version>91</version>
-        <stateSequence>0</stateSequence>
-        <propertyName>mlTabCotCotacao</propertyName>
-      </extendedPropertyFieldPK>
-      <propertyType>0</propertyType>
-      <propertyDescription>mlTabCotCotacao</propertyDescription>
-      <propertyValue>ML0011107</propertyValue>
       <isDefaultProperty>false</isDefaultProperty>
     </ExtendedPropertyField>
   </list>

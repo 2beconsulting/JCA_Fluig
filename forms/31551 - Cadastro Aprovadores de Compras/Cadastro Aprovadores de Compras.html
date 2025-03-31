@@ -1,0 +1,58 @@
+<html>
+	<head>
+		<link type="text/css" rel="stylesheet" href="/style-guide/css/fluig-style-guide.min.css"/>
+		<script type="text/javascript" src="/portal/resources/js/jquery/jquery.js"></script>
+		<script type="text/javascript" src="/portal/resources/js/jquery/jquery-ui.min.js"></script>
+		<script type="text/javascript" src="/portal/resources/js/mustache/mustache-min.js"></script>
+		<script type="text/javascript" src="/style-guide/js/fluig-style-guide.min.js" charset="utf-8"></script>
+		<script type="text/javascript" src="main.js"></script>
+	</head>
+	<body>
+		<div class="fluig-style-guide">
+			<form name="form" role="form">
+				<div class="row">
+					<div class="col-md-10 form-group">
+						<label>Nivel <span class="text-danger">*</span></label>
+						<input type="text" class="form-control" name="nivel" id="nivel">
+					</div>
+					<div class="col-md-2 form-group">
+						<label>Valor Limite <span class="text-danger">*</span></label>
+						<input type="text" class="form-control" name="valorLimite" id="valorLimite" mask="#.##0,00">
+					</div>
+				</div>
+				<div class="panel panel-primary" id="panelAprovadores">
+					<div class="panel-heading">
+						<h3 class="panel-title">Aprovadores <span class="text-danger">*</span></h3>
+					</div>
+					<div class="panel-body">
+						<table class="table table-striped" tablename="tabAprovadores">
+							<thead class="hide">
+								<tr>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>
+										<input type="hidden" name="aprovadorMatricula" id="aprovadorMatricula">
+										<input type="zoom" name="aprovadorNome" id="aprovadorNome" data-zoom="{
+				                            'displayKey':'colleagueName',
+				                            'datasetId':'colleague',
+				                            'maximumSelectionLength':'1',
+				                            'placeholder':'Selecione o usuário',
+				                            'filterValues':'active,true',
+				                            'fields':[
+				                                {'field':'colleagueId','label':'Matrícula'},
+				                                {'field':'colleagueName','label':'Nome'}
+				                            ]
+				                    	}">
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</form>
+		</div>
+	</body>
+</html>

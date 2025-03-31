@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recuperação de Senha</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+
+        table {
+            border-spacing: 0;
+            width: 100%;
+            background-color: #f9f9f9;
+        }
+
+        .email-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: #ffffff;
+            padding: 20px;
+            border: 1px solid #dddddd;
+        }
+
+        h1 {
+            color: #333333;
+            font-size: 24px;
+            margin: 0 0 20px;
+        }
+
+        p {
+            font-size: 16px;
+            color: #555555;
+            margin: 0 0 10px;
+        }
+
+        .footer {
+            font-size: 14px;
+            color: #aaaaaa;
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .password-wrapper {
+            margin-top: 10px;
+        }
+
+        .password-input {
+            font-size: 16px;
+            padding: 10px;
+            border: 1px solid #cccccc;
+            border-radius: 5px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+
+<body>
+    <br>
+    <table>
+        <tr>
+            <td align="center">
+                <table class="email-container" cellspacing="0" cellpadding="0">
+                    <tr>
+                        <td>
+                            <h1>Olá!</h1>
+                            <p>Segue sua senha correspondente ao usuário de e-mail:</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <table cellspacing="0" cellpadding="0" width="100%">
+                                <tr>
+                                    <td style="font-size: 16px; color: #555555; padding: 10px 0;">
+                                        <strong>E-mail:</strong> ${MAIL}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="font-size: 16px; color: #555555; padding: 10px 0;">
+                                        <strong>Senha:</strong> ${SENHA}
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+                <p class="footer">
+                    Se você não solicitou essa informação, por favor, entre em contato conosco
+                </p>
+            </td>
+        </tr>
+    </table>
+</body>
+
+</html>

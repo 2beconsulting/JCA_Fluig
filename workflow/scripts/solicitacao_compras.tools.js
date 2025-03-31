@@ -744,9 +744,9 @@ var tools = {
 				//log.info("-- filtered --");
 				//log.dir(filtered);
 
-				if (el.C8_PRECO != "") {
-					/** @todo identificar se, quando o cara incluir a cotação numa rodada seguinte, se vai descer. 
-					 * Neste caso, parece que, como não tinha a cotação, o protheus não devolve e consequentemente vai ser o registro  */
+				if (tools.formata.toBranco(el.C8_PRECO) != ""
+					&& tools.formata.toBranco(el.C8_QUANT) != ""
+					&& tools.formata.toBranco(el.C8_PRAZO) != "") {
 					if (filtered.length > 0) {
 						filtered[0]["ITEM"].push({
 							"C8_PRODUTO": el.C8_PRODUTO.trim(),
@@ -756,8 +756,7 @@ var tools = {
 							"C8_TES": tools.tes.get(dadosFluig.TES, el.C8_FORNECE, el.C8_LOJA, el.C8_PRODUTO)
 						})
 					}
-				} else {
-					/** @todo aqui para não enviar o registro da cotação sem preço */
+				} /*else {
 					if (filtered.length > 0) {
 						filtered[0]["ITEM"].push({
 							"C8_PRODUTO": el.C8_PRODUTO.trim(),
@@ -767,7 +766,7 @@ var tools = {
 							"C8_TES": "001"
 						})
 					}
-				}
+				}*/
 
 			})
 
@@ -1060,7 +1059,7 @@ var tools = {
 		},
 		getCardId: function () {
 			var ds = integra.getDBFluig(
-				"SELECT DISTINCT ML.DOCUMENTID FROM ML001990 ML \
+				"SELECT DISTINCT ML.DOCUMENTID FROM " + hAPI.getAdvancedProperty("mlFormCotacao") + " ML \
 					  INNER JOIN DOCUMENTO DOC ON DOC.NR_DOCUMENTO = ML.DOCUMENTID AND DOC.NR_VERSAO = ML.VERSION \
 					  WHERE ML.idEmpresa = '"+ hAPI.getCardValue("idEmpresa") + "' AND ML.C8_NUM = '" + hAPI.getCardValue("C8_NUM") + "' AND ML.C8_CICLO = '" + hAPI.getCardValue("ciclo_atual") + "'"
 			)
@@ -1068,7 +1067,7 @@ var tools = {
 			return ds != null && ds.rowsCount > 0 ? ds.getValue(0, "documentid") : 0
 		},
 		getData: function () {
-			log.info(">> tools.cotacao.getData [#1049]");
+			tools.log(">> tools.cotacao.getData [#1049]");
 			var obj = { "ok": false, "dados": [], "TES": [], "fornec": [] };
 
 			try {
@@ -1145,8 +1144,7 @@ var tools = {
 						],
 						null
 					)
-					log.info('-- DS_CONSULTA_AUXILIAR_COTACAO')
-					log.dir(ds)
+					tools.log('-- DS_CONSULTA_AUXILIAR_COTACAO')
 
 					if (ds != null && ds.values.length > 0) {
 						for (var i = 0; i < ds.values.length; i++) {
@@ -1174,11 +1172,9 @@ var tools = {
 						}
 					}
 
-					log.info("++ obj");
+					tools.log("++ obj");
 					log.dir(obj);
-					log.info("-- obj");
-					log.info(">> tools.cotacao.getData [#1159]")
-					/** @todo puxar aqui a mudança para regularizar a rodada dois, com os fornecedores em branco */
+					tools.log(">> tools.cotacao.getData [#1159]");
 					if (obj.dados.length > 0) {
 
 						var updateFields = {};
@@ -1188,6 +1184,8 @@ var tools = {
 						log.dir(cotacoes)
 						for (var i = 0; i < cotacoes.rowsCount; i++) {
 							var idx = 1 * cotacoes.getValue(i, "idx");
+							log.info(">> indexesChildren linha: " + idx)
+							log.info(" || C8_PRODUTO: " + cotacoes.getValue(i, "C8_PRODUTO") + " || C8_FORNECE: " + cotacoes.getValue(i, "C8_FORNECE") + " || C8_LOJA: " + cotacoes.getValue(i, "C8_LOJA"))
 							var dataFiltered = obj.dados.filter(function (el) { return el.C8_PRODUTO == cotacoes.getValue(i, "C8_PRODUTO") && el.C8_FORNECE == cotacoes.getValue(i, "C8_FORNECE") && el.C8_LOJA == cotacoes.getValue(i, "C8_LOJA") });
 							if (dataFiltered.length > 0 /*&& dataFiltered[0]["C8_PRECO"] != "" && dataFiltered[0]["C8_PRECO"] != "0.00 && dataFiltered[0]["C8_PRECO"] != "0.000000"*/) {
 								log.info(">> dataFiltered <<");
@@ -1209,6 +1207,25 @@ var tools = {
 								updateCotacoes["C8_VALSOL" + "___" + idx] = (dataFiltered[0]["C8_VALSOL"] != null && dataFiltered[0]["C8_VALSOL"] != "null") ? dataFiltered[0]["C8_VALSOL"] : "";
 								updateCotacoes["C8_VALIDA" + "___" + idx] = (dataFiltered[0]["C8_VALIDA"] != null && dataFiltered[0]["C8_VALIDA"] != "null") ? dataFiltered[0]["C8_VALIDA"] : "";
 								updateCotacoes["VENCEDOR" + "___" + idx] = (dataFiltered[0]["VENCEDOR"] != null && dataFiltered[0]["VENCEDOR"] != "null") ? dataFiltered[0]["VENCEDOR"] : "";
+							} else {
+								updateCotacoes["C8_ITEM" + "___" + idx] = tools.formata.toBranco(cotacoes.getValue(i, "C8_ITEM"));
+								updateCotacoes["C8_PRODUTO" + "___" + idx] = tools.formata.toBranco(cotacoes.getValue(i, "C8_PRODUTO"));
+								updateCotacoes["C8_UM" + "___" + idx] = tools.formata.toBranco(cotacoes.getValue(i, "C8_UM"));
+								updateCotacoes["C8_FORNECE" + "___" + idx] = tools.formata.toBranco(cotacoes.getValue(i, "C8_FORNECE"));
+								updateCotacoes["C8_LOJA" + "___" + idx] = tools.formata.toBranco(cotacoes.getValue(i, "C8_LOJA"));
+								updateCotacoes["C8_QUANT" + "___" + idx] = tools.formata.toBranco(cotacoes.getValue(i, "C8_QUANT"));
+								updateCotacoes["C8_PRECO" + "___" + idx] = tools.formata.toBranco(cotacoes.getValue(i, "C8_PRECO"));
+								updateCotacoes["C8_TOTAL" + "___" + idx] = tools.formata.toBranco(cotacoes.getValue(i, "C8_TOTAL"));
+								updateCotacoes["C8_PRAZO" + "___" + idx] = tools.formata.toBranco(cotacoes.getValue(i, "C8_PRAZO"));
+								updateCotacoes["C8_FILENT" + "___" + idx] = tools.formata.toBranco(cotacoes.getValue(i, "C8_FILENT"));
+								updateCotacoes["C8_VALIPI" + "___" + idx] = tools.formata.toBranco(cotacoes.getValue(i, "C8_VALIPI"));
+								updateCotacoes["C8_VALICM" + "___" + idx] = tools.formata.toBranco(cotacoes.getValue(i, "C8_VALICM"));
+								updateCotacoes["C8_VALISS" + "___" + idx] = tools.formata.toBranco(cotacoes.getValue(i, "C8_VALISS"));
+								updateCotacoes["C8_DIFAL" + "___" + idx] = tools.formata.toBranco(cotacoes.getValue(i, "C8_DIFAL"));
+								updateCotacoes["C8_VALSOL" + "___" + idx] = tools.formata.toBranco(cotacoes.getValue(i, "C8_VALSOL"));
+								updateCotacoes["C8_VALIDA" + "___" + idx] = tools.formata.toBranco(cotacoes.getValue(i, "C8_VALIDA"));
+								updateCotacoes["VENCEDOR" + "___" + idx] = tools.formata.toBranco(cotacoes.getValue(i, "VENCEDOR"));
+
 							}
 						}
 
@@ -1221,9 +1238,6 @@ var tools = {
 							}
 						})
 
-						log.info("++ tabTES")
-						log.dir(tabTES)
-						log.info("-- tabTES")
 
 						obj.TES.forEach(function (el) {
 							var filtTES = tabTES.filter(function (t) { return t.TES_A2_COD == el.TES_A2_COD && t.TES_A2_LOJA == el.TES_A2_LOJA && t.TES_B1_COD == el.TES_B1_COD });
@@ -1251,10 +1265,6 @@ var tools = {
 							}
 						})
 
-						log.info("++ tabFornecedor")
-						log.dir(tabFornecedor)
-						log.info("-- tabFornecedor")
-
 						obj.fornec.forEach(function (el) {
 							var filtFornec = tabFornecedor.filter(function (t) { return t.A2_COD == el.A2_COD && t.A2_LOJA == el.A2_LOJA });
 
@@ -1268,9 +1278,6 @@ var tools = {
 								updateFields["A2_VALIDA" + "___" + filtFornec[0].idx] = el["A2_VALIDA"];
 							}
 						})
-
-						log.info(">> updateFields <<")
-						log.dir(updateFields);
 
 						if (Object.keys(updateFields).length > 0) {
 							var formFields = { "values": [] };
@@ -1291,15 +1298,9 @@ var tools = {
 								}
 							}
 
-							log.info(">> formFields <<");
-							log.dir(formFields);
-
 							obj["ok"] = true;
 							obj["formFields"] = formFields;
 						}
-
-						log.info(">> updateCotacoes <<")
-						log.dir(updateCotacoes);
 
 						if (Object.keys(updateCotacoes).length > 0) {
 							var cotacaoFields = { "values": [] };
@@ -1314,17 +1315,14 @@ var tools = {
 							})
 
 							log.info(">> cotacaoFields <<");
-							log.dir(cotacaoFields);
+							tools.log(cotacaoFields);
 
 							obj["ok"] = true;
 							obj["cotacaoFields"] = cotacaoFields;
 						}
 
 					} else {
-						obj = {
-							"ok": false,
-							"error": "Não foi encontrado nenhum dado de cotação para recuperar da solicitação filha " + solicFilha
-						}
+						throw "Não foi encontrado nenhum dado de cotação para recuperar da solicitação filha " + solicFilha;
 					}
 				} else { // Para regularização apenas carregará os dados da própria C8 da solicitação atual
 					var indexesChildren = hAPI.getChildrenIndexes("tabCotacao");
@@ -1372,7 +1370,7 @@ var tools = {
 
 				}
 
-				log.info(">> tools.cotacao.getData [#333]")
+				tools.log(">> tools.cotacao.getData [#333]")
 				obj.ok = true;
 			} catch (e) {
 				obj.ok = false;
@@ -1518,6 +1516,18 @@ var tools = {
 		}
 	},
 	formata: {
+		toBranco: function (oldValue) {
+
+			if (oldValue == undefined
+				|| oldValue == "undefined"
+				|| oldValue == null
+				|| oldValue == "null"
+				|| oldValue == ""
+			)
+				return ""
+			return oldValue
+
+		},
 		toFloat: function (oldValue) {
 			if (oldValue != "") {
 				var newValue = oldValue;
@@ -2088,7 +2098,11 @@ var tools = {
 			}
 
 			cotacoes.forEach(function (cotacao) {
-				if (cotacao["C8_PRECO"] != "" && cotacao["C8_PRECO"] != "0.00" && cotacao["C8_PRECO"] != "0.000000") {
+				if (tools.formata.toBranco(cotacao["C8_PRECO"]) != ""
+					&& tools.formata.toBranco(cotacao["C8_QUANT"]) != ""
+					&& tools.formata.toBranco(cotacao["C8_PRAZO"]) != ""
+					&& cotacao["C8_PRECO"] != "0.00"
+					&& cotacao["C8_PRECO"] != "0.000000") {
 					var filterFORNECE = FORNECE.filter(function (el) { return el.C8_FORNECE == (cotacao["C8_FORNECE"] + cotacao["C8_LOJA"]) })
 					if (filterFORNECE.length > 0) {
 						filterFORNECE[0].ITEM.push({
