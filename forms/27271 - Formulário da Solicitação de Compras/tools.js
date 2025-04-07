@@ -64,7 +64,8 @@ var tools = {
 		},
 		listaItens(idPastaGED) {
 			let obj = [];
-			return obj;
+			if (idPastaGED == "" || idPastaGED == null || idPastaGED == "0")
+				return obj;
 			let ds = DatasetFactory.getDataset(
 				"document",
 				null,
@@ -154,6 +155,16 @@ var tools = {
 		if (decisaoAprovador == "nao" || decisaoAprovador == "retornar") $("#descReprovAprov3,#_descReprovAprov3").closest(".form-group").show();
 
 	},
+	validaDataValida(date, holidayArray) {
+
+		if (date.getDay() == '0' || date.getDay() == '6')
+			return false
+
+		if (holidayArray.indexOf(date) > -1)
+			return false
+
+		return true
+	},
 	calculaPrazoEntrega: function () {
 		let tipoSC = $("[name=tipoSc]:checked").val();
 
@@ -166,13 +177,27 @@ var tools = {
 				],
 				null
 			)
-
+			let arrHolidays = tools.getHoliday()
+			let isDateValid = false;
+			let tentativas = 1;
 			if (ds != null && ds.values.length > 0) {
 				let dias = 1 * ds.values[0]["prazo_" + tipoSC];
 
 				if (!isNaN(dias)) {
 					let d = new Date();
 					d.setDate(d.getDate() + dias);
+					d.setHours(0);
+					d.setMinutes(0);
+					d.setMilliseconds(0);
+
+					isDateValid = tools.validaDataValida(d, arrHolidays);
+					while (!isDateValid && tentativas < 5) {
+
+						d.setDate(d.getDate() + 1);
+						isDateValid = tools.validaDataValida(d, arrHolidays);
+
+						tentativas++
+					}
 
 					let txtDate = (d.getDate() < 10 ? "0" + d.getDate() : d.getDate()) + "/" + ((d.getMonth() + 1) < 10 ? "0" + (d.getMonth() + 1) : (d.getMonth() + 1)) + "/" + d.getFullYear()
 
@@ -182,6 +207,41 @@ var tools = {
 				}
 			}
 		}
+	},
+	normalizaInteiro: function (dataRef) {
+		dataRef += "";
+		dataRef = dataRef.length == 1 ? "0" + dataRef : dataRef;
+		return dataRef
+	},
+	getHoliday: () => {
+		let ds = DatasetFactory.getDataset(
+			"holiday",
+			null,
+			null,
+			null
+		);
+		let testedata = new Date()
+		let anoAtual = testedata.getFullYear();
+		if (ds.values.length > 0) {
+			let arrayDatas = []
+
+			arrayDatas = ds.values.reduce(function (acc, elem, index) {
+
+				if (elem.holidayYear == 0) {
+					acc.push(new Date(`${anoAtual}-${tools.normalizaInteiro(elem.holidayMonth)}-${tools.normalizaInteiro(elem.holidayDay)}T00:00`))
+					acc.push(new Date(`${anoAtual + 1}-${tools.normalizaInteiro(elem.holidayMonth)}-${tools.normalizaInteiro(elem.holidayDay)}T00:00`))
+					acc.push(new Date(`${anoAtual + 2}-${tools.normalizaInteiro(elem.holidayMonth)}-${tools.normalizaInteiro(elem.holidayDay)}T00:00`))
+				} else {
+					let dataRef = elem.dayFormatted
+					dataRef = dataRef.split("-").reverse().join("-")
+					acc.push(new Date(dataRef + "T00:00"))
+				}
+
+				return acc;
+			}, [])
+			return arrayDatas;
+		}
+		return []
 	},
 	customRemoveChild(oElement) {
 		fnWdkRemoveChild(oElement);
@@ -2746,7 +2806,15 @@ var tools = {
 		carregaDiv() {
 			if ($("[name*=tipoSc]:checked").val() != "5" || aDados.cotacoes.length > 0) {
 				let temp = $("#tmpl5").html();
-				let html = Mustache.render(temp, aDados);
+				let tempDados = {
+					fornecedoresAtivo: null,
+					TES: null,
+					produtos: null,
+				}
+				tempDados.fornecedoresAtivo = aDados.fornecedoresAtivo
+				tempDados.TES = aDados.TES
+				tempDados.produtos = aDados.produtos
+				let html = Mustache.render(temp, tempDados);
 
 				FLUIGC.modal({
 					title: 'Preencher dados TES',

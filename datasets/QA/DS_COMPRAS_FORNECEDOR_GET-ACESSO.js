@@ -165,7 +165,9 @@ var tools = {
 		var atualDate = new Date();
 		var novaData = new Date();
 		novaData.setDate(atualDate.getDate() + 365);
-		return novaData.toLocaleDateString("pt-BR").split("/").reverse().join("-");
+		//**
+		// @todo ajustar aqui */
+		return novaData.split("/").join("-");
 	},
 	novoAcesso: function (dadosFornec) {
 		var passw = tools.generatePassword();
