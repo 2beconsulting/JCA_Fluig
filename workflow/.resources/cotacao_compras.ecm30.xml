@@ -29,7 +29,7 @@
     <processDefinitionVersionPK>
       <companyId>1</companyId>
       <processId>Cotação</processId>
-      <version>5</version>
+      <version>6</version>
     </processDefinitionVersionPK>
     <versionDescription></versionDescription>
     <formId>746757</formId>
@@ -1259,55 +1259,61 @@
         <processId>cotacao_compras</processId>
         <version>1</version>
       </workflowProcessEventPK>
-      <eventDescription>function onNotify(subject, receivers, template, params){&#xd;
-	if(getValue(&quot;WKNumState&quot;) == 5 &amp;&amp; template == &quot;TPLTASK_WILL_EXPIRE&quot;){&#xd;
+      <eventDescription>function onNotify(subject, receivers, template, params) {&#xd;
+	if (getValue(&quot;WKNumState&quot;) == 5 &amp;&amp; template == &quot;TPLTASK_WILL_EXPIRE&quot;) {&#xd;
 		receivers.clear();&#xd;
-		&#xd;
-		var cotacao_encerramento 		= hAPI.getCardValue(&quot;cotacao_encerramento&quot;);&#xd;
-		var ciclo 						= hAPI.getCardValue(&quot;ciclo_atual&quot;);&#xd;
-		var especificacao_tecnica 		= hAPI.getCardValue(&quot;especificacao_tecnica&quot;);&#xd;
-		&#xd;
-		hAPI.getChildrenIndexes(&quot;tabFornecedor&quot;).forEach(function(idx){&#xd;
-			var A2_COD 	= hAPI.getCardValue(&quot;A2_COD&quot;+&quot;___&quot;+idx);&#xd;
-			var A2_LOJA = hAPI.getCardValue(&quot;A2_LOJA&quot;+&quot;___&quot;+idx);&#xd;
-			var A2_NOME = hAPI.getCardValue(&quot;A2_NOME&quot;+&quot;___&quot;+idx);&#xd;
-			&#xd;
+&#xd;
+		var cotacao_encerramento = hAPI.getCardValue(&quot;cotacao_encerramento&quot;);&#xd;
+		var ciclo = hAPI.getCardValue(&quot;ciclo_atual&quot;);&#xd;
+		var especificacao_tecnica = hAPI.getCardValue(&quot;especificacao_tecnica&quot;);&#xd;
+		var WKNumProces = getValue(&quot;WKNumProces&quot;);&#xd;
+		var cardData = hAPI.getCardData(WKNumProces);&#xd;
+		var tableFornecedor = tools.getTableFilho(&#xd;
+			cardData,&#xd;
+			[&quot;A2_COD&quot;, &quot;A2_LOJA&quot;, &quot;A2_NOME&quot;, &quot;A2_NOTIFICA&quot;]&#xd;
+		)&#xd;
+		tableFornecedor.forEach(function (linha) {&#xd;
+			var idx = linha.index;&#xd;
+			var A2_COD = linha.A2_COD.value;&#xd;
+			var A2_LOJA = linha.A2_LOJA.value;&#xd;
+			var A2_NOME = linha.A2_NOME.value;&#xd;
+&#xd;
 			var dsEmails = DatasetFactory.getDataset(&#xd;
 				&quot;DS_COMPRAS_FORNECEDOR_GET-ACESSO&quot;,&#xd;
 				null,&#xd;
 				[&#xd;
-					DatasetFactory.createConstraint(&quot;A2_COD&quot;	,A2_COD		,A2_COD		,ConstraintType.MUST),&#xd;
-					DatasetFactory.createConstraint(&quot;A2_LOJA&quot;	,A2_LOJA	,A2_LOJA	,ConstraintType.MUST)&#xd;
+					DatasetFactory.createConstraint(&quot;A2_COD&quot;, A2_COD, A2_COD, ConstraintType.MUST),&#xd;
+					DatasetFactory.createConstraint(&quot;A2_LOJA&quot;, A2_LOJA, A2_LOJA, ConstraintType.MUST)&#xd;
 				],&#xd;
 				null&#xd;
 			)&#xd;
-			&#xd;
-			if(dsEmails != null &amp;&amp; dsEmails.rowsCount &gt; 0 &amp;&amp; !dsEmails.columnsName.toArray().includes(&quot;ERROR&quot;)){&#xd;
+&#xd;
+			if (dsEmails != null &amp;&amp; dsEmails.rowsCount &gt; 0 &amp;&amp; !dsEmails.columnsName.toArray().includes(&quot;ERROR&quot;)) {&#xd;
 				var parametros = [&#xd;
-					{&quot;id&quot;:&quot;INSTANCEID&quot;		, &quot;value&quot;: getValue(&quot;WKNumProces&quot;).toString()},&#xd;
-					{&quot;id&quot;:&quot;A2_NOME&quot;			, &quot;value&quot;: A2_NOME},&#xd;
-					{&quot;id&quot;:&quot;PRAZO&quot;			, &quot;value&quot;: cotacao_encerramento},&#xd;
+					{ &quot;id&quot;: &quot;INSTANCEID&quot;, &quot;value&quot;: WKNumProces + &quot;&quot; },&#xd;
+					{ &quot;id&quot;: &quot;A2_NOME&quot;, &quot;value&quot;: A2_NOME },&#xd;
+					{ &quot;id&quot;: &quot;PRAZO&quot;, &quot;value&quot;: cotacao_encerramento },&#xd;
 				]&#xd;
-				&#xd;
+&#xd;
 				var destinatarios = [];&#xd;
-				for(var i = 0 ; i &lt; dsEmails.rowsCount ; i++){&#xd;
-					destinarios.push(dsEmails.getValue(i,&quot;emailRegister&quot;))&#xd;
+				for (var i = 0; i &lt; dsEmails.rowsCount; i++) {&#xd;
+					destinarios.push(dsEmails.getValue(i, &quot;emailRegister&quot;))&#xd;
 				}&#xd;
-				&#xd;
+&#xd;
 				tools.sendMail(&#xd;
 					&quot;TEMPLATE_COMPRAS_COTACAO_PRAZO&quot;,&#xd;
 					&quot;Notificação de Encerramento de Prazo para Cotar&quot;,&#xd;
 					destinatarios,&#xd;
 					parametros&#xd;
 				)&#xd;
-				&#xd;
-				hAPI.setCardValue(&quot;A2_NOTIFICA___&quot;+idx,&quot;Enviado&quot;)&#xd;
+&#xd;
+				hAPI.setCardValue(&quot;A2_NOTIFICA___&quot; + idx, &quot;Enviado&quot;)&#xd;
 			}&#xd;
-			else if(dsEmails.columnsName.toArray().includes(&quot;ERROR&quot;)){&#xd;
-				hAPI.setCardValue(&quot;A2_NOTIFICA___&quot;+idx, dsEmails.getValue(0,&quot;ERROR&quot;))&#xd;
+			else if (dsEmails.columnsName.toArray().includes(&quot;ERROR&quot;)) {&#xd;
+				hAPI.setCardValue(&quot;A2_NOTIFICA___&quot; + idx, dsEmails.getValue(0, &quot;ERROR&quot;))&#xd;
 			}&#xd;
-			else{&#xd;
-				hAPI.setCardValue(&quot;A2_NOTIFICA___&quot;+idx, &quot;Não localizado&quot;)&#xd;
+			else {&#xd;
+				hAPI.setCardValue(&quot;A2_NOTIFICA___&quot; + idx, &quot;Não localizado&quot;)&#xd;
 			}&#xd;
 		})&#xd;
 	}&#xd;
@@ -1914,6 +1920,38 @@
 			}&#xd;
 			return newDataset;&#xd;
 		}&#xd;
+	},&#xd;
+	/**&#xd;
+	* Método para listar os filhos de um pai x filho&#xd;
+	* @param cardData: campos do formulário, ex: hAPI.getCardData(getValue(&quot;WKNumProces&quot;))&#xd;
+	* @param fields[]: Array dos campos que pertencem ao pai x filho em questao, ex [&apos;cCentroCustoRat&apos;,&#xd;
+							&apos;valorCCusto&apos;]&#xd;
+	* @returns [{{}}] Array de Objeto com as chaves e valores&#xd;
+	*/&#xd;
+	getTableFilho: function (cardData, fields) {&#xd;
+		log.info(&quot;Consultando os campos pai x filho Form&quot;);&#xd;
+		cardData = cardData || hAPI.getCardData(getValue(&quot;WKNumProces&quot;));&#xd;
+		var it = cardData.keySet().iterator();&#xd;
+		var listaFilho = [];&#xd;
+		var fieldTemp = fields[0];&#xd;
+&#xd;
+		while (it.hasNext()) {&#xd;
+			var key = it.next();&#xd;
+			var campo = key.split(&quot;___&quot;);&#xd;
+&#xd;
+			if (key.indexOf(&apos;___&apos;) &gt;= 0 &amp;&amp; campo[0] == fieldTemp) {&#xd;
+				var idx = campo[1];&#xd;
+				var row = {};&#xd;
+&#xd;
+				for (var i = 0; i &lt; fields.length; i++) {&#xd;
+					var name = fields[i] + &quot;___&quot; + idx;&#xd;
+					row[fields[i]] = { value: cardData.get(name), index: idx, name: name };&#xd;
+				}&#xd;
+				listaFilho.push(row);&#xd;
+			}&#xd;
+		}&#xd;
+		return listaFilho;&#xd;
+&#xd;
 	}&#xd;
 }</eventDescription>
     </WorkflowProcessEvent>
@@ -1924,7 +1962,7 @@
         <companyId>1</companyId>
         <processId>cotacao_compras</processId>
         <propertyId>formCotacaoAux</propertyId>
-        <version>5</version>
+        <version>6</version>
       </advancedProcessPropertiesPK>
       <propertieValue>746754</propertieValue>
     </AdvancedProcessProperties>
@@ -1933,7 +1971,7 @@
         <companyId>1</companyId>
         <processId>cotacao_compras</processId>
         <propertyId>formPrincipal</propertyId>
-        <version>5</version>
+        <version>6</version>
       </advancedProcessPropertiesPK>
       <propertieValue>ML001722</propertieValue>
     </AdvancedProcessProperties>
@@ -1942,7 +1980,7 @@
         <companyId>1</companyId>
         <processId>cotacao_compras</processId>
         <propertyId>mlFormCotacao</propertyId>
-        <version>5</version>
+        <version>6</version>
       </advancedProcessPropertiesPK>
       <propertieValue>ML001742</propertieValue>
     </AdvancedProcessProperties>
@@ -1951,7 +1989,7 @@
         <companyId>1</companyId>
         <processId>cotacao_compras</processId>
         <propertyId>mlFormCotCotacao</propertyId>
-        <version>5</version>
+        <version>6</version>
       </advancedProcessPropertiesPK>
       <propertieValue>ML001740</propertieValue>
     </AdvancedProcessProperties>
@@ -1960,7 +1998,7 @@
         <companyId>1</companyId>
         <processId>cotacao_compras</processId>
         <propertyId>mlTabCotacao</propertyId>
-        <version>5</version>
+        <version>6</version>
       </advancedProcessPropertiesPK>
       <propertieValue>ML001743</propertieValue>
     </AdvancedProcessProperties>
@@ -1969,7 +2007,7 @@
         <companyId>1</companyId>
         <processId>cotacao_compras</processId>
         <propertyId>mlTabCotCotacao</propertyId>
-        <version>5</version>
+        <version>6</version>
       </advancedProcessPropertiesPK>
       <propertieValue>ML001741</propertieValue>
     </AdvancedProcessProperties>
@@ -1978,7 +2016,7 @@
         <companyId>1</companyId>
         <processId>cotacao_compras</processId>
         <propertyId>password</propertyId>
-        <version>5</version>
+        <version>6</version>
       </advancedProcessPropertiesPK>
       <propertieValue>jca@2024</propertieValue>
     </AdvancedProcessProperties>
@@ -1987,7 +2025,7 @@
         <companyId>1</companyId>
         <processId>cotacao_compras</processId>
         <propertyId>publisherId</propertyId>
-        <version>5</version>
+        <version>6</version>
       </advancedProcessPropertiesPK>
       <propertieValue>integracao.fluig</propertieValue>
     </AdvancedProcessProperties>
@@ -1996,7 +2034,7 @@
         <companyId>1</companyId>
         <processId>cotacao_compras</processId>
         <propertyId>tabCotacao</propertyId>
-        <version>5</version>
+        <version>6</version>
       </advancedProcessPropertiesPK>
       <propertieValue>ML001738</propertieValue>
     </AdvancedProcessProperties>
@@ -2005,7 +2043,7 @@
         <companyId>1</companyId>
         <processId>cotacao_compras</processId>
         <propertyId>tabFornecedor</propertyId>
-        <version>5</version>
+        <version>6</version>
       </advancedProcessPropertiesPK>
       <propertieValue>ML001727</propertieValue>
     </AdvancedProcessProperties>
@@ -2014,7 +2052,7 @@
         <companyId>1</companyId>
         <processId>cotacao_compras</processId>
         <propertyId>tabFornecedorProduto</propertyId>
-        <version>5</version>
+        <version>6</version>
       </advancedProcessPropertiesPK>
       <propertieValue>ML001737</propertieValue>
     </AdvancedProcessProperties>
@@ -2023,7 +2061,7 @@
         <companyId>1</companyId>
         <processId>cotacao_compras</processId>
         <propertyId>tabProduto</propertyId>
-        <version>5</version>
+        <version>6</version>
       </advancedProcessPropertiesPK>
       <propertieValue>ML001735</propertieValue>
     </AdvancedProcessProperties>
@@ -2032,7 +2070,7 @@
         <companyId>1</companyId>
         <processId>cotacao_compras</processId>
         <propertyId>tabSC</propertyId>
-        <version>5</version>
+        <version>6</version>
       </advancedProcessPropertiesPK>
       <propertieValue>ML001736</propertieValue>
     </AdvancedProcessProperties>
@@ -2041,7 +2079,7 @@
         <companyId>1</companyId>
         <processId>cotacao_compras</processId>
         <propertyId>tabTES</propertyId>
-        <version>5</version>
+        <version>6</version>
       </advancedProcessPropertiesPK>
       <propertieValue>ML001739</propertieValue>
     </AdvancedProcessProperties>
@@ -2050,7 +2088,7 @@
         <companyId>1</companyId>
         <processId>cotacao_compras</processId>
         <propertyId>username</propertyId>
-        <version>5</version>
+        <version>6</version>
       </advancedProcessPropertiesPK>
       <propertieValue>integracao.fluig</propertieValue>
     </AdvancedProcessProperties>
@@ -2112,7 +2150,7 @@
       <processLinkBendPK>
         <companyId>1</companyId>
         <processId>cotacao_compras</processId>
-        <version>5</version>
+        <version>6</version>
         <linkSequence>28</linkSequence>
         <bendSequence>1</bendSequence>
       </processLinkBendPK>
@@ -2123,7 +2161,7 @@
       <processLinkBendPK>
         <companyId>1</companyId>
         <processId>cotacao_compras</processId>
-        <version>5</version>
+        <version>6</version>
         <linkSequence>29</linkSequence>
         <bendSequence>1</bendSequence>
       </processLinkBendPK>
@@ -2134,7 +2172,7 @@
       <processLinkBendPK>
         <companyId>1</companyId>
         <processId>cotacao_compras</processId>
-        <version>5</version>
+        <version>6</version>
         <linkSequence>33</linkSequence>
         <bendSequence>1</bendSequence>
       </processLinkBendPK>
@@ -2145,7 +2183,7 @@
       <processLinkBendPK>
         <companyId>1</companyId>
         <processId>cotacao_compras</processId>
-        <version>5</version>
+        <version>6</version>
         <linkSequence>34</linkSequence>
         <bendSequence>1</bendSequence>
       </processLinkBendPK>
@@ -2156,7 +2194,7 @@
       <processLinkBendPK>
         <companyId>1</companyId>
         <processId>cotacao_compras</processId>
-        <version>5</version>
+        <version>6</version>
         <linkSequence>35</linkSequence>
         <bendSequence>1</bendSequence>
       </processLinkBendPK>
@@ -2170,7 +2208,7 @@
       <extendedPropertyFieldPK>
         <companyId>1</companyId>
         <processId>cotacao_compras</processId>
-        <version>5</version>
+        <version>6</version>
         <stateSequence>0</stateSequence>
         <propertyName>formCotacaoAux</propertyName>
       </extendedPropertyFieldPK>
@@ -2183,7 +2221,7 @@
       <extendedPropertyFieldPK>
         <companyId>1</companyId>
         <processId>cotacao_compras</processId>
-        <version>5</version>
+        <version>6</version>
         <stateSequence>0</stateSequence>
         <propertyName>formPrincipal</propertyName>
       </extendedPropertyFieldPK>
@@ -2196,7 +2234,7 @@
       <extendedPropertyFieldPK>
         <companyId>1</companyId>
         <processId>cotacao_compras</processId>
-        <version>5</version>
+        <version>6</version>
         <stateSequence>0</stateSequence>
         <propertyName>mlFormCotacao</propertyName>
       </extendedPropertyFieldPK>
@@ -2209,7 +2247,7 @@
       <extendedPropertyFieldPK>
         <companyId>1</companyId>
         <processId>cotacao_compras</processId>
-        <version>5</version>
+        <version>6</version>
         <stateSequence>0</stateSequence>
         <propertyName>mlFormCotCotacao</propertyName>
       </extendedPropertyFieldPK>
@@ -2222,7 +2260,7 @@
       <extendedPropertyFieldPK>
         <companyId>1</companyId>
         <processId>cotacao_compras</processId>
-        <version>5</version>
+        <version>6</version>
         <stateSequence>0</stateSequence>
         <propertyName>mlTabCotacao</propertyName>
       </extendedPropertyFieldPK>
@@ -2235,7 +2273,7 @@
       <extendedPropertyFieldPK>
         <companyId>1</companyId>
         <processId>cotacao_compras</processId>
-        <version>5</version>
+        <version>6</version>
         <stateSequence>0</stateSequence>
         <propertyName>mlTabCotCotacao</propertyName>
       </extendedPropertyFieldPK>
@@ -2248,7 +2286,7 @@
       <extendedPropertyFieldPK>
         <companyId>1</companyId>
         <processId>cotacao_compras</processId>
-        <version>5</version>
+        <version>6</version>
         <stateSequence>0</stateSequence>
         <propertyName>password</propertyName>
       </extendedPropertyFieldPK>
@@ -2261,7 +2299,7 @@
       <extendedPropertyFieldPK>
         <companyId>1</companyId>
         <processId>cotacao_compras</processId>
-        <version>5</version>
+        <version>6</version>
         <stateSequence>0</stateSequence>
         <propertyName>publisherId</propertyName>
       </extendedPropertyFieldPK>
@@ -2274,7 +2312,7 @@
       <extendedPropertyFieldPK>
         <companyId>1</companyId>
         <processId>cotacao_compras</processId>
-        <version>5</version>
+        <version>6</version>
         <stateSequence>0</stateSequence>
         <propertyName>tabCotacao</propertyName>
       </extendedPropertyFieldPK>
@@ -2287,7 +2325,7 @@
       <extendedPropertyFieldPK>
         <companyId>1</companyId>
         <processId>cotacao_compras</processId>
-        <version>5</version>
+        <version>6</version>
         <stateSequence>0</stateSequence>
         <propertyName>tabFornecedor</propertyName>
       </extendedPropertyFieldPK>
@@ -2300,7 +2338,7 @@
       <extendedPropertyFieldPK>
         <companyId>1</companyId>
         <processId>cotacao_compras</processId>
-        <version>5</version>
+        <version>6</version>
         <stateSequence>0</stateSequence>
         <propertyName>tabFornecedorProduto</propertyName>
       </extendedPropertyFieldPK>
@@ -2313,7 +2351,7 @@
       <extendedPropertyFieldPK>
         <companyId>1</companyId>
         <processId>cotacao_compras</processId>
-        <version>5</version>
+        <version>6</version>
         <stateSequence>0</stateSequence>
         <propertyName>tabProduto</propertyName>
       </extendedPropertyFieldPK>
@@ -2326,7 +2364,7 @@
       <extendedPropertyFieldPK>
         <companyId>1</companyId>
         <processId>cotacao_compras</processId>
-        <version>5</version>
+        <version>6</version>
         <stateSequence>0</stateSequence>
         <propertyName>tabSC</propertyName>
       </extendedPropertyFieldPK>
@@ -2339,7 +2377,7 @@
       <extendedPropertyFieldPK>
         <companyId>1</companyId>
         <processId>cotacao_compras</processId>
-        <version>5</version>
+        <version>6</version>
         <stateSequence>0</stateSequence>
         <propertyName>tabTES</propertyName>
       </extendedPropertyFieldPK>
@@ -2352,7 +2390,7 @@
       <extendedPropertyFieldPK>
         <companyId>1</companyId>
         <processId>cotacao_compras</processId>
-        <version>5</version>
+        <version>6</version>
         <stateSequence>0</stateSequence>
         <propertyName>username</propertyName>
       </extendedPropertyFieldPK>

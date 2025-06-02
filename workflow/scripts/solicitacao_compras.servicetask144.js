@@ -4,7 +4,8 @@ function servicetask144(attempt, message) {
 	ciclo_atual = ciclo_atual == "" ? 1 : (ciclo_atual * 1);
 
 	if (ciclo_atual == 1) {
-		var cotacao = tools.cotacao.geraCotacao();
+		var cardData = hAPI.getCardData(getValue("WKNumProces"));
+		var cotacao = tools.cotacao.geraCotacao(cardData);
 
 		if (cotacao.ok) {
 			hAPI.setCardValue("C8_NUM", cotacao.numero.trim());

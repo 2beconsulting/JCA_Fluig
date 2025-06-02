@@ -6,13 +6,15 @@ function servicetask362(attempt, message) {
 
     if (ciclo_atual == 1) {
         var cotacao = hAPI.getCardValue("C8_NUM");
-        var ciclo = tools.cotacao.geraCicloInicial(cotacao);
+        var cardData = hAPI.getCardData(getValue("WKNumProces"))
+        var ciclo = tools.cotacao.geraCicloInicial(cotacao, cardData);
 
         if (!ciclo.ok) {
             throw ciclo.errorMessage;
         }
     } else {
-        var novoCiclo = tools.cotacao.geraCicloNovo(ciclo_atual);
+        var cardData = hAPI.getCardData(getValue("WKNumProces"))
+        var novoCiclo = tools.cotacao.geraCicloNovo(ciclo_atual, cardData);
 
         if (!novoCiclo.ok) throw "Ocorreu um problema ao gerar o novo ciclo : " + novoCiclo.error
     }

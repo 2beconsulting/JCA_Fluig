@@ -1,14 +1,16 @@
 function servicetask306(attempt, message) {
-	try{
+	try {
 		var retorno = tools.pedido.decisao.aprovar();
-		
-		if(retorno.ok){
-			tools.pedido.decisao.registrar("Aprovado")
+
+		if (retorno.ok) {
+
+			var cardData = hAPI.getCardData(getValue("WKNumProces"));
+			tools.pedido.decisao.registrar("Aprovado", cardData)
 		}
-		else{
+		else {
 			throw retorno.error;
 		}
-	}catch(e){
+	} catch (e) {
 		throw e.message != undefined ? e.message : e
 	}
 }

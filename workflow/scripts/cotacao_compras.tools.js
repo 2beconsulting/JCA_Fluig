@@ -128,5 +128,37 @@ var tools = {
 			}
 			return newDataset;
 		}
+	},
+	/**
+	* Método para listar os filhos de um pai x filho
+	* @param cardData: campos do formulário, ex: hAPI.getCardData(getValue("WKNumProces"))
+	* @param fields[]: Array dos campos que pertencem ao pai x filho em questao, ex ['cCentroCustoRat',
+							'valorCCusto']
+	* @returns [{{}}] Array de Objeto com as chaves e valores
+	*/
+	getTableFilho: function (cardData, fields) {
+		log.info("Consultando os campos pai x filho Form");
+		cardData = cardData || hAPI.getCardData(getValue("WKNumProces"));
+		var it = cardData.keySet().iterator();
+		var listaFilho = [];
+		var fieldTemp = fields[0];
+
+		while (it.hasNext()) {
+			var key = it.next();
+			var campo = key.split("___");
+
+			if (key.indexOf('___') >= 0 && campo[0] == fieldTemp) {
+				var idx = campo[1];
+				var row = {};
+
+				for (var i = 0; i < fields.length; i++) {
+					var name = fields[i] + "___" + idx;
+					row[fields[i]] = { value: cardData.get(name), index: idx, name: name };
+				}
+				listaFilho.push(row);
+			}
+		}
+		return listaFilho;
+
 	}
 }

@@ -5,14 +5,19 @@ var tools = {
 		log.info(WKNumProces + ": " + mensagem);
 	},
 	aprovacao: {
-		buscaFluig: function () {
+		buscaFluig: function (cardData) {
 			var ciclo_aprov = hAPI.getCardValue("aprovacaoCiclo");
 			var aprovsCiclo = [];
-			hAPI.getChildrenIndexes("tabAprovacoes").forEach(function (idx) {
-				if (hAPI.getCardValue("aprov_ciclo___" + idx) == ciclo_aprov) {
+			var tabAprovacoes = tools.getTableFilho(
+				cardData || hAPI.getCardData(getValue("WKNumProces")),
+				["aprov_ciclo", "aprov_matAprovador", "aprov_decisao"]
+			);
+			tabAprovacoes.forEach(function (linha) {
+				var idx = linha.aprov_ciclo.index;
+				if (linha["aprov_ciclo"].value == ciclo_aprov) {
 					aprovsCiclo.push({
-						"aprov_matAprovador": hAPI.getCardValue("aprov_matAprovador___" + idx),
-						"aprov_decisao": hAPI.getCardValue("aprov_decisao___" + idx)
+						"aprov_matAprovador": linha["aprov_matAprovador"].value,
+						"aprov_decisao": linha["aprov_decisao"].value
 					})
 				}
 			})
@@ -105,8 +110,8 @@ var tools = {
 			}
 
 		},
-		carregaValorMenor: function () {
-			var valorPedido = tools.pedido.valorTotal();
+		carregaValorMenor: function (cardData) {
+			var valorPedido = tools.pedido.valorTotal(cardData);
 			var primeiraMatricula = "";
 			var protheus = tools.aprovacao.buscaProtheus();
 
@@ -141,11 +146,11 @@ var tools = {
 				throw protheus.error;
 			}
 		},
-		carregaCompradores: function () {
+		carregaCompradores: function (cardData) {
 			log.info("++ tools.aprovacao.carregaCompradores");
 			var ciclo_atual = hAPI.getCardValue("ciclo_atual");
 			var aprovs = [];
-			var valorPedido = tools.pedido.valorTotal();
+			var valorPedido = tools.pedido.valorTotal(cardData);
 			log.info("valorPedido: " + valorPedido);
 			var pre_alcada = [];
 
@@ -203,19 +208,31 @@ var tools = {
 			hAPI.setCardValue("matLiberaPedido", aprovs)
 			log.info("-- tools.aprovacao.carregaCompradores");
 		},
-		carregaIntrack: function () {
+		/**
+		 * Carrega os aprovadores de compras do Intrack
+		 * @warning em desevolvimento/ alinhamento com a área da necessidade
+		 */
+		carregaIntrack: function (cardData) {
 			log.info("++ tools.aprovacao.carregaIntrack");
 			var ciclo_atual = hAPI.getCardValue("ciclo_atual");
-			var aprovsForm = hAPI.getChildrenIndexes("tabAprovacoesIntrack").filter(function (idx) { return hAPI.getCardValue("aprovIntrack_ciclo___" + idx) == ciclo_atual }).map(function (idx) {
+			tableAprovacoesIntrack = tools.getTableFilho(
+				cardData || hAPI.getCardData(getValue("WKNumProces")),
+				["aprovIntrack_ciclo", "aprovIntrack_matAprovador", "aprovIntrack_decisao"]
+			);
+			var aprovsForm = tableAprovacoesIntrack.filter(function (linha) {
+				var idx = linha.aprovIntrack_ciclo.index;
+				return linha.aprovIntrack_ciclo.value == ciclo_atual
+			}).map(function (linha) {
+				var idx = linha.aprovIntrack_ciclo.index;
 				return {
-					"matAprovador": hAPI.getCardValue("aprovIntrack_matAprovador___" + idx),
-					"decisao": hAPI.getCardValue("aprovIntrack_decisao___" + idx)
+					"matAprovador": linha["aprovIntrack_matAprovador"].value,
+					"decisao": linha["aprovIntrack_decisao"].value
 				}
 			})
 			//log.info(">> aprovsForm")
 			//log.dir(aprovsForm)
 			if (aprovsForm.length == 0) {
-				var valorPedido = tools.pedido.valorTotal();
+				var valorPedido = tools.pedido.valorTotal(cardData);
 				var pre_alcada = [];
 				var alcada = [];
 				var proxAprovadorComprador = "";
@@ -301,42 +318,6 @@ var tools = {
 				log.info("-- tools.aprovacao.carregaCompradores");
 			}
 		},
-		carregaCompradoresOld: function () {
-			var valorPedido = tools.pedido.valorTotal();
-			var primeiraMatricula = "";
-			var protheus = tools.aprovacao.buscaCompradoresProtheus();
-
-			if (protheus.ok) {
-				var txtErro = "";
-				var vlrAnt = 0;
-
-				protheus.alcada.forEach(function (el, i, arr) {
-					if (vlrAnt < valorPedido) {
-						if (tools.outros.usuarioAtivo(el.ZPX_COLABO)) {
-							primeiraMatricula = primeiraMatricula != "" ? primeiraMatricula : el.ZPX_COLABO;
-							var childData = new java.util.HashMap();
-							childData.put("aprovValorMenor_ciclo", hAPI.getCardValue("ciclo_atual"));
-							childData.put("aprovValorMenor_matAprovador", el.ZPX_COLABO);
-							childData.put("aprovValorMenor_aprovador", tools.outros.getColleagueName(el.ZPX_COLABO));
-							hAPI.addCardChild("tabAprovacoesValorMenor", childData);
-							vlrAnt = parseFloat(el.ZPX_VALOR)
-						} else {
-							txtErro += "O usuário " + el.ZPX_COLABO + " - " + el.ZPX_NOME + " não foi encontrado ativo na plataforma </br>";
-						}
-					} else {
-						arr.length = i
-					}
-				})
-
-				if (txtErro != "") {
-					throw txtErro
-				} else {
-					hAPI.setCardValue("aprovacaoProxAprovador", primeiraMatricula);
-				}
-			} else {
-				throw protheus.error;
-			}
-		},
 		processa: function (aprovadores, etapa) {
 			if (etapa == "Inicial") {
 				aprovadores.forEach(function (el) {
@@ -361,7 +342,7 @@ var tools = {
 			getTotal: function () {
 				return tools.formata.toFloat(hAPI.getCardValue("valor_total"));
 			},
-			proximoAprovador: function () {
+			proximoAprovador: function (cardData) {
 				log.info(">> tools.aprovacao.solicitacao.proximoAprovador");
 				var aprovProtheus = tools.aprovacao.buscaProtheus();
 				//log.dir(aprovProtheus);
@@ -448,7 +429,7 @@ var tools = {
 							}
 						} else {
 							log.info(">> proximoAprovador if 01 else if 01")
-							var aprovFluig = tools.aprovacao.buscaFluig();
+							var aprovFluig = tools.aprovacao.buscaFluig(cardData);
 							//log.dir(aprovFluig);
 
 							//if(hAPI.getCardValue("decisaoAprovador") != "retornar"){
@@ -526,8 +507,9 @@ var tools = {
 			}
 		},
 		valorPreAprovadoMenor: function () {
+			/**@todo */
 			//return false; //Incluido enquanto não estiver implementado a tratativa da homologação
-			var valorAtual = tools.pedido.valorTotal();
+			var valorAtual = tools.pedido.valorTotal(hAPI.getCardData(getValue("WKNumProces")));
 			var valorInicial = tools.formata.toFloat(hAPI.getCardValue("valor_total"));
 
 			hAPI.setCardValue("valor_total_compra", tools.formata.toFluig(valorAtual));
@@ -756,7 +738,17 @@ var tools = {
 							"C8_TES": tools.tes.get(dadosFluig.TES, el.C8_FORNECE, el.C8_LOJA, el.C8_PRODUTO)
 						})
 					}
-				}
+				} /*else {
+					if (filtered.length > 0) {
+						filtered[0]["ITEM"].push({
+							"C8_PRODUTO": el.C8_PRODUTO.trim(),
+							"C8_PRECO": "0.00",
+							"C8_QTDISP": "0.00",
+							"C8_PRAZO": "0",
+							"C8_TES": "001"
+						})
+					}
+				}*/
 
 			})
 
@@ -804,7 +796,7 @@ var tools = {
 
 			return obj;
 		},
-		geraCicloInicial: function (cotacao_numero) {
+		geraCicloInicial: function (cotacao_numero, cardData) {
 			tools.log(">> tools.cotacao.geraCicloInicial [#550]")
 			var obj = {
 				"ok": false,
@@ -812,7 +804,7 @@ var tools = {
 			}
 			var ciclo_atual = "1";
 
-			tools.fornecedores.incluiCotacao(ciclo_atual);
+			tools.fornecedores.incluiCotacao(ciclo_atual, cardData);
 			tools.log(">> tools.cotacao.geraCicloInicial [#788]")
 			var cotacao = integra.getProtheus("/JWSSC803/1/" + hAPI.getCardValue("idEmpresa") + "/" + cotacao_numero);
 
@@ -863,7 +855,7 @@ var tools = {
 
 			return obj;
 		},
-		geraCicloNovo: function (ciclo_atual) {
+		geraCicloNovo: function (ciclo_atual, cardData) {
 			log.info(">> tools.cotacao.geraCicloNovo " + ciclo_atual)
 			var obj = {
 				"ok": false,
@@ -872,26 +864,19 @@ var tools = {
 
 			var ciclo_anterior = (ciclo_atual - 1).toString();
 
-			obj_inclui = tools.fornecedores.incluiCotacao(ciclo_atual);
+			obj_inclui = tools.fornecedores.incluiCotacao(ciclo_atual, cardData);
 			log.info("++ obj_inclui");
 			log.dir(obj_inclui);
 
 			if (obj_inclui.ok) {
 
-				obj = tools.fornecedores.excluiCotacao(ciclo_anterior);
+				obj = tools.fornecedores.excluiCotacao(ciclo_anterior, cardData);
 				log.info("++ obj > tools.fornecedores.excluiCotacao");
 				log.dir(obj);
 
 				if (obj.ok) {
 
-					var fornecedoresAtivo = hAPI.getChildrenIndexes("tabFornecedor")
-						.filter(function (idx) { return hAPI.getCardValue("CICLO_REMOVIDO___" + idx) == "" })
-						.map(function (idx) {
-							return {
-								"A2_COD": hAPI.getCardValue("A2_COD" + "___" + idx),
-								"A2_LOJA": hAPI.getCardValue("A2_LOJA" + "___" + idx)
-							}
-						})
+					var fornecedoresAtivo = tools.cotacao.getTabFornecedor(cardData)
 
 					log.info(">> fornecedoresAtivo");
 					log.dir(fornecedoresAtivo);
@@ -997,14 +982,14 @@ var tools = {
 			log.info("<< tools.cotacao.geraCicloNovo " + ciclo_atual)
 			return obj;
 		},
-		geraCotacao: function () {
+		geraCotacao: function (cardData) {
 			var obj = {
 				"ok": false,
 				"numero": "",
 				"errorMessage": ""
 			}
 
-			var itensCotacao = tools.cotacao.getItensCotacao();
+			var itensCotacao = tools.cotacao.getItensCotacao(cardData);
 
 			var param = {
 				"SOLICITA": [
@@ -1029,8 +1014,12 @@ var tools = {
 
 			if (retCotacao.ok) {
 
-				hAPI.getChildrenIndexes("tabFornecedor").forEach(function (idx) {
-					hAPI.setCardValue("CICLO_INSERIDO_" + idx, "1");
+				var tableFornecedores = tools.getTableFilho(
+					cardData || hAPI.getCardData(getValue("WKNumProces")),
+					["CICLO_INSERIDO"]
+				);
+				tableFornecedores.forEach(function (linha) {
+					hAPI.setCardValue(linha["CICLO_INSERIDO"].name, "1");
 				})
 
 				if (retCotacao.retorno.data[0] != undefined && retCotacao.retorno.data[0].cotacao != undefined) {
@@ -1056,7 +1045,7 @@ var tools = {
 
 			return ds != null && ds.rowsCount > 0 ? ds.getValue(0, "documentid") : 0
 		},
-		getData: function () {
+		getData: function (cardData) {
 			tools.log(">> tools.cotacao.getData [#1049]");
 			var obj = { "ok": false, "dados": [], "TES": [], "fornec": [] };
 
@@ -1064,7 +1053,7 @@ var tools = {
 				var numProcess = getValue("WKNumProces");
 				var CICLO_ATUAL = hAPI.getCardValue("ciclo_atual");
 				var childrenProcess = hAPI.getChildrenInstances(numProcess);
-				var mapProces = hAPI.getCardData(numProcess);
+				var mapProces = cardData || hAPI.getCardData(numProcess);
 				var iteratorProc = mapProces.keySet().iterator();
 				var solicFilha = childrenProcess.get(childrenProcess.size() - 1);
 				var mapChildren = hAPI.getCardData(solicFilha);
@@ -1072,32 +1061,7 @@ var tools = {
 
 				if (hAPI.getCardValue("tipoSc") != "5") { // Tipo de Solicitação diferente de regularização 
 					while (iteratorChild.hasNext()) {
-						var id = "" + iteratorChild.next();
-						/*if(id.indexOf("C8_CICLO___") == 0){
-					    	var idx = id.replace("C8_CICLO___","");
-					    	
-				    		obj.dados.push({
-					    		"C8_CICLO" 		: ""+mapChildren.get("C8_CICLO"+"___"+idx),
-					    		"C8_ITEM" 		: ""+mapChildren.get("C8_ITEM"+"___"+idx),
-					    		"C8_PRODUTO" 	: ""+mapChildren.get("C8_PRODUTO"+"___"+idx),
-					    		"C8_UM" 		: ""+mapChildren.get("C8_UM"+"___"+idx),
-					    		"C8_FORNECE" 	: ""+mapChildren.get("C8_FORNECE"+"___"+idx),
-					    		"C8_LOJA" 		: ""+mapChildren.get("C8_LOJA"+"___"+idx),
-					    		"C8_QUANT" 		: ""+mapChildren.get("C8_QUANT"+"___"+idx),
-					    		"C8_PRECO" 		: ""+mapChildren.get("C8_PRECO"+"___"+idx),
-					    		"C8_TOTAL" 		: ""+mapChildren.get("C8_TOTAL"+"___"+idx),
-					    		"C8_PRAZO" 		: ""+mapChildren.get("C8_PRAZO"+"___"+idx),
-					    		"C8_FILENT" 	: ""+mapChildren.get("C8_FILENT"+"___"+idx),
-					    		"C8_VALIPI" 	: ""+mapChildren.get("C8_VALIPI"+"___"+idx),
-					    		"C8_VALICM" 	: ""+mapChildren.get("C8_VALICM"+"___"+idx),
-					    		"C8_VALISS" 	: ""+mapChildren.get("C8_VALISS"+"___"+idx),
-					    		"C8_DIFAL" 		: ""+mapChildren.get("C8_DIFAL"+"___"+idx),
-					    		"C8_VALSOL" 	: ""+mapChildren.get("C8_VALSOL"+"___"+idx),
-					    		"C8_VALIDA" 	: ""+mapChildren.get("C8_VALIDA"+"___"+idx),
-					    		"VENCEDOR" 		: ""+mapChildren.get("VENCEDOR"+"___"+idx)
-					    	})
-					    }
-						else */if (id.indexOf("TES_A2_COD___") == 0) {
+						var id = "" + iteratorChild.next(); if (id.indexOf("TES_A2_COD___") == 0) {
 							var idx = id.replace("TES_A2_COD___", "");
 
 							obj.TES.push({
@@ -1219,12 +1183,18 @@ var tools = {
 							}
 						}
 
-						var tabTES = hAPI.getChildrenIndexes("tabTES").map(function (idx) {
+
+						var tableTES = tools.getTableFilho(
+							cardData || hAPI.getCardData(getValue("WKNumProces")),
+							["TES_A2_COD", "TES_A2_LOJA", "TES_B1_COD"]
+						);
+						var tabTES = tableTES.map(function (linha) {
+							var idx = linha["TES_A2_COD"].index;
 							return {
 								"idx": idx,
-								"TES_A2_COD": "" + hAPI.getCardValue("TES_A2_COD" + "___" + idx),
-								"TES_A2_LOJA": "" + hAPI.getCardValue("TES_A2_LOJA" + "___" + idx),
-								"TES_B1_COD": "" + hAPI.getCardValue("TES_B1_COD" + "___" + idx)
+								"TES_A2_COD": "" + linha["TES_A2_COD"].value,
+								"TES_A2_LOJA": "" + linha["TES_A2_LOJA"].value,
+								"TES_B1_COD": "" + linha["TES_B1_COD"].value
 							}
 						})
 
@@ -1242,16 +1212,21 @@ var tools = {
 							}
 						})
 
-						var tabFornecedor = hAPI.getChildrenIndexes("tabFornecedor").map(function (idx) {
+						var tableFornecedores = tools.getTableFilho(
+							cardData || hAPI.getCardData(getValue("WKNumProces")),
+							["A2_COD", "A2_LOJA", "A2_CGC", "A2_COND", "A2_TPFRETE", "A2_VALFRE", "A2_VALIDA"]
+						);
+						var tabFornecedor = tableFornecedores.map(function (linha) {
+
 							return {
 								"idx": idx,
-								"A2_COD": hAPI.getCardValue("A2_COD" + "___" + idx),
-								"A2_LOJA": hAPI.getCardValue("A2_LOJA" + "___" + idx),
-								"A2_CGC": hAPI.getCardValue("A2_CGC" + "___" + idx),
-								"A2_COND": hAPI.getCardValue("A2_COND" + "___" + idx),
-								"A2_TPFRETE": hAPI.getCardValue("A2_TPFRETE" + "___" + idx),
-								"A2_VALFRE": hAPI.getCardValue("A2_VALFRE" + "___" + idx),
-								"A2_VALIDA": hAPI.getCardValue("A2_VALIDA" + "___" + idx)
+								"A2_COD": linha["A2_COD"].value,
+								"A2_LOJA": linha["A2_LOJA"].value,
+								"A2_CGC": linha["A2_CGC"].value,
+								"A2_COND": linha["A2_COND"].value,
+								"A2_TPFRETE": linha["A2_TPFRETE"].value,
+								"A2_VALFRE": linha["A2_VALFRE"].value,
+								"A2_VALIDA": linha["A2_VALIDA"].value
 							}
 						})
 
@@ -1320,51 +1295,68 @@ var tools = {
 						);
 					}
 				} else { // Para regularização apenas carregará os dados da própria C8 da solicitação atual
-					var indexesChildren = hAPI.getChildrenIndexes("tabCotacao");
 
-					indexesChildren.forEach(function (idx) {
-						log.info(">> indexesChildren linha: " + idx)
-						if (hAPI.getCardValue("C8_CICLO___" + idx) == CICLO_ATUAL) {
-							log.info(" || C8_PRODUTO: " + hAPI.getCardValue("C8_PRODUTO" + "___" + idx) + " || C8_FORNECE: " + hAPI.getCardValue("C8_FORNECE" + "___" + idx) + " || C8_LOJA: " + hAPI.getCardValue("C8_LOJA" + "___" + idx))
+					var tableCotacoes = tools.getTableFilho(
+						cardData || hAPI.getCardData(getValue("WKNumProces")),
+						["C8_CICLO", "C8_ITEM", "C8_PRODUTO", "C8_UM", "C8_FORNECE", "C8_LOJA",
+							"C8_QUANT", "C8_PRECO", "C8_TOTAL", "C8_PRAZO", "C8_FILENT", "C8_VALIPI",
+							"C8_VALICM", "C8_VALISS", "C8_DIFAL", "C8_VALSOL", "C8_VALIDA"]
+					);
+					tableCotacoes.forEach(function (linha) {
+
+						if (linha["C8_CICLO___"].value == CICLO_ATUAL) {
+							log.info(" || C8_PRODUTO: " + linha["C8_PRODUTO"].value
+								+ " || C8_FORNECE: " + linha["C8_FORNECE"].value
+								+ " || C8_LOJA: " + linha["C8_LOJA"].value)
 							obj.dados.push({
-								"C8_QUANT": hAPI.getCardValue("C8_QUANT" + "___" + idx),
-								"C8_PRECO": hAPI.getCardValue("C8_PRECO" + "___" + idx),
-								"C8_TOTAL": hAPI.getCardValue("C8_TOTAL" + "___" + idx),
-								"C8_PRAZO": hAPI.getCardValue("C8_PRAZO" + "___" + idx),
-								"C8_FILENT": hAPI.getCardValue("C8_FILENT" + "___" + idx),
-								"C8_VALIPI": hAPI.getCardValue("C8_VALIPI" + "___" + idx),
-								"C8_VALICM": hAPI.getCardValue("C8_VALICM" + "___" + idx),
-								"C8_VALISS": hAPI.getCardValue("C8_VALISS" + "___" + idx),
-								"C8_DIFAL": hAPI.getCardValue("C8_DIFAL" + "___" + idx),
-								"C8_VALSOL": hAPI.getCardValue("C8_VALSOL" + "___" + idx),
-								"C8_VALIDA": hAPI.getCardValue("C8_VALIDA" + "___" + idx)
+								"C8_QUANT": linha["C8_QUANT"].value,
+								"C8_PRECO": linha["C8_PRECO"].value,
+								"C8_TOTAL": linha["C8_TOTAL"].value,
+								"C8_PRAZO": linha["C8_PRAZO"].value,
+								"C8_FILENT": linha["C8_FILENT"].value,
+								"C8_VALIPI": linha["C8_VALIPI"].value,
+								"C8_VALICM": linha["C8_VALICM"].value,
+								"C8_VALISS": linha["C8_VALISS"].value,
+								"C8_DIFAL": linha["C8_DIFAL"].value,
+								"C8_VALSOL": linha["C8_VALSOL"].value,
+								"C8_VALIDA": linha["C8_VALIDA"].value
 							})
 						}
 					})
 
-					obj.TES = hAPI.getChildrenIndexes("tabTES").filter(function (idx) { return hAPI.getCardValue("TES_CODIGO" + "___" + idx) != "" }).map(function (idx) {
+					var tableTES = tools.getTableFilho(
+						cardData || hAPI.getCardData(getValue("WKNumProces")),
+						["TES_A2_COD", "TES_A2_LOJA", "TES_B1_COD", "TES_CODIGO"]
+					);
+					obj.TES = tableTES.filter(function (linha) {
+						return linha["TES_CODIGO"].value != ""
+					}).map(function (linha) {
 						return {
-							"idx": idx,
-							"TES_A2_COD": "" + hAPI.getCardValue("TES_A2_COD" + "___" + idx),
-							"TES_A2_LOJA": "" + hAPI.getCardValue("TES_A2_LOJA" + "___" + idx),
-							"TES_B1_COD": "" + hAPI.getCardValue("TES_B1_COD" + "___" + idx)
+							"idx": linha["TES_A2_COD"].index,
+							"TES_A2_COD": "" + linha["TES_A2_COD"].value,
+							"TES_A2_LOJA": "" + linha["TES_A2_LOJA"].value,
+							"TES_B1_COD": "" + linha["TES_B1_COD"].value
 						}
 					})
+					var tableFornecedores = tools.getTableFilho(
+						cardData || hAPI.getCardData(getValue("WKNumProces")),
+						["A2_COD", "A2_LOJA", "A2_CGC", "A2_COND", "A2_TPFRETE", "A2_VALFRE", "A2_VALIDA"]
+					);
 
-					obj.fornec = hAPI.getChildrenIndexes("tabFornecedor").filter(function (idx) { return hAPI.getCardValue("CICLO_REMOVIDO" + "___" + idx) == "" }).map(function (idx) {
+					obj.fornec = tableFornecedores.filter(function (linha) {
+						return linha["CICLO_REMOVIDO"].value == ""
+					}).map(function (linha) {
 						return {
-							"A2_COD": hAPI.getCardValue("A2_COD" + "___" + idx),
-							"A2_LOJA": hAPI.getCardValue("A2_LOJA" + "___" + idx),
-							"A2_CGC": hAPI.getCardValue("A2_CGC" + "___" + idx),
-							"A2_COND": hAPI.getCardValue("A2_COND" + "___" + idx),
-							"A2_TPFRETE": hAPI.getCardValue("A2_TPFRETE" + "___" + idx),
-							"A2_VALFRE": hAPI.getCardValue("A2_VALFRE" + "___" + idx),
-							"A2_VALIDA": hAPI.getCardValue("A2_VALIDA" + "___" + idx)
+							"A2_COD": linha["A2_COD"].value,
+							"A2_LOJA": linha["A2_LOJA"].value,
+							"A2_CGC": linha["A2_CGC"].value,
+							"A2_COND": linha["A2_COND"].value,
+							"A2_TPFRETE": linha["A2_TPFRETE"].value,
+							"A2_VALFRE": linha["A2_VALFRE"].value,
+							"A2_VALIDA": linha["A2_VALIDA"].value
 						}
 					})
-
 				}
-
 				tools.log(">> tools.cotacao.getData [#333]")
 				obj.ok = true;
 			} catch (e) {
@@ -1374,53 +1366,74 @@ var tools = {
 
 			return obj;
 		},
-		getDataForm: function () {
+		getDataForm: function (cardData) {
 			var obj = { dados: [], TES: [], fornec: [] };
 
-			hAPI.getChildrenIndexes("tabCotacao").forEach(function (idx) {
+			var tableCotacoes = tools.getTableFilho(
+				cardData || hAPI.getCardData(getValue("WKNumProces")),
+				["C8_CICLO", "C8_ITEM", "C8_PRODUTO", "C8_UM", "C8_FORNECE", "C8_LOJA",
+					"C8_QUANT", "C8_PRECO", "C8_TOTAL", "C8_PRAZO", "C8_FILENT", "C8_VALIPI",
+					"C8_VALICM", "C8_VALISS", "C8_DIFAL", "C8_VALSOL", "C8_VALIDA", "BEN_FISCAL"]
+			);
+			tableCotacoes.forEach(function (linha) {
+
 				obj.dados.push({
-					"C8_CICLO": hAPI.getCardValue("C8_CICLO" + "___" + idx),
-					"C8_ITEM": hAPI.getCardValue("C8_ITEM" + "___" + idx),
-					"C8_PRODUTO": hAPI.getCardValue("C8_PRODUTO" + "___" + idx),
-					"C8_UM": hAPI.getCardValue("C8_UM" + "___" + idx),
-					"C8_FORNECE": hAPI.getCardValue("C8_FORNECE" + "___" + idx),
-					"C8_LOJA": hAPI.getCardValue("C8_LOJA" + "___" + idx),
-					"C8_QUANT": hAPI.getCardValue("C8_QUANT" + "___" + idx),
-					"C8_PRECO": hAPI.getCardValue("C8_PRECO" + "___" + idx),
-					"C8_TOTAL": hAPI.getCardValue("C8_TOTAL" + "___" + idx),
-					"C8_PRAZO": hAPI.getCardValue("C8_PRAZO" + "___" + idx),
-					"C8_FILENT": hAPI.getCardValue("C8_FILENT" + "___" + idx),
-					"C8_VALIPI": hAPI.getCardValue("C8_VALIPI" + "___" + idx),
-					"C8_VALICM": hAPI.getCardValue("C8_VALICM" + "___" + idx),
-					"C8_VALISS": hAPI.getCardValue("C8_VALISS" + "___" + idx),
-					"C8_DIFAL": hAPI.getCardValue("C8_DIFAL" + "___" + idx),
-					"C8_VALSOL": hAPI.getCardValue("C8_VALSOL" + "___" + idx),
-					"C8_VALIDA": hAPI.getCardValue("C8_VALIDA" + "___" + idx),
-					"BEN_FISCAL": hAPI.getCardValue("BEN_FISCAL" + "___" + idx),
+					"C8_CICLO": linha["C8_CICLO"].value,
+					"C8_ITEM": linha["C8_ITEM"].value,
+					"C8_PRODUTO": linha["C8_PRODUTO"].value,
+					"C8_UM": linha["C8_UM"].value,
+					"C8_FORNECE": linha["C8_FORNECE"].value,
+					"C8_LOJA": linha["C8_LOJA"].value,
+					"C8_QUANT": linha["C8_QUANT"].value,
+					"C8_PRECO": linha["C8_PRECO"].value,
+					"C8_TOTAL": linha["C8_TOTAL"].value,
+					"C8_PRAZO": linha["C8_PRAZO"].value,
+					"C8_FILENT": linha["C8_FILENT"].value,
+					"C8_VALIPI": linha["C8_VALIPI"].value,
+					"C8_VALICM": linha["C8_VALICM"].value,
+					"C8_VALISS": linha["C8_VALISS"].value,
+					"C8_DIFAL": linha["C8_DIFAL"].value,
+					"C8_VALSOL": linha["C8_VALSOL"].value,
+					"C8_VALIDA": linha["C8_VALIDA"].value,
+					"BEN_FISCAL": linha["BEN_FISCAL"].value,
 				})
 			})
 
-			obj.TES = hAPI.getChildrenIndexes("tabTES").filter(function (idx) { return hAPI.getCardValue("TES_CODIGO" + "___" + idx) != "" }).map(function (idx) {
+			var tableTES = tools.getTableFilho(
+				cardData || hAPI.getCardData(getValue("WKNumProces")),
+				["TES_A2_COD", "TES_A2_LOJA", "TES_A2_CGC", "TES_B1_COD", "TES_CODIGO", "TES_COMPRADOR"]
+			);
+			obj.TES = tableTES.filter(function (linha) {
+
+				return linha["TES_CODIGO"].value != ""
+			}).map(function (linha) {
 				return {
-					"idx": idx,
-					"TES_A2_COD": "" + hAPI.getCardValue("TES_A2_COD" + "___" + idx),
-					"TES_A2_LOJA": "" + hAPI.getCardValue("TES_A2_LOJA" + "___" + idx),
-					"TES_A2_CGC": "" + hAPI.getCardValue("TES_A2_CGC" + "___" + idx),
-					"TES_B1_COD": "" + hAPI.getCardValue("TES_B1_COD" + "___" + idx),
-					"TES_CODIGO": "" + hAPI.getCardValue("TES_CODIGO" + "___" + idx),
-					"TES_COMPRADOR": "" + hAPI.getCardValue("TES_COMPRADOR" + "___" + idx)
+					"idx": linha["TES_A2_COD"].index,
+					"TES_A2_COD": "" + linha["TES_A2_COD"].value,
+					"TES_A2_LOJA": "" + linha["TES_A2_LOJA"].value,
+					"TES_A2_CGC": "" + linha["TES_A2_CGC"].value,
+					"TES_B1_COD": "" + linha["TES_B1_COD"].value,
+					"TES_CODIGO": "" + linha["TES_CODIGO"].value,
+					"TES_COMPRADOR": "" + linha["TES_COMPRADOR"].value
 				}
 			})
 
-			obj.fornec = hAPI.getChildrenIndexes("tabFornecedor").filter(function (idx) { return hAPI.getCardValue("CICLO_REMOVIDO" + "___" + idx) == "" }).map(function (idx) {
+			var tableFornecedores = tools.getTableFilho(
+				cardData || hAPI.getCardData(getValue("WKNumProces")),
+				["A2_COD", "A2_LOJA", "A2_CGC", "A2_COND", "A2_TPFRETE", "A2_VALFRE", "A2_VALIDA", "CICLO_REMOVIDO"]
+			);
+
+			obj.fornec = tableFornecedores.filter(function (linha) {
+				return linha["CICLO_REMOVIDO"].value == ""
+			}).map(function (idx) {
 				return {
-					"A2_COD": hAPI.getCardValue("A2_COD" + "___" + idx),
-					"A2_LOJA": hAPI.getCardValue("A2_LOJA" + "___" + idx),
-					"A2_CGC": hAPI.getCardValue("A2_CGC" + "___" + idx),
-					"A2_COND": hAPI.getCardValue("A2_COND" + "___" + idx),
-					"A2_TPFRETE": hAPI.getCardValue("A2_TPFRETE" + "___" + idx),
-					"A2_VALFRE": hAPI.getCardValue("A2_VALFRE" + "___" + idx),
-					"A2_VALIDA": hAPI.getCardValue("A2_VALIDA" + "___" + idx)
+					"A2_COD": linha["A2_COD"].value,
+					"A2_LOJA": linha["A2_LOJA"].value,
+					"A2_CGC": linha["A2_CGC"].value,
+					"A2_COND": linha["A2_COND"].value,
+					"A2_TPFRETE": linha["A2_TPFRETE"].value,
+					"A2_VALFRE": linha["A2_VALFRE"].value,
+					"A2_VALIDA": linha["A2_VALIDA"].value,
 				}
 			})
 
@@ -1450,14 +1463,13 @@ var tools = {
 				null
 			)
 		},
-		getItensCotacao: function () {
+		getItensCotacao: function (cardData) {
 			var obj = [];
 
-			var tabFornecedorProduto = tools.cotacao.getTabFornecedorProduto();
-			var tabFornecedor = tools.cotacao.getTabFornecedor();
-			var tabSC = tools.cotacao.getTabSC();
+			//var tabFornecedorProduto = tools.cotacao.getTabFornecedorProduto(cardData);
+			var tabFornecedor = tools.cotacao.getTabFornecedor(cardData);
+			var tabSC = tools.cotacao.getTabSC(cardData);
 
-			log.dir(tabFornecedorProduto)
 			log.dir(tabFornecedor)
 			log.dir(tabSC)
 
@@ -1476,38 +1488,58 @@ var tools = {
 
 			return obj;
 		},
-		getTabFornecedor: function () {
-			return hAPI.getChildrenIndexes("tabFornecedor")
-				.filter(function (idx) { return hAPI.getCardValue("CICLO_REMOVIDO" + "___" + idx) == "" })
-				.map(function (idx) {
+		getTabFornecedor: function (cardData) {
+			var tableFornecedores = tools.getTableFilho(
+				cardData || hAPI.getCardData(getValue("WKNumProces")),
+				["A2_COD", "A2_CGC", "A2_LOJA", "A2_NOME", "CICLO_REMOVIDO", "A2_COND",
+					"A2_TPFRETE", "A2_VALFRE"]
+			);
+			return tableFornecedores
+				.filter(function (linha) {
+					return linha["CICLO_REMOVIDO"].value == ""
+				})
+				.map(function (linha) {
 					return {
-						"A2_COD": hAPI.getCardValue("A2_COD" + "___" + idx),
-						"A2_LOJA": hAPI.getCardValue("A2_LOJA" + "___" + idx),
-						"A2_NOME": hAPI.getCardValue("A2_NOME" + "___" + idx)
+						"idx": linha["A2_COD"].index,
+						"A2_COD": linha["A2_COD"].value,
+						"A2_LOJA": linha["A2_LOJA"].value,
+						"A2_NOME": linha["A2_NOME"].value,
+						"A2_CGC": linha["A2_CGC"].value,
+						"A2_COND": linha["A2_COND"].value,
+						"A2_TPFRETE": linha["A2_TPFRETE"].value,
+						"A2_VALFRE": linha["A2_VALFRE"].value
 					}
 				});
 		},
-		getTabFornecedorProduto: function () {
-			return hAPI.getChildrenIndexes("tabFornecedorProduto")
-				.map(function (idx) {
+		getTabFornecedorProduto: function (cardData) {
+			var tableFornecedorProduto = tools.getTableFilho(
+				cardData || hAPI.getCardData(getValue("WKNumProces")),
+				["A5_PRODUTO", "A5_FORNECE", "A5_LOJA"]
+			);
+			return tableFornecedorProduto
+				.map(function (linha) {
 					return {
-						"A5_PRODUTO": hAPI.getCardValue("A5_PRODUTO" + "___" + idx),
-						"A5_FORNECE": hAPI.getCardValue("A5_FORNECE" + "___" + idx),
-						"A5_LOJA": hAPI.getCardValue("A5_LOJA" + "___" + idx)
+						"A5_PRODUTO": linha["A5_PRODUTO"].value,
+						"A5_FORNECE": linha["A5_FORNECE"].value,
+						"A5_LOJA": linha["A5_LOJA"].value
 					}
 				});
 		},
-		getTabSC: function () {
-			return hAPI.getChildrenIndexes("tabSC")
-				.map(function (idx) {
+		getTabSC: function (cardData) {
+			var tableSC = tools.getTableFilho(
+				cardData || hAPI.getCardData(getValue("WKNumProces")),
+				["C1_ITEM", "C1_PRODUTO"]
+			);
+			return tableSC
+				.map(function (linha) {
 					return {
-						"C1_ITEM": "" + hAPI.getCardValue("C1_ITEM" + "___" + idx),
-						"C1_PRODUTO": "" + hAPI.getCardValue("C1_PRODUTO" + "___" + idx)
+						"C1_ITEM": "" + linha["C1_ITEM"].value,
+						"C1_PRODUTO": "" + linha["C1_PRODUTO"].value
 					}
 				});
 		},
 		necessitaAtualizar: function (cotacao) {
-			return cotacao.dados.filter(function (el) { return el.C8_PRECO != "" && el.C8_PRECO != "0.00" && el.C8_PRECO != "0,00" && el.C8_PRECO != "0.000000" && el.C8_PRECO != "0,000000" }).length > 0
+			return cotacao.dados.filter(function (el) { return el.C8_PRECO != "" && el.C8_PRECO != "0" && el.C8_PRECO != "0.00" && el.C8_PRECO != "0,00" && el.C8_PRECO != "0.000000" && el.C8_PRECO != "0,000000" }).length > 0
 		}
 	},
 	formata: {
@@ -1544,20 +1576,26 @@ var tools = {
 		}
 	},
 	fornecedores: {
-		excluiCotacao: function (ciclo_atual) {
+		excluiCotacao: function (ciclo_atual, cardData) {
 			log.info(">> tools.fornecedores.excluiCotacao [#1479]")
 			var retorno = { ok: true }
-			var indexes = hAPI.getChildrenIndexes("tabFornecedor");
-			var fornecedores = hAPI.getChildrenIndexes("tabFornecedor")
-				.filter(function (idx) { return hAPI.getCardValue("CICLO_REMOVIDO___" + idx) == ciclo_atual })
-				.map(function (idx) {
+			var tableFornecedores = tools.getTableFilho(
+				cardData || hAPI.getCardData(getValue("WKNumProces")),
+				["A2_COD", "A2_LOJA", "CICLO_REMOVIDO"]
+			)
+			var fornecedores = tableFornecedores
+				.filter(function (linha) {
+					return linha["CICLO_REMOVIDO"].value == ciclo_atual
+				})
+				.map(function (linha) {
+
 					return {
 						"idx": idx,
-						"A2_COD": hAPI.getCardValue("A2_COD" + "___" + idx),
-						"A2_LOJA": hAPI.getCardValue("A2_LOJA" + "___" + idx),
-						"A2_CGC": hAPI.getCardValue("A2_CGC" + "___" + idx)
+						"A2_COD": linha["A2_COD"].value,
+						"A2_LOJA": linha["A2_LOJA"].value,
+						"A2_CGC": linha["A2_CGC"].value
 					}
-				});
+				})
 
 			if (fornecedores.length > 0) {
 				var obj = {
@@ -1575,10 +1613,8 @@ var tools = {
 		},
 		getProdutosExcluir: function (fornecedores, ciclo_anterior) {
 			var obj = [];
-			//var indexes 	= hAPI.getChildrenIndexes("tabCotacao");
 			var dsCotacoes = tools.cotacao.getFormCiclo(ciclo_anterior);
 
-			//indexes.forEach(function(idx){
 			for (var i = 0; i < dsCotacoes.rowsCount; i++) {
 				var C8_FORNECE = dsCotacoes.getValue(i, "C8_FORNECE");
 				var C8_LOJA = dsCotacoes.getValue(i, "C8_LOJA");
@@ -1604,25 +1640,19 @@ var tools = {
 
 			return obj;
 		},
-		getProdutosIncluir: function () {
-			return hAPI.getChildrenIndexes("tabSC")
-				.map(function (idx) { return { "C8_PRODUTO": "" + hAPI.getCardValue("C1_PRODUTO___" + idx).trim() } })
+		getProdutosIncluir: function (cardData) {
+			var tableSC = tools.getTableFilho(
+				cardData || hAPI.getCardData(getValue("WKNumProces")),
+				["C1_ITEM", "C1_PRODUTO"]
+			);
+			return tableSC
+				.map(function (linha) { return { "C8_PRODUTO": "" + linha["C1_PRODUTO"].value + "".trim() } })
 				.filter(function (el) { return el.C8_PRODUTO.length > 8 });
 		},
-		incluiCotacao: function (ciclo_atual) {
+		incluiCotacao: function (ciclo_atual, cardData) {
 			log.info(">> tools.fornecedores.incluiCotacao [#1329]")
 			var retorno = { ok: true, obj: [] };
-			var fornecedores = hAPI.getChildrenIndexes("tabFornecedor")
-				.filter(function (idx) { return hAPI.getCardValue("CICLO_INSERIDO___" + idx) == "" })
-				.map(function (idx) {
-					return {
-						"idx": idx,
-						"A2_COD": hAPI.getCardValue("A2_COD" + "___" + idx),
-						"A2_LOJA": hAPI.getCardValue("A2_LOJA" + "___" + idx),
-						"A2_CGC": hAPI.getCardValue("A2_CGC" + "___" + idx)
-					}
-				})
-
+			var fornecedores = tools.cotacao.getTabFornecedor(cardData)
 			log.dir(fornecedores);
 
 			if (fornecedores.length > 0) {
@@ -1635,7 +1665,7 @@ var tools = {
 						}]
 					}
 					log.info(">> tools.fornecedores.incluiCotacao [#1353]");
-					var produtos = tools.fornecedores.getProdutosIncluir();
+					var produtos = tools.fornecedores.getProdutosIncluir(cardData);
 
 					fornecedores.forEach(function (fornecedor) {
 						obj.COTACAO[0].FORNECE.push({
@@ -1644,7 +1674,8 @@ var tools = {
 							"ITEM": produtos
 						})
 					})
-					log.info(">> tools.fornecedores.incluiCotacao obj"); log.dir(obj);
+					log.info(">> tools.fornecedores.incluiCotacao obj");
+					log.dir(obj);
 
 					retorno = integra.postProtheus("/JWSSC802/1", obj)
 					log.info(">> tools.fornecedores.incluiCotacao [#1366]")
@@ -1678,37 +1709,6 @@ var tools = {
 									C8_VALISS: el["C8_VALISS"],
 									C8_ITEM: el["C8_ITEM"],
 								})
-								/*integra.postFluig("/ecm-forms/api/v2/cardindex/"+hAPI.getAdvancedProperty("formCotacao")+"/cards/"+cardId+"/children",{
-									"values":[
-										{
-											  "fieldId": "C8_CICLO",
-											  "value": ""+ciclo_atual
-										},
-										{
-										  "fieldId": "C8_ITEM",
-										  "value": ""+el.C8_ITEM
-										},
-										{
-										  "fieldId": "C8_PRODUTO",
-										  "value": ""+el.C8_PRODUTO
-										},
-										{
-										  "fieldId": "C8_UM",
-										  "value": ""+el.C8_UM
-										},
-										{
-										  "fieldId": "C8_FORNECE",
-										  "value": ""+el.C8_FORNECE
-										},
-										{
-										  "fieldId": "C8_LOJA",
-										  "value": ""+el.C8_LOJA
-										},
-										{
-										  "fieldId": "C8_VALIDA",
-										  "value": ""+el.C8_VALIDA
-										}
-									]*/
 							})
 
 						})
@@ -1716,7 +1716,6 @@ var tools = {
 						fornecedores.forEach(function (el) {
 							hAPI.setCardValue("CICLO_INSERIDO___" + el.idx, ciclo_atual)
 						})
-
 					}
 					else {
 						retorno = cotacao;
@@ -1899,10 +1898,14 @@ var tools = {
 
 				return obj;
 			},
-			registrar: function (decisao) {
-				hAPI.getChildrenIndexes("tabPedidos").forEach(function (idx) {
-					if (hAPI.getCardValue("C7_STATUS___" + idx) == "")
-						hAPI.setCardValue("C7_STATUS___" + idx, decisao)
+			registrar: function (decisao, cardData) {
+				var tablePedidos = tools.getTableFilho(
+					cardData || hAPI.getCardData(getValue("WKNumProces")),
+					["C7_STATUS"]
+				);
+				tablePedidos.forEach(function (linha) {
+					if (linha["C7_STATUS"].value == "")
+						hAPI.setCardValue(linha["C7_STATUS"].name, decisao)
 				})
 			},
 			reprovar: function () {
@@ -1968,7 +1971,7 @@ var tools = {
 
 			return "";
 		},
-		getItens: function () {
+		getItens: function (cardData) {
 
 			var ciclo_atual = hAPI.getCardValue("ciclo_atual");
 			var tipo_pc_contrato = hAPI.getCardValue("tipo_pc_contrato");
@@ -1981,23 +1984,27 @@ var tools = {
 						INNER JOIN "+ hAPI.getAdvancedProperty("mlTabCotacao") + " COT ON COT.DOCUMENTID = ML.DOCUMENTID AND COT.VERSION = ML.VERSION \
 					WHERE ML.C8_NUM = '"+ hAPI.getCardValue("C8_NUM") + "' AND ML.idEmpresa = '" + hAPI.getCardValue("idEmpresa") + "' AND ML.C8_CICLO = '" + hAPI.getCardValue("ciclo_atual") + "' AND COT.VENCEDOR_COMPRADOR = 'true' AND DOC.VERSAO_ATIVA = 1"
 				)
+				dsItens = dsItens.map(function (item) {
+					return {
+						"C8_ITEM": item["C8_ITEM"],
+						"C8_FORNECE": item["C8_FORNECE"] + item["C8_LOJA"]
+					}
+				})
 			}
 			else {
-				var dsItens = hAPI.getChildrenIndexes("tabCotacao").map(function (idx) {
+				var tableCotacao = tools.getTableFilho(
+					cardData || hAPI.getCardData(getValue("WKNumProces")),
+					["C8_ITEM", "C8_FORNECE", "C8_LOJA"]
+				);
+				var dsItens = tableCotacao.map(function (linha) {
 					return {
-						C8_ITEM: hAPI.getCardValue("C8_ITEM" + "___" + idx),
-						C8_FORNECE: hAPI.getCardValue("C8_FORNECE" + "___" + idx),
-						C8_LOJA: hAPI.getCardValue("C8_LOJA" + "___" + idx)
+						"C8_ITEM": linha["C8_ITEM"],
+						"C8_FORNECE": linha["C8_FORNECE"] + linha["C8_LOJA"]
 					}
 				})
 			}
 
-			var itens = dsItens.map(function (item) {
-				return {
-					"C8_ITEM": item["C8_ITEM"],
-					"C8_FORNECE": item["C8_FORNECE"] + item["C8_LOJA"]
-				}
-			})
+			var itens = dsItens
 			log.dir(itens)
 
 			if (tipo_pc_contrato == "contrato") {
@@ -2041,27 +2048,23 @@ var tools = {
 			}
 
 		},
-		atualizaCotacao: function () {
+		atualizaCotacao: function (cardData) {
 			var retorno = { ok: true };
-			var ciclo_atual = hAPI.getCardValue("ciclo_atual");
-			var tabFornecedor = hAPI.getChildrenIndexes("tabFornecedor")
-				.filter(function (idx) { return hAPI.getCardValue("CICLO_REMOVIDO" + "___" + idx) == "" })
-				.map(function (idx) {
-					return {
-						"A2_COD": hAPI.getCardValue("A2_COD" + "___" + idx),
-						"A2_LOJA": hAPI.getCardValue("A2_LOJA" + "___" + idx),
-						"A2_COND": hAPI.getCardValue("A2_COND" + "___" + idx),
-						"A2_TPFRETE": hAPI.getCardValue("A2_TPFRETE" + "___" + idx),
-						"A2_VALFRE": hAPI.getCardValue("A2_VALFRE" + "___" + idx)
-					}
-				})
+			var ciclo_atual = cardData.get("ciclo_atual");
+			var tabFornecedor = tools.cotacao.getTabFornecedor(cardData);
 
-			var tabTES = hAPI.getChildrenIndexes("tabTES").map(function (idx) {
+			var tableTES = tools.getTableFilho(
+				cardData || hAPI.getCardData(getValue("WKNumProces")),
+				["TES_A2_COD", "TES_A2_LOJA", "TES_B1_COD", "TES_CODIGO"]
+			);
+			var tabTES = tableTES.map(function (linha) {
+				var idx = linha["TES_A2_COD"].index;
 				return {
-					"TES_A2_COD": "" + hAPI.getCardValue("TES_A2_COD" + "___" + idx),
-					"TES_A2_LOJA": "" + hAPI.getCardValue("TES_A2_LOJA" + "___" + idx),
-					"TES_B1_COD": "" + hAPI.getCardValue("TES_B1_COD" + "___" + idx),
-					"TES_CODIGO": "" + hAPI.getCardValue("TES_CODIGO" + "___" + idx)
+					"idx": idx,
+					"TES_A2_COD": "" + linha["TES_A2_COD"].value,
+					"TES_A2_LOJA": "" + linha["TES_A2_LOJA"].value,
+					"TES_B1_COD": "" + linha["TES_B1_COD"].value,
+					"TES_CODIGO": "" + linha["TES_CODIGO"].value
 				}
 			})
 			log.info("--- tabTES");
@@ -2069,26 +2072,30 @@ var tools = {
 
 			var FORNECE = [];
 			if (hAPI.getCardValue("tipoSc") != "5") {
-
-				var cotacoes = integra.getDBFluig(
-					"SELECT COT.* FROM " + hAPI.getAdvancedProperty("mlFormCotacao") + " ML \
-						INNER JOIN DOCUMENTO DOC ON DOC.NR_DOCUMENTO = ML.DOCUMENTID AND DOC.NR_VERSAO = ML.VERSION \
-						INNER JOIN "+ hAPI.getAdvancedProperty("mlTabCotacao") + " COT ON COT.DOCUMENTID = ML.DOCUMENTID AND COT.VERSION = ML.VERSION \
-					WHERE ML.C8_NUM = '"+ hAPI.getCardValue("C8_NUM") + "' AND ML.idEmpresa = '" + hAPI.getCardValue("idEmpresa") + "' AND ML.C8_CICLO = '" + ciclo_atual + "' AND DOC.VERSAO_ATIVA = 1"
-				).filter(function (cot) {
+				var cotacoes = tools.getDataset("DS_CONSULTA_COTACOES", null, [
+					{ field: "C8_NUM", value: cardData.get("C8_NUM") },
+					{ field: "idEmpresa", value: cardData.get("idEmpresa") },
+					{ field: "C8_CICLO", value: ciclo_atual }
+				], false);
+				cotacoes = cotacoes.filter(function (cot) {
 					return tabFornecedor.filter(function (f) { return f.A2_COD == cot.C8_FORNECE && f.A2_LOJA == cot.C8_LOJA }).length > 0
 				})
 			}
 			else {
-				var cotacoes = hAPI.getChildrenIndexes("tabCotacao").map(function (idx) {
+				var tableCotacao = tools.getTableFilho(
+					cardData || hAPI.getCardData(getValue("WKNumProces")),
+					["C8_PRODUTO", "C8_FORNECE", "C8_LOJA", "QTD_COMPRADOR",
+						"C8_QUANT", "C8_PRECO", "C8_PRAZO"]
+				);
+				var cotacoes = tableCotacao.map(function (linha) {
 					return {
-						C8_PRODUTO: hAPI.getCardValue("C8_PRODUTO" + "___" + idx),
-						C8_FORNECE: hAPI.getCardValue("C8_FORNECE" + "___" + idx),
-						C8_LOJA: hAPI.getCardValue("C8_LOJA" + "___" + idx),
-						QTD_COMPRADOR: hAPI.getCardValue("QTD_COMPRADOR" + "___" + idx),
-						C8_QUANT: hAPI.getCardValue("C8_QUANT" + "___" + idx),
-						C8_PRECO: hAPI.getCardValue("C8_PRECO" + "___" + idx),
-						C8_PRAZO: hAPI.getCardValue("C8_PRAZO" + "___" + idx)
+						C8_PRODUTO: linha["C8_PRODUTO"].value,
+						C8_FORNECE: linha["C8_FORNECE"].value,
+						C8_LOJA: linha["C8_LOJA"].value,
+						QTD_COMPRADOR: linha["QTD_COMPRADOR"].value,
+						C8_QUANT: linha["C8_QUANT"].value,
+						C8_PRECO: linha["C8_PRECO"].value,
+						C8_PRAZO: linha["C8_PRAZO"].value
 					}
 				})
 			}
@@ -2141,7 +2148,7 @@ var tools = {
 
 			return retorno;
 		},
-		limpaCotacao: function () {
+		limpaCotacao: function (cardData) {
 			var retorno = { ok: true };
 			var ciclo_atual = hAPI.getCardValue("ciclo_atual");
 			var tipoSc = hAPI.getCardValue("tipoSc");
@@ -2152,7 +2159,10 @@ var tools = {
 					"SELECT COT.C8_FORNECE,COT.C8_LOJA,COT.C8_PRODUTO FROM " + hAPI.getAdvancedProperty("mlFormCotacao") + " ML \
 						INNER JOIN DOCUMENTO DOC ON DOC.NR_DOCUMENTO = ML.DOCUMENTID AND DOC.NR_VERSAO = ML.VERSION \
 						INNER JOIN "+ hAPI.getAdvancedProperty("mlTabCotacao") + " COT ON COT.DOCUMENTID = ML.DOCUMENTID AND COT.VERSION = ML.VERSION \
-					WHERE ML.C8_NUM = '"+ hAPI.getCardValue("C8_NUM") + "' AND ML.idEmpresa = '" + hAPI.getCardValue("idEmpresa") + "' AND ML.C8_CICLO = '" + ciclo_atual + "' AND COT.C8_PRECO IN ('','0.00','0.000000') AND DOC.VERSAO_ATIVA = 1"
+					WHERE ML.C8_NUM = '"+ hAPI.getCardValue("C8_NUM")
+					+ "' AND ML.idEmpresa = '" + hAPI.getCardValue("idEmpresa")
+					+ "' AND ML.C8_CICLO = '" + ciclo_atual
+					+ "' AND COT.C8_PRECO IN ('','0.00','0.000000') AND DOC.VERSAO_ATIVA = 1"
 				)
 				cotacoes.forEach(function (cotacao) {
 					var filterFORNECE = FORNECE.filter(function (el) { return el.C8_FORNECE == cotacao["C8_FORNECE"] + cotacao["C8_LOJA"] })
@@ -2173,16 +2183,24 @@ var tools = {
 				var cotacao = integra.getProtheus("/JWSSC803/1/" + hAPI.getCardValue("idEmpresa") + "/" + hAPI.getCardValue("C8_NUM"));
 
 				if (cotacao.ok) {
-					var tabCotacao = hAPI.getChildrenIndexes("tabCotacao").map(function (idx) {
+					var tableCotacao = tools.getTableFilho(
+						cardData || hAPI.getCardData(getValue("WKNumProces")),
+						["C8_PRODUTO", "C8_FORNECE", "C8_LOJA"]
+					);
+					var tabCotacao = tableCotacao.map(function (linha) {
 						return {
-							"C8_FORNECE": hAPI.getCardValue("C8_FORNECE___" + idx),
-							"C8_LOJA": hAPI.getCardValue("C8_LOJA___" + idx),
-							"C8_PRODUTO": hAPI.getCardValue("C8_PRODUTO___" + idx)
+							"C8_FORNECE": linha["C8_FORNECE"].value,
+							"C8_LOJA": linha["C8_LOJA"].value,
+							"C8_PRODUTO": linha["C8_PRODUTO"].value
 						}
 					})
 					log.dir(tabCotacao)
 					cotacao.retorno.DADOS.forEach(function (el) {
-						var filt = tabCotacao.filter(function (tc) { return tc.C8_FORNECE == el.C8_FORNECE && tc.C8_LOJA == el.C8_LOJA && tc.C8_PRODUTO.trim() == el.C8_PRODUTO.trim() });
+						var filt = tabCotacao.filter(function (tc) {
+							return tc.C8_FORNECE == el.C8_FORNECE
+								&& tc.C8_LOJA == el.C8_LOJA
+								&& tc.C8_PRODUTO.trim() == el.C8_PRODUTO.trim()
+						});
 						if (filt.length == 0) {
 							var filterFORNECE = FORNECE.filter(function (f) { return f.C8_FORNECE == (el.C8_FORNECE + el.C8_LOJA) })
 							if (filterFORNECE.length > 0) {
@@ -2257,20 +2275,10 @@ var tools = {
 				}
 			})
 		},
-		registra: function (pedidos) {
+		registra: function (pedidos, cardData) {
 			log.info(">> tools.pedido.registra <<")
 			var ciclo_atual = hAPI.getCardValue("ciclo_atual");
-			var itens = hAPI.getChildrenIndexes("tabCotacao").filter(function (idx) {
-				return hAPI.getCardValue("C8_CICLO___" + idx) == ciclo_atual && hAPI.getCardValue("VENCEDOR_COMPRADOR___" + idx) == "true" && hAPI.getCardValue("C8_NUMPED___" + idx) == "";
-			}).map(function (idx) {
-				return {
-					"idx": idx,
-					"C8_ITEM": hAPI.getCardValue("C8_ITEM___" + idx),
-					"C8_FORNECE": hAPI.getCardValue("C8_FORNECE___" + idx) + hAPI.getCardValue("C8_LOJA___" + idx)
-				}
-			})
 
-			log.dir(itens);
 			log.dir(pedidos);
 			var campoPedidos = [];
 			for (var i = 0; i < pedidos.length; i++) {
@@ -2282,7 +2290,7 @@ var tools = {
 			hAPI.setCardValue("pedidoProtheus", campoPedidos);
 
 		},
-		valorTotal: function () {
+		valorTotal: function (cardData) {
 			var valor = 0;
 			var ciclo_atual = hAPI.getCardValue("ciclo_atual");
 			if (hAPI.getCardValue("tipoSc") != "5") {
@@ -2293,17 +2301,22 @@ var tools = {
 					WHERE ML.C8_NUM = '"+ hAPI.getCardValue("C8_NUM") + "' AND ML.idEmpresa = '" + hAPI.getCardValue("idEmpresa") + "' AND ML.C8_CICLO = '" + ciclo_atual + "' AND COT.VENCEDOR_COMPRADOR = 'true' AND DOC.VERSAO_ATIVA = 1"
 				)
 			} else {
-				var cotacoes = hAPI.getChildrenIndexes("tabCotacao").map(function (idx) {
+				var tableCotacao = tools.getTableFilho(
+					cardData || hAPI.getCardData(getValue("WKNumProces")),
+					["C8_PRODUTO", "C8_FORNECE", "C8_LOJA", "QTD_COMPRADOR",
+						"C8_QUANT", "C8_PRECO", "C8_DIFAL", "C8_VALSOL"]
+				);
+				var cotacoes = tableCotacao.map(function (linha) {
 					return {
-						C8_FORNECE: hAPI.getCardValue("C8_FORNECE" + "___" + idx),
-						C8_LOJA: hAPI.getCardValue("C8_LOJA" + "___" + idx),
-						C8_PRODUTO: hAPI.getCardValue("C8_PRODUTO" + "___" + idx),
-						C8_PRECO: hAPI.getCardValue("C8_PRECO" + "___" + idx),
-						QTD_COMPRADOR: hAPI.getCardValue("QTD_COMPRADOR" + "___" + idx),
-						C8_DIFAL: hAPI.getCardValue("C8_DIFAL" + "___" + idx),
-						QTD_COMPRADOR: hAPI.getCardValue("QTD_COMPRADOR" + "___" + idx),
-						C8_QUANT: hAPI.getCardValue("C8_QUANT" + "___" + idx),
-						C8_VALSOL: hAPI.getCardValue("C8_VALSOL" + "___" + idx)
+						C8_FORNECE: linha["C8_FORNECE"].value,
+						C8_LOJA: linha["C8_LOJA"].value,
+						C8_PRODUTO: linha["C8_PRODUTO"].value,
+						C8_PRECO: linha["C8_PRECO"].value,
+						QTD_COMPRADOR: linha["QTD_COMPRADOR"].value,
+						C8_DIFAL: linha["C8_DIFAL"].value,
+						QTD_COMPRADOR: linha["QTD_COMPRADOR"].value,
+						C8_QUANT: linha["C8_QUANT"].value,
+						C8_VALSOL: linha["C8_VALSOL"].value
 					}
 				})
 			}
@@ -2339,17 +2352,21 @@ var tools = {
 			log.dir(filtTES);
 			return filtTES.length > 0 ? filtTES[0].TES_CODIGO : "022";
 		},
-		regulariza: function () {
+		regulariza: function (cardData) {
 			log.info("-- tools.tes.regulariza")
 			var arrAdiciona = [];
-
-			var tes = hAPI.getChildrenIndexes("tabTES").map(function (idx) {
+			var tableTES = tools.getTableFilho(
+				cardData || hAPI.getCardData(getValue("WKNumProces")),
+				["TES_A2_COD", "TES_A2_LOJA", "TES_B1_COD", "TES_A2_CGC"]
+			);
+			var tes = tableTES.map(function (linha) {
+				var idx = linha["TES_A2_COD"].index;
 				return {
 					"idx": idx,
-					"TES_A2_COD": "" + hAPI.getCardValue("TES_A2_COD" + "___" + idx),
-					"TES_A2_LOJA": "" + hAPI.getCardValue("TES_A2_LOJA" + "___" + idx),
-					"TES_A2_CGC": "" + hAPI.getCardValue("TES_A2_CGC" + "___" + idx),
-					"TES_B1_COD": "" + hAPI.getCardValue("TES_B1_COD" + "___" + idx)
+					"TES_A2_COD": "" + linha["TES_A2_COD"].value,
+					"TES_A2_LOJA": "" + linha["TES_A2_LOJA"].value,
+					"TES_B1_COD": "" + linha["TES_B1_COD"].value,
+					"TES_A2_CGC": "" + linha["TES_A2_CGC"].value
 				}
 			})
 			log.info(">> tes <<");
@@ -2364,29 +2381,23 @@ var tools = {
 				}
 			}
 
-			var fornecedores = hAPI.getChildrenIndexes("tabFornecedor")
-				.filter(function (idx) {
-					return hAPI.getCardValue("CICLO_REMOVIDO" + "___" + idx) == ""
-				})
-				.map(function (idx) {
-					return {
-						"idx": idx,
-						"A2_COD": "" + hAPI.getCardValue("A2_COD" + "___" + idx),
-						"A2_LOJA": "" + hAPI.getCardValue("A2_LOJA" + "___" + idx),
-						"A2_CGC": "" + hAPI.getCardValue("A2_CGC" + "___" + idx)
-					}
-				})
+			var fornecedores = tools.cotacao.getTabFornecedor(cardData);
 			log.info(">> fornecedores <<");
 			log.dir(fornecedores);
 
-			var produtos = hAPI.getChildrenIndexes("tabProduto")
-				.filter(function (idx) {
-					return hAPI.getCardValue("B1_PAI" + "___" + idx) == ""
+			var tableProduto = tools.getTableFilho(
+				cardData || hAPI.getCardData(getValue("WKNumProces")),
+				["B1_COD", "B1_PAI"]
+			);
+			var produtos = tableProduto
+				.filter(function (linha) {
+					return linha["B1_PAI"].value == ""
 				})
-				.map(function (idx) {
+				.map(function (linha) {
+					idx = linha["B1_COD"].index;
 					return {
 						"idx": idx,
-						"B1_COD": "" + hAPI.getCardValue("B1_COD" + "___" + idx)
+						"B1_COD": "" + linha["B1_COD"].value
 					}
 				})
 			log.info(">> produtos <<");
@@ -2420,9 +2431,13 @@ var tools = {
 		}
 	},
 	validacaoTecnica: {
-		carregaIdDocs: function () {
-			hAPI.getChildrenIndexes("tabAnexosValidacao").forEach(function (idx) {
-				if (hAPI.getCardValue("FILE_ID___" + idx) == "") {
+		carregaIdDocs: function (cardData) {
+			var tableAnexos = tools.getTableFilho(
+				cardData || hAPI.getCardData(getValue("WKNumProces")),
+				["FILE_DESCRIPTION", "FILE_ID"]
+			);
+			tableAnexos.forEach(function (linha) {
+				if (linha["FILE_ID"].value == "") {
 					var ds = DatasetFactory.getDataset(
 						"processAttachment",
 						["documentId"],
@@ -2433,7 +2448,7 @@ var tools = {
 						null
 					)
 					if (ds != null && ds.rowsCount > 0) {
-						var c = [DatasetFactory.createConstraint("documentDescription", hAPI.getCardValue("FILE_DESCRIPTION___" + idx), hAPI.getCardValue("FILE_DESCRIPTION___" + idx), ConstraintType.MUST)]
+						var c = [DatasetFactory.createConstraint("documentDescription", linha["FILE_DESCRIPTION"].value, linha["FILE_DESCRIPTION"].value, ConstraintType.MUST)]
 						for (var i = 0; i < ds.rowsCount; i++) {
 							c.push(DatasetFactory.createConstraint("documentPK.documentId", ds.getValue(i, "documentId"), ds.getValue(i, "documentId"), ConstraintType.SHOULD))
 						}
@@ -2446,8 +2461,12 @@ var tools = {
 			})
 		},
 		necessario: function () {
-			return hAPI.getChildrenIndexes("tabValidacaoTecnica")
-				.filter(function (idx) { return hAPI.getCardValue("VT_DECISAO___" + idx) == "" }).length > 0
+			var cardData = hAPI.getCardData(getValue("WKNumProces"));
+			var tableValidacao = tools.getTableFilho(cardData,
+				["VT_DECISAO"]);
+
+			return tableValidacao
+				.filter(function (linha) { return linha["VT_DECISAO"].value == "" }).length > 0
 		}
 	},
 	getDataset: function (name, campos, filtros, isInternal) {
@@ -2492,12 +2511,41 @@ var tools = {
 					_loop();
 				}
 			}
-
 			return result;
 		} catch (error) {
-
 			return result
-
 		}
+	},
+	/**
+	* Método para listar os filhos de um pai x filho
+	* @param cardData: campos do formulário, ex: hAPI.getCardData(getValue("WKNumProces"))
+	* @param fields[]: Array dos campos que pertencem ao pai x filho em questao, ex ['cCentroCustoRat',
+							'valorCCusto']
+	* @returns [{{}}] Array de Objeto com as chaves e valores
+	*/
+	getTableFilho: function (cardData, fields) {
+		log.info("Consultando os campos pai x filho Form");
+		cardData = cardData || hAPI.getCardData(getValue("WKNumProces"));
+		var it = cardData.keySet().iterator();
+		var listaFilho = [];
+		var fieldTemp = fields[0];
+
+		while (it.hasNext()) {
+			var key = it.next();
+			var campo = key.split("___");
+
+			if (key.indexOf('___') >= 0 && campo[0] == fieldTemp) {
+				var idx = campo[1];
+				var row = {};
+
+				for (var i = 0; i < fields.length; i++) {
+					var name = fields[i] + "___" + idx;
+					row[fields[i]] = { value: cardData.get(name), index: idx, name: name };
+				}
+				listaFilho.push(row);
+			}
+		}
+		return listaFilho;
+
 	}
 }
