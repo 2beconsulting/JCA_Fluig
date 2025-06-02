@@ -119,7 +119,8 @@
 								</div>
 								<div class="row">
 									<div class="col-md-4 form-group">
-										<button class="btn btn-info" onclick="tools.generatePDF()">Emitir relatório</button>
+										<button class="btn btn-info" onclick="tools.generatePDF()">Emitir
+											relatório</button>
 									</div>
 								</div>
 							</div>
@@ -166,9 +167,10 @@
 						                    	}" />
 									</div>
 									<div class="col-md-2 form-group">
-										<label for="telefone_empresa">Telefone <span class="text-danger">*</span></label>
-										<input type="text" class="form-control" name="telefone_empresa" id="telefone_empresa"
-											maxlength="15">
+										<label for="telefone_empresa">Telefone <span
+												class="text-danger">*</span></label>
+										<input type="text" class="form-control" name="telefone_empresa"
+											id="telefone_empresa" maxlength="15">
 									</div>
 									<div class="col-md-2 form-group">
 										<label for="ramal_empresa">Ramal <span class="text-danger">*</span></label>
@@ -180,7 +182,8 @@
 										<label for="descricaoEmpresa" class="control-label required">Empresa Origem<span
 												class="text-danger">*</span></label>
 
-										<input type="zoom" id="displayEmpresa" name="displayEmpresa" class="form-control" data-zoom="{
+										<input type="zoom" id="displayEmpresa" name="displayEmpresa"
+											class="form-control" data-zoom="{
 													'displayKey':'DISPLAY',
 													'datasetId':'DS_SM0_FILTRADO',
 													'maximumSelectionLength':'1',
@@ -208,20 +211,22 @@
 										<!--<input type="hidden" id="telefoneEmpresaOrigem" name="telefoneEmpresaOrigem"> -->
 									</div>
 									<div class="col-md-2 form-group">
-										<label for="cnpjEmpresa">CNPJ da origem <span class="text-danger">*</span></label>
-										<input type="text" class="form-control" name="cnpjEmpresa" id="cnpjEmpresa" readonly>
+										<label for="cnpjEmpresa">CNPJ da origem <span
+												class="text-danger">*</span></label>
+										<input type="text" class="form-control" name="cnpjEmpresa" id="cnpjEmpresa"
+											readonly>
 									</div>
 									<div class="col-md-2 form-group">
 										<label for="telefoneEmpresaOrigem">Telefone Origem</label>
 										<input type="text" class="form-control" name="telefoneEmpresaOrigem"
 											id="telefoneEmpresaOrigem" readonly>
 									</div>
-									
+
 								</div>
 								<div class="row">
 									<div class="form-group col-md-8">
-										<label for="descricaoEmpresaEntrega" class="control-label required">Empresa Entrega<span
-												class="text-danger">*</span></label>
+										<label for="descricaoEmpresaEntrega" class="control-label required">Empresa
+											Entrega<span class="text-danger">*</span></label>
 										<input type="zoom" id="displayEmpresaEntrega" name="displayEmpresaEntrega"
 											class="form-control" data-zoom="{
 													'displayKey':'DISPLAY',
@@ -242,7 +247,8 @@
 													]
 												}" />
 										<input type="hidden" id="idEmpresaEntrega" name="idEmpresaEntrega">
-										<input type="hidden" id="descricaoEmpresaEntrega" name="descricaoEmpresaEntrega">
+										<input type="hidden" id="descricaoEmpresaEntrega"
+											name="descricaoEmpresaEntrega">
 										<input type="hidden" id="cepEmpresaEntrega" name="cepEmpresaEntrega">
 										<input type="hidden" id="estadoEmpresaEntrega" name="estadoEmpresaEntrega">
 										<input type="hidden" id="cidadeEmpresaEntrega" name="cidadeEmpresaEntrega">
@@ -251,8 +257,8 @@
 									</div>
 									<div class="col-md-2 form-group">
 										<label for="cnpjEmpresaEntrega">CNPJ Entrega </label>
-										<input type="text" class="form-control" name="cnpjEmpresaEntrega" id="cnpjEmpresaEntrega"
-											readonly>
+										<input type="text" class="form-control" name="cnpjEmpresaEntrega"
+											id="cnpjEmpresaEntrega" readonly>
 									</div>
 									<div class="col-md-2 form-group">
 										<label for="telefoneEmpresaEntrega">Telefone Entrega</label>
@@ -269,26 +275,31 @@
 			serviços prestados pelo Grupo, ou passiveis de risco ambientais. Esta compra deve ser
 			obrigatoriamente justificada e será incluído no fluxo de aprovação o diretor da unidade,
 			independentemente do valor.">
-												<input type="radio" name="tipoSc" id="compraEmergencial" value="2"> Compra
+												<input type="radio" name="tipoSc" id="compraEmergencial" value="2">
+												Compra
 												Emergencial
 											</label>
 											<label for="compraPadrao" class="col-md-2" title="É aquela compra realizada para manter a rotina da área, seja para custeio
 			ou investimento, que não se enquadre nas demais categorias.">
-												<input type="radio" name="tipoSc" id="compraPadrao" value="1"> Compra Padrão
+												<input type="radio" name="tipoSc" id="compraPadrao" value="1"> Compra
+												Padrão
 											</label>
 											<label for="compraEstrategica" class="col-md-3" title="É aquela que está diretamente ligada com algum dos objetivos do Grupo
 			e/ou tem um alto grau de complexidade na sua contratação, seja pelo alto valor
 			envolvido ou pelo escopo técnico definido.">
-												<input type="radio" name="tipoSc" id="compraEstrategica" value="3"> Compra
+												<input type="radio" name="tipoSc" id="compraEstrategica" value="3">
+												Compra
 												Estratégica
 											</label>
 											<label for="compraPlanejada" class="col-md-2">
-												<input type="radio" name="tipoSc" id="compraPlanejada" value="4"> Compra Planejada
+												<input type="radio" name="tipoSc" id="compraPlanejada" value="4"> Compra
+												Planejada
 											</label>
 											<label for="compraRegularizacao" class="col-md-2" title="Refere-se as aquisições de materiais ou prestação de serviços para o Grupo,
 			de forma continua, não delegados às áreas, que tenham sido contratados antes da
 			criação da área de suprimentos e/ou sem envolvimento desta área.">
-												<input type="radio" name="tipoSc" id="compraRegularizacao" value="5"> Regularização
+												<input type="radio" name="tipoSc" id="compraRegularizacao" value="5">
+												Regularização
 											</label>
 											<label for="compraVTR" class="col-md-4" title="Compra usada para atendimento imediato
 			afim de não comprometer a atividade fim do Grupo.
@@ -298,11 +309,13 @@
 												Tecnicamente Retido)
 											</label>
 											<div class="form-horizontal col-md-6 form-group">
-										        <label for="C1_ZPRECAR" class="col-sm-4 control-label">Prefixo Carro <span class="text-danger">*</span></label>
-										        <div class="col-sm-8">
-										            <input type="text" class="form-control" name="C1_ZPRECAR" id="C1_ZPRECAR" placeholder="Prefixo Carro">
-										        </div>
-										    </div>
+												<label for="C1_ZPRECAR" class="col-sm-4 control-label">Prefixo Carro
+													<span class="text-danger">*</span></label>
+												<div class="col-sm-8">
+													<input type="text" class="form-control" name="C1_ZPRECAR"
+														id="C1_ZPRECAR" placeholder="Prefixo Carro">
+												</div>
+											</div>
 										</div>
 									</div>
 								</div>
@@ -318,22 +331,28 @@
 									</div>
 									<div class="col-md-3 form-group">
 										<span>
-											<label for="data_necessidade">Data necessidade <span class="text-danger">*</span></label>
-											<input type="text" class="form-control" name="data_necessidade" id="data_necessidade"
-												mask="00/00/0000">
+											<label for="data_necessidade">Data necessidade <span
+													class="text-danger">*</span></label>
+											<input type="text" class="form-control" name="data_necessidade"
+												id="data_necessidade" mask="00/00/0000">
 										</span>
 										<span>
-											<label for="data_emissao">Data Emissão <span class="text-danger">*</span></label>
-											<input type="text" class="form-control" name="data_emissao" id="data_emissao" >
+											<label for="data_emissao">Data Emissão <span
+													class="text-danger">*</span></label>
+											<input type="text" class="form-control" name="data_emissao"
+												id="data_emissao">
 										</span>
 									</div>
 									<div class="col-md-3 form-group">
 										<span>
-											<label for="data_entrega">Data prev. entrega <span class="text-danger">*</span></label>
-											<input type="text" class="form-control" name="data_entrega" id="data_entrega" readonly>
+											<label for="data_entrega">Data prev. entrega <span
+													class="text-danger">*</span></label>
+											<input type="text" class="form-control" name="data_entrega"
+												id="data_entrega" readonly>
 										</span>
 										<span>
-											<label for="cond_pagto">Condição de Pagamento <span class="text-danger">*</span></label>
+											<label for="cond_pagto">Condição de Pagamento <span
+													class="text-danger">*</span></label>
 											<input type="hidden" name="cond_pagto" id="cond_pagto" readonly />
 											<input type="zoom" name="condicaoPagto" id="condicaoPagto" data-zoom="{
 					                            'displayKey':'E4_DESCRI',
@@ -349,20 +368,25 @@
 									</div>
 									<div class="col-md-3 form-group">
 										<span>
-											<label for="havera_rateio">Haverá rateio? <span class="text-danger">*</span></label>
+											<label for="havera_rateio">Haverá rateio? <span
+													class="text-danger">*</span></label>
 											<div>
 												<label for="havera_rateio_sim">
-													<input type="radio" name="havera_rateio" id="havera_rateio_sim" value="sim"> Sim
+													<input type="radio" name="havera_rateio" id="havera_rateio_sim"
+														value="sim"> Sim
 												</label>
 												<label for="havera_rateio_nao">
-													<input type="radio" name="havera_rateio" id="havera_rateio_nao" value="nao"> Não
+													<input type="radio" name="havera_rateio" id="havera_rateio_nao"
+														value="nao"> Não
 												</label>
 											</div>
 										</span>
 									</div>
 									<div class="col-md-3 form-group">
-										<label for="valor_total">Valor total orçado <span class="text-danger">*</span></label>
-										<input type="text" class="form-control" name="valor_total" id="valor_total" readonly>
+										<label for="valor_total">Valor total orçado <span
+												class="text-danger">*</span></label>
+										<input type="text" class="form-control" name="valor_total" id="valor_total"
+											readonly>
 										<input type="hidden" name="valor_total_compra" id="valor_total_compra">
 									</div>
 								</div>
@@ -393,12 +417,13 @@
 									<div class="col-md-4 form-group">
 										<label for="localRecebimento">Local de recebimento / Visita técnica <span
 												class="text-danger">*</span></label>
-										<input type="text" name="localRecebimento" id="localRecebimento" class="form-control">
+										<input type="text" name="localRecebimento" id="localRecebimento"
+											class="form-control">
 										<input type="hidden" id="idLocalRecebimento" name="idLocalRecebimento">
 									</div>
 									<div class="col-md-4 form-group">
-										<label for="responsavel_recebimento">Responsável pelo recebimento / Atendimento <span
-												class="text-danger">*</span></label>
+										<label for="responsavel_recebimento">Responsável pelo recebimento / Atendimento
+											<span class="text-danger">*</span></label>
 										<input type="text" class="form-control" name="responsavel_recebimento"
 											id="responsavel_recebimento">
 									</div>
@@ -410,11 +435,13 @@
 												class="text-danger">*</span></label>
 										<div>
 											<label for="necessita_visita_sim">
-												<input type="radio" name="necessita_visita" id="necessita_visita_sim" value="sim">
+												<input type="radio" name="necessita_visita" id="necessita_visita_sim"
+													value="sim">
 												Sim
 											</label>
 											<label for="necessita_visita_nao">
-												<input type="radio" name="necessita_visita" id="necessita_visita_nao" value="nao">
+												<input type="radio" name="necessita_visita" id="necessita_visita_nao"
+													value="nao">
 												Não
 											</label>
 										</div>
@@ -436,8 +463,8 @@
 									<div class="panel-body">
 										<div class="row">
 											<div class="col-md-3 form-group">
-												<input type="button" class="btn btn-default hideInserir" id="inserirRateio"
-													value="INSERIR RATEIO" />
+												<input type="button" class="btn btn-default hideInserir"
+													id="inserirRateio" value="INSERIR RATEIO" />
 											</div>
 										</div>
 										<table class="table table-striped" id="tabelaRateio" tablename="tabelaRateio"
@@ -451,18 +478,22 @@
 												<tr>
 													<td class="bpm-mobile-trash-column hideLixeira">
 														<span class="fluig-style-guide fs-display-block fs-md-space">
-															<i class="fluigicon fluigicon-trash fluigicon-md" id="excluirRateio"
-																onClick="tools.customRemoveChild(this);" style="cursor: pointer"></i>
+															<i class="fluigicon fluigicon-trash fluigicon-md"
+																id="excluirRateio"
+																onClick="tools.customRemoveChild(this);"
+																style="cursor: pointer"></i>
 														</span>
 													</td>
 													<td>
 														<div class="row">
 															<div class="col-md-10 form-group">
-																<label>Empresa <span class="text-danger">*</span></label>
+																<label>Empresa <span
+																		class="text-danger">*</span></label>
 																<input type="hidden" name="codigoEmpresaRateio"
 																	id="codigoEmpresaRateio" readonly />
 																<input type="zoom" id="descricaoEmpresaRateio"
-																	name="descricaoEmpresaRateio" class="form-control" data-zoom="{
+																	name="descricaoEmpresaRateio" class="form-control"
+																	data-zoom="{
 																			'displayKey':'DES_EMPRES',
 																			'datasetId':'DS_SM0',
 																			'maximumSelectionLength':'1',
@@ -475,10 +506,11 @@
 																		}" />
 															</div>
 															<div class="col-md-2 form-group">
-																<label>Percentual <span class="text-danger">*</span></label>
+																<label>Percentual <span
+																		class="text-danger">*</span></label>
 																<input type="text" name="percentualEmpresaRateio"
-																	id="percentualEmpresaRateio" class="form-control" mask="##0.00%"
-																	maxlength="6">
+																	id="percentualEmpresaRateio" class="form-control"
+																	mask="##0.00%" maxlength="6">
 															</div>
 														</div>
 													</td>
@@ -494,8 +526,8 @@
 									<div class="panel-body">
 										<div class="tableProduct">
 											<div style="width:3000px">
-												<table class="table table-stripped" tablename="tabelaProduto" id="tabelaProduto"
-													noaddbutton="true" nodeletebutton="true">
+												<table class="table table-stripped" tablename="tabelaProduto"
+													id="tabelaProduto" noaddbutton="true" nodeletebutton="true">
 													<thead>
 														<tr>
 															<th style="width:50px" class="hideLixeira">&nbsp;</th>
@@ -503,23 +535,28 @@
 																		class="text-danger">*</span></label></th>
 															<th style="width:200px"><label>Código</label></th>
 															<th style="width:200px"><label>Prev. Entrega</label></th>
-															<th style="width:200px"><label title="Consulta de Saldo">Saldo</label>
+															<th style="width:200px"><label
+																	title="Consulta de Saldo">Saldo</label>
 															</th>
-															<th style="width:200px"><label title="Unidade de Medida">UM</label></th>
+															<th style="width:200px"><label
+																	title="Unidade de Medida">UM</label></th>
 															<th style="width:200px"><label>Quantidade <span
 																		class="text-danger">*</span></label></th>
 															<th style="width:200px"><label>Vl. Unit <span
 																		class="text-danger">*</span></label></th>
 															<th style="width:200px"><label>Vl. Total</label></th>
-															<th style="width:200px" class="comRateio"><label>% rateio</label></th>
-															<th style="width:500px"><label>Sugestão de Marcas</label></th>
+															<th style="width:200px" class="comRateio"><label>%
+																	rateio</label></th>
+															<th style="width:500px"><label>Sugestão de Marcas</label>
+															</th>
 															<th style="width:500px"><label>Observação</label></th>
 														</tr>
 													</thead>
 													<tbody>
 														<tr>
 															<td class="bpm-mobile-trash-column hideLixeira">
-																<span class="fluig-style-guide fs-display-block fs-md-space">
+																<span
+																	class="fluig-style-guide fs-display-block fs-md-space">
 																	<i class="fluigicon fluigicon-trash fluigicon-md"
 																		id="excluirProduto"
 																		onClick="tools.produtos.customRemoveChild(this);"
@@ -527,8 +564,8 @@
 																</span>
 															</td>
 															<td>
-																<input type="zoom" name="produto" id="produto" class="form-control"
-																	data-zoom="{
+																<input type="zoom" name="produto" id="produto"
+																	class="form-control" data-zoom="{
 									                            'displayKey':'DISPLAY',
 									                            'datasetId':'ds_consulta_produto_filtrado_protheus',
 									                            'maximumSelectionLength':'1',
@@ -543,62 +580,70 @@
 									                    	}" />
 															</td>
 															<td>
-																<input type="text" name="codigoProduto" id="codigoProduto"
-																	class="form-control" readonly />
-																<input type="hidden" name="tipoProduto" id="tipoProduto" />
+																<input type="text" name="codigoProduto"
+																	id="codigoProduto" class="form-control" readonly />
+																<input type="hidden" name="tipoProduto"
+																	id="tipoProduto" />
 															</td>
 															<td>
-																<input type="text" class="form-control" name="produto_entrega"
-																	id="produto_entrega" readonly>
+																<input type="text" class="form-control"
+																	name="produto_entrega" id="produto_entrega"
+																	readonly>
 															</td>
 															<td>
-																<input type="text" class="form-control" name="produto_saldo"
-																	id="produto_saldo" readonly>
+																<input type="text" class="form-control"
+																	name="produto_saldo" id="produto_saldo" readonly>
 															</td>
 															<td>
-																<input type="text" class="form-control" name="unidadeMedidaProduto"
+																<input type="text" class="form-control"
+																	name="unidadeMedidaProduto"
 																	id="unidadeMedidaProduto" readonly>
 															</td>
 															<td>
-																<input type="number" class="form-control" name="produto_qtd"
-																	id="produto_qtd" min="1">
+																<input type="number" class="form-control"
+																	name="produto_qtd" id="produto_qtd" min="1">
 															</td>
 															<td>
-																<input type="text" class="form-control" name="produto_vlUnitario"
-																	id="produto_vlUnitario" mask="#000.000.000.000,00">
+																<input type="text" class="form-control"
+																	name="produto_vlUnitario" id="produto_vlUnitario"
+																	mask="#000.000.000.000,00">
 																<input type="hidden" name="produto_dtUltCompra"
 																	id="produto_dtUltCompra">
 																<input type="hidden" name="produto_vlUltCompra"
 																	id="produto_vlUltCompra">
 															</td>
 															<td>
-																<input type="text" class="form-control" name="produto_vlTotal"
-																	id="produto_vlTotal" readonly>
+																<input type="text" class="form-control"
+																	name="produto_vlTotal" id="produto_vlTotal"
+																	readonly>
 															</td>
 															<td class="comRateio">
-																<input type="text" class="form-control" name="produto_percRateio"
-																	id="produto_percRateio" readonly>
+																<input type="text" class="form-control"
+																	name="produto_percRateio" id="produto_percRateio"
+																	readonly>
 															</td>
 															<td>
-																<input type="text" class="form-control" name="produto_marcas" id="produto_marcas">
+																<input type="text" class="form-control"
+																	name="produto_marcas" id="produto_marcas">
 															</td>
 															<td>
-																<input type="text" class="form-control" name="produto_observacao" id="produto_observacao">
+																<input type="text" class="form-control"
+																	name="produto_observacao" id="produto_observacao">
 															</td>
 														</tr>
 													</tbody>
 												</table>
 											</div>
 										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-3 form-group">
+										<input type="button" class="btn btn-default hideInserir" id="inserirProduto"
+											value="INSERIR PRODUTO" />
+									</div>
+								</div>
 							</div>
-						</div>
-						<div class="row">
-							<div class="col-md-3 form-group">
-								<input type="button" class="btn btn-default hideInserir" id="inserirProduto"
-									value="INSERIR PRODUTO" />
-							</div>
-						</div>
-					</div>
 
 						</div>
 					</div>
@@ -759,11 +804,12 @@
 						</div>
 					</div>
 					<div class="row">
-							<div class="col-md-12 form-group">
-								<label>Especificação Técnica <span class="text-danger">*</span></label>
-								<textarea class="form-control" name="especificacao_tecnica" id="especificacao_tecnica" rows="5"></textarea>
-							</div>
+						<div class="col-md-12 form-group">
+							<label>Especificação Técnica <span class="text-danger">*</span></label>
+							<textarea class="form-control" name="especificacao_tecnica" id="especificacao_tecnica"
+								rows="5"></textarea>
 						</div>
+					</div>
 					<div class="row">
 						<div class="col-md-3 form-group">
 							<label>Data término cotação (dias) <span class="text-danger">*</span></label>
@@ -955,13 +1001,13 @@
 													{'field':'LOJA','label':'LOJA'}
 												]
 											}" />
-									<input type="hidden" id="CICLO_INSERIDO" 		name="CICLO_INSERIDO">
-									<input type="hidden" id="CICLO_REMOVIDO" 		name="CICLO_REMOVIDO">
-									<input type="hidden" id="COMPRADOR_REMOCAO" 	name="COMPRADOR_REMOCAO">
-									<input type="hidden" id="MOTIVO_REMOCAO" 		name="MOTIVO_REMOCAO">
-									<input type="hidden" id="VALIDACAO_NECESSARIA" 	name="VALIDACAO_NECESSARIA">
-									<input type="hidden" id="VALIDACAO_DECISAO" 	name="VALIDACAO_DECISAO">
-									<input type="hidden" id="VALIDACAO_OBS" 		name="VALIDACAO_OBS">
+									<input type="hidden" id="CICLO_INSERIDO" name="CICLO_INSERIDO">
+									<input type="hidden" id="CICLO_REMOVIDO" name="CICLO_REMOVIDO">
+									<input type="hidden" id="COMPRADOR_REMOCAO" name="COMPRADOR_REMOCAO">
+									<input type="hidden" id="MOTIVO_REMOCAO" name="MOTIVO_REMOCAO">
+									<input type="hidden" id="VALIDACAO_NECESSARIA" name="VALIDACAO_NECESSARIA">
+									<input type="hidden" id="VALIDACAO_DECISAO" name="VALIDACAO_DECISAO">
+									<input type="hidden" id="VALIDACAO_OBS" name="VALIDACAO_OBS">
 								</td>
 								<td><input type="text" class="form-control" id="A2_LOJA" name="A2_LOJA" readonly></td>
 								<td><input type="zoom" id="A2_NOME" name="A2_NOME" class="form-control" data-zoom="{
@@ -992,10 +1038,14 @@
 										}" />
 								</td>
 								<td><input class="form-control" name="A2_EST" id="A2_EST" readonly></td>
-								<td class="hide"><input type="text" class="form-control" id="A2_COND" name="A2_COND" readonly></td>
-								<td class="hide"><input type="text" class="form-control" id="A2_TPFRETE" name="A2_TPFRETE" readonly></td>
-								<td class="hide"><input type="text" class="form-control" id="A2_VALFRE" name="A2_VALFRE" readonly></td>
-								<td class="hide"><input type="text" class="form-control" id="A2_VALIDA" name="A2_VALIDA"></td>
+								<td class="hide"><input type="text" class="form-control" id="A2_COND" name="A2_COND"
+										readonly></td>
+								<td class="hide"><input type="text" class="form-control" id="A2_TPFRETE"
+										name="A2_TPFRETE" readonly></td>
+								<td class="hide"><input type="text" class="form-control" id="A2_VALFRE" name="A2_VALFRE"
+										readonly></td>
+								<td class="hide"><input type="text" class="form-control" id="A2_VALIDA"
+										name="A2_VALIDA"></td>
 
 								<td class="analisa-cotacao">
 									<span info-exclusao></span>
@@ -1040,8 +1090,10 @@
 							</div>
 						</div>
 						<div class="col-md-3 form-group">
-							<label for="novaDataVencCotacao">Vencimento Cotação <span class="text-danger">*</span></label>
-							<input type="text" class="form-control" name="novaDataVencCotacao" id="novaDataVencCotacao" mask="00/00/0000">
+							<label for="novaDataVencCotacao">Vencimento Cotação <span
+									class="text-danger">*</span></label>
+							<input type="text" class="form-control" name="novaDataVencCotacao" id="novaDataVencCotacao"
+								mask="00/00/0000">
 						</div>
 						<div class="col-md-3 form-group">
 							<label for="tipo_pc_contrato">Tipo <span class="text-danger">*</span></label>
@@ -1067,13 +1119,13 @@
 						<div class="col-md-offset-2">
 							<div class="checkbox">
 								<label>
-									<input type="checkbox" name="intrack_necessario"
-										id="intrack_necessario" value="true"> InTrack
+									<input type="checkbox" name="intrack_necessario" id="intrack_necessario"
+										value="true"> InTrack
 								</label>
 							</div>
 						</div>
 					</div>
-					
+
 					<div class="row">
 						<div class="form-group col-md-12">
 							<label for="obsComprador">Justificativa <span class="text-danger">*</span></label>
@@ -1106,63 +1158,67 @@
 					</div>
 				</div>
 			</div>
-			
+
 			<div class="panel panel-primary" id="panelContrato">
-						<div class="panel-heading">
-							<h3 class="panel-title">Contrato</h3>
+				<div class="panel-heading">
+					<h3 class="panel-title">Contrato</h3>
+				</div>
+				<div class="panel-body">
+					<div class="row">
+						<div class="col-md-3 form-group">
+							<label for="CN9_DTINIC">Início Vigência <span class="text-danger">*</span></label>
+							<input type="text" class="form-control" name="CN9_DTINIC" id="CN9_DTINIC">
 						</div>
-						<div class="panel-body">
-							<div class="row">
-								<div class="col-md-3 form-group">
-									<label for="CN9_DTINIC">Início Vigência <span class="text-danger">*</span></label>
-									<input type="text" class="form-control" name="CN9_DTINIC" id="CN9_DTINIC">
-								</div>
-								<div class="col-md-2 form-group">
-									<label for="CN9_UNVIGE">Unidade de Vigência <span
-											class="text-danger">*</span></label>
-									<select class="form-control" name="CN9_UNVIGE" id="CN9_UNVIGE">
-										<option value="">Selecione</option>
-										<option value="1">Dias</option>
-										<option value="2">Meses</option>
-										<option value="3">Anos</option>
-										<option value="4">Indeterminada</option>
-									</select>
-								</div>
-								<div class="col-md-2 form-group">
-									<label for="CN9_VIGE">Vigência <span class="text-danger">*</span></label>
-									<input type="text" class="form-control" name="CN9_VIGE" id="CN9_VIGE" mask="#0"
-										maxlength="4">
-								</div>
-								<div class="col-md-3 form-group">
-									<label for="contrato_primeira_medicao">Primeira Medição <span
-											class="text-danger">*</span></label>
-									<input type="text" class="form-control" name="contrato_primeira_medicao"
-										id="contrato_primeira_medicao" mask="00/00/0000">
-								</div>
-								<div class="col-md-2 form-group">
-									<label for="contrato_competencia">Competência Inicial <span
-											class="text-danger">*</span></label>
-									<input type="text" class="form-control" name="contrato_competencia"
-										id="contrato_competencia" mask="00/0000">
-								</div>
-								<div class="col-md-3 form-group hide">
-									<label for="CN9_TPCTO">Tipo do Contrato <span class="text-danger">*</span></label>
-									<select class="form-control" name="CN9_TPCTO" id="CN9_TPCTO" dataset="DS_CONSULTA_CN9_TPCTO" datasetkey="CN1_CODIGO" datasetvalue="CN1_DESCRI" addBlankLine=”true”></select>
-								</div>
-								<div class="col-md-3 form-group hide">
-									<label for="CNA_TIPPLA">Tipo da Planilha <span class="text-danger">*</span></label>
-									<select class="form-control" name="CNA_TIPPLA" id="CNA_TIPPLA" dataset="DS_CONSULTA_CNA_TIPPLA" datasetkey="CNL_CODIGO" datasetvalue="CNL_DESCRI" addBlankLine=”true”></select>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-md-4 form-group">
-									<label for="CN9_NATURE">Natureza Financeira <span class="text-danger">*</span></label>
-									<select class="form-control" name="CN9_NATURE" id="CN9_NATURE" dataset="DS_CONSULTA_CN9_NATURE" datasetkey="ED_CODIGO" datasetvalue="ED_DESCRIC" addBlankLine=”true”></select>
-								</div>
-								<div class="col-md-4 form-group">
-									<label for="contrato_area">Área Contratante <span class="text-danger">*</span></label>
-									<input type="hidden" name="CN9_DEPART" id="CN9_DEPART">
-									<input type="zoom" id="contrato_area" name="contrato_area" class="form-control" data-zoom="{
+						<div class="col-md-2 form-group">
+							<label for="CN9_UNVIGE">Unidade de Vigência <span class="text-danger">*</span></label>
+							<select class="form-control" name="CN9_UNVIGE" id="CN9_UNVIGE">
+								<option value="">Selecione</option>
+								<option value="1">Dias</option>
+								<option value="2">Meses</option>
+								<option value="3">Anos</option>
+								<option value="4">Indeterminada</option>
+							</select>
+						</div>
+						<div class="col-md-2 form-group">
+							<label for="CN9_VIGE">Vigência <span class="text-danger">*</span></label>
+							<input type="text" class="form-control" name="CN9_VIGE" id="CN9_VIGE" mask="#0"
+								maxlength="4">
+						</div>
+						<div class="col-md-3 form-group">
+							<label for="contrato_primeira_medicao">Primeira Medição <span
+									class="text-danger">*</span></label>
+							<input type="text" class="form-control" name="contrato_primeira_medicao"
+								id="contrato_primeira_medicao" mask="00/00/0000">
+						</div>
+						<div class="col-md-2 form-group">
+							<label for="contrato_competencia">Competência Inicial <span
+									class="text-danger">*</span></label>
+							<input type="text" class="form-control" name="contrato_competencia"
+								id="contrato_competencia" mask="00/0000">
+						</div>
+						<div class="col-md-3 form-group hide">
+							<label for="CN9_TPCTO">Tipo do Contrato <span class="text-danger">*</span></label>
+							<select class="form-control" name="CN9_TPCTO" id="CN9_TPCTO" dataset="DS_CONSULTA_CN9_TPCTO"
+								datasetkey="CN1_CODIGO" datasetvalue="CN1_DESCRI" addBlankLine=”true”></select>
+						</div>
+						<div class="col-md-3 form-group hide">
+							<label for="CNA_TIPPLA">Tipo da Planilha <span class="text-danger">*</span></label>
+							<select class="form-control" name="CNA_TIPPLA" id="CNA_TIPPLA"
+								dataset="DS_CONSULTA_CNA_TIPPLA" datasetkey="CNL_CODIGO" datasetvalue="CNL_DESCRI"
+								addBlankLine=”true”></select>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-4 form-group">
+							<label for="CN9_NATURE">Natureza Financeira <span class="text-danger">*</span></label>
+							<select class="form-control" name="CN9_NATURE" id="CN9_NATURE"
+								dataset="DS_CONSULTA_CN9_NATURE" datasetkey="ED_CODIGO" datasetvalue="ED_DESCRIC"
+								addBlankLine=”true”></select>
+						</div>
+						<div class="col-md-4 form-group">
+							<label for="contrato_area">Área Contratante <span class="text-danger">*</span></label>
+							<input type="hidden" name="CN9_DEPART" id="CN9_DEPART">
+							<input type="zoom" id="contrato_area" name="contrato_area" class="form-control" data-zoom="{
 										'displayKey':'CXQ_DESCRI',
 										'datasetId':'DS_CONSULTA_CN9_DEPART',
 										'maximumSelectionLength':'1',
@@ -1172,11 +1228,12 @@
 											{'field':'CXQ_DESCRI','label':'DESCRIÇÃO'}
 										]
 									}" />
-								</div>
-								<div class="col-md-4 form-group">
-									<label for="contrato_gestor">Gestor <span class="text-danger">*</span></label>
-									<input type="hidden" name="CN9_GESTC" id="CN9_GESTC">
-									<input type="zoom" id="contrato_gestor" name="contrato_gestor" class="form-control" data-zoom="{
+						</div>
+						<div class="col-md-4 form-group">
+							<label for="contrato_gestor">Gestor <span class="text-danger">*</span></label>
+							<input type="hidden" name="CN9_GESTC" id="CN9_GESTC">
+							<input type="zoom" id="contrato_gestor" name="contrato_gestor" class="form-control"
+								data-zoom="{
 										'displayKey':'DISPLAY',
 										'datasetId':'DS_CONSULTA_CN9_GESTC',
 										'maximumSelectionLength':'1',
@@ -1188,43 +1245,42 @@
 											{'field':'USR_NOME','label':'NOME'}
 										]
 									}" />
-								</div>
-							</div>
-							<div class="row">
-								
-								<div class="col-md-3 form-group">
-									<label for="financeiro_contrato">Gera Cronograma? <span
-											class="text-danger">*</span></label>
-									<div>
-										<label for="contrato_financeiro_sim">
-											<input type="radio" name="contrato_financeiro" id="contrato_financeiro_sim"
-												value="1"> Sim
-										</label>
-										<label for="contrato_financeiro_nao">
-											<input type="radio" name="contrato_financeiro" id="contrato_financeiro_nao"
-												value="2"> Não
-										</label>
-									</div>
-								</div>
-								<div class="col-md-2 form-group">
-									<label for="contrato_cronograma">Período <span class="text-danger">*</span></label>
-									<select class="form-control" name="contrato_cronograma" id="contrato_cronograma"
-										title="Período entre as parcelas do cronograma">
-										<option value="">Selecione</option>
-										<option value="1">Mensal</option>
-										<option value="2">Quizenal</option>
-										<option value="3">Semanal</option>
-									</select>
-								</div>
-								<div class="col-md-2 form-group">
-									<label for="contrato_parcelas">Parcelas <span class="text-danger">*</span></label>
-									<input type="text" class="form-control" name="contrato_parcelas"
-										id="contrato_parcelas" mask="#0" maxlength="4">
-								</div>
-							</div>
 						</div>
 					</div>
-			
+					<div class="row">
+
+						<div class="col-md-3 form-group">
+							<label for="financeiro_contrato">Gera Cronograma? <span class="text-danger">*</span></label>
+							<div>
+								<label for="contrato_financeiro_sim">
+									<input type="radio" name="contrato_financeiro" id="contrato_financeiro_sim"
+										value="1"> Sim
+								</label>
+								<label for="contrato_financeiro_nao">
+									<input type="radio" name="contrato_financeiro" id="contrato_financeiro_nao"
+										value="2"> Não
+								</label>
+							</div>
+						</div>
+						<div class="col-md-2 form-group">
+							<label for="contrato_cronograma">Período <span class="text-danger">*</span></label>
+							<select class="form-control" name="contrato_cronograma" id="contrato_cronograma"
+								title="Período entre as parcelas do cronograma">
+								<option value="">Selecione</option>
+								<option value="1">Mensal</option>
+								<option value="2">Quizenal</option>
+								<option value="3">Semanal</option>
+							</select>
+						</div>
+						<div class="col-md-2 form-group">
+							<label for="contrato_parcelas">Parcelas <span class="text-danger">*</span></label>
+							<input type="text" class="form-control" name="contrato_parcelas" id="contrato_parcelas"
+								mask="#0" maxlength="4">
+						</div>
+					</div>
+				</div>
+			</div>
+
 			<div class="panel panel-primary" id="panelValidacaoTecnica">
 				<div class="panel-heading">
 					<h3 class="panel-title">Validação Técnica</h3>
@@ -1249,14 +1305,16 @@
 						</thead>
 						<tbody>
 							<tr>
-								<td><input type="text" class="form-control" id="FILE_DESCRIPTION" name="FILE_DESCRIPTION"></td>
+								<td><input type="text" class="form-control" id="FILE_DESCRIPTION"
+										name="FILE_DESCRIPTION"></td>
 								<td><input type="text" class="form-control" id="FILE_ID" name="FILE_ID"></td>
 								<td><input type="text" class="form-control" id="FILE_IDX" name="FILE_IDX"></td>
 								<td><input type="text" class="form-control" id="FILE_NAME" name="FILE_NAME"></td>
 							</tr>
 						</tbody>
 					</table>
-					<table class="table table-striped hide" tablename="tabValidacaoTecnica" noaddbutton="true" nodeletebutton="true">
+					<table class="table table-striped hide" tablename="tabValidacaoTecnica" noaddbutton="true"
+						nodeletebutton="true">
 						<thead>
 							<tr>
 								<th>Fornecedor</th>
@@ -1272,13 +1330,15 @@
 								<td><input type="text" class="form-control" id="VT_A2CGC" name="VT_A2CGC"></td>
 								<td><input type="text" class="form-control" id="VT_B1COD" name="VT_B1COD"></td>
 								<td><input type="text" class="form-control" id="VT_FILEIDX" name="VT_FILEIDX"></td>
-								<td><textarea class="form-control" id="VT_DETALHAMENTO" name="VT_DETALHAMENTO"></textarea></td>
+								<td><textarea class="form-control" id="VT_DETALHAMENTO"
+										name="VT_DETALHAMENTO"></textarea></td>
 								<td>
 									<input type="text" class="form-control" id="VT_DECISAO" name="VT_DECISAO">
 									<input type="hidden" id="VT_EXECUTADA" name="VT_EXECUTADA">
 									<input type="hidden" id="VT_DATA_HORA" name="VT_DATA_HORA">
 								</td>
-								<td><textarea class="form-control" id="VT_DECISAOOBS" name="VT_DECISAOOBS"></textarea></td>
+								<td><textarea class="form-control" id="VT_DECISAOOBS" name="VT_DECISAOOBS"></textarea>
+								</td>
 							</tr>
 						</tbody>
 					</table>
@@ -1488,7 +1548,8 @@
 				</div>
 				<div class="panel-body">
 					<span id="tabPedido"></span>
-					<table class="table table-striped hide" tablename="tabPedidos" noaddbutton="true" nodeletebutton="true">
+					<table class="table table-striped hide" tablename="tabPedidos" noaddbutton="true"
+						nodeletebutton="true">
 						<thead>
 							<tr>
 								<th>C7_FILIAL</th>
@@ -1571,8 +1632,7 @@
 					<div class="row">
 						<input type="hidden" name="matLiberaPedido">
 						<div class="col-md-3 form-group">
-							<label for="decisaoLiberarPedido">Libera Pedido? <span
-									class="text-danger">*</span></label>
+							<label for="decisaoLiberarPedido">Libera Pedido? <span class="text-danger">*</span></label>
 							<div>
 								<label for="decisaoLiberarPedido_sim">
 									<input type="radio" name="decisaoLiberarPedido" id="decisaoLiberarPedido_sim"
@@ -1588,7 +1648,8 @@
 					<div class="row">
 						<div class="col-md-12 form-group">
 							<label>Motivo <span class="text-danger">*</span></label>
-							<textarea class="form-control" name="decisaoLiberarPedido_obs" id="decisaoLiberarPedido_obs"></textarea>
+							<textarea class="form-control" name="decisaoLiberarPedido_obs"
+								id="decisaoLiberarPedido_obs"></textarea>
 						</div>
 					</div>
 				</div>
@@ -1688,7 +1749,7 @@
 				</div>
 			</div>
 
-			<div >
+			<div>
 				<div class="panel panel-primary" id="atendimento">
 					<div class="panel-heading">
 						<h3 class="panel-title">Avaliação de Atendimento</h3>
@@ -1704,7 +1765,7 @@
 						<div class="row" id="satisfeito">
 							<div class="form-group">
 								<div class="col-md-12 fs-no-padding-left">
-												<label for="motivoSatisfacao"> Motivo Nível de Satisfação? </label>
+									<label for="motivoSatisfacao"> Motivo Nível de Satisfação? </label>
 								</div>
 								<div class="col-md-12">
 									<label>
@@ -1713,19 +1774,23 @@
 								</div>
 								<div class="col-md-12">
 									<label>
-										<input type="radio" name="checkRadio" id="checkRadio2" /> Tempo que o atendimento foi realizado </label>
+										<input type="radio" name="checkRadio" id="checkRadio2" /> Tempo que o
+										atendimento foi realizado </label>
 								</div>
 								<div class="col-md-12">
 									<label>
-										<input type="radio" name="checkRadio" id="checkRadio3" /> Qualidade do serviço entregue </label>
+										<input type="radio" name="checkRadio" id="checkRadio3" /> Qualidade do serviço
+										entregue </label>
 								</div>
 								<div class="col-md-12">
 									<label>
-										<input type="radio" name="checkRadio" id="checkRadio4" /> Cortesia de quem prestou o serviço </label>
+										<input type="radio" name="checkRadio" id="checkRadio4" /> Cortesia de quem
+										prestou o serviço </label>
 								</div>
 								<div class="col-md-12">
 									<label>
-										<input type="radio" name="checkRadio" id="checkRadio5" /> Comprometimento de quem prestou o serviço </label>
+										<input type="radio" name="checkRadio" id="checkRadio5" /> Comprometimento de
+										quem prestou o serviço </label>
 								</div>
 								<div class="col-md-12">
 									<label>
@@ -2120,7 +2185,7 @@
 			{{/.}}
 		</div>
 	</script>
-	<script type="text/template" id="tmpl2">
+<script type="text/template" id="tmpl2">
 		<div class="panel-group" id="accordion">
 			{{#.}}
 			<div class="panel panel-default">
@@ -2157,8 +2222,8 @@
 							<tbody>
 								{{#cotacoes}}
 									<tr class="{{#VENCEDOR}}vencedor{{/VENCEDOR}} {{#VENCEDOR_COMP}}vencedor_comprador{{/VENCEDOR_COMP}}">
-										<td><span data-vencedor fornecedor="{{C8_FORNECE}}" loja="{{C8_LOJA}}" produto="{{B1_COD}}"><i class="flaticon flaticon-file-awards" aria-hidden="true"></i></span></td>
-										<td>{{C8_FORNECE}} - {{A2_NOME}}</td>
+										<td><span data-vencedor fornecedor="{{C8_FORNECE}}" loja="{{C8_LOJA}}" produto="{{C8_PRODUTO}}"><i class="flaticon flaticon-file-awards" aria-hidden="true"></i></span></td>
+										<td>{{C8_FORNECE}}:{{C8_LOJA}} - {{A2_NOME}}</td>
 										<td {{#COMPRADOR}}title="{{COMPRADOR}}{{#COMPRADOR_JUSTIFICATIVA}} : {{COMPRADOR_JUSTIFICATIVA}}{{/COMPRADOR_JUSTIFICATIVA}}"{{/COMPRADOR}}>{{QTD_COMPRADOR}}</td>
 										<td>{{MARCA}}</td>
 										<td>{{CONDPAGTO}}</td>
@@ -2183,7 +2248,7 @@
 			{{/.}}
 		</div>
 	</script>
-	<script type="text/template" id="tmpl3">
+<script type="text/template" id="tmpl3">
 		<div>
 			<input type="hidden" id="confirm_vencedor" value="{{VENCEDOR}}">
 			<div class="row">
@@ -2230,7 +2295,7 @@
 			</div>
 		</div>
 	</script>
-	<script type="text/template" id="tmpl4">
+<script type="text/template" id="tmpl4">
 		<div class="panel-group" id="accordion">
 			{{#.}}
 			<div class="panel panel-default">
@@ -2278,7 +2343,7 @@
 			{{/.}}
 		</div>
 	</script>
-	<script type="text/template" id="tmpl5">
+<script type="text/template" id="tmpl5">
 		<div id="modalTES">
 			<div class="panel-group" id="accordionTES">
 				{{#fornecedoresAtivo}}
@@ -2323,7 +2388,7 @@
 			</div>
 		</div>
 	</script>
-	<script type="text/template" id="tmpl6">
+<script type="text/template" id="tmpl6">
 		<div class="row">
 			<div class="col-md-2 form-group">
 				<label>Código</label>
@@ -2404,7 +2469,7 @@
 			</table>
 		</div>
 	</script>
-	<script type="text/template" id="tmpl7">
+<script type="text/template" id="tmpl7">
 		<div class="row">
 			<div class="col-md-5 form-group">
 				<label>Produto <span class="text-danger">*</span></label>
@@ -2457,7 +2522,7 @@
 			</div>
 		</div>
 	</script>
-	<script type="text/template" id="tmpl8">
+<script type="text/template" id="tmpl8">
     <style>
         .center{
             text-align:center;
@@ -2682,7 +2747,7 @@
     </table>
     {{/.}}
 	</script>
-	<script type="text/template" id="tmpl9">
+<script type="text/template" id="tmpl9">
 		<div class="panel-group" id="accordion">
 			{{#produtos}}
 			<div class="panel panel-default">
@@ -2742,7 +2807,7 @@
 			</div>
 		</div>
 	</script>
-	<script type="text/template" id="tmpl10">
+<script type="text/template" id="tmpl10">
         <div class="row">
             <div class="col-md-12 form-group">
                 <div class="input-group">
@@ -2752,7 +2817,7 @@
             </div>
         </div>
 	</script>
-	<script type="text/template" id="tmpl11">
+<script type="text/template" id="tmpl11">
 		{{#.}}
 			<div class="panel panel-default">
 				<div class="panel-heading">
@@ -2779,7 +2844,7 @@
 			{{/.}}
 		</div>
 	</script>
-	<script type="text/template" id="tmpl12">
+<script type="text/template" id="tmpl12">
 		 <div class="row">
             <div class="col-md-6 form-group">
                 <label>Fornecedor <span class="text-danger">*</span></label>
@@ -2815,7 +2880,7 @@
             </div>
         </div>
 	</script>
-	<script type="text/template" id="tmpl13">
+<script type="text/template" id="tmpl13">
 		<div class="panel-group" id="accordionAnalise">
 			{{#.}}
 			<div class="panel panel-default">
@@ -2897,7 +2962,7 @@
 			{{/.}}
 		</div>
 	</script>
-	<script type="text/template" id="tmpl14">
+<script type="text/template" id="tmpl14">
 		<div class="panel-group" id="accordion">
 			{{#.}}
 			<div class="panel panel-default">
@@ -2987,4 +3052,5 @@
 			{{/.}}
 		</div>
 	</script>
+
 </html>

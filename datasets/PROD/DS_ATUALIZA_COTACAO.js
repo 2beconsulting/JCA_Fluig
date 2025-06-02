@@ -1,6 +1,6 @@
 var mlSolicitacao = "ML001722";
 var mlTES = "ML001739";
-var formCotacao = "36306";
+var formCotacao = "746756";
 
 function createDataset(fields, constraints, sortFields) {
 	try {
@@ -45,26 +45,34 @@ function createDataset(fields, constraints, sortFields) {
 				var dsArr = dsToJson(ds);
 				log.info("dsArr");
 				log.dir(dsArr);
-
+				var dsIdx = null
 				if (IDX != undefined) {
-					var dsIdx = dsArr.filter(function (el) { return el.idx == IDX });
+					dsIdx = dsArr.filter(function (el) { return el.idx == IDX });
 					log.info("dsIdx");
 					log.dir(dsIdx);
 
 					if (dsIdx.length > 0) {
-						C8_FORNECE = dsIdx[0]["C8_FORNECE"];
-						C8_LOJA = dsIdx[0]["C8_LOJA"];
-						C8_PRODUTO = dsIdx[0]["C8_PRODUTO"].trim();
+						C8_FORNECE = dsIdx[0]["C8_FORNECE"] + "".trim();
+						C8_LOJA = dsIdx[0]["C8_LOJA"] + "".trim();
+						C8_PRODUTO = dsIdx[0]["C8_PRODUTO"] + "".trim();
 					}
 				}
 
 				if (C8_FORNECE != undefined && C8_LOJA != undefined && C8_PRODUTO != undefined) {
-					var dsFilt = dsArr.filter(function (el) { return el.C8_FORNECE == C8_FORNECE && el.C8_LOJA == C8_LOJA && el.C8_PRODUTO == C8_PRODUTO });
-					log.info("dsFilt");
+					var dsFilt = dsArr.filter(function (el) {
+						return el.C8_FORNECE + "".trim() == C8_FORNECE
+							&& el.C8_LOJA + "".trim() == C8_LOJA
+							&& el.C8_PRODUTO + "".trim() == C8_PRODUTO
+					});
+					C8_PRODUTO = C8_PRODUTO.replace("   ", "")
+					log.info("dsFilt>>" + C8_FORNECE + ":" + C8_PRODUTO + ":" + C8_LOJA);
 					log.dir(dsFilt);
 
 					dsFilt.forEach(function (reg) {
 						IDX = dsFilt[0].idx;
+
+						if (C8_COND == "" || C8_COND == undefined)
+							C8_COND = '010';
 
 						if (C8_COND != undefined && C8_TPFRETE != undefined && C8_TOTFRE != undefined) {
 							//if(QTD_COMPRADOR != C8_QUANT){
@@ -86,18 +94,28 @@ function createDataset(fields, constraints, sortFields) {
 							}]
 
 							//var filFornec = dsArr.filter(function(el){return el.C8_FORNECE == C8_FORNECE && el.C8_LOJA == C8_LOJA}); //
-							var filFornec = dsArr.filter(function (el) { return el.C8_FORNECE == C8_FORNECE && el.C8_LOJA == C8_LOJA && el.C8_PRODUTO == C8_PRODUTO });
-							log.info("--filFornec");
+							var filFornec = dsIdx
+							log.info("--filFornec>>" + C8_FORNECE + ":" + C8_PRODUTO + ":" + C8_LOJA);
 							log.dir(filFornec);
 
 							filFornec.forEach(function (regForn) {
-								filtTES = dsTES.filter(function (el) { return el.TES_A2_COD == C8_FORNECE && el.TES_A2_LOJA == C8_LOJA && el.TES_B1_COD == reg.C8_PRODUTO.substring(0, 8) })
+								filtTES = dsTES.filter(function (el) {
+									var produto = regForn.C8_PRODUTO;
+									produto = produto.replace("   ", "")
+									return el.TES_A2_COD == C8_FORNECE
+										&& el.TES_A2_LOJA == C8_LOJA
+										&& el.TES_B1_COD == produto
+
+								})
+								TES = filtTES.length != 0 ? filtTES[0]["TES_CODIGO"] : "022"
+								TES = (TES != '' && TES != ' ') ? TES : "022"
+
 								FORNECE[0].ITEM.push({
-									"C8_PRODUTO": regForn["C8_PRODUTO"],
+									"C8_PRODUTO": C8_PRODUTO,
 									"C8_PRECO": regForn["C8_PRECO"],
 									"C8_QTDISP": regForn["QTD_COMPRADOR"] != "" && regForn["QTD_COMPRADOR"] != "null" && regForn["QTD_COMPRADOR"] != "0" ? regForn["QTD_COMPRADOR"] : regForn["C8_QUANT"],
 									"C8_PRAZO": regForn["C8_PRAZO"],
-									"C8_TES": filtTES.length != 0 ? filtTES[0]["TES_CODIGO"] : "001"
+									"C8_TES": filtTES.length != 0 ? filtTES[0]["TES_CODIGO"] : "022"
 								})
 							})
 
@@ -116,8 +134,15 @@ function createDataset(fields, constraints, sortFields) {
 									if (dadosProtheus.retorno.message == undefined) {
 										if (dadosProtheus.retorno.length > 0) {
 
-											var filProtheus = dadosProtheus.retorno.filter(function (p) { return p.C8_FORNECE == reg.C8_FORNECE && p.C8_LOJA == reg.C8_LOJA && p.C8_PRODUTO.trim() == reg.C8_PRODUTO.trim() })
-											log.info("--filProtheus");
+											var filProtheus = dadosProtheus.retorno.filter(function (p) {
+												var produto = reg.C8_PRODUTO;
+												produto = produto.replace("   ", "");
+												return p.C8_FORNECE == reg.C8_FORNECE && p.C8_LOJA == reg.C8_LOJA && produto == C8_PRODUTO
+											})
+											filProtheus = filProtheus.filter(function (retorno) {
+												return retorno.C8_PRODUTO == C8_PRODUTO;
+											})
+											log.info("--filProtheus>>" + C8_FORNECE + ":" + C8_PRODUTO + ":" + C8_LOJA);
 											log.dir(filProtheus);
 											if (filProtheus.length > 0) {
 												var formFields = {
@@ -148,7 +173,7 @@ function createDataset(fields, constraints, sortFields) {
 												reg.C8_TOTAL = filProtheus[0].C8_TOTAL;
 												//reg.VENCEDOR = filProtheus[0].C8_STATUS;
 
-												log.info("formFields");
+												log.info("formFields>>" + C8_FORNECE + ":" + C8_PRODUTO + ":" + C8_LOJA);
 												log.dir(formFields);
 
 												if (reg.documentid != "" && reg.documentid != undefined) {

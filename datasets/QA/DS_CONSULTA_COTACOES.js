@@ -11,15 +11,35 @@ function createDataset(fields, constraints, sortFields) {
 		var VENCEDOR_COMPRADOR = jConstr.VENCEDOR_COMPRADOR;
 
 		if (idEmpresa != undefined && C8_NUM != undefined) {
-			var txtQuery = "SELECT ML.C8_CICLO, COT.documentid,COT.version, COT.VENCEDOR, COT.VENCEDOR_COMPRADOR, COT.COMPRADOR, COT.QTD_COMPRADOR, COT.COMPRADOR_JUSTIFICATIVA, COT.C8_ITEM, COT.C8_PRODUTO, COT.C8_UM, COT.C8_FORNECE, COT.C8_LOJA, COT.C8_QUANT, COT.C8_PRECO, COT.C8_TOTAL, COT.C8_PRAZO, COT.C8_FILENT, COT.C8_VALIPI, COT.C8_VALICM, COT.C8_VALISS, COT.C8_DIFAL, COT.C8_VALSOL, COT.C8_VALIDA FROM " + mlFormCotacao + " ML \
-								INNER JOIN DOCUMENTO DOC ON DOC.NR_DOCUMENTO = ML.DOCUMENTID AND DOC.NR_VERSAO = ML.VERSION \
+			var txtQuery = "SELECT ML.C8_CICLO, COT.documentid,COT.version, COT.VENCEDOR, COT.VENCEDOR_COMPRADOR, COT.COMPRADOR, " +
+				"COT.QTD_COMPRADOR, COT.COMPRADOR_JUSTIFICATIVA, COT.C8_ITEM, COT.C8_PRODUTO, COT.C8_UM, COT.C8_FORNECE, " +
+				"COT.C8_LOJA, COT.C8_QUANT, COT.C8_PRECO, COT.C8_TOTAL, COT.C8_PRAZO, COT.C8_FILENT, COT.C8_VALIPI, " +
+				"COT.C8_VALICM, COT.C8_VALISS, COT.C8_DIFAL, COT.C8_VALSOL, COT.C8_VALIDA FROM " + mlFormCotacao + " ML \
 								INNER JOIN "+ mlTabCotacao + " COT ON COT.DOCUMENTID = ML.DOCUMENTID AND COT.VERSION = ML.VERSION \
-							WHERE ML.C8_NUM = '"+ C8_NUM + "' AND ML.idEmpresa = '" + idEmpresa + "' AND DOC.VERSAO_ATIVA = 1"
+								AND ML.VERSION  = (SELECT MAX(VERSION) FROM " + mlFormCotacao + " MLVERS WHERE MLVERS.DOCUMENTID = ML.DOCUMENTID) \
+							WHERE ML.C8_NUM = '"+ C8_NUM + "' AND ML.idEmpresa = '" + idEmpresa + "'"
 
+			txtQuery = "SELECT DISTINCT ML.C8_CICLO, COT.documentid, COT.version, COT.VENCEDOR, COT.VENCEDOR_COMPRADOR, COT.COMPRADOR, \
+                           COT.QTD_COMPRADOR, COT.COMPRADOR_JUSTIFICATIVA, COT.C8_ITEM, COT.C8_PRODUTO, COT.C8_UM, COT.C8_FORNECE, \
+                           COT.C8_LOJA, COT.C8_QUANT, COT.C8_PRECO, COT.C8_TOTAL, COT.C8_PRAZO, COT.C8_FILENT, COT.C8_VALIPI, \
+                           COT.C8_VALICM, COT.C8_VALISS, COT.C8_DIFAL, COT.C8_VALSOL, COT.C8_VALIDA \
+            FROM " + mlFormCotacao + " ML \
+            INNER JOIN ( \
+                SELECT DOCUMENTID, MAX(VERSION) AS max_version \
+                FROM " + mlFormCotacao + "  MLV \
+                    INNER JOIN DOCUMENTO DOC ON DOC.NR_DOCUMENTO = MLV.DOCUMENTID AND DOC.NR_VERSAO = MLV.VERSION \
+		                   AND DOC.VERSAO_ATIVA = 1 \
+                WHERE MLV.C8_NUM = "+ C8_NUM + " AND MLV.idEmpresa = '" + idEmpresa + "'"
 			if (C8_CICLO != undefined) {
-				txtQuery += " AND ML.C8_CICLO = '" + C8_CICLO + "'"
+				//txtQuery += " AND ML.C8_CICLO = '" + C8_CICLO + "'"
+				txtQuery += " AND MLV.C8_CICLO = '" + C8_CICLO + "' "
 			}
-
+			txtQuery += " GROUP BY DOCUMENTID \
+            ) AS LatestVersions \
+                ON ML.DOCUMENTID = LatestVersions.DOCUMENTID AND ML.VERSION = LatestVersions.max_version \
+            INNER JOIN "+ mlTabCotacao + " COT  \
+                ON COT.DOCUMENTID = ML.DOCUMENTID  \
+                AND COT.VERSION = ML.VERSION"
 			if (VENCEDOR_COMPRADOR != undefined) {
 				txtQuery += " AND COT.VENCEDOR_COMPRADOR = '" + VENCEDOR_COMPRADOR + "'"
 			}

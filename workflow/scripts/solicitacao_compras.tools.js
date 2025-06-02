@@ -756,17 +756,7 @@ var tools = {
 							"C8_TES": tools.tes.get(dadosFluig.TES, el.C8_FORNECE, el.C8_LOJA, el.C8_PRODUTO)
 						})
 					}
-				} /*else {
-					if (filtered.length > 0) {
-						filtered[0]["ITEM"].push({
-							"C8_PRODUTO": el.C8_PRODUTO.trim(),
-							"C8_PRECO": "0.00",
-							"C8_QTDISP": "0.00",
-							"C8_PRAZO": "0",
-							"C8_TES": "001"
-						})
-					}
-				}*/
+				}
 
 			})
 
@@ -1322,7 +1312,12 @@ var tools = {
 						}
 
 					} else {
-						throw "Não foi encontrado nenhum dado de cotação para recuperar da solicitação filha " + solicFilha;
+						hAPI.setTaskComments(
+							getValue("WKUser"),
+							getValue("WKNumProces"),
+							getValue("WKActualThread"),
+							"Não foi encontrado nenhum dado de cotação para recuperar da solicitação filha " + solicFilha
+						);
 					}
 				} else { // Para regularização apenas carregará os dados da própria C8 da solicitação atual
 					var indexesChildren = hAPI.getChildrenIndexes("tabCotacao");
@@ -2074,6 +2069,7 @@ var tools = {
 
 			var FORNECE = [];
 			if (hAPI.getCardValue("tipoSc") != "5") {
+
 				var cotacoes = integra.getDBFluig(
 					"SELECT COT.* FROM " + hAPI.getAdvancedProperty("mlFormCotacao") + " ML \
 						INNER JOIN DOCUMENTO DOC ON DOC.NR_DOCUMENTO = ML.DOCUMENTID AND DOC.NR_VERSAO = ML.VERSION \
@@ -2341,7 +2337,7 @@ var tools = {
 			log.info("++ tools.tes.get ++ \n A2_COD: " + A2_COD + " \n A2_LOJA: " + A2_LOJA + " \n B1_COD: " + B1_COD)
 			var filtTES = tabTES.filter(function (el) { return el.TES_A2_COD == A2_COD && el.TES_A2_LOJA == A2_LOJA && el.TES_B1_COD == B1_COD.substring(0, 8) && el.TES_CODIGO != "" })
 			log.dir(filtTES);
-			return filtTES.length > 0 ? filtTES[0].TES_CODIGO : "001";
+			return filtTES.length > 0 ? filtTES[0].TES_CODIGO : "022";
 		},
 		regulariza: function () {
 			log.info("-- tools.tes.regulariza")
@@ -2452,6 +2448,56 @@ var tools = {
 		necessario: function () {
 			return hAPI.getChildrenIndexes("tabValidacaoTecnica")
 				.filter(function (idx) { return hAPI.getCardValue("VT_DECISAO___" + idx) == "" }).length > 0
+		}
+	},
+	getDataset: function (name, campos, filtros, isInternal) {
+
+		var constraints = [];
+
+		if (isInternal) {
+			constraints.push(DatasetFactory.createConstraint('metadata#active', true, true, ConstraintType.MUST));
+		}
+
+		if (filtros) {
+			filtros.forEach(function (filtro) {
+				constraints.push(DatasetFactory.createConstraint(filtro.field, filtro.value, filtro.value, filtro.type || ConstraintType.MUST));
+			});
+		}
+
+		var result = [];
+		try {
+
+			var dataset = DatasetFactory.getDataset(name, null, constraints, null);
+
+			if (dataset == null) {
+				return result;
+			}
+			if (dataset.rowsCount > 0) {
+
+				var _loop = function _loop() {
+					var o = {};
+
+					if (!campos) {
+						campos = dataset.getColumnsName();
+					}
+
+					campos.forEach(function (campo) {
+						o[campo] = dataset.getValue(i, campo);
+					});
+
+					result.push(o);
+				};
+
+				for (var i = 0; i < dataset.rowsCount; i++) {
+					_loop();
+				}
+			}
+
+			return result;
+		} catch (error) {
+
+			return result
+
 		}
 	}
 }

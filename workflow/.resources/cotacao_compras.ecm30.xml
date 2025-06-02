@@ -10,8 +10,8 @@
     <publicProcess>false</publicProcess>
     <volumeId>Default</volumeId>
     <categoryId>Suprimentos</categoryId>
-    <managerEngineAllocationId>Grupo</managerEngineAllocationId>
-    <managerEngineAllocationConfiguration>&lt;AssignmentController&gt;&lt;Group&gt;COMPRAS_COMPRADORES&lt;/Group&gt;&lt;/AssignmentController&gt;</managerEngineAllocationConfiguration>
+    <managerEngineAllocationId>Usuário</managerEngineAllocationId>
+    <managerEngineAllocationConfiguration>&lt;AssignmentController&gt;&lt;User&gt;admin&lt;/User&gt;&lt;/AssignmentController&gt;</managerEngineAllocationConfiguration>
     <snapshotFrequency>0</snapshotFrequency>
     <baseDay>0</baseDay>
     <baseMonth>0</baseMonth>
@@ -29,7 +29,7 @@
     <processDefinitionVersionPK>
       <companyId>1</companyId>
       <processId>Cotação</processId>
-      <version>1</version>
+      <version>5</version>
     </processDefinitionVersionPK>
     <versionDescription></versionDescription>
     <formId>746757</formId>
@@ -60,8 +60,8 @@
       <deadlineTime>0</deadlineTime>
       <joint>false</joint>
       <agreementPercentage>0</agreementPercentage>
-      <engineAllocationId></engineAllocationId>
-      <engineAllocationConfiguration></engineAllocationConfiguration>
+      <engineAllocationId>Grupo</engineAllocationId>
+      <engineAllocationConfiguration>&lt;AssignmentController&gt;&lt;Group&gt;COMPRAS_COMPRADORES&lt;/Group&gt;&lt;/AssignmentController&gt;</engineAllocationConfiguration>
       <selectColleague>1</selectColleague>
       <initialState>true</initialState>
       <notifyAuthorityDelay>true</notifyAuthorityDelay>
@@ -162,7 +162,6 @@
       <joint>false</joint>
       <agreementPercentage>0</agreementPercentage>
       <engineAllocationId>mec_comprador_responsavel</engineAllocationId>
-      <engineAllocationConfiguration></engineAllocationConfiguration>
       <selectColleague>1</selectColleague>
       <initialState>false</initialState>
       <notifyAuthorityDelay>true</notifyAuthorityDelay>
@@ -1676,14 +1675,23 @@
                 idx++
             }
         }
-        tools.createFormCotacaoAux(cotacaoFields)
-        tools.log(&quot;-- fim rsCotacao&quot;);
-        tools.log(&quot;-- deleted&quot;);
-        var deleted = integra.deleteFluig(&quot;/ecm-forms/api/v2/cardindex/&quot; + hAPI.getAdvancedProperty(&quot;formCotacaoAux&quot;) + &quot;/cards/&quot; + docId)
-        log.dir(deleted);
+        if (cotacaoFields.values.length &gt; 0) {
+            tools.createFormCotacaoAux(cotacaoFields)
+            tools.log(&quot;-- fim rsCotacao&quot;);
+            tools.log(&quot;-- deleted&quot;);
+            var deleted = integra.deleteFluig(&quot;/ecm-forms/api/v2/cardindex/&quot; + hAPI.getAdvancedProperty(&quot;formCotacaoAux&quot;) + &quot;/cards/&quot; + docId)
+            log.dir(deleted);
+        } else {
+            hAPI.setTaskComments(
+                getValue(&quot;WKUser&quot;),
+                getValue(&quot;WKNumProces&quot;),
+                getValue(&quot;WKActualThread&quot;),
+                &quot;nenhum orçamento foi enviado nesta cotação.&quot;
+            )
+        }
 
     } catch (error) {
-        log.error(&quot;ERRO==============&gt; &quot; + error.message != undefined ?
+        tools.log(&quot;ERRO==============&gt; &quot; + error.message != undefined ?
             error.message : error);
         throw error.message
     } finally {
@@ -1916,7 +1924,7 @@
         <companyId>1</companyId>
         <processId>cotacao_compras</processId>
         <propertyId>formCotacaoAux</propertyId>
-        <version>1</version>
+        <version>5</version>
       </advancedProcessPropertiesPK>
       <propertieValue>746754</propertieValue>
     </AdvancedProcessProperties>
@@ -1925,7 +1933,7 @@
         <companyId>1</companyId>
         <processId>cotacao_compras</processId>
         <propertyId>formPrincipal</propertyId>
-        <version>1</version>
+        <version>5</version>
       </advancedProcessPropertiesPK>
       <propertieValue>ML001722</propertieValue>
     </AdvancedProcessProperties>
@@ -1934,7 +1942,7 @@
         <companyId>1</companyId>
         <processId>cotacao_compras</processId>
         <propertyId>mlFormCotacao</propertyId>
-        <version>1</version>
+        <version>5</version>
       </advancedProcessPropertiesPK>
       <propertieValue>ML001742</propertieValue>
     </AdvancedProcessProperties>
@@ -1943,7 +1951,7 @@
         <companyId>1</companyId>
         <processId>cotacao_compras</processId>
         <propertyId>mlFormCotCotacao</propertyId>
-        <version>1</version>
+        <version>5</version>
       </advancedProcessPropertiesPK>
       <propertieValue>ML001740</propertieValue>
     </AdvancedProcessProperties>
@@ -1952,7 +1960,7 @@
         <companyId>1</companyId>
         <processId>cotacao_compras</processId>
         <propertyId>mlTabCotacao</propertyId>
-        <version>1</version>
+        <version>5</version>
       </advancedProcessPropertiesPK>
       <propertieValue>ML001743</propertieValue>
     </AdvancedProcessProperties>
@@ -1961,7 +1969,7 @@
         <companyId>1</companyId>
         <processId>cotacao_compras</processId>
         <propertyId>mlTabCotCotacao</propertyId>
-        <version>1</version>
+        <version>5</version>
       </advancedProcessPropertiesPK>
       <propertieValue>ML001741</propertieValue>
     </AdvancedProcessProperties>
@@ -1970,25 +1978,25 @@
         <companyId>1</companyId>
         <processId>cotacao_compras</processId>
         <propertyId>password</propertyId>
-        <version>1</version>
+        <version>5</version>
       </advancedProcessPropertiesPK>
-      <propertieValue>2w8lJ6TtQGup0uGA</propertieValue>
+      <propertieValue>jca@2024</propertieValue>
     </AdvancedProcessProperties>
     <AdvancedProcessProperties>
       <advancedProcessPropertiesPK>
         <companyId>1</companyId>
         <processId>cotacao_compras</processId>
         <propertyId>publisherId</propertyId>
-        <version>1</version>
+        <version>5</version>
       </advancedProcessPropertiesPK>
-      <propertieValue>admin</propertieValue>
+      <propertieValue>integracao.fluig</propertieValue>
     </AdvancedProcessProperties>
     <AdvancedProcessProperties>
       <advancedProcessPropertiesPK>
         <companyId>1</companyId>
         <processId>cotacao_compras</processId>
         <propertyId>tabCotacao</propertyId>
-        <version>1</version>
+        <version>5</version>
       </advancedProcessPropertiesPK>
       <propertieValue>ML001738</propertieValue>
     </AdvancedProcessProperties>
@@ -1997,7 +2005,7 @@
         <companyId>1</companyId>
         <processId>cotacao_compras</processId>
         <propertyId>tabFornecedor</propertyId>
-        <version>1</version>
+        <version>5</version>
       </advancedProcessPropertiesPK>
       <propertieValue>ML001727</propertieValue>
     </AdvancedProcessProperties>
@@ -2006,7 +2014,7 @@
         <companyId>1</companyId>
         <processId>cotacao_compras</processId>
         <propertyId>tabFornecedorProduto</propertyId>
-        <version>1</version>
+        <version>5</version>
       </advancedProcessPropertiesPK>
       <propertieValue>ML001737</propertieValue>
     </AdvancedProcessProperties>
@@ -2015,7 +2023,7 @@
         <companyId>1</companyId>
         <processId>cotacao_compras</processId>
         <propertyId>tabProduto</propertyId>
-        <version>1</version>
+        <version>5</version>
       </advancedProcessPropertiesPK>
       <propertieValue>ML001735</propertieValue>
     </AdvancedProcessProperties>
@@ -2024,7 +2032,7 @@
         <companyId>1</companyId>
         <processId>cotacao_compras</processId>
         <propertyId>tabSC</propertyId>
-        <version>1</version>
+        <version>5</version>
       </advancedProcessPropertiesPK>
       <propertieValue>ML001736</propertieValue>
     </AdvancedProcessProperties>
@@ -2033,7 +2041,7 @@
         <companyId>1</companyId>
         <processId>cotacao_compras</processId>
         <propertyId>tabTES</propertyId>
-        <version>1</version>
+        <version>5</version>
       </advancedProcessPropertiesPK>
       <propertieValue>ML001739</propertieValue>
     </AdvancedProcessProperties>
@@ -2042,9 +2050,9 @@
         <companyId>1</companyId>
         <processId>cotacao_compras</processId>
         <propertyId>username</propertyId>
-        <version>1</version>
+        <version>5</version>
       </advancedProcessPropertiesPK>
-      <propertieValue>admin</propertieValue>
+      <propertieValue>integracao.fluig</propertieValue>
     </AdvancedProcessProperties>
   </list>
   <list>
@@ -2104,7 +2112,7 @@
       <processLinkBendPK>
         <companyId>1</companyId>
         <processId>cotacao_compras</processId>
-        <version>1</version>
+        <version>5</version>
         <linkSequence>28</linkSequence>
         <bendSequence>1</bendSequence>
       </processLinkBendPK>
@@ -2115,7 +2123,7 @@
       <processLinkBendPK>
         <companyId>1</companyId>
         <processId>cotacao_compras</processId>
-        <version>1</version>
+        <version>5</version>
         <linkSequence>29</linkSequence>
         <bendSequence>1</bendSequence>
       </processLinkBendPK>
@@ -2126,7 +2134,7 @@
       <processLinkBendPK>
         <companyId>1</companyId>
         <processId>cotacao_compras</processId>
-        <version>1</version>
+        <version>5</version>
         <linkSequence>33</linkSequence>
         <bendSequence>1</bendSequence>
       </processLinkBendPK>
@@ -2137,7 +2145,7 @@
       <processLinkBendPK>
         <companyId>1</companyId>
         <processId>cotacao_compras</processId>
-        <version>1</version>
+        <version>5</version>
         <linkSequence>34</linkSequence>
         <bendSequence>1</bendSequence>
       </processLinkBendPK>
@@ -2148,7 +2156,7 @@
       <processLinkBendPK>
         <companyId>1</companyId>
         <processId>cotacao_compras</processId>
-        <version>1</version>
+        <version>5</version>
         <linkSequence>35</linkSequence>
         <bendSequence>1</bendSequence>
       </processLinkBendPK>
@@ -2162,7 +2170,7 @@
       <extendedPropertyFieldPK>
         <companyId>1</companyId>
         <processId>cotacao_compras</processId>
-        <version>1</version>
+        <version>5</version>
         <stateSequence>0</stateSequence>
         <propertyName>formCotacaoAux</propertyName>
       </extendedPropertyFieldPK>
@@ -2175,7 +2183,7 @@
       <extendedPropertyFieldPK>
         <companyId>1</companyId>
         <processId>cotacao_compras</processId>
-        <version>1</version>
+        <version>5</version>
         <stateSequence>0</stateSequence>
         <propertyName>formPrincipal</propertyName>
       </extendedPropertyFieldPK>
@@ -2188,7 +2196,7 @@
       <extendedPropertyFieldPK>
         <companyId>1</companyId>
         <processId>cotacao_compras</processId>
-        <version>1</version>
+        <version>5</version>
         <stateSequence>0</stateSequence>
         <propertyName>mlFormCotacao</propertyName>
       </extendedPropertyFieldPK>
@@ -2201,7 +2209,7 @@
       <extendedPropertyFieldPK>
         <companyId>1</companyId>
         <processId>cotacao_compras</processId>
-        <version>1</version>
+        <version>5</version>
         <stateSequence>0</stateSequence>
         <propertyName>mlFormCotCotacao</propertyName>
       </extendedPropertyFieldPK>
@@ -2214,7 +2222,7 @@
       <extendedPropertyFieldPK>
         <companyId>1</companyId>
         <processId>cotacao_compras</processId>
-        <version>1</version>
+        <version>5</version>
         <stateSequence>0</stateSequence>
         <propertyName>mlTabCotacao</propertyName>
       </extendedPropertyFieldPK>
@@ -2227,7 +2235,7 @@
       <extendedPropertyFieldPK>
         <companyId>1</companyId>
         <processId>cotacao_compras</processId>
-        <version>1</version>
+        <version>5</version>
         <stateSequence>0</stateSequence>
         <propertyName>mlTabCotCotacao</propertyName>
       </extendedPropertyFieldPK>
@@ -2240,33 +2248,33 @@
       <extendedPropertyFieldPK>
         <companyId>1</companyId>
         <processId>cotacao_compras</processId>
-        <version>1</version>
+        <version>5</version>
         <stateSequence>0</stateSequence>
         <propertyName>password</propertyName>
       </extendedPropertyFieldPK>
       <propertyType>0</propertyType>
       <propertyDescription>password</propertyDescription>
-      <propertyValue>2w8lJ6TtQGup0uGA</propertyValue>
+      <propertyValue>jca@2024</propertyValue>
       <isDefaultProperty>false</isDefaultProperty>
     </ExtendedPropertyField>
     <ExtendedPropertyField>
       <extendedPropertyFieldPK>
         <companyId>1</companyId>
         <processId>cotacao_compras</processId>
-        <version>1</version>
+        <version>5</version>
         <stateSequence>0</stateSequence>
         <propertyName>publisherId</propertyName>
       </extendedPropertyFieldPK>
       <propertyType>0</propertyType>
       <propertyDescription>publisherId</propertyDescription>
-      <propertyValue>admin</propertyValue>
+      <propertyValue>integracao.fluig</propertyValue>
       <isDefaultProperty>false</isDefaultProperty>
     </ExtendedPropertyField>
     <ExtendedPropertyField>
       <extendedPropertyFieldPK>
         <companyId>1</companyId>
         <processId>cotacao_compras</processId>
-        <version>1</version>
+        <version>5</version>
         <stateSequence>0</stateSequence>
         <propertyName>tabCotacao</propertyName>
       </extendedPropertyFieldPK>
@@ -2279,7 +2287,7 @@
       <extendedPropertyFieldPK>
         <companyId>1</companyId>
         <processId>cotacao_compras</processId>
-        <version>1</version>
+        <version>5</version>
         <stateSequence>0</stateSequence>
         <propertyName>tabFornecedor</propertyName>
       </extendedPropertyFieldPK>
@@ -2292,7 +2300,7 @@
       <extendedPropertyFieldPK>
         <companyId>1</companyId>
         <processId>cotacao_compras</processId>
-        <version>1</version>
+        <version>5</version>
         <stateSequence>0</stateSequence>
         <propertyName>tabFornecedorProduto</propertyName>
       </extendedPropertyFieldPK>
@@ -2305,7 +2313,7 @@
       <extendedPropertyFieldPK>
         <companyId>1</companyId>
         <processId>cotacao_compras</processId>
-        <version>1</version>
+        <version>5</version>
         <stateSequence>0</stateSequence>
         <propertyName>tabProduto</propertyName>
       </extendedPropertyFieldPK>
@@ -2318,7 +2326,7 @@
       <extendedPropertyFieldPK>
         <companyId>1</companyId>
         <processId>cotacao_compras</processId>
-        <version>1</version>
+        <version>5</version>
         <stateSequence>0</stateSequence>
         <propertyName>tabSC</propertyName>
       </extendedPropertyFieldPK>
@@ -2331,7 +2339,7 @@
       <extendedPropertyFieldPK>
         <companyId>1</companyId>
         <processId>cotacao_compras</processId>
-        <version>1</version>
+        <version>5</version>
         <stateSequence>0</stateSequence>
         <propertyName>tabTES</propertyName>
       </extendedPropertyFieldPK>
@@ -2344,13 +2352,13 @@
       <extendedPropertyFieldPK>
         <companyId>1</companyId>
         <processId>cotacao_compras</processId>
-        <version>1</version>
+        <version>5</version>
         <stateSequence>0</stateSequence>
         <propertyName>username</propertyName>
       </extendedPropertyFieldPK>
       <propertyType>0</propertyType>
       <propertyDescription>username</propertyDescription>
-      <propertyValue>admin</propertyValue>
+      <propertyValue>integracao.fluig</propertyValue>
       <isDefaultProperty>false</isDefaultProperty>
     </ExtendedPropertyField>
   </list>

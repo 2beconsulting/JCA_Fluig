@@ -77,14 +77,23 @@ function servicetask30(attempt, message) {
                 idx++
             }
         }
-        tools.createFormCotacaoAux(cotacaoFields)
-        tools.log("-- fim rsCotacao");
-        tools.log("-- deleted");
-        var deleted = integra.deleteFluig("/ecm-forms/api/v2/cardindex/" + hAPI.getAdvancedProperty("formCotacaoAux") + "/cards/" + docId)
-        log.dir(deleted);
+        if (cotacaoFields.values.length > 0) {
+            tools.createFormCotacaoAux(cotacaoFields)
+            tools.log("-- fim rsCotacao");
+            tools.log("-- deleted");
+            var deleted = integra.deleteFluig("/ecm-forms/api/v2/cardindex/" + hAPI.getAdvancedProperty("formCotacaoAux") + "/cards/" + docId)
+            log.dir(deleted);
+        } else {
+            hAPI.setTaskComments(
+                getValue("WKUser"),
+                getValue("WKNumProces"),
+                getValue("WKActualThread"),
+                "nenhum orçamento foi enviado nesta cotação."
+            )
+        }
 
     } catch (error) {
-        log.error("ERRO==============> " + error.message != undefined ?
+        tools.log("ERRO==============> " + error.message != undefined ?
             error.message : error);
         throw error.message
     } finally {

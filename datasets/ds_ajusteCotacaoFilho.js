@@ -5,25 +5,41 @@ function onSync(lastSyncDate) {
 
 }
 function createDataset(fields, constraints, sortFields) {
-
+    /**
+     * copia uma ficha de cotação do processo de cotaão,
+     * para os filhos de uma outra que não foi criada.
+     */
     log.info("ds_ajusteCotacaoFilho")
-    var mlFormCotacao = "ML001742";
-    var mlTabCotacao = "ML001743";
-    var C8NUM = "000002";
-    var IDEMPRESA = "00100289";
-    var idFichaCotacaoCotacoes = "756307";
+    /**
+     * COTACOES NO FORMULÁRIO PAI
+        var mlFormCotacao = "ML001742";
+        var mlTabCotacao = "ML001743";
+    */
+    /**
+         * COTACOES NO FORMULÁRIO FILHO */
+    var mlFormCotacao = "ML001740";
+    var mlTabCotacao = "ML001741";
+
+    var CODFOMCOTACAOCOTACOES = '746754'
+    var idFichaCotacaoCotacoes = "854105";
     var CICLOATUAL = "1";
-    var CODFOMCOTACAOCOTACOES = "746754";
-    var query = "SELECT COT.VENCEDOR, COT.VENCEDOR_COMPRADOR, COT.COMPRADOR, COT.QTD_COMPRADOR, COT.COMPRADOR_JUSTIFICATIVA, \
-    COT.C8_ITEM, COT.C8_PRODUTO, COT.C8_UM, COT.C8_FORNECE, COT.C8_LOJA, COT.C8_QUANT, COT.C8_PRECO, COT.C8_TOTAL, COT.C8_PRAZO, \
-    COT.C8_FILENT, COT.C8_VALIPI, COT.C8_VALICM, COT.C8_VALISS, COT.C8_DIFAL, COT.C8_VALSOL, COT.C8_VALIDA \
-					 FROM "+ mlFormCotacao + " ML \
-					INNER JOIN DOCUMENTO DOC ON DOC.NR_DOCUMENTO = ML.DOCUMENTID AND DOC.NR_VERSAO = ML.VERSION \
-					INNER JOIN "+ mlTabCotacao + " COT ON COT.DOCUMENTID = ML.DOCUMENTID AND COT.VERSION = ML.VERSION \
-				WHERE ML.C8_NUM = '"+ C8NUM + "' \
-                AND ML.idEmpresa = '" + IDEMPRESA + "' \
-                AND ML.C8_CICLO = '" + CICLOATUAL + "' \
-                AND DOC.VERSAO_ATIVA = 1"
+    var CODCOTACOESREF = "853812";
+
+    query = "SELECT DISTINCT ML.C8_CICLO, COT.documentid, COT.version, COT.VENCEDOR, COT.VENCEDOR_COMPRADOR, COT.COMPRADOR, \
+                           COT.QTD_COMPRADOR, COT.COMPRADOR_JUSTIFICATIVA, COT.C8_ITEM, COT.C8_PRODUTO, COT.C8_UM, COT.C8_FORNECE, \
+                           COT.C8_LOJA, COT.C8_QUANT, COT.C8_PRECO, COT.C8_TOTAL, COT.C8_PRAZO, COT.C8_FILENT, COT.C8_VALIPI, \
+                           COT.C8_VALICM, COT.C8_VALISS, COT.C8_DIFAL, COT.C8_VALSOL, COT.C8_VALIDA \
+            FROM " + mlFormCotacao + " ML \
+            INNER JOIN ( \
+                SELECT DOCUMENTID, MAX(VERSION) AS max_version \
+                FROM " + mlFormCotacao + " \
+                WHERE DOCUMENTID = '"+ CODCOTACOESREF + "' \
+                GROUP BY DOCUMENTID \
+            ) AS LatestVersions \
+                ON ML.DOCUMENTID = LatestVersions.DOCUMENTID AND ML.VERSION = LatestVersions.max_version \
+            INNER JOIN "+ mlTabCotacao + " COT  \
+                ON COT.DOCUMENTID = ML.DOCUMENTID  \
+                AND COT.VERSION = ML.VERSION";
 
     var dataSetRetorno = tools.getDataset('ds_sql_execute', null, null, false);
 
@@ -80,8 +96,7 @@ function createDataset(fields, constraints, sortFields) {
         dataset.addRow(["Erro na atualização do formulário > " + formAtualizado.error]);
     } else {
         dataset.addColumn("resultado");
-        dataset.addRow([JSON.stringfy(formAtualizado)]);
-
+        dataset.addRow([JSON.stringify(formAtualizado)]);
     }
 
     return dataset

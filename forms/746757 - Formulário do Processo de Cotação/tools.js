@@ -77,7 +77,10 @@ var tools = {
 			if (ds != null && ds.values.length > 0) {
 				for (var i = 0; i < ds.values.length; i++) {
 					var valor = ds.values[i].C8_PRECO.trim();
-					if (valor != "" && valor != null && valor != "0.00" && valor != "0,00") {
+					if (valor != "" && valor != null
+						&& valor != "0.00"
+						&& valor != "0"
+						&& valor != "0,00") {
 
 						let filtProd = aDados.produtos.filter(function (prd) { return prd.C8_PRODUTO == ds.values[i].C8_PRODUTO.trim().substring(0, 8) })
 						let B1_ZMARCA = filtProd.length > 0 ? filtProd[0]["B1_ZMARCA"] : "";
@@ -389,7 +392,7 @@ var tools = {
 			tools.aDadosCot["TES"] = tools.aDadosCot["TES"].sort(function (el1, el2) { return el1.CODIGO - el2.CODIGO })
 		},
 		init() {
-			if ([5].includes(WKNumState)) {
+			if ([5, 23].includes(WKNumState)) {
 				if (!aDados.TES) tools.TES.carregaOptions();
 				$("#btnTES").on("click", tools.TES.carregaDiv)
 			} else {

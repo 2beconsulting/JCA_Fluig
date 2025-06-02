@@ -331,99 +331,100 @@ var tools = {
 	},
 	cotacao: {
 		carregaDados: function (cotacoes) {
-			if($("#C8_NUM,#_C8_NUM").val() != "" || $("[name*=tipoSc]:checked").val() == "5"){
+			if ($("#C8_NUM,#_C8_NUM").val() != "" || $("[name*=tipoSc]:checked").val() == "5") {
 				if (usuarioCompras) {
 					let ciclo = $("#ciclo_atual,#_ciclo_atual").val();
 					aDados.cotacoes = [];
 					aDados.solicitacao = [];
 
 					if (aDados.cotacoes.length < 1) {
-						if(!cotacoes){
+						if (!cotacoes) {
 							let tmp = tools.cotacao.getFormCotacao();
 							cotacoes = aDados.dsCotacoes;
 						}
-						
+
 						aDados.cotacoes = cotacoes
-						.filter(function(el){return el.C8_PRECO != "" && el.C8_PRECO != "0.00" && el.C8_PRECO != "0,00" && el.C8_PRECO != "null" && el.C8_PRECO != "0.000000" && el.C8_PRECO != "0,000000"})
-						.map(function(cotacao){
-							let filtForn = aDados.fornecedores.filter(function (f) { return f.A2_COD == cotacao["C8_FORNECE"] && f.A2_LOJA == cotacao["C8_LOJA"] });
-							cotacao["C8_COND"] = filtForn.length > 0 ? filtForn[0]["A2_COND"] : "";
-							let condPagto = aDados.condPagto.filter(function (cP) { return cP.CODIGO == cotacao["C8_COND"] })
-							
-							return {
-								IDX: 						cotacao["idx"],
-								C8_CICLO: 					cotacao["C8_CICLO"],
-								VENCEDOR: 					cotacao["VENCEDOR"] == "true",
-								VENCEDOR_COMP: 				cotacao["VENCEDOR_COMPRADOR"] == "true",
-								QTD_COMPRADOR: 				!["","null"].includes(cotacao["QTD_COMPRADOR"]) ? cotacao["QTD_COMPRADOR"] : 0,
-								COMPRADOR: 					!["","null"].includes(cotacao["COMPRADOR"]) ? cotacao["COMPRADOR"] : "",
-								COMPRADOR_JUSTIFICATIVA: 	!["","null"].includes(cotacao["COMPRADOR_JUSTIFICATIVA"]) ? cotacao["COMPRADOR_JUSTIFICATIVA"] : "",
-								C8_PRODUTO: 				cotacao["C8_PRODUTO"].trim(),
-								B1_COD: 					aDados.produtos.filter(function (p) { return p.B1_COD == cotacao["C8_PRODUTO"].trim().substring(0, 8) })[0]["B1_COD"],
-								B1_DESC: 					aDados.produtos.filter(function (p) { return p.B1_COD == cotacao["C8_PRODUTO"].trim().substring(0, 8) })[0]["B1_DESC"],
-								QTD: 						aDados.produtos.filter(function (p) { return p.B1_COD == cotacao["C8_PRODUTO"].trim().trim().substring(0, 8) })[0]["QTD"],
-								MARCA: 						aDados.produtos.filter(function (p) { return p.B1_COD == cotacao["C8_PRODUTO"].trim().substring(0, 8) })[0].FILHOS.filter(function (pF) { return pF.B1_COD == cotacao["C8_PRODUTO"].trim() })[0]["ZPM_DESC"],
-								C8_FORNECE: 				cotacao["C8_FORNECE"],
-								C8_LOJA: 					cotacao["C8_LOJA"],
-								A2_NOME: 					filtForn[0]["A2_NOME"],
-								C8_QUANT: 					cotacao["C8_QUANT"],
-								C8_PRECO: 					cotacao["C8_PRECO"],
-								C8_TOTAL: 					cotacao["C8_TOTAL"],
-								CONDPAGTO: 					condPagto.length > 0 ? condPagto[0]["DESCRICAO"] : "",
-								C8_PRAZO: 					cotacao["C8_PRAZO"],
-								C8_FILENT: 					cotacao["C8_FILENT"],
-								C8_VALIPI: 					cotacao["C8_VALIPI"],
-								C8_VALICM: 					cotacao["C8_VALICM"],
-								C8_VALISS: 					cotacao["C8_VALISS"],
-								C8_DIFAL: 					cotacao["C8_DIFAL"],
-								C8_VALSOL: 					cotacao["C8_VALSOL"],
-								C8_VALIDA: 					cotacao["C8_VALIDA"],
-								C8_UM: 						cotacao["C8_UM"]
-							}
-						})
+							.filter(function (el) { return el.C8_PRECO != "" && el.C8_PRECO != "0.00" && el.C8_PRECO != "0,00" && el.C8_PRECO != "null" && el.C8_PRECO != "0.000000" && el.C8_PRECO != "0,000000" })
+							.map(function (cotacao) {
+								let filtForn = aDados.fornecedores.filter(function (f) { return f.A2_COD == cotacao["C8_FORNECE"] && f.A2_LOJA == cotacao["C8_LOJA"] });
+								cotacao["C8_COND"] = filtForn.length > 0 ? filtForn[0]["A2_COND"] : "";
+								let condPagto = aDados.condPagto.filter(function (cP) { return cP.CODIGO == cotacao["C8_COND"] })
+
+								console.log("-- filtForn", filtForn, "cotcao", cotacao);
+								return {
+									IDX: cotacao["idx"],
+									C8_CICLO: cotacao["C8_CICLO"],
+									VENCEDOR: cotacao["VENCEDOR"] == "true",
+									VENCEDOR_COMP: cotacao["VENCEDOR_COMPRADOR"] == "true",
+									QTD_COMPRADOR: !["", "null"].includes(cotacao["QTD_COMPRADOR"]) ? cotacao["QTD_COMPRADOR"] : 0,
+									COMPRADOR: !["", "null"].includes(cotacao["COMPRADOR"]) ? cotacao["COMPRADOR"] : "",
+									COMPRADOR_JUSTIFICATIVA: !["", "null"].includes(cotacao["COMPRADOR_JUSTIFICATIVA"]) ? cotacao["COMPRADOR_JUSTIFICATIVA"] : "",
+									C8_PRODUTO: cotacao["C8_PRODUTO"].trim(),
+									B1_COD: aDados.produtos.filter(function (p) { return p.B1_COD == cotacao["C8_PRODUTO"].trim().substring(0, 8) })[0]["B1_COD"],
+									B1_DESC: aDados.produtos.filter(function (p) { return p.B1_COD == cotacao["C8_PRODUTO"].trim().substring(0, 8) })[0]["B1_DESC"],
+									QTD: aDados.produtos.filter(function (p) { return p.B1_COD == cotacao["C8_PRODUTO"].trim().trim().substring(0, 8) })[0]["QTD"],
+									MARCA: aDados.produtos.filter(function (p) { return p.B1_COD == cotacao["C8_PRODUTO"].trim().substring(0, 8) })[0].FILHOS.filter(function (pF) { return pF.B1_COD == cotacao["C8_PRODUTO"].trim() })[0]["ZPM_DESC"],
+									C8_FORNECE: cotacao["C8_FORNECE"],
+									C8_LOJA: cotacao["C8_LOJA"],
+									A2_NOME: filtForn.length > 0 ? filtForn[0]["A2_NOME"] : "",
+									C8_QUANT: cotacao["C8_QUANT"],
+									C8_PRECO: cotacao["C8_PRECO"],
+									C8_TOTAL: cotacao["C8_TOTAL"],
+									CONDPAGTO: condPagto.length > 0 ? condPagto[0]["DESCRICAO"] : "",
+									C8_PRAZO: cotacao["C8_PRAZO"],
+									C8_FILENT: cotacao["C8_FILENT"],
+									C8_VALIPI: cotacao["C8_VALIPI"],
+									C8_VALICM: cotacao["C8_VALICM"],
+									C8_VALISS: cotacao["C8_VALISS"],
+									C8_DIFAL: cotacao["C8_DIFAL"],
+									C8_VALSOL: cotacao["C8_VALSOL"],
+									C8_VALIDA: cotacao["C8_VALIDA"],
+									C8_UM: cotacao["C8_UM"]
+								}
+							})
 
 					}
 
 					aDados.produtos.forEach(function (el) {
-						el["cotacoes"] 		= aDados.cotacoes.filter(function (ele) { return ((ele.C8_PRODUTO.trim().length == 12 && ele.C8_PRODUTO.trim().substring(0, 8) == el.B1_COD) || ele.C8_PRODUTO.trim().substring(0, 8) == el.B1_COD) && ele.C8_CICLO == ciclo });
-						el["temCotacao"] 	= el["cotacoes"].length > 0;
+						el["cotacoes"] = aDados.cotacoes.filter(function (ele) { return ((ele.C8_PRODUTO.trim().length == 12 && ele.C8_PRODUTO.trim().substring(0, 8) == el.B1_COD) || ele.C8_PRODUTO.trim().substring(0, 8) == el.B1_COD) && ele.C8_CICLO == ciclo });
+						el["temCotacao"] = el["cotacoes"].length > 0;
 					});
 
 					aDados.fornecedores.forEach(function (el) {
-						el["cotacoes"] 		= aDados.cotacoes.filter(function (ele) { return /* ele.C8_PRODUTO.trim().length == 12 && */ ele.C8_FORNECE == el.A2_COD && ele.C8_LOJA == el.A2_LOJA && ele.C8_CICLO == ciclo })
-						el["temCotacao"] 	= el["cotacoes"].length > 0;
+						el["cotacoes"] = aDados.cotacoes.filter(function (ele) { return /* ele.C8_PRODUTO.trim().length == 12 && */ ele.C8_FORNECE == el.A2_COD && ele.C8_LOJA == el.A2_LOJA && ele.C8_CICLO == ciclo })
+						el["temCotacao"] = el["cotacoes"].length > 0;
 					});
-					
+
 				} else {
 					$("[name=filtrar_mapa]").closest(".row").hide();
 					if (aDados.cotacoes.length < 1) {
 						let tmp = tools.cotacao.getFormCotacao();
-						let dsCotacoes = aDados.dsCotacoes.filter(function(el){return el.C8_CICLO == $("#ciclo_atual,#_ciclo_atual").val()})
-						for(var i=0 ; i < dsCotacoes.length ; i++){
+						let dsCotacoes = aDados.dsCotacoes.filter(function (el) { return el.C8_CICLO == $("#ciclo_atual,#_ciclo_atual").val() })
+						for (var i = 0; i < dsCotacoes.length; i++) {
 							aDados.cotacoes.push({
-								C8_CICLO		: dsCotacoes[i]["C8_CICLO"],
-								VENCEDOR		: dsCotacoes[i]["VENCEDOR"] == "true",
-								VENCEDOR_COMP	: dsCotacoes[i]["VENCEDOR_COMPRADOR"] == "true",
-								C8_ITEM			: dsCotacoes[i]["C8_ITEM"],
-								B1_COD			: dsCotacoes[i]["B1_COD"],//
-								C8_PRODUTO		: dsCotacoes[i]["C8_PRODUTO"].trim(),
-								C8_UM			: dsCotacoes[i]["C8_UM"],
-								C8_FORNECE		: dsCotacoes[i]["C8_FORNECE"],
-								C8_LOJA			: dsCotacoes[i]["C8_LOJA"],
-								A2_NOME			: aDados.fornecedores.filter(function (el) { return el.A2_COD == dsCotacoes[i]["C8_FORNECE"] && el.A2_LOJA == dsCotacoes[i]["C8_LOJA"] })[0]["A2_NOME"],
-								C8_QUANT		: dsCotacoes[i]["C8_QUANT"],
-								QTD_COMPRADOR	: dsCotacoes[i]["QTD_COMPRADOR"],//
-								C8_PRECO		: dsCotacoes[i]["C8_PRECO"],
-								C8_TOTAL		: dsCotacoes[i]["C8_TOTAL"],
-								C8_PRAZO		: dsCotacoes[i]["C8_PRAZO"],
-								C8_FILENT		: dsCotacoes[i]["C8_FILENT"],
-								C8_VALIPI		: dsCotacoes[i]["C8_VALIPI"],
-								C8_VALICM		: dsCotacoes[i]["C8_VALICM"],
-								C8_VALISS		: dsCotacoes[i]["C8_VALISS"],
-								C8_DIFAL		: dsCotacoes[i]["C8_DIFAL"],
-								C8_VALSOL		: dsCotacoes[i]["C8_VALSOL"],
-								C8_VALIDA		: dsCotacoes[i]["C8_VALIDA"],
-								C8_UM			: dsCotacoes[i]["C8_UM"]
+								C8_CICLO: dsCotacoes[i]["C8_CICLO"],
+								VENCEDOR: dsCotacoes[i]["VENCEDOR"] == "true",
+								VENCEDOR_COMP: dsCotacoes[i]["VENCEDOR_COMPRADOR"] == "true",
+								C8_ITEM: dsCotacoes[i]["C8_ITEM"],
+								B1_COD: dsCotacoes[i]["B1_COD"],//
+								C8_PRODUTO: dsCotacoes[i]["C8_PRODUTO"].trim(),
+								C8_UM: dsCotacoes[i]["C8_UM"],
+								C8_FORNECE: dsCotacoes[i]["C8_FORNECE"],
+								C8_LOJA: dsCotacoes[i]["C8_LOJA"],
+								A2_NOME: aDados.fornecedores.filter(function (el) { return el.A2_COD == dsCotacoes[i]["C8_FORNECE"] && el.A2_LOJA == dsCotacoes[i]["C8_LOJA"] })[0]["A2_NOME"],
+								C8_QUANT: dsCotacoes[i]["C8_QUANT"],
+								QTD_COMPRADOR: dsCotacoes[i]["QTD_COMPRADOR"],//
+								C8_PRECO: dsCotacoes[i]["C8_PRECO"],
+								C8_TOTAL: dsCotacoes[i]["C8_TOTAL"],
+								C8_PRAZO: dsCotacoes[i]["C8_PRAZO"],
+								C8_FILENT: dsCotacoes[i]["C8_FILENT"],
+								C8_VALIPI: dsCotacoes[i]["C8_VALIPI"],
+								C8_VALICM: dsCotacoes[i]["C8_VALICM"],
+								C8_VALISS: dsCotacoes[i]["C8_VALISS"],
+								C8_DIFAL: dsCotacoes[i]["C8_DIFAL"],
+								C8_VALSOL: dsCotacoes[i]["C8_VALSOL"],
+								C8_VALIDA: dsCotacoes[i]["C8_VALIDA"],
+								C8_UM: dsCotacoes[i]["C8_UM"]
 							})
 						}
 					}
@@ -436,54 +437,59 @@ var tools = {
 				}
 			}
 		},
-		getFormCotacao: function(){
-			if($("#C8_NUM,#_C8_NUM").val() != "" && $("[name*=tipoSc]:checked").val() != "5"){
+		getFormCotacao: function () {
+
+			let ciclo = $("#ciclo_atual,#_ciclo_atual").val();
+			if ($("#C8_NUM,#_C8_NUM").val() != "" && $("[name*=tipoSc]:checked").val() != "5") {
 				aDados["dsCotacoes"] = DatasetFactory.getDataset(
 					"DS_CONSULTA_COTACOES",
 					null,
 					[
-						DatasetFactory.createConstraint("idEmpresa",$("#idEmpresa,#_idEmpresa").val(),$("#idEmpresaEntrega,#_idEmpresaEntrega").val(),ConstraintType.MUST),
-						DatasetFactory.createConstraint("C8_NUM",$("#C8_NUM,#_C8_NUM").val(),$("#C8_NUM,#_C8_NUM").val(),ConstraintType.MUST)
+						DatasetFactory.createConstraint("idEmpresa", $("#idEmpresa,#_idEmpresa").val(), $("#idEmpresaEntrega,#_idEmpresaEntrega").val(), ConstraintType.MUST),
+						DatasetFactory.createConstraint("C8_NUM", $("#C8_NUM,#_C8_NUM").val(), $("#C8_NUM,#_C8_NUM").val(), ConstraintType.MUST),
+						DatasetFactory.createConstraint("C8_CICLO", ciclo, ciclo, ConstraintType.MUST)
 					],
 					null
 				).values
 			}
-			else if($("[name*=tipoSc]:checked").val() == "5"){
-				aDados["dsCotacoes"] = $("[name*=C8_PRODUTO___].form-control").toArray().map(function(el){return {
-					IDX: 						$(el).attr("id").split("___")[1],
-					C8_CICLO: 					$(el).closest("tr").find("[name*=C8_CICLO]").val(),
-					VENCEDOR: 					$(el).closest("tr").find("[name*=VENCEDOR]").val() == "true",
-					VENCEDOR_COMP: 				$(el).closest("tr").find("[name*=VENCEDOR_COMPRADOR]").val() == "true",
-					QTD_COMPRADOR: 				!["","null"].includes($(el).closest("tr").find("[name*=QTD_COMPRADOR]").val()) ? $(el).closest("tr").find("[name*=QTD_COMPRADOR]").val() : 0,
-					COMPRADOR: 					!["","null"].includes($(el).closest("tr").find("[name*=COMPRADOR]").val()) ? $(el).closest("tr").find("[name*=COMPRADOR]").val() : "",
-					COMPRADOR_JUSTIFICATIVA: 	!["","null"].includes($(el).closest("tr").find("[name*=COMPRADOR_JUSTIFICATIVA]").val()) ? $(el).closest("tr").find("[name*=COMPRADOR_JUSTIFICATIVA]").val() : "",
-					C8_PRODUTO: 				$(el).closest("tr").find("[name*=C8_PRODUTO]").val().trim(),
-					B1_COD: 					aDados.produtos.filter(function (p) { return p.B1_COD == $(el).closest("tr").find("[name*=C8_PRODUTO]").val().trim().substring(0, 8) })[0]["B1_COD"],
-					B1_DESC: 					aDados.produtos.filter(function (p) { return p.B1_COD == $(el).closest("tr").find("[name*=C8_PRODUTO]").val().trim().substring(0, 8) })[0]["B1_DESC"],
-					QTD: 						aDados.produtos.filter(function (p) { return p.B1_COD == $(el).closest("tr").find("[name*=C8_PRODUTO]").val().trim().substring(0, 8) })[0]["QTD"],
-					MARCA: 						aDados.produtos.filter(function (p) { return p.B1_COD == $(el).closest("tr").find("[name*=C8_PRODUTO]").val().trim().substring(0, 8) })[0].FILHOS.filter(function (pF) { return pF.B1_COD == $(el).closest("tr").find("[name*=C8_PRODUTO]").val().trim() })[0]["ZPM_DESC"],
-					C8_FORNECE: 				$(el).closest("tr").find("[name*=C8_FORNECE]").val(),
-					C8_LOJA: 					$(el).closest("tr").find("[name*=C8_LOJA]").val(),
-					//A2_NOME: 					filtForn[0]["A2_NOME"],
-					C8_QUANT: 					$(el).closest("tr").find("[name*=C8_QUANT]").val(),
-					C8_PRECO: 					$(el).closest("tr").find("[name*=C8_PRECO]").val(),
-					C8_TOTAL: 					$(el).closest("tr").find("[name*=C8_TOTAL]").val(),
-					//CONDPAGTO: 					condPagto.length > 0 ? condPagto[0]["DESCRICAO"] : "",
-					C8_PRAZO: 					$(el).closest("tr").find("[name*=C8_PRAZO]").val(),
-					C8_FILENT: 					$(el).closest("tr").find("[name*=C8_FILENT]").val(),
-					C8_VALIPI: 					$(el).closest("tr").find("[name*=C8_VALIPI]").val(),
-					C8_VALICM: 					$(el).closest("tr").find("[name*=C8_VALICM]").val(),
-					C8_VALISS: 					$(el).closest("tr").find("[name*=C8_VALISS]").val(),
-					C8_DIFAL: 					$(el).closest("tr").find("[name*=C8_DIFAL]").val(),
-					C8_VALSOL: 					$(el).closest("tr").find("[name*=C8_VALSOL]").val(),
-					C8_VALIDA: 					$(el).closest("tr").find("[name*=C8_VALIDA]").val(),
-					C8_UM: 						$(el).closest("tr").find("[name*=C8_UM]").val()
-				}})
+			else if ($("[name*=tipoSc]:checked").val() == "5") {
+				aDados["dsCotacoes"] = $("[name*=C8_PRODUTO___].form-control").toArray().map(function (el) {
+					return {
+						IDX: $(el).attr("id").split("___")[1],
+						C8_CICLO: $(el).closest("tr").find("[name*=C8_CICLO]").val(),
+						VENCEDOR: $(el).closest("tr").find("[name*=VENCEDOR]").val() == "true",
+						VENCEDOR_COMP: $(el).closest("tr").find("[name*=VENCEDOR_COMPRADOR]").val() == "true",
+						QTD_COMPRADOR: !["", "null"].includes($(el).closest("tr").find("[name*=QTD_COMPRADOR]").val()) ? $(el).closest("tr").find("[name*=QTD_COMPRADOR]").val() : 0,
+						COMPRADOR: !["", "null"].includes($(el).closest("tr").find("[name*=COMPRADOR]").val()) ? $(el).closest("tr").find("[name*=COMPRADOR]").val() : "",
+						COMPRADOR_JUSTIFICATIVA: !["", "null"].includes($(el).closest("tr").find("[name*=COMPRADOR_JUSTIFICATIVA]").val()) ? $(el).closest("tr").find("[name*=COMPRADOR_JUSTIFICATIVA]").val() : "",
+						C8_PRODUTO: $(el).closest("tr").find("[name*=C8_PRODUTO]").val().trim(),
+						B1_COD: aDados.produtos.filter(function (p) { return p.B1_COD == $(el).closest("tr").find("[name*=C8_PRODUTO]").val().trim().substring(0, 8) })[0]["B1_COD"],
+						B1_DESC: aDados.produtos.filter(function (p) { return p.B1_COD == $(el).closest("tr").find("[name*=C8_PRODUTO]").val().trim().substring(0, 8) })[0]["B1_DESC"],
+						QTD: aDados.produtos.filter(function (p) { return p.B1_COD == $(el).closest("tr").find("[name*=C8_PRODUTO]").val().trim().substring(0, 8) })[0]["QTD"],
+						MARCA: aDados.produtos.filter(function (p) { return p.B1_COD == $(el).closest("tr").find("[name*=C8_PRODUTO]").val().trim().substring(0, 8) })[0].FILHOS.filter(function (pF) { return pF.B1_COD == $(el).closest("tr").find("[name*=C8_PRODUTO]").val().trim() })[0]["ZPM_DESC"],
+						C8_FORNECE: $(el).closest("tr").find("[name*=C8_FORNECE]").val(),
+						C8_LOJA: $(el).closest("tr").find("[name*=C8_LOJA]").val(),
+						//A2_NOME: 					filtForn[0]["A2_NOME"],
+						C8_QUANT: $(el).closest("tr").find("[name*=C8_QUANT]").val(),
+						C8_PRECO: $(el).closest("tr").find("[name*=C8_PRECO]").val(),
+						C8_TOTAL: $(el).closest("tr").find("[name*=C8_TOTAL]").val(),
+						//CONDPAGTO: 					condPagto.length > 0 ? condPagto[0]["DESCRICAO"] : "",
+						C8_PRAZO: $(el).closest("tr").find("[name*=C8_PRAZO]").val(),
+						C8_FILENT: $(el).closest("tr").find("[name*=C8_FILENT]").val(),
+						C8_VALIPI: $(el).closest("tr").find("[name*=C8_VALIPI]").val(),
+						C8_VALICM: $(el).closest("tr").find("[name*=C8_VALICM]").val(),
+						C8_VALISS: $(el).closest("tr").find("[name*=C8_VALISS]").val(),
+						C8_DIFAL: $(el).closest("tr").find("[name*=C8_DIFAL]").val(),
+						C8_VALSOL: $(el).closest("tr").find("[name*=C8_VALSOL]").val(),
+						C8_VALIDA: $(el).closest("tr").find("[name*=C8_VALIDA]").val(),
+						C8_UM: $(el).closest("tr").find("[name*=C8_UM]").val()
+					}
+				})
 			}
-			
+
 		},
 		init: function () {
-			if ([65,21,163].includes(WKNumState)) {
+			if ([65, 21, 163].includes(WKNumState)) {
 				if ($("[name=tipoSc]:checked,[name=_tipoSc]:checked").val() == "5") {
 					$("#btnAddCotacao").on("click", tools.cotacao.modal.listar);
 					return;
@@ -552,7 +558,7 @@ var tools = {
 							let filterForn = aDados.fornecedores.filter(function (el) { return el.A2_COD == A2_COD && el.A2_LOJA == A2_LOJA });
 							if (filterForn.length > 0 && filterForn[0].cotacoes != undefined) {
 								//var filCot = filterForn[0].cotacoes.filter(function (el) { return el.C8_PRODUTO == C8_PRODUTO });
-								var filCot = aDados.dsCotacoes.filter(function (el) { return el.C8_PRODUTO == C8_PRODUTO && el.C8_FORNECE == A2_COD && el.C8_LOJA == A2_LOJA});
+								var filCot = aDados.dsCotacoes.filter(function (el) { return el.C8_PRODUTO == C8_PRODUTO && el.C8_FORNECE == A2_COD && el.C8_LOJA == A2_LOJA });
 							}
 							if (filterForn != undefined && filterForn.length > 0) {
 
@@ -645,7 +651,7 @@ var tools = {
 
 				let temp = $("#tmpl6").html();
 				let html = Mustache.render(temp, aDados.fornecedores[0]);
-				if(tools.cotacao.modal["listarCotacao"] != undefined)
+				if (tools.cotacao.modal["listarCotacao"] != undefined)
 					tools.cotacao.modal["listarCotacao"].remove();
 				tools.cotacao.modal["listarCotacao"] = FLUIGC.modal({
 					title: 'Manutenção de cotações',
@@ -673,30 +679,30 @@ var tools = {
 						$("[data-incluir-modal]").on("click", tools.cotacao.modal.insert)
 						$("[data-editar-modal]").on("click", tools.cotacao.modal.edit)
 						$("[data-excluir-modal]").on("click", tools.cotacao.modal.delete)
-						
-						
+
+
 						//Nova tratativa para frete e condição no cabeçalho
 						$("[data-id='C8_VALFRE']").val($("[name^=A2_VALFRE___]").val())
 						$("[data-id='C8_TPFRETE']").val($("[name^=A2_TPFRETE___]").val())
-						let filtCond = aDados.condPagto.filter(function(el){return el.CODIGO == $("[name^=A2_COND___]").val()})
-						if(filtCond.length > 0) $("[data-id='condicao']").val(filtCond[0]["DESCRICAO"])
-						
+						let filtCond = aDados.condPagto.filter(function (el) { return el.CODIGO == $("[name^=A2_COND___]").val() })
+						if (filtCond.length > 0) $("[data-id='condicao']").val(filtCond[0]["DESCRICAO"])
+
 						$("[data-id='C8_VALFRE']").on("keyup", tools.formata.mascara.money);
-						$("[data-id='C8_VALFRE'],[data-id='C8_TPFRETE']").on("change",function(){
-							let C8_TPFRETE 	= $("[data-id='C8_TPFRETE']").val();
-							let C8_VALFRE 	= $("[data-id='C8_VALFRE']").val();
-							
-							if(C8_VALFRE != ""){
-								if(C8_TPFRETE != ""){
-									if(C8_TPFRETE == "S"){
+						$("[data-id='C8_VALFRE'],[data-id='C8_TPFRETE']").on("change", function () {
+							let C8_TPFRETE = $("[data-id='C8_TPFRETE']").val();
+							let C8_VALFRE = $("[data-id='C8_VALFRE']").val();
+
+							if (C8_VALFRE != "") {
+								if (C8_TPFRETE != "") {
+									if (C8_TPFRETE == "S") {
 										$("[name^=A2_TPFRETE___]").val(C8_TPFRETE);
 										$("[name^=A2_VALFRE___]").val("0,00");
-									}else{
+									} else {
 										$("[name^=A2_TPFRETE___]").val(C8_TPFRETE);
 										$("[name^=A2_VALFRE___]").val(C8_VALFRE);
 									}
-									
-								}else{
+
+								} else {
 									$("[data-id='C8_VALFRE']").val("");
 									FLUIGC.toast({
 										message: 'É necessário selecionar o Tipo do Frete antes de incluir o valor',
@@ -704,8 +710,8 @@ var tools = {
 									});
 								}
 							}
-							else{
-								if(C8_TPFRETE == "S"){
+							else {
+								if (C8_TPFRETE == "S") {
 									$("[name^=A2_TPFRETE___]").val(C8_TPFRETE);
 									$("[name^=A2_VALFRE___]").val("0,00");
 								}
@@ -793,7 +799,7 @@ var tools = {
 					let filterForn = aDados.fornecedores.filter(function (el) { return el.A2_COD == A2_COD && el.A2_LOJA == A2_LOJA });
 					if (filterForn.length > 0 && filterForn[0].cotacoes != undefined) {
 						//var filCot = filterForn[0].cotacoes.filter(function (el) { return el.C8_PRODUTO == C8_PRODUTO });
-						var filCot = aDados.dsCotacoes.filter(function (el) { return el.C8_PRODUTO == C8_PRODUTO && el.C8_FORNECE == A2_COD && el.C8_LOJA == A2_LOJA});
+						var filCot = aDados.dsCotacoes.filter(function (el) { return el.C8_PRODUTO == C8_PRODUTO && el.C8_FORNECE == A2_COD && el.C8_LOJA == A2_LOJA });
 					}
 
 					if (painel == "fluig-inserirCotacao") {
@@ -869,7 +875,7 @@ var tools = {
 						$("#C8_FILENT" + "___" + idx).val($("#idEmpresaEntrega,#_idEmpresaEntrega").val());
 
 						tools.cotacao.carregaDados();
-						
+
 						if (painel == "fluig-editarCotacao") {
 							tools.cotacao.modal["editarCotacao"].remove();
 						} else {
@@ -955,7 +961,7 @@ var tools = {
 							if (!err) {
 								$("#modMarca").DataTable({
 									data: aDados.produtos.filter(
-										function (el) { return el.B1_COD == C8_PROD })[0].FILHOS.sort(function (a, b) { return b.ZPM_DESC - a.ZPM_DESC }).map(function (it) { return { id: it.B1_COD, desc: it.ZPM_DESC , um: it.UM} }),
+										function (el) { return el.B1_COD == C8_PROD })[0].FILHOS.sort(function (a, b) { return b.ZPM_DESC - a.ZPM_DESC }).map(function (it) { return { id: it.B1_COD, desc: it.ZPM_DESC, um: it.UM } }),
 									columns: [
 										{ data: "id", visible: false },
 										{ data: "um", visible: false },
@@ -1021,7 +1027,7 @@ var tools = {
 										$("[data-panel=edit][data-id=C8_PROD]").val(cod);
 
 										let filtMarcas = aDados.produtos.filter(function (el) { return el.B1_COD == cod })
-										if(filtMarcas[0] != undefined){
+										if (filtMarcas[0] != undefined) {
 											$("[data-panel=edit][data-id=C8_QUANT]").val(filtMarcas[0].QTD);
 											if (filtMarcas[0].FILHOS.length == 1) {
 												$("[data-panel=edit][data-id=marca]").val(filtMarcas[0].FILHOS[0].ZPM_DESC);
@@ -1037,8 +1043,8 @@ var tools = {
 											}
 										}
 
-										
-										
+
+
 										tools.cotacao.modalSelecionaProduto.remove();
 
 									})
@@ -1137,35 +1143,35 @@ var tools = {
 			money: function (casas) {
 				let v = this.value;
 				v = v.replace(/\D/g, "");//Remove tudo o que não é dígito
-				if(casas == undefined || isNaN(casas)){
+				if (casas == undefined || isNaN(casas)) {
 					v = !isNaN(v) && v != "" ? parseInt(v).toString() : "000";
 					v = v.replace(/(\d)(\d{8})$/, "$1.$2");//coloca o ponto dos milhões
 					v = v.replace(/(\d)(\d{5})$/, "$1.$2");//coloca o ponto dos milhares
 
 					v = v.replace(/(\d)(\d{2})$/, "$1,$2");//coloca a virgula antes dos 2 últimos dígitos
 				}
-				else if(casas == 6){
+				else if (casas == 6) {
 					v = !isNaN(v) && v != "" ? parseInt(v).toString() : "0000000";
 					v = v.replace(/(\d)(\d{12})$/, "$1.$2");//coloca o ponto dos milhões
 					v = v.replace(/(\d)(\d{9})$/, "$1.$2");//coloca o ponto dos milhares
 
 					v = v.replace(/(\d)(\d{6})$/, "$1,$2");//coloca a virgula antes dos 6 últimos dígitos
 				}
-				else{
-					if(!isNaN(v) && v != ""){
+				else {
+					if (!isNaN(v) && v != "") {
 						v = parseInt(v).toString();
-					}else{
+					} else {
 						var t = "0";
-						for(var i = 0 ; i < casas ; i++) t += "0"
+						for (var i = 0; i < casas; i++) t += "0"
 						v = t;
 					}
-					
-					v = v.replace("/(\d)(\d{"+(6+casas)+"})$/", "$1.$2");//coloca o ponto dos milhões
-					v = v.replace("/(\d)(\d{"+(3+casas)+"})$/", "$1.$2");//coloca o ponto dos milhares
 
-					v = v.replace("/(\d)(\d{"+casas+"})$/", "$1,$2");//coloca a virgula antes dos 2 últimos dígitos
+					v = v.replace("/(\d)(\d{" + (6 + casas) + "})$/", "$1.$2");//coloca o ponto dos milhões
+					v = v.replace("/(\d)(\d{" + (3 + casas) + "})$/", "$1.$2");//coloca o ponto dos milhares
+
+					v = v.replace("/(\d)(\d{" + casas + "})$/", "$1,$2");//coloca a virgula antes dos 2 últimos dígitos
 				}
-				
+
 				this.value = v;
 			},
 			phone: function () {
@@ -1190,39 +1196,28 @@ var tools = {
 
 			return parseFloat(newValue);
 		},
-		floatToMoney: function (v,casas) {
-			if(casas == undefined){
-				v = v != undefined && !isNaN(v) ? parseFloat(v).toFixed(2) : "000";
-				v = v.replace(/\D/g, "");//Remove tudo o que não é dígito
-				v = v.replace(/(\d)(\d{8})$/, "$1.$2");//coloca o ponto dos milhões
-				v = v.replace(/(\d)(\d{5})$/, "$1.$2");//coloca o ponto dos milhares
-
-				v = v.replace(/(\d)(\d{2})$/, "$1,$2");//coloca a virgula antes dos 2 últimos dígitos
-			}else{
-				if(!isNaN(v) && v != ""){
-					v = parseInt(v).toString();
-				}else{
-					var t = "0";
-					for(var i = 0 ; i < casas ; i++) t += "0"
-					v = t;
+		floatToMoney: function (v, casas) {
+			if (v != undefined) {
+				if (!isNaN(v)) {
+					v = tools.formata.toFloat(v)
+					if (casas != undefined) {
+						v = new Intl.NumberFormat("PT-BR", { minimumFractionDigits: casas }).format(
+							v,
+						)
+					} else {
+						v = new Intl.NumberFormat("PT-BR", { minimumFractionDigits: 2 }).format(
+							v,
+						)
+					}
 				}
-				
-				v = v.replace("/(\d)(\d{"+(6+casas)+"})$/", "$1.$2");//coloca o ponto dos milhões
-				v = v.replace("/(\d)(\d{"+(3+casas)+"})$/", "$1.$2");//coloca o ponto dos milhares
-
-				v = v.replace("/(\d)(\d{"+casas+"})$/", "$1,$2");//coloca a virgula antes dos 2 últimos dígitos
-			}
-			
+				else
+					return 0
+			} else
+				return 0
 			return v;
 		},
 		floatToMoney6: function (v) {
-				v = v != undefined && !isNaN(v) ? parseFloat(v).toFixed(6) : "0000000";
-				v = v.replace(/\D/g, "");//Remove tudo o que não é dígito
-				v = v.replace(/(\d)(\d{12})$/, "$1.$2");//coloca o ponto dos milhões
-				v = v.replace(/(\d)(\d{9})$/, "$1.$2");//coloca o ponto dos milhares
-
-				v = v.replace(/(\d)(\d{6})$/, "$1,$2");//coloca a virgula antes dos 2 últimos dígitos
-			
+			v = tools.formata.floatToMoney(v)
 			return v;
 		}
 	},
@@ -1244,49 +1239,49 @@ var tools = {
 		carregaDados: function () {
 			aDados["fornecedores"] = $("[name^=A2_COD___].form-control,[name^=_A2_COD___].form-control").toArray().map(function (file) {
 				return {
-					"A2_COD"		: $(file).closest("tr").find("[name*='" + "A2_COD" + "___']").val(),
-					"A2_LOJA"		: $(file).closest("tr").find("[name*='" + "A2_LOJA" + "___']").val(),
-					"A2_NOME"		: $(file).closest("tr").find("[name*='" + "A2_NOME" + "___']").val(),
-					"A2_CGC"		: $(file).closest("tr").find("[name*='" + "A2_CGC" + "___']").val(),
-					"A2_COND"		: $(file).closest("tr").find("[name*='" + "A2_COND" + "___']").val(),
-					"A2_EST"		: $(file).closest("tr").find("[name*='" + "A2_EST" + "___']").val(),
-					"A2_TPFRETE"	: $(file).closest("tr").find("[name*='" + "A2_TPFRETE" + "___']").val(),
-					"A2_VALFRE"		: $(file).closest("tr").find("[name*='" + "A2_VALFRE" + "___']").val(),
-					"ATIVO"			: $(file).closest("tr").find("[name*='" + "CICLO_REMOVIDO" + "___']").val() == "",
-					"CICLO_REMOV"	: $(file).closest("tr").find("[name*='" + "CICLO_REMOVIDO" + "___']").val(),
-					"VALIDACAO_NECESSARIA"	: $(file).closest("tr").find("[name*='" + "VALIDACAO_NECESSARIA" + "___']").val(),
-					"VALIDACAO_DECISAO"		: $(file).closest("tr").find("[name*='" + "VALIDACAO_DECISAO" + "___']").val(),
-					"VALIDACAO_OBS"			: $(file).closest("tr").find("[name*='" + "VALIDACAO_OBS" + "___']").val(),
+					"A2_COD": $(file).closest("tr").find("[name*='" + "A2_COD" + "___']").val(),
+					"A2_LOJA": $(file).closest("tr").find("[name*='" + "A2_LOJA" + "___']").val(),
+					"A2_NOME": $(file).closest("tr").find("[name*='" + "A2_NOME" + "___']").val(),
+					"A2_CGC": $(file).closest("tr").find("[name*='" + "A2_CGC" + "___']").val(),
+					"A2_COND": $(file).closest("tr").find("[name*='" + "A2_COND" + "___']").val(),
+					"A2_EST": $(file).closest("tr").find("[name*='" + "A2_EST" + "___']").val(),
+					"A2_TPFRETE": $(file).closest("tr").find("[name*='" + "A2_TPFRETE" + "___']").val(),
+					"A2_VALFRE": $(file).closest("tr").find("[name*='" + "A2_VALFRE" + "___']").val(),
+					"ATIVO": $(file).closest("tr").find("[name*='" + "CICLO_REMOVIDO" + "___']").val() == "",
+					"CICLO_REMOV": $(file).closest("tr").find("[name*='" + "CICLO_REMOVIDO" + "___']").val(),
+					"VALIDACAO_NECESSARIA": $(file).closest("tr").find("[name*='" + "VALIDACAO_NECESSARIA" + "___']").val(),
+					"VALIDACAO_DECISAO": $(file).closest("tr").find("[name*='" + "VALIDACAO_DECISAO" + "___']").val(),
+					"VALIDACAO_OBS": $(file).closest("tr").find("[name*='" + "VALIDACAO_OBS" + "___']").val(),
 				}
 			});
 
 			aDados["fornecedoresAtivo"] = aDados["fornecedores"].filter(function (el) { return el.ATIVO })
 		},
-		cotacaoCiclo: function(el){
-			let A2_COD 		= $(el).closest("tr").find("[name^=A2_COD___],[name^=_A2_COD___]").val();
-			let A2_LOJA 	= $(el).closest("tr").find("[name^=A2_LOJA___],[name^=_A2_LOJA___]").val();
+		cotacaoCiclo: function (el) {
+			let A2_COD = $(el).closest("tr").find("[name^=A2_COD___],[name^=_A2_COD___]").val();
+			let A2_LOJA = $(el).closest("tr").find("[name^=A2_LOJA___],[name^=_A2_LOJA___]").val();
 			let ciclo_atual = $("#ciclo_atual").val();
-			
-			let filt = aDados.cotacoes.filter(function(c){return c.C8_CICLO == ciclo_atual && c.C8_FORNECE == A2_COD && c.C8_LOJA == A2_LOJA});
-			
+
+			let filt = aDados.cotacoes.filter(function (c) { return c.C8_CICLO == ciclo_atual && c.C8_FORNECE == A2_COD && c.C8_LOJA == A2_LOJA });
+
 			return filt.length > 0;
 		},
 		excluiFornecedor: function (ev) {
 
-			let idx 	= $(this).closest("tr").find("[name^=A2_COD___],[name^=_A2_COD___]").attr("id").split("___")[1];
-			let A2_COD 	= $(this).closest("tr").find("[name^=A2_COD___],[name^=_A2_COD___]").val();
+			let idx = $(this).closest("tr").find("[name^=A2_COD___],[name^=_A2_COD___]").attr("id").split("___")[1];
+			let A2_COD = $(this).closest("tr").find("[name^=A2_COD___],[name^=_A2_COD___]").val();
 			let A2_LOJA = $(this).closest("tr").find("[name^=A2_LOJA___],[name^=_A2_LOJA___]").val();
-			let A2_CGC 	= $(this).closest("tr").find("[name^=A2_CGC___],[name^=_A2_CGC___]").val();
+			let A2_CGC = $(this).closest("tr").find("[name^=A2_CGC___],[name^=_A2_CGC___]").val();
 			let A2_NOME = $(this).closest("tr").find("[name^=A2_NOME___],[name^=_A2_NOME___]").val();
-			let A2_EST	= $(this).closest("tr").find("[name^=A2_EST___],[name^=_A2_EST___]").val();
-			
-			if (aDados.dsCotacoes == undefined || aDados.dsCotacoes.filter(function(el){return el.C8_FORNECE == A2_COD && el.C8_LOJA == A2_LOJA}).length == 0 || A2_COD.length == 0) { //Não foi gerado itens na cotação
+			let A2_EST = $(this).closest("tr").find("[name^=A2_EST___],[name^=_A2_EST___]").val();
+
+			if (aDados.dsCotacoes == undefined || aDados.dsCotacoes.filter(function (el) { return el.C8_FORNECE == A2_COD && el.C8_LOJA == A2_LOJA }).length == 0 || A2_COD.length == 0) { //Não foi gerado itens na cotação
 				fnWdkRemoveChild($(this).closest("tr").find("[name^=A2_LOJA___],[name^=_A2_LOJA___]").get(0))
 				fnWdkRemoveChild($(this));
-				
+
 				tools.fornecedores.carregaDados();
 				tools.cotacao.carregaDados(aDados.dsCotacoes);
-			}else{
+			} else {
 
 				let html = "\
  	 				<div class=\"row\">\
@@ -1350,19 +1345,19 @@ var tools = {
 								})
 								return;
 							} else {
-								
-								if(tools.fornecedores.temCotacao(A2_COD,A2_LOJA)){
+
+								if (tools.fornecedores.temCotacao(A2_COD, A2_LOJA)) {
 									FLUIGC.message.confirm({
 										message: 'Existem cotações inseridas para este fornecedor que serão excluidas, Confirma?',
 										labelYes: 'Confirmar',
 										labelNo: 'Cancelar'
 									}, function (result, el, ev) {
 										if (result) {
-											let idxExcluir = tools.fornecedores.identificaIdx(A2_COD,A2_LOJA)
+											let idxExcluir = tools.fornecedores.identificaIdx(A2_COD, A2_LOJA)
 											$("#CICLO_REMOVIDO___" + idxExcluir + ",#_CICLO_REMOVIDO___" + idxExcluir).val($("#ciclo_atual").val() != "" ? $("#ciclo_atual").val() : "1");
 											$("#MOTIVO_REMOCAO___" + idxExcluir + ",#_MOTIVO_REMOCAO___" + idxExcluir).val($("#JUSTIFICATIVA_EXCLUI").val());
 											$("#COMPRADOR_REMOCAO___" + idxExcluir + ",#_COMPRADOR_REMOCAO___" + idxExcluir).val(usuarioAtual);
-											
+
 											tools.fornecedores.carregaDados();
 											tools.fornecedores.habilitaAcoes();
 											tools.cotacao.carregaDados(aDados.dsCotacoes);
@@ -1372,8 +1367,8 @@ var tools = {
 										}
 									});
 								}
-								else{
-									let idxExcluir = tools.fornecedores.identificaIdx(A2_COD,A2_LOJA)
+								else {
+									let idxExcluir = tools.fornecedores.identificaIdx(A2_COD, A2_LOJA)
 									$("#CICLO_REMOVIDO___" + idxExcluir + ",#_CICLO_REMOVIDO___" + idxExcluir).val($("#ciclo_atual").val() != "" ? $("#ciclo_atual").val() : "1");
 									$("#MOTIVO_REMOCAO___" + idxExcluir + ",#_MOTIVO_REMOCAO___" + idxExcluir).val($("#JUSTIFICATIVA_EXCLUI").val());
 									$("#COMPRADOR_REMOCAO___" + idxExcluir + ",#_COMPRADOR_REMOCAO___" + idxExcluir).val(usuarioAtual);
@@ -1467,7 +1462,7 @@ var tools = {
 						tools.fornecedores.carregaDados();
 						tools.cotacao.carregaDados(aDados.dsCotacoes);
 						tools.mapaCompradores.exibe();
-						
+
 						tools.fornecedores.habilitaAcoes();
 						tools.fornecedores.modalConfirm.remove();
 
@@ -1479,12 +1474,12 @@ var tools = {
 
 		},
 		excluiFornecedorConsultar: function (ev) {
-			let idx 		= $(this).closest("tr").find("[name^=A2_COD___],[name^=_A2_COD___]").attr("id").split("___")[1];
-			let A2_COD 		= $(this).closest("tr").find("[name^=A2_COD___],[name^=_A2_COD___]").val();
-			let A2_LOJA 	= $(this).closest("tr").find("[name^=A2_LOJA___],[name^=_A2_LOJA___]").val();
-			let A2_CGC 		= $(this).closest("tr").find("[name^=A2_CGC___],[name^=_A2_CGC___]").val();
-			let A2_NOME 	= $(this).closest("tr").find("[name^=A2_NOME___],[name^=_A2_NOME___]").val();
-			let A2_EST 		= $(this).closest("tr").find("[name^=A2_EST___],[name^=_A2_EST___]").val();
+			let idx = $(this).closest("tr").find("[name^=A2_COD___],[name^=_A2_COD___]").attr("id").split("___")[1];
+			let A2_COD = $(this).closest("tr").find("[name^=A2_COD___],[name^=_A2_COD___]").val();
+			let A2_LOJA = $(this).closest("tr").find("[name^=A2_LOJA___],[name^=_A2_LOJA___]").val();
+			let A2_CGC = $(this).closest("tr").find("[name^=A2_CGC___],[name^=_A2_CGC___]").val();
+			let A2_NOME = $(this).closest("tr").find("[name^=A2_NOME___],[name^=_A2_NOME___]").val();
+			let A2_EST = $(this).closest("tr").find("[name^=A2_EST___],[name^=_A2_EST___]").val();
 			let MOTIVO_REMOCAO = $(this).closest("tr").find("[name^=MOTIVO_REMOCAO___],[name^=_MOTIVO_REMOCAO___]").val();
 			let COMPRADOR_REMOCAO = $(this).closest("tr").find("[name^=COMPRADOR_REMOCAO___],[name^=_COMPRADOR_REMOCAO___]").val();
 			let CICLO_REMOCAO = $(this).closest("tr").find("[name^=CICLO_REMOVIDO___],[name^=_CICLO_REMOVIDO___]").val();
@@ -1543,7 +1538,7 @@ var tools = {
 		},
 		habilitaAcoes: function (idx) {
 
-			if([26,65,21,163,76,80,105,148].includes(WKNumState)){
+			if ([26, 65, 21, 163, 76, 80, 105, 148].includes(WKNumState)) {
 				$(".analisa-cotacao").show();
 				$("[btn-excluir],[btn-cancelarexclusao],[btn-excluido]").hide();
 
@@ -1555,13 +1550,13 @@ var tools = {
 					}
 				})
 				$("[btn-cancelarexclusao]").each(function (idx, el) {
-					if(tools.fornecedores.cotacaoCiclo(el)){
+					if (tools.fornecedores.cotacaoCiclo(el)) {
 						if ($(el).closest("tr").find("[name^=CICLO_REMOVIDO___][value='" + ciclo_atual + "'],[name^=_CICLO_REMOVIDO___][value='" + ciclo_atual + "']").length > 0 && $(el).closest("tr").find("[name^=CICLO_REMOVIDO___],[name^=_CICLO_REMOVIDO___]").not("[value='']").length > 0) {
 							$(el).show();
 							$(el).off("click").on("click", tools.fornecedores.excluiFornecedorCancela);
 						}
 					}
-					
+
 				})
 				$("[btn-excluido]").each(function (idx, el) {
 					if (!tools.fornecedores.cotacaoCiclo(el)) {
@@ -1582,8 +1577,8 @@ var tools = {
 				$("#btnAddFornecedor").hide();
 			}
 		},
-		identificaIdx: function(A2_COD,A2_LOJA){
-			return $("[name^=A2_COD___].form-control[value='"+A2_COD+"'],[name^=_A2_COD___].form-control[value='"+A2_COD+"']").closest("tr").find("[name*=A2_LOJA___][value='"+A2_LOJA+"']").attr("id").split("___")[1]
+		identificaIdx: function (A2_COD, A2_LOJA) {
+			return $("[name^=A2_COD___].form-control[value='" + A2_COD + "'],[name^=_A2_COD___].form-control[value='" + A2_COD + "']").closest("tr").find("[name*=A2_LOJA___][value='" + A2_LOJA + "']").attr("id").split("___")[1]
 		},
 		temCotacao(A2_COD, A2_LOJA) {
 			let filtFornec = aDados.fornecedores.filter(function (el) { return el.A2_COD == A2_COD && el.A2_LOJA == A2_LOJA })
@@ -1593,7 +1588,7 @@ var tools = {
 			}
 
 			return false
-			
+
 			//return aDados.dsCotacoes.filter(function(el){return el.C8_FORNECE == A2_COD && el.C8_LOJA == A2_LOJA}).length > 0
 		},
 		validaDuplicidade: function (index, valor) {
@@ -1691,19 +1686,19 @@ var tools = {
 					let temp = $("#tmpl1").html();
 					let html = Mustache.render(temp, mapa);
 					//$("#tabMapa").html(html);
-					if([26,76,80,105,148].includes(WKNumState)) $("[data-vencedor]").on("click", tools.mapa.setaVencedor);
+					if ([26, 76, 80, 105, 148].includes(WKNumState)) $("[data-vencedor]").on("click", tools.mapa.setaVencedor);
 				}
 
 				return
 			}
 			else if (filtrar == "produto") {
-				let complemento = item != undefined ? item.complementoFiltro == undefined ? $(this).attr("data-cod") : item.complementoFiltro.substring(0,8) : $(this).attr("data-cod");
+				let complemento = item != undefined ? item.complementoFiltro == undefined ? $(this).attr("data-cod") : item.complementoFiltro.substring(0, 8) : $(this).attr("data-cod");
 				let mapa = aDados.produtos.filter(function (el) { return complemento == "" || el.B1_COD.trim() == complemento })
 				if (mapa.length > 0) {
-					mapa[0].cotacoes = mapa[0].cotacoes.filter(function(c){
-						return aDados.fornecedoresAtivo.filter(function (f){return f.A2_COD == c.C8_FORNECE && f.A2_LOJA == c.C8_LOJA}).length > 0
+					mapa[0].cotacoes = mapa[0].cotacoes.filter(function (c) {
+						return aDados.fornecedoresAtivo.filter(function (f) { return f.A2_COD == c.C8_FORNECE && f.A2_LOJA == c.C8_LOJA }).length > 0
 					})
-					mapa[0].cotacoes.forEach(function(cotacao){
+					mapa[0].cotacoes.forEach(function (cotacao) {
 						cotacao["TOTAL_GERAL"] = tools.formata.toFloat(cotacao.C8_TOTAL) + tools.formata.toFloat(cotacao.C8_DIFAL) + tools.formata.toFloat(cotacao.C8_VALIPI) + tools.formata.toFloat(cotacao.C8_VALISS) + tools.formata.toFloat(cotacao.C8_VALSOL)
 						cotacao.C8_TOTAL = tools.formata.floatToMoney(tools.formata.toFloat(cotacao.C8_TOTAL));
 						cotacao.C8_PRECO = tools.formata.floatToMoney(tools.formata.toFloat(cotacao.C8_PRECO));
@@ -1716,7 +1711,7 @@ var tools = {
 					})
 					let temp = $("#tmpl2").html();
 					let html = Mustache.render(temp, mapa);
-					if(tools.mapa["modalMapaProduto"] != undefined) tools.mapa["modalMapaProduto"].remove()
+					if (tools.mapa["modalMapaProduto"] != undefined) tools.mapa["modalMapaProduto"].remove()
 					tools.mapa["modalMapaProduto"] = FLUIGC.modal({
 						title: 'Detalhe produto',
 						content: html,
@@ -1724,13 +1719,13 @@ var tools = {
 						id: 'fluig-mapaProduto'
 					}, function (err, data) {
 						if (!err) {
-							if([26,76,80,105,148].includes(WKNumState)) $("[data-vencedor]").on("click", tools.mapa.setaVencedor);
+							if ([26, 76, 80, 105, 148].includes(WKNumState)) $("[data-vencedor]").on("click", tools.mapa.setaVencedor);
 							//tools.mapaCompradores.exibe();
 						}
-						else{
+						else {
 							//tools.mapaCompradores.exibe();
 						}
-						
+
 					})
 					//$("#tabMapa").html(html);
 
@@ -1743,65 +1738,65 @@ var tools = {
 		carregaMapaOutros: function () {
 			tools.mapa.carregaBase();
 			let ciclo_atual = $("#ciclo_atual,#_ciclo_atual").val();
-			let idEmpresa 		= $("#idEmpresa,#_idEmpresa").val();
-			let C8_NUM 		= $("#C8_NUM,#_C8_NUM").val();
+			let idEmpresa = $("#idEmpresa,#_idEmpresa").val();
+			let C8_NUM = $("#C8_NUM,#_C8_NUM").val();
 
 			let cot = DatasetFactory.getDataset(
 				"DS_CONSULTA_COTACOES",
 				null,
 				[
-					DatasetFactory.createConstraint("idEmpresa",idEmpresa,idEmpresa,ConstraintType.MUST),
-					DatasetFactory.createConstraint("C8_NUM",C8_NUM,C8_NUM,ConstraintType.MUST),
-					DatasetFactory.createConstraint("C8_CICLO",ciclo_atual,ciclo_atual,ConstraintType.MUST),
-					DatasetFactory.createConstraint("VENCEDOR_COMPRADOR","true","true",ConstraintType.MUST)
+					DatasetFactory.createConstraint("idEmpresa", idEmpresa, idEmpresa, ConstraintType.MUST),
+					DatasetFactory.createConstraint("C8_NUM", C8_NUM, C8_NUM, ConstraintType.MUST),
+					DatasetFactory.createConstraint("C8_CICLO", ciclo_atual, ciclo_atual, ConstraintType.MUST),
+					DatasetFactory.createConstraint("VENCEDOR_COMPRADOR", "true", "true", ConstraintType.MUST)
 				],
 				null
 			).values
-			.map(function(el){
-			    let fornec = aDados.fornecedores.filter(function(f){return f.A2_COD == el.C8_FORNECE.trim()});
-			    let C8_PRODUTO = el.C8_PRODUTO.trim();
-			    let produto = aDados.produtos.filter(function(p){return p.B1_COD == C8_PRODUTO.substring(0,8)});
-			    let fMarca = produto.length > 0 ? produto[0].FILHOS.filter(function(pF){return pF.B1_COD == C8_PRODUTO}) : produto;
-			    let marca = fMarca.length > 0 ? fMarca[0]["ZPM_DESC"] : "";
-			    let QTD_COMPRADOR = el.QTD_COMPRADOR;
-			    let C8_PRECO = tools.formata.fluigToFloat(el.C8_PRECO) * QTD_COMPRADOR;
-			    let C8_VALIPI = tools.formata.fluigToFloat(el.C8_VALIPI);
-			    let C8_VALISS = tools.formata.fluigToFloat(el.C8_VALISS);
-			    let C8_VALICM = tools.formata.fluigToFloat(el.C8_VALICM);
-			    let C8_DIFAL = tools.formata.fluigToFloat(el.C8_DIFAL);
-			    let C8_VALSOL = tools.formata.fluigToFloat(el.C8_VALSOL);
-			    return {
-					"C8_CICLO" 		: ciclo_atual,
-					"QTD_COMPRADOR" : QTD_COMPRADOR,
-					"C8_PRODUTO" 	: C8_PRODUTO.substring(0,8),
-					"MARCA"			: marca,
-					"C8_FORNECE" 	: el.C8_FORNECE,
-					"FORNECEDOR" 	: (fornec.length > 0 ? fornec[0]["A2_NOME"] : ""),
-					"C8_LOJA" 		: el.C8_LOJA,
-				    "C8_PRECO" 		: C8_PRECO,
-				    "C8_VALIPI" 	: C8_VALIPI,
-				    "C8_VALISS" 	: C8_VALISS,
-				    "C8_VALICM" 	: C8_VALICM,
-				    "C8_DIFAL" 		: C8_DIFAL,
-				    "C8_VALSOL"		: C8_VALSOL,
-				    "C8_IMPOSTOS"	: C8_VALIPI+C8_VALSOL+C8_DIFAL,
-				    "C8_TOTAL"		: tools.formata.floatToMoney(C8_PRECO+C8_VALIPI+C8_VALSOL+C8_DIFAL),
-				}
-			}).sort(function(a,b){return a.FORNECEDOR - b.FORNECEDOR})
-			
+				.map(function (el) {
+					let fornec = aDados.fornecedores.filter(function (f) { return f.A2_COD == el.C8_FORNECE.trim() });
+					let C8_PRODUTO = el.C8_PRODUTO.trim();
+					let produto = aDados.produtos.filter(function (p) { return p.B1_COD == C8_PRODUTO.substring(0, 8) });
+					let fMarca = produto.length > 0 ? produto[0].FILHOS.filter(function (pF) { return pF.B1_COD == C8_PRODUTO }) : produto;
+					let marca = fMarca.length > 0 ? fMarca[0]["ZPM_DESC"] : "";
+					let QTD_COMPRADOR = el.QTD_COMPRADOR;
+					let C8_PRECO = tools.formata.fluigToFloat(el.C8_PRECO) * QTD_COMPRADOR;
+					let C8_VALIPI = tools.formata.fluigToFloat(el.C8_VALIPI);
+					let C8_VALISS = tools.formata.fluigToFloat(el.C8_VALISS);
+					let C8_VALICM = tools.formata.fluigToFloat(el.C8_VALICM);
+					let C8_DIFAL = tools.formata.fluigToFloat(el.C8_DIFAL);
+					let C8_VALSOL = tools.formata.fluigToFloat(el.C8_VALSOL);
+					return {
+						"C8_CICLO": ciclo_atual,
+						"QTD_COMPRADOR": QTD_COMPRADOR,
+						"C8_PRODUTO": C8_PRODUTO.substring(0, 8),
+						"MARCA": marca,
+						"C8_FORNECE": el.C8_FORNECE,
+						"FORNECEDOR": (fornec.length > 0 ? fornec[0]["A2_NOME"] : ""),
+						"C8_LOJA": el.C8_LOJA,
+						"C8_PRECO": C8_PRECO,
+						"C8_VALIPI": C8_VALIPI,
+						"C8_VALISS": C8_VALISS,
+						"C8_VALICM": C8_VALICM,
+						"C8_DIFAL": C8_DIFAL,
+						"C8_VALSOL": C8_VALSOL,
+						"C8_IMPOSTOS": C8_VALIPI + C8_VALSOL + C8_DIFAL,
+						"C8_TOTAL": tools.formata.floatToMoney(C8_PRECO + C8_VALIPI + C8_VALSOL + C8_DIFAL),
+					}
+				}).sort(function (a, b) { return a.FORNECEDOR - b.FORNECEDOR })
+
 			let obj = {
-				totalOrcado 	: 0,
-				totalPedido 	: 0
+				totalOrcado: 0,
+				totalPedido: 0
 			}
-			 
+
 			let mapa = aDados.produtos.map(function (prd) {
-				prd["vlOrcado"]	= tools.formata.toFloat(prd.vlUnit) * parseInt(prd.QTD);
-				prd["cotacoes"] = cot.filter(function(c){return c.C8_PRODUTO == prd.B1_COD});
+				prd["vlOrcado"] = tools.formata.toFloat(prd.vlUnit) * parseInt(prd.QTD);
+				prd["cotacoes"] = cot.filter(function (c) { return c.C8_PRODUTO == prd.B1_COD });
 				prd["vlPedido"] = 0;
 				prd["qtdPedido"] = 0;
-				prd["cotacoes"].forEach(function(c){
-					prd["vlPedido"] 	+= tools.formata.toFloat(c.C8_TOTAL);
-					prd["qtdPedido"] 	+= parseInt(c.QTD_COMPRADOR);
+				prd["cotacoes"].forEach(function (c) {
+					prd["vlPedido"] += tools.formata.toFloat(c.C8_TOTAL);
+					prd["qtdPedido"] += parseInt(c.QTD_COMPRADOR);
 				})
 				obj.totalOrcado += prd["vlOrcado"];
 				obj.totalPedido += prd["vlPedido"];
@@ -1809,20 +1804,20 @@ var tools = {
 				prd["vlPedido"] = tools.formata.floatToMoney(prd["vlPedido"]);
 				return prd;
 			})
-			
+
 			if (mapa.length > 0) {
 				obj["produtos"] = mapa;
 				obj["totalOrcado"] = tools.formata.floatToMoney(obj["totalOrcado"]);
 				obj["totalPedido"] = tools.formata.floatToMoney(obj["totalPedido"]);
 				obj["percDiferenca"] = tools.formata.floatToMoney((tools.formata.fluigToFloat(obj["totalPedido"]) - tools.formata.fluigToFloat(obj["totalOrcado"])) / tools.formata.fluigToFloat(obj["totalOrcado"]) * 100);
-				
+
 				let temp = $("#tmpl9").html();
 				let html = Mustache.render(temp, obj);
 				$("#tabMapa").html(html);
 			}
 		},
 		init: function () {
-			if (![0, 1, 2, 3, 65, 134, 163, 88, 21,163].includes(WKNumState)) {
+			if (![0, 1, 2, 3, 65, 134, 163, 88, 21, 163].includes(WKNumState)) {
 				tools.mapa.atualizaCiclo();
 				if (!usuarioCompras) tools.mapa.carregaMapaOutros();
 				$("[name=filtrar_mapa]").on("change", tools.mapa.atualizaComplemento);
@@ -1831,12 +1826,12 @@ var tools = {
 			}
 		},
 		setaVencedor: function () {
-			let fornecedor 	= $(this).attr("fornecedor");
-			let loja 		= $(this).attr("loja");
-			let produto 	= $(this).attr("produto");
-			let ciclo_mapa 	= $("#ciclo_mapa").val()
+			let fornecedor = $(this).attr("fornecedor");
+			let loja = $(this).attr("loja");
+			let produto = $(this).attr("produto");
+			let ciclo_mapa = $("#ciclo_mapa").val()
 
-			let dataFiltered = aDados.cotacoes.filter(function (el) { return el.C8_CICLO == ciclo_mapa && el.C8_FORNECE == fornecedor && el.C8_LOJA == loja && el.C8_PRODUTO.substring(0,8) == produto })
+			let dataFiltered = aDados.cotacoes.filter(function (el) { return el.C8_CICLO == ciclo_mapa && el.C8_FORNECE == fornecedor && el.C8_LOJA == loja && el.C8_PRODUTO == produto })
 
 			if (dataFiltered.length > 0) {
 				let temp = $("#tmpl3").html();
@@ -1865,15 +1860,15 @@ var tools = {
 						vencedores_comp.forEach(function (el) {
 							qtdVenc += parseInt(el.QTD_COMPRADOR != "" ? el.QTD_COMPRADOR : 0)
 						})
-						
+
 						let confirm_qtd = qtdSolic - qtdVenc;
 						$("#confirm_qtd").val(confirm_qtd <= C8_QUANT ? confirm_qtd : C8_QUANT);
-						
-						$("[data-confirm-modal]").on("click", function (ev) {	
+
+						$("[data-confirm-modal]").on("click", function (ev) {
 							ev.stopPropagation();
 							aDados["loading"] = FLUIGC.loading(window);
 							aDados.loading.show();
-							setTimeout(()=>{
+							setTimeout(() => {
 								let problems = "";
 								if ($("#confirm_qtd").val() == "") problems += "O campo Quantidade é obrigatório <br>";
 								if ($("#confirm_justificativa").val() == "" && $("#confirm_vencedor").val() != "true" && $("#confirm_qtd").val() != "0") problems += "O campo Justificativa é obrigatório <br>";
@@ -1890,8 +1885,8 @@ var tools = {
 									aDados.loading.hide();
 									return;
 								} else {
-									let solicitado 	= aDados.produtos.filter(function (el) { return el.B1_COD == produto.substring(0, 8) });
-									let vencedores 	= aDados.cotacoes.filter(function (el) { return el.C8_CICLO == ciclo_mapa && el.C8_PRODUTO.substring(0, 8) == produto.substring(0, 8) && el.VENCEDOR });
+									let solicitado = aDados.produtos.filter(function (el) { return el.B1_COD == produto.substring(0, 8) });
+									let vencedores = aDados.cotacoes.filter(function (el) { return el.C8_CICLO == ciclo_mapa && el.C8_PRODUTO.substring(0, 8) == produto.substring(0, 8) && el.VENCEDOR });
 									let vencedores_comp = aDados.cotacoes.filter(function (el) { return el.C8_CICLO == ciclo_mapa && el.C8_PRODUTO.substring(0, 8) == produto.substring(0, 8) && el.VENCEDOR_COMP && el.C8_FORNECE != fornecedor });
 
 									let qtdSolic = parseInt(solicitado[0]["QTD"])
@@ -1908,75 +1903,80 @@ var tools = {
 										return
 									}
 
-									let dataFiltered = aDados.cotacoes.filter(function (el) { return el.C8_CICLO == ciclo_mapa && el.C8_FORNECE == fornecedor && el.C8_LOJA == loja && el.C8_PRODUTO.substring(0,8) == produto })
+									let dataFiltered = aDados.cotacoes.filter(function (el) {
+										return el.C8_CICLO == ciclo_mapa
+											&& el.C8_FORNECE == fornecedor
+											&& el.C8_LOJA == loja
+											&& el.C8_PRODUTO == produto
+									})
 
 									if (dataFiltered.length > 0) {
-										let filtForn = aDados.fornecedores.filter(function(el){return el.A2_COD == fornecedor && el.A2_LOJA == loja});
+										let filtForn = aDados.fornecedores.filter(function (el) { return el.A2_COD == fornecedor && el.A2_LOJA == loja });
 										let idx = dataFiltered[0]["IDX"];
-										if(parseInt(dataFiltered[0]["C8_QUANT"]) < parseInt($("#confirm_qtd").val())){
+										if (parseInt(dataFiltered[0]["C8_QUANT"]) < parseInt($("#confirm_qtd").val())) {
 											FLUIGC.toast({
 												message: 'Quantidade é superior a fornecida! Verifique o campo Quantidade',
 												type: 'danger'
 											});
 											aDados.loading.hide();
 											return
-										}else{
+										} else {
 											let ds = DatasetFactory.getDataset(
-													"DS_ATUALIZA_COTACAO",
-													null,
-													[
-														DatasetFactory.createConstraint("idEmpresa"	,$("#idEmpresa").val()		,"",ConstraintType.MUST),
-														DatasetFactory.createConstraint("C8_NUM"			,$("#C8_NUM").val()					,"",ConstraintType.MUST),
-														DatasetFactory.createConstraint("C8_CICLO"			,$("#ciclo_atual").val()			,"",ConstraintType.MUST),
-														DatasetFactory.createConstraint("IDX"				,idx								,"",ConstraintType.MUST),
-														DatasetFactory.createConstraint("C8_FORNECE"		,fornecedor							,"",ConstraintType.MUST),
-														DatasetFactory.createConstraint("C8_LOJA"			,loja								,"",ConstraintType.MUST),
-														DatasetFactory.createConstraint("C8_PRODUTO"		,$("#confirm_produto_id").val()		,"",ConstraintType.MUST),
-														
-														DatasetFactory.createConstraint("C8_COND"		,filtForn.length > 0 ? filtForn[0]["A2_COND"] : undefined	,"",ConstraintType.MUST),
-														DatasetFactory.createConstraint("C8_TPFRETE"	,filtForn.length > 0 ? filtForn[0]["A2_TPFRETE"] : undefined	,"",ConstraintType.MUST),
-														DatasetFactory.createConstraint("C8_TOTFRE"		,filtForn.length > 0 ? filtForn[0]["A2_VALFRE"] : undefined	,"",ConstraintType.MUST),
-														
-														DatasetFactory.createConstraint("C8_QUANT"					,$("#confirm_quantidade").val()		,"",ConstraintType.MUST),
-														DatasetFactory.createConstraint("COMPRADOR"					,$("#confirm_qtd").val() != "" && $("#confirm_qtd").val() != "0" ? usuarioAtual : ""						,"",ConstraintType.MUST),
-														DatasetFactory.createConstraint("VENCEDOR_COMPRADOR"		,$("#confirm_qtd").val() != "" && $("#confirm_qtd").val() != "0" ? "true" : ""							,"",ConstraintType.MUST),
-														DatasetFactory.createConstraint("QTD_COMPRADOR"				,$("#confirm_qtd").val() != "" ? $("#confirm_qtd").val() : "0"			,"",ConstraintType.MUST),
-														DatasetFactory.createConstraint("COMPRADOR_JUSTIFICATIVA"	,$("#confirm_qtd").val() != "" ? $("#confirm_justificativa").val() : ""	,"",ConstraintType.MUST)
-													],
-													null,
-													{
-														success : function(ds){
-															if(ds.columns.includes("ERROR")){
-																FLUIGC.toast({
-																	message: ds.values[0]["ERROR"],
-																	type: 'danger'
-																});
-																aDados.loading.hide();
-															}
-															else{
-																let tmpCot 	= tools.cotacao.carregaDados(ds.values);
-																tools.mapaCompradores.exibe();
-																tools.mapa.carregaMapa({"tipoFiltro":"produto","complementoFiltro":produto.substring(0,8)});
-																tools.mapa.modalConfirm.remove();
-																aDados.loading.hide();
-															}
-														},
-														error: function(jqXHR, textStatus, errorThrown){
-															console.log(jqXHR, textStatus, errorThrown)
+												"DS_ATUALIZA_COTACAO",
+												null,
+												[
+													DatasetFactory.createConstraint("idEmpresa", $("#idEmpresa").val(), "", ConstraintType.MUST),
+													DatasetFactory.createConstraint("C8_NUM", $("#C8_NUM").val(), "", ConstraintType.MUST),
+													DatasetFactory.createConstraint("C8_CICLO", $("#ciclo_atual").val(), "", ConstraintType.MUST),
+													DatasetFactory.createConstraint("IDX", idx, "", ConstraintType.MUST),
+													DatasetFactory.createConstraint("C8_FORNECE", fornecedor, "", ConstraintType.MUST),
+													DatasetFactory.createConstraint("C8_LOJA", loja, "", ConstraintType.MUST),
+													DatasetFactory.createConstraint("C8_PRODUTO", $("#confirm_produto_id").val(), "", ConstraintType.MUST),
+
+													DatasetFactory.createConstraint("C8_COND", filtForn.length > 0 ? filtForn[0]["A2_COND"] : undefined, "", ConstraintType.MUST),
+													DatasetFactory.createConstraint("C8_TPFRETE", filtForn.length > 0 ? filtForn[0]["A2_TPFRETE"] : undefined, "", ConstraintType.MUST),
+													DatasetFactory.createConstraint("C8_TOTFRE", filtForn.length > 0 ? filtForn[0]["A2_VALFRE"] : undefined, "", ConstraintType.MUST),
+
+													DatasetFactory.createConstraint("C8_QUANT", $("#confirm_quantidade").val(), "", ConstraintType.MUST),
+													DatasetFactory.createConstraint("COMPRADOR", $("#confirm_qtd").val() != "" && $("#confirm_qtd").val() != "0" ? usuarioAtual : "", "", ConstraintType.MUST),
+													DatasetFactory.createConstraint("VENCEDOR_COMPRADOR", $("#confirm_qtd").val() != "" && $("#confirm_qtd").val() != "0" ? "true" : "", "", ConstraintType.MUST),
+													DatasetFactory.createConstraint("QTD_COMPRADOR", $("#confirm_qtd").val() != "" ? $("#confirm_qtd").val() : "0", "", ConstraintType.MUST),
+													DatasetFactory.createConstraint("COMPRADOR_JUSTIFICATIVA", $("#confirm_qtd").val() != "" ? $("#confirm_justificativa").val() : "", "", ConstraintType.MUST)
+												],
+												null,
+												{
+													success: function (ds) {
+														if (ds.columns.includes("ERROR")) {
 															FLUIGC.toast({
-																message: "Ocorreu um problema na atualização da cotação. Favor confirmar novamente!",
+																message: ds.values[0]["ERROR"],
 																type: 'danger'
 															});
+															aDados.loading.hide();
 														}
+														else {
+															let tmpCot = tools.cotacao.carregaDados(ds.values);
+															tools.mapaCompradores.exibe();
+															tools.mapa.carregaMapa({ "tipoFiltro": "produto", "complementoFiltro": produto.substring(0, 8) });
+															tools.mapa.modalConfirm.remove();
+															aDados.loading.hide();
+														}
+													},
+													error: function (jqXHR, textStatus, errorThrown) {
+														console.log(jqXHR, textStatus, errorThrown)
+														FLUIGC.toast({
+															message: "Ocorreu um problema na atualização da cotação. Favor confirmar novamente!",
+															type: 'danger'
+														});
 													}
-												)
+												}
+											)
 										}
 
 									}
-										
+
 								}
 							}, 100)
-									
+
 						})
 					} else {
 						// do something with data
@@ -2020,24 +2020,24 @@ var tools = {
 				fluigMapa = { fornecedores: [], produtos: [], TOTAL_QTD: 0 };
 
 				if (aDados.fornecedores != undefined && aDados.fornecedores.length > 0 && aDados.produtos != undefined && aDados.produtos.length > 0) {
-					if($("[name=tipoSc]:checked,[name=_tipoSc]:checked").val() == "5"){
+					if ($("[name=tipoSc]:checked,[name=_tipoSc]:checked").val() == "5") {
 						var ciclos = ["1"];
-					}else{
+					} else {
 						var ciclos = $("[name*=cotacao_ciclo___].form-control").toArray().map(function (el) { return parseInt($(el).val()) }).sort(function (a, b) { return a - b });
 					}
 
 					if (ciclos.length > 0 || $("[name=tipoSc]:checked,[name=_tipoSc]:checked").val() == "5") {
-						
+
 						fluigMapa.fornecedores = aDados.fornecedores.filter(function (f) { return f.ATIVO }).sort(function (a, b) { return a.A2_NOME.trim() - b.A2_NOME.trim() }).map(function (f) {
 							return {
-								"A2_COD"		: f.A2_COD,
-								"A2_LOJA"		: f.A2_LOJA,
-								"A2_CGC"		: f.A2_CGC,
-								"A2_NOME"		: f.A2_NOME,
-								"A2_EST"		: f.A2_EST,
-								"A2_COND"		: f.A2_COND,
-								"A2_TPFRETE"	: f.A2_TPFRETE,
-								"A2_VALFRE"		: tools.formata.toFloat(f.A2_VALFRE),
+								"A2_COD": f.A2_COD,
+								"A2_LOJA": f.A2_LOJA,
+								"A2_CGC": f.A2_CGC,
+								"A2_NOME": f.A2_NOME,
+								"A2_EST": f.A2_EST,
+								"A2_COND": f.A2_COND,
+								"A2_TPFRETE": f.A2_TPFRETE,
+								"A2_VALFRE": tools.formata.toFloat(f.A2_VALFRE),
 							}
 						})
 
@@ -2045,42 +2045,42 @@ var tools = {
 
 						//let dsCotacoes = tools.cotacao.getFormCotacao();
 						let cotacoes = aDados.cotacoes
-						//.filter(function (el) { return el.C8_PRECO != "" && el.C8_PRECO != "0.00" && el.C8_PRECO != "0,00" && el.C8_PRECO != "null"  && el.C8_PRECO != "0.000000" && el.C8_PRECO != "0,000000"})
-						.map(function (el) {
-							return {
-								"C8_CICLO"				: el.C8_CICLO,
-								"B1_COD"				: el.B1_COD,
-								"C8_PRODUTO"			: el.C8_PRODUTO,
-								"vencedor_protheus"		: el.VENCEDOR/* == "true"*/,
-								"vencedor_comprador"	: el.VENCEDOR_COMP/* == "true"*/, 
-								"B1_ZMARCA"				: aDados.produtos.filter(function (p) { return p.B1_COD == el.C8_PRODUTO.substring(0,8) })[0].FILHOS.filter(function (p) { return p.B1_COD == el.C8_PRODUTO })[0].ZPM_DESC,
-								"C8_FORNECE"			: el.C8_FORNECE,
-								"C8_LOJA"				: el.C8_LOJA,
-								"C8_QUANT"				: parseInt(el.QTD_COMPRADOR != "" && el.QTD_COMPRADOR != "null" ? el.QTD_COMPRADOR : el.C8_QUANT != "" ? el.C8_QUANT : "0"),
-								"C8_PRECO"				: tools.formata.fluigToFloat(el.C8_PRECO),
-								"C8_VALIPI"				: tools.formata.fluigToFloat(el.C8_VALIPI),
-								"C8_VALISS"				: tools.formata.fluigToFloat(el.C8_VALISS),
-								"C8_VALIPI"				: tools.formata.fluigToFloat(el.C8_VALIPI),
-								"C8_VALICM"				: tools.formata.fluigToFloat(el.C8_VALICM),
-								"C8_DIFAL"				: tools.formata.fluigToFloat(el.C8_DIFAL),
-								"C8_VALSOL"				: tools.formata.fluigToFloat(el.C8_VALSOL),
-								"C8_IMPOSTOS"			: tools.formata.fluigToFloat(el.C8_VALIPI) + tools.formata.fluigToFloat(el.C8_VALISS) + tools.formata.fluigToFloat(el.C8_VALSOL) + tools.formata.fluigToFloat(el.C8_DIFAL),
-								"C8_TOTAL"				: (parseInt(el.QTD_COMPRADOR != "" && el.QTD_COMPRADOR != "null" ? el.QTD_COMPRADOR : el.C8_QUANT != "" ? el.C8_QUANT : "0")) * tools.formata.fluigToFloat(el.C8_PRECO),
-								"C8_TOTAL_INTERF"		: (el.vencedor_comprador ? parseInt(el.QTD_COMPRADOR) : parseInt(el.C8_QUANT != "" ? el.C8_QUANT : "0")) * tools.formata.fluigToFloat(el.C8_PRECO),
-								"C8_PRAZO"				: el.C8_PRAZO,
-								"C8_VALSOL"				: tools.formata.fluigToFloat(el.C8_VALSOL),
-							}
-						})
+							//.filter(function (el) { return el.C8_PRECO != "" && el.C8_PRECO != "0.00" && el.C8_PRECO != "0,00" && el.C8_PRECO != "null"  && el.C8_PRECO != "0.000000" && el.C8_PRECO != "0,000000"})
+							.map(function (el) {
+								return {
+									"C8_CICLO": el.C8_CICLO,
+									"B1_COD": el.B1_COD,
+									"C8_PRODUTO": el.C8_PRODUTO,
+									"vencedor_protheus": el.VENCEDOR/* == "true"*/,
+									"vencedor_comprador": el.VENCEDOR_COMP/* == "true"*/,
+									"B1_ZMARCA": aDados.produtos.filter(function (p) { return p.B1_COD == el.C8_PRODUTO.substring(0, 8) })[0].FILHOS.filter(function (p) { return p.B1_COD == el.C8_PRODUTO })[0].ZPM_DESC,
+									"C8_FORNECE": el.C8_FORNECE,
+									"C8_LOJA": el.C8_LOJA,
+									"C8_QUANT": parseInt(el.QTD_COMPRADOR != "" && el.QTD_COMPRADOR != "null" ? el.QTD_COMPRADOR : el.C8_QUANT != "" ? el.C8_QUANT : "0"),
+									"C8_PRECO": tools.formata.fluigToFloat(el.C8_PRECO),
+									"C8_VALIPI": tools.formata.fluigToFloat(el.C8_VALIPI),
+									"C8_VALISS": tools.formata.fluigToFloat(el.C8_VALISS),
+									"C8_VALIPI": tools.formata.fluigToFloat(el.C8_VALIPI),
+									"C8_VALICM": tools.formata.fluigToFloat(el.C8_VALICM),
+									"C8_DIFAL": tools.formata.fluigToFloat(el.C8_DIFAL),
+									"C8_VALSOL": tools.formata.fluigToFloat(el.C8_VALSOL),
+									"C8_IMPOSTOS": tools.formata.fluigToFloat(el.C8_VALIPI) + tools.formata.fluigToFloat(el.C8_VALISS) + tools.formata.fluigToFloat(el.C8_VALSOL) + tools.formata.fluigToFloat(el.C8_DIFAL),
+									"C8_TOTAL": (parseInt(el.QTD_COMPRADOR != "" && el.QTD_COMPRADOR != "null" ? el.QTD_COMPRADOR : el.C8_QUANT != "" ? el.C8_QUANT : "0")) * tools.formata.fluigToFloat(el.C8_PRECO),
+									"C8_TOTAL_INTERF": (el.vencedor_comprador ? parseInt(el.QTD_COMPRADOR) : parseInt(el.C8_QUANT != "" ? el.C8_QUANT : "0")) * tools.formata.fluigToFloat(el.C8_PRECO),
+									"C8_PRAZO": el.C8_PRAZO,
+									"C8_VALSOL": tools.formata.fluigToFloat(el.C8_VALSOL),
+								}
+							})
 
-						if(cotacoes.length > 0){
+						if (cotacoes.length > 0) {
 							aDados.produtos.forEach(function (prod) {
 
 								fluigMapa.produtos.push({
-									"B1_COD"	: prod.B1_COD,
-									"B1_DESC"	: prod.B1_DESC,
-									"QTD"		: prod.QTD,
-									"UM"		: prod.UM,
-									"B1_UPRC"	: tools.formata.toFloat(prod.B1_UPRC),
+									"B1_COD": prod.B1_COD,
+									"B1_DESC": prod.B1_DESC,
+									"QTD": prod.QTD,
+									"UM": prod.UM,
+									"B1_UPRC": tools.formata.toFloat(prod.B1_UPRC),
 									"FORNECEDORES": fluigMapa.fornecedores.map(function (f) {
 										return {
 											"A2_COD": f.A2_COD,
@@ -2089,7 +2089,7 @@ var tools = {
 											"CICLOS": ciclos.map(function (c) {
 												return {
 													"CICLO": c,
-													"COTACOES": cotacoes.filter(function (cot) { return prod.B1_COD == cot.C8_PRODUTO.substring(0,8) && c == cot.C8_CICLO && cot.C8_FORNECE == f.A2_COD && cot.C8_LOJA == f.A2_LOJA })
+													"COTACOES": cotacoes.filter(function (cot) { return prod.B1_COD == cot.C8_PRODUTO.substring(0, 8) && c == cot.C8_CICLO && cot.C8_FORNECE == f.A2_COD && cot.C8_LOJA == f.A2_LOJA })
 												}
 											})
 										}
@@ -2097,7 +2097,7 @@ var tools = {
 									"CICLOS": ciclos.map(function (c) {
 										return {
 											"CICLO": c,
-											"MENOR": cotacoes.filter(function (cot) { return prod.B1_COD == cot.C8_PRODUTO.substring(0,8) && c == cot.C8_CICLO }).reduce(tools.mapaCompradores.funcs.menorPreco, cotacoes[0])
+											"MENOR": cotacoes.filter(function (cot) { return prod.B1_COD == cot.C8_PRODUTO.substring(0, 8) && c == cot.C8_CICLO }).reduce(tools.mapaCompradores.funcs.menorPreco, cotacoes[0])
 										}
 									})
 								})
@@ -2110,8 +2110,12 @@ var tools = {
 								prd["FORNECEDORES"].forEach(function (forn, iForn, aPrd) {
 									forn["CICLOS"].forEach(function (cic, iCic, aCic) {
 										forn["PRIMEIRA"] = forn["PRIMEIRA"] == undefined ? cic.COTACOES.length > 0 ? cic.COTACOES.reduce(tools.mapaCompradores.funcs.menorPreco, cic.COTACOES[0]).C8_PRECO : undefined : forn["PRIMEIRA"],
-											forn["NEGOCIADA"] = (aCic[iCic - 1] != undefined && aCic[iCic - 1]["COTACOES"].length > 0) ? aCic[iCic - 1]["COTACOES"].reduce(tools.mapaCompradores.funcs.menorPreco, aCic[iCic - 1]["COTACOES"][0]).C8_PRECO : forn["NEGOCIADA"],
-											forn["ATUAL"] = cic["COTACOES"]
+											forn["NEGOCIADA"] = (aCic[iCic - 1] != undefined && aCic[iCic - 1]["COTACOES"].length > 0) ? aCic[iCic - 1]["COTACOES"].reduce(tools.mapaCompradores.funcs.menorPreco, aCic[iCic - 1]["COTACOES"][0]).C8_PRECO : forn["NEGOCIADA"];
+
+										cotItens = cic["COTACOES"].filter(function (cotProd) { return cotProd["C8_TOTAL"] != "0,00" && cotProd["C8_TOTAL"] != 0 })
+										forn["ATUAL"] = cic["COTACOES"]
+										if (cotItens.length > 0)
+											forn["ATUAL"] = cotItens
 										forn["vencedor_protheus"] = cic["COTACOES"].length > 0 && cic["COTACOES"].filter(function (el) { return el.vencedor_protheus }).length > 0
 										forn["vencedor_comprador"] = cic["COTACOES"].length > 0 && cic["COTACOES"].filter(function (el) { return el.vencedor_comprador }).length > 0
 									})
@@ -2119,88 +2123,88 @@ var tools = {
 							})
 
 							fluigMapa.fornecedores.forEach(function (forn, idx, arr) {
-								forn["TOTAIS"] = { "PRIMEIRA": 0, "NEGOCIADA": 0, "ATUAL": 0, "TOTAL": 0, "IMPOSTOS":0 };
+								forn["TOTAIS"] = { "PRIMEIRA": 0, "NEGOCIADA": 0, "ATUAL": 0, "TOTAL": 0, "IMPOSTOS": 0 };
 								fluigMapa.produtos.forEach(function (prd) {
-									let primeira 	= prd.FORNECEDORES[idx].PRIMEIRA;
-									let negociada 	= prd.FORNECEDORES[idx].NEGOCIADA;
-									let atual 		= prd.FORNECEDORES[idx].ATUAL[0];
+									let primeira = prd.FORNECEDORES[idx].PRIMEIRA;
+									let negociada = prd.FORNECEDORES[idx].NEGOCIADA;
+									let atual = prd.FORNECEDORES[idx].ATUAL[0];
 
-									primeira 	= primeira != undefined ? primeira : 0;
-									negociada 	= negociada != undefined ? negociada : 0;
-									let preco 	= atual != undefined ? atual.C8_PRECO : 0;
+									primeira = primeira != undefined ? primeira : 0;
+									negociada = negociada != undefined ? negociada : 0;
+									let preco = atual != undefined ? atual.C8_PRECO : 0;
 
-									forn.TOTAIS.PRIMEIRA 	+= primeira;
-									forn.TOTAIS.NEGOCIADA 	+= negociada;
-									forn.TOTAIS.ATUAL 		+= preco;
+									forn.TOTAIS.PRIMEIRA += primeira;
+									forn.TOTAIS.NEGOCIADA += negociada;
+									forn.TOTAIS.ATUAL += preco;
 								})
 
-								let agregado = fluigMapa.produtos.reduce(tools.mapaCompradores.funcs.calcAgregados, { idx: idx, C8_IMPOSTOS: 0, TOTAL_BASELINE: 0, TOTAL: 0, C8_VALIPI:0, C8_VALISS:0, C8_VALSOL:0, C8_DIFAL:0, FCP:0, ONLYSERVICE : true});
-								forn.TOTAIS["C8_VALFRE"] 	= agregado.ONLYSERVICE ? 0 : forn.A2_VALFRE;
-								forn.TOTAIS["C8_VALIPI"] 	= agregado.C8_VALIPI;
-								forn.TOTAIS["C8_VALISS"] 	= agregado.C8_VALISS;
-								forn.TOTAIS["C8_VALSOL"] 	= agregado.C8_VALSOL;
-								forn.TOTAIS["C8_DIFAL"] 	= agregado.C8_DIFAL;
-								forn.TOTAIS["C8_IMPOSTOS"] 	= agregado.C8_IMPOSTOS;
-								forn.TOTAIS["BASELINE"] 	= agregado.TOTAL_BASELINE;
-								forn.TOTAIS.TOTAL 			= agregado.TOTAL;
-								forn.TOTAIS["TOTALGERAL"] 	= agregado.TOTAL + (agregado.ONLYSERVICE ? 0 : forn.A2_VALFRE) + agregado.C8_IMPOSTOS;
+								let agregado = fluigMapa.produtos.reduce(tools.mapaCompradores.funcs.calcAgregados, { idx: idx, C8_IMPOSTOS: 0, TOTAL_BASELINE: 0, TOTAL: 0, C8_VALIPI: 0, C8_VALISS: 0, C8_VALSOL: 0, C8_DIFAL: 0, FCP: 0, ONLYSERVICE: true });
+								forn.TOTAIS["C8_VALFRE"] = agregado.ONLYSERVICE ? 0 : forn.A2_VALFRE;
+								forn.TOTAIS["C8_VALIPI"] = agregado.C8_VALIPI;
+								forn.TOTAIS["C8_VALISS"] = agregado.C8_VALISS;
+								forn.TOTAIS["C8_VALSOL"] = agregado.C8_VALSOL;
+								forn.TOTAIS["C8_DIFAL"] = agregado.C8_DIFAL;
+								forn.TOTAIS["C8_IMPOSTOS"] = agregado.C8_IMPOSTOS;
+								forn.TOTAIS["BASELINE"] = agregado.TOTAL_BASELINE;
+								forn.TOTAIS.TOTAL = agregado.TOTAL;
+								forn.TOTAIS["TOTALGERAL"] = agregado.TOTAL + (agregado.ONLYSERVICE ? 0 : forn.A2_VALFRE) + agregado.C8_IMPOSTOS;
 								let filCond = aDados.condPagto.filter(function (el) { return el.CODIGO == forn.A2_COND })[0];
-								forn.TOTAIS["C8_COND"] 		= filCond != undefined ? filCond.DESCRICAO : "";
+								forn.TOTAIS["C8_COND"] = filCond != undefined ? filCond.DESCRICAO : "";
 
-								forn.TOTAIS["varFinalBaseLine"] 	= forn.TOTAIS["TOTALGERAL"] / forn.TOTAIS["BASELINE"] - 1;
-								forn.TOTAIS["economia"] 			= forn.TOTAIS["BASELINE"] - forn.TOTAIS["TOTALGERAL"];
-								forn.TOTAIS["save"]					= forn.TOTAIS["economia"] > 0;
-								forn.TOTAIS["penalty"]				= forn.TOTAIS["economia"] < 0;
-								forn.TOTAIS["economiaUnformatted"]	= forn.TOTAIS["economia"];
-								forn.TOTAIS["performance"] 			= (forn.TOTAIS.ATUAL / forn.TOTAIS.PRIMEIRA - 1) * 100;
+								forn.TOTAIS["varFinalBaseLine"] = forn.TOTAIS["TOTALGERAL"] / forn.TOTAIS["BASELINE"] - 1;
+								forn.TOTAIS["economia"] = forn.TOTAIS["BASELINE"] - forn.TOTAIS["TOTALGERAL"];
+								forn.TOTAIS["save"] = forn.TOTAIS["economia"] > 0;
+								forn.TOTAIS["penalty"] = forn.TOTAIS["economia"] < 0;
+								forn.TOTAIS["economiaUnformatted"] = forn.TOTAIS["economia"];
+								forn.TOTAIS["performance"] = (forn.TOTAIS.ATUAL / forn.TOTAIS.PRIMEIRA - 1) * 100;
 
 							})
-							
-							fluigMapa["orcado"] 		= $("#valor_total,#_valor_total").val();
-							fluigMapa["baseline"] 		= fluigMapa.produtos.reduce(tools.mapaCompradores.funcs.somaBaseline, 0);
+
+							fluigMapa["orcado"] = $("#valor_total,#_valor_total").val();
+							fluigMapa["baseline"] = fluigMapa.produtos.reduce(tools.mapaCompradores.funcs.somaBaseline, 0);
 							fluigMapa["melhorprimeira"] = fluigMapa.produtos.reduce(tools.mapaCompradores.funcs.somaMelhorPrimeira, 0);
-							
+
 							console.log("fim carregaDados > " + new Date())
 							tools.mapaCompradores.formata();
 
 							//fluigMapa.fornecedores.sort(function(a,b){return tools.formata.toFloat(b.TOTAIS.ATUAL) == 0 ? -1 : tools.formata.toFloat(b.TOTAIS.ATUAL) - tools.formata.toFloat(a.TOTAIS.ATUAL)}).sort(function(a,b){return tools.formata.toFloat(b.TOTAIS.economiaUnformatted) == 0 ? -1 : tools.formata.toFloat(b.TOTAIS.economiaUnformatted) - tools.formata.toFloat(a.TOTAIS.economiaUnformatted)});
-							fluigMapa.fornecedores.sort(function(a,b){return tools.formata.toFloat(b.TOTAIS.ATUAL) - tools.formata.toFloat(a.TOTAIS.ATUAL)});
-							
+							fluigMapa.fornecedores.sort(function (a, b) { return tools.formata.toFloat(b.TOTAIS.ATUAL) - tools.formata.toFloat(a.TOTAIS.ATUAL) });
+
 							var fornecedoresOrdem = [];
-							aDados.fornecedores.forEach(function(el,idx,arr){
+							aDados.fornecedores.forEach(function (el, idx, arr) {
 								fornecedoresOrdem.push({
-									"A2_CGC" 	: el.A2_CGC,
-									"idxADados"	: idx
+									"A2_CGC": el.A2_CGC,
+									"idxADados": idx
 								})
 							})
-							fluigMapa.fornecedores.forEach(function(el,idx,arr){
-								var fornFilter = fornecedoresOrdem.filter(function(f){return f.A2_CGC == el.A2_CGC})
-								if(fornFilter.length > 0) fornFilter[0]["idxFluigMapa"] = idx
+							fluigMapa.fornecedores.forEach(function (el, idx, arr) {
+								var fornFilter = fornecedoresOrdem.filter(function (f) { return f.A2_CGC == el.A2_CGC })
+								if (fornFilter.length > 0) fornFilter[0]["idxFluigMapa"] = idx
 							})
 							//console.log(fornecedoresOrdem)
-							aDados.fornecedores.sort(function(a,b){return fornecedoresOrdem.filter(function(el){return a.A2_CGC == el.A2_CGC})[0].idxFluigMapa - fornecedoresOrdem.filter(function(el){return b.A2_CGC == el.A2_CGC})[0].idxFluigMapa})
-							fluigMapa.produtos.forEach(function(p){
-								p.FORNECEDORES.sort(function(a,b){return fornecedoresOrdem.filter(function(el){return a.A2_CGC == el.A2_CGC})[0].idxFluigMapa - fornecedoresOrdem.filter(function(el){return b.A2_CGC == el.A2_CGC})[0].idxFluigMapa})
+							aDados.fornecedores.sort(function (a, b) { return fornecedoresOrdem.filter(function (el) { return a.A2_CGC == el.A2_CGC })[0].idxFluigMapa - fornecedoresOrdem.filter(function (el) { return b.A2_CGC == el.A2_CGC })[0].idxFluigMapa })
+							fluigMapa.produtos.forEach(function (p) {
+								p.FORNECEDORES.sort(function (a, b) { return fornecedoresOrdem.filter(function (el) { return a.A2_CGC == el.A2_CGC })[0].idxFluigMapa - fornecedoresOrdem.filter(function (el) { return b.A2_CGC == el.A2_CGC })[0].idxFluigMapa })
 							})
-							 
+
 							console.log("fim > " + new Date())
-							
-						}else{
+
+						} else {
 							$("#mapa_cotacao").hide();
 							FLUIGC.toast({
 								message: 'Não foram encontradas cotações para exibição do Mapa de Cotação',
 								type: 'warning'
 							});
 						}
-						
+
 					}
 
 				}
-				
+
 			}
 		},
 		exibe: function () {
-			if([26,35,40,224,110,70,71,76,80,105,148].includes(WKNumState)){
+			if ([26, 35, 40, 224, 110, 70, 71, 76, 80, 105, 148].includes(WKNumState)) {
 				if (usuarioCompras) {
 					tools.mapaCompradores.carregaBase();
 					tools.anexos.carrega();
@@ -2210,7 +2214,7 @@ var tools = {
 
 					$("#tabMapa").html(html);
 					$("[open-modal]").on("click", tools.mapaCompradores.exibeModal)
-					$("[btn-prod],[btn-forn]").on("click",tools.mapa.carregaMapa)
+					$("[btn-prod],[btn-forn]").on("click", tools.mapa.carregaMapa)
 					$("[icon-attachment]").on("click", tools.anexos.exibeAnexos)
 
 				} else {
@@ -2248,10 +2252,10 @@ var tools = {
 					})
 				})
 			})
-			
-			aDados.produtos.forEach(function(prd){
-				prd.cotacoes.forEach(function(cot){
-					cot.C8_PRECO = tools.formata.floatToMoney(cot.C8_PRECO,6);
+
+			aDados.produtos.forEach(function (prd) {
+				prd.cotacoes.forEach(function (cot) {
+					cot.C8_PRECO = tools.formata.floatToMoney(cot.C8_PRECO, 6);
 					cot.C8_DIFAL = tools.formata.floatToMoney(cot.C8_DIFAL);
 					cot.C8_TOTAL = tools.formata.floatToMoney(cot.C8_TOTAL);
 					cot.C8_VALIPI = tools.formata.floatToMoney(cot.C8_VALIPI);
@@ -2265,16 +2269,16 @@ var tools = {
 				forn.TOTAIS.NEGOCIADA = tools.formata.floatToMoney(forn.TOTAIS.NEGOCIADA);
 				forn.TOTAIS.ATUAL = tools.formata.floatToMoney(forn.TOTAIS.ATUAL);
 				forn.TOTAIS.C8_IMPOSTOS = tools.formata.floatToMoney(forn.TOTAIS.C8_IMPOSTOS);
-				forn.TOTAIS.C8_VALIPI 	= tools.formata.floatToMoney(forn.TOTAIS.C8_VALIPI);
-				forn.TOTAIS.C8_VALISS 	= tools.formata.floatToMoney(forn.TOTAIS.C8_VALISS);
-				forn.TOTAIS.C8_VALSOL 	= tools.formata.floatToMoney(forn.TOTAIS.C8_VALSOL);
-				forn.TOTAIS.C8_DIFAL 	= tools.formata.floatToMoney(forn.TOTAIS.C8_DIFAL);
+				forn.TOTAIS.C8_VALIPI = tools.formata.floatToMoney(forn.TOTAIS.C8_VALIPI);
+				forn.TOTAIS.C8_VALISS = tools.formata.floatToMoney(forn.TOTAIS.C8_VALISS);
+				forn.TOTAIS.C8_VALSOL = tools.formata.floatToMoney(forn.TOTAIS.C8_VALSOL);
+				forn.TOTAIS.C8_DIFAL = tools.formata.floatToMoney(forn.TOTAIS.C8_DIFAL);
 				//forn.TOTAIS.C8_IMPOSTOS = tools.formata.floatToMoney(forn.TOTAIS.C8_IMPOSTOS);
-				forn.TOTAIS.TOTAL 		= tools.formata.floatToMoney(forn.TOTAIS.TOTAL);
-				forn.TOTAIS.C8_VALFRE 	= tools.formata.floatToMoney(forn.TOTAIS.C8_VALFRE);
-				forn.TOTAIS.TOTALGERAL 	= tools.formata.floatToMoney6(forn.TOTAIS.TOTALGERAL);
+				forn.TOTAIS.TOTAL = tools.formata.floatToMoney(forn.TOTAIS.TOTAL);
+				forn.TOTAIS.C8_VALFRE = tools.formata.floatToMoney(forn.TOTAIS.C8_VALFRE);
+				forn.TOTAIS.TOTALGERAL = tools.formata.floatToMoney6(forn.TOTAIS.TOTALGERAL);
 				forn.TOTAIS.varFinalBaseLine = tools.formata.floatToMoney(forn.TOTAIS.varFinalBaseLine);
-				forn.TOTAIS.economia 	= tools.formata.floatToMoney(forn.TOTAIS.economia);
+				forn.TOTAIS.economia = tools.formata.floatToMoney(forn.TOTAIS.economia);
 				forn.TOTAIS.performance = tools.formata.floatToMoney(forn.TOTAIS.performance);
 			})
 
@@ -2286,22 +2290,22 @@ var tools = {
 		funcs: {
 			calcAgregados(item, obj) {
 				obj.FORNECEDORES[item.idx].ATUAL.forEach(function (el) {
-					item.C8_VALIPI 		+= el.C8_VALIPI;
-					item.C8_VALISS 		+= el.C8_VALISS;
-					item.C8_VALSOL 		+= el.C8_VALSOL;
-					item.C8_DIFAL 		+= el.C8_DIFAL;
-					item.FCP 			+= el.FCP;
-					item.C8_IMPOSTOS 	+= el.C8_IMPOSTOS;
+					item.C8_VALIPI += el.C8_VALIPI;
+					item.C8_VALISS += el.C8_VALISS;
+					item.C8_VALSOL += el.C8_VALSOL;
+					item.C8_DIFAL += el.C8_DIFAL;
+					item.FCP += el.FCP;
+					item.C8_IMPOSTOS += el.C8_IMPOSTOS;
 					item.TOTAL_BASELINE += (obj.B1_UPRC * el.C8_QUANT);
-					item.TOTAL 			+= (el.C8_QUANT * el.C8_PRECO);
-					item.ONLYSERVICE 	= (el.C8_PRODUTO.indexOf("S") != 0 ? false : item.ONLYSERVICE);
+					item.TOTAL += (el.C8_QUANT * el.C8_PRECO);
+					item.ONLYSERVICE = (el.C8_PRODUTO.indexOf("S") != 0 ? false : item.ONLYSERVICE);
 				})
 				return item
 			},
 			menorPreco(item, obj) {
 				return obj.C8_PRECO < item.C8_PRECO ? obj : item
 			},
-			
+
 			primeiraCotacao(item, obj) {
 				return item.MENOR != "" && item.MENOR != undefined ? item : obj;
 			},
@@ -2319,152 +2323,154 @@ var tools = {
 			}
 		}
 	},
-	obsLimpar:function(){
-		$("#observacoes,#_observacoes").off("keypress").on("keypress",function(e){
+	obsLimpar: function () {
+		$("#observacoes,#_observacoes").off("keypress").on("keypress", function (e) {
 			var chr = String.fromCharCode(e.keyCode);
-	         if ("\\/<>".indexOf(chr) > -1) return false;
+			if ("\\/<>".indexOf(chr) > -1) return false;
 		})
-		
-		$("#observacoes,#_observacoes").off("change").on("change",function(e){
+
+		$("#observacoes,#_observacoes").off("change").on("change", function (e) {
 			$('#observacoes,#_observacoes').val($('#observacoes,#_observacoes').val().trim()
-				.replace(/\\/g,"")
-				.replace(/\//g,"")
-				.replace(/</g,"")
-				.replace(/>/g,"")
+				.replace(/\\/g, "")
+				.replace(/\//g, "")
+				.replace(/</g, "")
+				.replace(/>/g, "")
 			)
 		})
 	},
 	pedidos: {
-		carregaDados: function(){
-			aDados["pedidos"] = $("[name*=C7_NUM___].form-control").toArray().map(function(el){return {
-				"C7_STATUS" 	: $(el).closest("tr").find("[name*=C7_STATUS"+"___]").val(),
-				"C7_FILIAL" 	: $(el).closest("tr").find("[name*=C7_FILIAL"+"___]").val(),
-				"C7_NUM" 		: $(el).closest("tr").find("[name*=C7_NUM"+"___]").val(),
-				"C7_EMISSAO" 	: $(el).closest("tr").find("[name*=C7_EMISSAO"+"___]").val(),
-				"C7_FORNECE" 	: $(el).closest("tr").find("[name*=C7_FORNECE"+"___]").val(),
-				"C7_LOJA" 		: $(el).closest("tr").find("[name*=C7_LOJA"+"___]").val(),
-				"C7_COND" 		: $(el).closest("tr").find("[name*=C7_COND"+"___]").val(),
-				"C7_TPFRETE" 	: [{ID:"S","DESC":"Sem Frete"},{ID:"C","DESC":"CIF"},{ID:"F","DESC":"FOB"}].filter(function (o){ return o.ID == $(el).closest("tr").find("[name*=C7_TPFRETE"+"___]").val()})[0].DESC,
-				"C7_FRETE" 		: $(el).closest("tr").find("[name*=C7_FRETE"+"___]").val(),
-				"C7_ITEM" 		: $(el).closest("tr").find("[name*=C7_ITEM"+"___]").val(),
-				"C7_PRODUTO" 	: $(el).closest("tr").find("[name*=C7_PRODUTO"+"___]").val(),
-				"C7_DESCRI" 	: $(el).closest("tr").find("[name*=C7_DESCRI"+"___]").val(),
-				"C7_UM" 		: $(el).closest("tr").find("[name*=C7_UM"+"___]").val(),
-				"C7_QTDSOL" 	: $(el).closest("tr").find("[name*=C7_QTDSOL"+"___]").val(),
-				"C7_QUANT" 		: $(el).closest("tr").find("[name*=C7_QUANT"+"___]").val(),
-				"C7_PRECO" 		: $(el).closest("tr").find("[name*=C7_PRECO"+"___]").val(),
-				"C7_TOTAL" 		: $(el).closest("tr").find("[name*=C7_TOTAL"+"___]").val(),
-				"C7_TES" 		: $(el).closest("tr").find("[name*=C7_TES"+"___]").val(),
-				"C7_VALIPI" 	: $(el).closest("tr").find("[name*=C7_VALIPI"+"___]").val(),
-				"C7_VALICM" 	: $(el).closest("tr").find("[name*=C7_VALICM"+"___]").val(),
-				"C7_VALIR" 		: $(el).closest("tr").find("[name*=C7_VALIR"+"___]").val(),
-				"C7_VALSOL" 	: $(el).closest("tr").find("[name*=C7_VALSOL"+"___]").val(),
-				"C7_VALISS" 	: $(el).closest("tr").find("[name*=C7_VALISS"+"___]").val(),
-				"C7_VALINS" 	: $(el).closest("tr").find("[name*=C7_VALINS"+"___]").val(),
-				"C7_VALCSL" 	: $(el).closest("tr").find("[name*=C7_VALCSL"+"___]").val(),
-				"C7_VALCOF" 	: $(el).closest("tr").find("[name*=C7_VALCOF"+"___]").val(),
-				"C7_VALPIS" 	: $(el).closest("tr").find("[name*=C7_VALPIS"+"___]").val(),
-				"C7_ITEMSC" 	: $(el).closest("tr").find("[name*=C7_ITEMSC"+"___]").val(),
-				"C7_NUMSC" 		: $(el).closest("tr").find("[name*=C7_NUMSC"+"___]").val(),
-				"C7_NUMCOT" 	: $(el).closest("tr").find("[name*=C7_NUMCOT"+"___]").val()
-			}}).filter(function(el){
-				if(WKNumState == 224){
+		carregaDados: function () {
+			aDados["pedidos"] = $("[name*=C7_NUM___].form-control").toArray().map(function (el) {
+				return {
+					"C7_STATUS": $(el).closest("tr").find("[name*=C7_STATUS" + "___]").val(),
+					"C7_FILIAL": $(el).closest("tr").find("[name*=C7_FILIAL" + "___]").val(),
+					"C7_NUM": $(el).closest("tr").find("[name*=C7_NUM" + "___]").val(),
+					"C7_EMISSAO": $(el).closest("tr").find("[name*=C7_EMISSAO" + "___]").val(),
+					"C7_FORNECE": $(el).closest("tr").find("[name*=C7_FORNECE" + "___]").val(),
+					"C7_LOJA": $(el).closest("tr").find("[name*=C7_LOJA" + "___]").val(),
+					"C7_COND": $(el).closest("tr").find("[name*=C7_COND" + "___]").val(),
+					"C7_TPFRETE": [{ ID: "S", "DESC": "Sem Frete" }, { ID: "C", "DESC": "CIF" }, { ID: "F", "DESC": "FOB" }].filter(function (o) { return o.ID == $(el).closest("tr").find("[name*=C7_TPFRETE" + "___]").val() })[0].DESC,
+					"C7_FRETE": $(el).closest("tr").find("[name*=C7_FRETE" + "___]").val(),
+					"C7_ITEM": $(el).closest("tr").find("[name*=C7_ITEM" + "___]").val(),
+					"C7_PRODUTO": $(el).closest("tr").find("[name*=C7_PRODUTO" + "___]").val(),
+					"C7_DESCRI": $(el).closest("tr").find("[name*=C7_DESCRI" + "___]").val(),
+					"C7_UM": $(el).closest("tr").find("[name*=C7_UM" + "___]").val(),
+					"C7_QTDSOL": $(el).closest("tr").find("[name*=C7_QTDSOL" + "___]").val(),
+					"C7_QUANT": $(el).closest("tr").find("[name*=C7_QUANT" + "___]").val(),
+					"C7_PRECO": $(el).closest("tr").find("[name*=C7_PRECO" + "___]").val(),
+					"C7_TOTAL": $(el).closest("tr").find("[name*=C7_TOTAL" + "___]").val(),
+					"C7_TES": $(el).closest("tr").find("[name*=C7_TES" + "___]").val(),
+					"C7_VALIPI": $(el).closest("tr").find("[name*=C7_VALIPI" + "___]").val(),
+					"C7_VALICM": $(el).closest("tr").find("[name*=C7_VALICM" + "___]").val(),
+					"C7_VALIR": $(el).closest("tr").find("[name*=C7_VALIR" + "___]").val(),
+					"C7_VALSOL": $(el).closest("tr").find("[name*=C7_VALSOL" + "___]").val(),
+					"C7_VALISS": $(el).closest("tr").find("[name*=C7_VALISS" + "___]").val(),
+					"C7_VALINS": $(el).closest("tr").find("[name*=C7_VALINS" + "___]").val(),
+					"C7_VALCSL": $(el).closest("tr").find("[name*=C7_VALCSL" + "___]").val(),
+					"C7_VALCOF": $(el).closest("tr").find("[name*=C7_VALCOF" + "___]").val(),
+					"C7_VALPIS": $(el).closest("tr").find("[name*=C7_VALPIS" + "___]").val(),
+					"C7_ITEMSC": $(el).closest("tr").find("[name*=C7_ITEMSC" + "___]").val(),
+					"C7_NUMSC": $(el).closest("tr").find("[name*=C7_NUMSC" + "___]").val(),
+					"C7_NUMCOT": $(el).closest("tr").find("[name*=C7_NUMCOT" + "___]").val()
+				}
+			}).filter(function (el) {
+				if (WKNumState == 224) {
 					return el.C7_STATUS == "";
 				}
-				else{
+				else {
 					return el.C7_STATUS != "";
 				}
-			}).reduce(tools.pedidos.funcs.normalizaPedido,[])
+			}).reduce(tools.pedidos.funcs.normalizaPedido, [])
 		},
 		exibir: function () {
-			if(([26,76,80,105,148].includes(WKNumState) && $("[name*=decisaoLiberarPedido]:checked").val() != undefined) || WKNumState == 224 || WKNumState == 71 || WKNumState == 70 ){
+			if (([26, 76, 80, 105, 148].includes(WKNumState) && $("[name*=decisaoLiberarPedido]:checked").val() != undefined) || WKNumState == 224 || WKNumState == 71 || WKNumState == 70) {
 				let temp = $("#tmpl14").html();
 				let html = Mustache.render(temp, aDados.pedidos);
-				
+
 				$("#tabPedido").html(html);
 				$("#panelPedidos").show();
 			}
 		},
-		formata: function(){
-			aDados.pedidos.forEach(function(pedido){
+		formata: function () {
+			aDados.pedidos.forEach(function (pedido) {
 				pedido["C7_VALIPI"] = tools.formata.floatToMoney(pedido["C7_VALIPI"]);
 				pedido["C7_VALICM"] = tools.formata.floatToMoney(pedido["C7_VALICM"]);
-				pedido["C7_VALIR"] 	= tools.formata.floatToMoney(pedido["C7_VALIR"]);
+				pedido["C7_VALIR"] = tools.formata.floatToMoney(pedido["C7_VALIR"]);
 				pedido["C7_VALSOL"] = tools.formata.floatToMoney(pedido["C7_VALSOL"]);
 				pedido["C7_VALISS"] = tools.formata.floatToMoney(pedido["C7_VALISS"]);
 				pedido["C7_VALINS"] = tools.formata.floatToMoney(pedido["C7_VALINS"]);
 				pedido["C7_VALCSL"] = tools.formata.floatToMoney(pedido["C7_VALCSL"]);
 				pedido["C7_VALCOF"] = tools.formata.floatToMoney(pedido["C7_VALCOF"]);
 				pedido["C7_VALPIS"] = tools.formata.floatToMoney(pedido["C7_VALPIS"]);
-				pedido["C7_TOTAL"] 	= tools.formata.floatToMoney(pedido["C7_TOTAL"]);
-				pedido["C7_IMPOSTOS"] 	= tools.formata.floatToMoney(pedido["C7_IMPOSTOS"]);
-				pedido["C7_FRETE"] 		= tools.formata.floatToMoney(pedido["C7_FRETE"]);
+				pedido["C7_TOTAL"] = tools.formata.floatToMoney(pedido["C7_TOTAL"]);
+				pedido["C7_IMPOSTOS"] = tools.formata.floatToMoney(pedido["C7_IMPOSTOS"]);
+				pedido["C7_FRETE"] = tools.formata.floatToMoney(pedido["C7_FRETE"]);
 				pedido["C7_TOTALGERAL"] = tools.formata.floatToMoney(pedido["C7_TOTALGERAL"]);
 			})
 		},
-		funcs:{
-			normalizaPedido(item, obj){
-				let itemFilter = item.filter(function(el){return el.C7_NUM == obj.C7_NUM});
-				
-				if(itemFilter.length > 0){
-					itemFilter[0]["C7_VALIPI"] 	+= parseFloat(obj.C7_VALIPI);
-					itemFilter[0]["C7_VALICM"] 	+= parseFloat(obj.C7_VALICM);
-					itemFilter[0]["C7_VALIR"] 	+= parseFloat(obj.C7_VALIR);
-					itemFilter[0]["C7_VALSOL"] 	+= parseFloat(obj.C7_VALSOL);
-					itemFilter[0]["C7_VALISS"] 	+= parseFloat(obj.C7_VALISS);
-					itemFilter[0]["C7_VALINS"] 	+= parseFloat(obj.C7_VALINS);
-					itemFilter[0]["C7_VALCSL"] 	+= parseFloat(obj.C7_VALCSL);
-					itemFilter[0]["C7_VALCOF"] 	+= parseFloat(obj.C7_VALCOF);
-					itemFilter[0]["C7_VALPIS"]	+= parseFloat(obj.C7_VALPIS);
-					itemFilter[0]["C7_TOTAL"] 	+= parseFloat(obj.C7_TOTAL);
-					
+		funcs: {
+			normalizaPedido(item, obj) {
+				let itemFilter = item.filter(function (el) { return el.C7_NUM == obj.C7_NUM });
+
+				if (itemFilter.length > 0) {
+					itemFilter[0]["C7_VALIPI"] += parseFloat(obj.C7_VALIPI);
+					itemFilter[0]["C7_VALICM"] += parseFloat(obj.C7_VALICM);
+					itemFilter[0]["C7_VALIR"] += parseFloat(obj.C7_VALIR);
+					itemFilter[0]["C7_VALSOL"] += parseFloat(obj.C7_VALSOL);
+					itemFilter[0]["C7_VALISS"] += parseFloat(obj.C7_VALISS);
+					itemFilter[0]["C7_VALINS"] += parseFloat(obj.C7_VALINS);
+					itemFilter[0]["C7_VALCSL"] += parseFloat(obj.C7_VALCSL);
+					itemFilter[0]["C7_VALCOF"] += parseFloat(obj.C7_VALCOF);
+					itemFilter[0]["C7_VALPIS"] += parseFloat(obj.C7_VALPIS);
+					itemFilter[0]["C7_TOTAL"] += parseFloat(obj.C7_TOTAL);
+
 					itemFilter[0].ITENS.push({
-						"C7_ITEM" 		: obj.C7_ITEM,
-						"C7_PRODUTO" 	: obj.C7_PRODUTO,
-						"C7_DESCRI" 	: obj.C7_DESCRI,
-						"C7_UM" 		: obj.C7_UM,
-						"C7_QTDSOL" 	: obj.C7_QTDSOL,
-						"C7_QUANT" 		: obj.C7_QUANT,
-						"C7_PRECO" 		: tools.formata.floatToMoney(parseFloat(obj.C7_PRECO)),
-						"C7_TOTAL" 		: tools.formata.floatToMoney(parseFloat(obj.C7_TOTAL)),
-						"C7_TES" 		: obj.C7_TES,
+						"C7_ITEM": obj.C7_ITEM,
+						"C7_PRODUTO": obj.C7_PRODUTO,
+						"C7_DESCRI": obj.C7_DESCRI,
+						"C7_UM": obj.C7_UM,
+						"C7_QTDSOL": obj.C7_QTDSOL,
+						"C7_QUANT": obj.C7_QUANT,
+						"C7_PRECO": tools.formata.floatToMoney(parseFloat(obj.C7_PRECO)),
+						"C7_TOTAL": tools.formata.floatToMoney(parseFloat(obj.C7_TOTAL)),
+						"C7_TES": obj.C7_TES,
 					})
 				}
-				else{
-					let forn = aDados.fornecedores.filter(function(el){return el.A2_COD == obj.C7_FORNECE && el.A2_LOJA == obj.C7_LOJA});
-					let cond = aDados.condPagto.filter(function(el){return el.CODIGO == obj.C7_COND});
+				else {
+					let forn = aDados.fornecedores.filter(function (el) { return el.A2_COD == obj.C7_FORNECE && el.A2_LOJA == obj.C7_LOJA });
+					let cond = aDados.condPagto.filter(function (el) { return el.CODIGO == obj.C7_COND });
 					item.push({
-						"C7_STATUS"	: obj.C7_STATUS == "" ? "Em aprovação" : obj.C7_STATUS,
-						"C7_FILIAL"	: obj.C7_FILIAL,
-						"C7_NUM"	: obj.C7_NUM,
+						"C7_STATUS": obj.C7_STATUS == "" ? "Em aprovação" : obj.C7_STATUS,
+						"C7_FILIAL": obj.C7_FILIAL,
+						"C7_NUM": obj.C7_NUM,
 						"C7_EMISSAO": obj.C7_EMISSAO,
 						"C7_FORNECE": obj.C7_FORNECE,
-						"C7_LOJA"	: obj.C7_LOJA,
-						"A2_NOME"	: forn.length > 0 ? forn[0]["A2_NOME"] : "",
-						"C7_COND"	: obj.C7_COND,
+						"C7_LOJA": obj.C7_LOJA,
+						"A2_NOME": forn.length > 0 ? forn[0]["A2_NOME"] : "",
+						"C7_COND": obj.C7_COND,
 						"COND_PAGTO": cond.length > 0 ? cond[0]["DESCRICAO"] : "",
 						"C7_TPFRETE": obj.C7_TPFRETE,
-						"C7_FRETE"	: parseFloat(obj.C7_FRETE),
-						"C7_VALIPI" : parseFloat(obj.C7_VALIPI),
-						"C7_VALICM" : parseFloat(obj.C7_VALICM),
-						"C7_VALIR" 	: parseFloat(obj.C7_VALIR),
-						"C7_VALSOL" : parseFloat(obj.C7_VALSOL),
-						"C7_VALISS" : parseFloat(obj.C7_VALISS),
-						"C7_VALINS" : parseFloat(obj.C7_VALINS),
-						"C7_VALCSL" : parseFloat(obj.C7_VALCSL),
-						"C7_VALCOF" : parseFloat(obj.C7_VALCOF),
-						"C7_VALPIS" : parseFloat(obj.C7_VALPIS),
-						"C7_TOTAL"	: parseFloat(obj.C7_TOTAL),
-						"ITENS" : [{
-							"C7_ITEM" 		: obj.C7_ITEM,
-							"C7_PRODUTO" 	: obj.C7_PRODUTO,
-							"C7_DESCRI" 	: obj.C7_DESCRI,
-							"C7_UM" 		: obj.C7_UM,
-							"C7_QTDSOL" 	: obj.C7_QTDSOL,
-							"C7_QUANT" 		: obj.C7_QUANT,
-							"C7_PRECO" 		: tools.formata.floatToMoney(parseFloat(obj.C7_PRECO)),
-							"C7_TOTAL" 		: tools.formata.floatToMoney(parseFloat(obj.C7_TOTAL)),
-							"C7_TES" 		: obj.C7_TES,
+						"C7_FRETE": parseFloat(obj.C7_FRETE),
+						"C7_VALIPI": parseFloat(obj.C7_VALIPI),
+						"C7_VALICM": parseFloat(obj.C7_VALICM),
+						"C7_VALIR": parseFloat(obj.C7_VALIR),
+						"C7_VALSOL": parseFloat(obj.C7_VALSOL),
+						"C7_VALISS": parseFloat(obj.C7_VALISS),
+						"C7_VALINS": parseFloat(obj.C7_VALINS),
+						"C7_VALCSL": parseFloat(obj.C7_VALCSL),
+						"C7_VALCOF": parseFloat(obj.C7_VALCOF),
+						"C7_VALPIS": parseFloat(obj.C7_VALPIS),
+						"C7_TOTAL": parseFloat(obj.C7_TOTAL),
+						"ITENS": [{
+							"C7_ITEM": obj.C7_ITEM,
+							"C7_PRODUTO": obj.C7_PRODUTO,
+							"C7_DESCRI": obj.C7_DESCRI,
+							"C7_UM": obj.C7_UM,
+							"C7_QTDSOL": obj.C7_QTDSOL,
+							"C7_QUANT": obj.C7_QUANT,
+							"C7_PRECO": tools.formata.floatToMoney(parseFloat(obj.C7_PRECO)),
+							"C7_TOTAL": tools.formata.floatToMoney(parseFloat(obj.C7_TOTAL)),
+							"C7_TES": obj.C7_TES,
 						}]
 					})
 				}
@@ -2475,8 +2481,8 @@ var tools = {
 
 		},
 		init: function () {
-			if([224,71,26,70,76,80,105,148].includes(WKNumState)){
-				if($("[name*=tipo_pc_contrato]:checked").val() == "pc"){
+			if ([224, 71, 26, 70, 76, 80, 105, 148].includes(WKNumState)) {
+				if ($("[name*=tipo_pc_contrato]:checked").val() == "pc") {
 					tools.pedidos.carregaDados();
 					tools.pedidos.totaliza();
 					tools.pedidos.formata();
@@ -2484,9 +2490,9 @@ var tools = {
 				}
 			}
 		},
-		totaliza: function(){
-			aDados.pedidos.forEach(function(pedido){
-				pedido["C7_IMPOSTOS"] 	= (pedido["C7_VALCOF"] + pedido["C7_VALCSL"] + pedido["C7_VALICM"] + pedido["C7_VALINS"] + pedido["C7_VALIPI"] + pedido["C7_VALIR"] + pedido["C7_VALISS"] + pedido["C7_VALPIS"] + pedido["C7_VALSOL"]);
+		totaliza: function () {
+			aDados.pedidos.forEach(function (pedido) {
+				pedido["C7_IMPOSTOS"] = (pedido["C7_VALCOF"] + pedido["C7_VALCSL"] + pedido["C7_VALICM"] + pedido["C7_VALINS"] + pedido["C7_VALIPI"] + pedido["C7_VALIR"] + pedido["C7_VALISS"] + pedido["C7_VALPIS"] + pedido["C7_VALSOL"]);
 				pedido["C7_TOTALGERAL"] = pedido["C7_TOTAL"] + pedido["C7_FRETE"] + pedido["C7_IMPOSTOS"];
 			})
 		}
@@ -2515,23 +2521,25 @@ var tools = {
 			aDados["produtos"] = [];
 			let filhos = [];
 
-			let prodTmp = $("[name*=codigoProduto___].form-control").toArray().map(function(el){return {
-				"B1_COD" 	: $(el).val(),
-				"B1_UPRC"	: $(el).closest("tr").find("[name*=" + "produto_vlUltCompra" + "___]").val() != "NaN" ? $(el).closest("tr").find("[name*=" + "produto_vlUltCompra" + "___]").val() : "",
-				"B1_UCOM"	: $(el).closest("tr").find("[name*=" + "produto_dtUltCompra" + "___]").val(),
-				"vlUnit"	: $(el).closest("tr").find("[name*=" + "produto_vlUnitario" + "___]").val(),
-				"marcas"	: $(el).closest("tr").find("[name*=" + "produto_marcas" + "___]").val()
-			}})
-			
+			let prodTmp = $("[name*=codigoProduto___].form-control").toArray().map(function (el) {
+				return {
+					"B1_COD": $(el).val(),
+					"B1_UPRC": $(el).closest("tr").find("[name*=" + "produto_vlUltCompra" + "___]").val() != "NaN" ? $(el).closest("tr").find("[name*=" + "produto_vlUltCompra" + "___]").val() : "",
+					"B1_UCOM": $(el).closest("tr").find("[name*=" + "produto_dtUltCompra" + "___]").val(),
+					"vlUnit": $(el).closest("tr").find("[name*=" + "produto_vlUnitario" + "___]").val(),
+					"marcas": $(el).closest("tr").find("[name*=" + "produto_marcas" + "___]").val()
+				}
+			})
+
 			$("[name*=B1_PAI___]").not("[value='']").each(function (idx, el) {
 				if ($(el).closest("tr").find("[name*=B1_COD___]").val() != undefined) {
 					filhos.push({
-						B1_COD		: $(el).closest("tr").find("[name*=B1_COD___]").val().trim(),
-						B1_DESC		: $(el).closest("tr").find("[name*=B1_DESC___]").val(),
-						B1_PAI		: $(el).closest("tr").find("[name*=B1_PAI___]").val().trim(),
-						B1_ZMARCA	: $(el).closest("tr").find("[name*=B1_ZMARCA___]").val(),
-						ZPM_DESC	: $(el).closest("tr").find("[name*=ZPM_DESC___]").val(),
-						UM		: $("[name*=codigoProduto___][value='" + $(el).closest("tr").find("[name*=B1_PAI___]").val() + "']").closest("tr").find("[name*=unidadeMedidaProduto___]").val()
+						B1_COD: $(el).closest("tr").find("[name*=B1_COD___]").val().trim(),
+						B1_DESC: $(el).closest("tr").find("[name*=B1_DESC___]").val(),
+						B1_PAI: $(el).closest("tr").find("[name*=B1_PAI___]").val().trim(),
+						B1_ZMARCA: $(el).closest("tr").find("[name*=B1_ZMARCA___]").val(),
+						ZPM_DESC: $(el).closest("tr").find("[name*=ZPM_DESC___]").val(),
+						UM: $("[name*=codigoProduto___][value='" + $(el).closest("tr").find("[name*=B1_PAI___]").val() + "']").closest("tr").find("[name*=unidadeMedidaProduto___]").val()
 					})
 				}
 			})
@@ -2540,28 +2548,28 @@ var tools = {
 				if ($(el).closest("tr").find("[name*=B1_COD___]").val() != undefined) {
 					filterFilhos = filhos.filter(function (pf) { return pf.B1_PAI == $(el).closest("tr").find("[name*=B1_COD___]").val().trim() });
 					filterFilhos = filterFilhos.length > 0 ? filterFilhos : [{
-						B1_COD		: $(el).closest("tr").find("[name*=B1_COD___]").val().trim(),
-						B1_DESC		: $(el).closest("tr").find("[name*=B1_DESC___]").val(),
-						B1_PAI		: $(el).closest("tr").find("[name*=B1_PAI___]").val().trim(),
-						B1_ZMARCA	: $(el).closest("tr").find("[name*=B1_ZMARCA___]").val(),
-						ZPM_DESC	: $(el).closest("tr").find("[name*=ZPM_DESC___]").val(),
-						B1_UPRC		: $(el).closest("tr").find("[name*=produto_vlUnitario___]").val() != "" ? parseFloat($(el).closest("tr").find("[name^=produto_vlUnitario___]").val()) : 0,
-						B1_UCOM		: $(el).closest("tr").find("[name*=B1_UCOM___]").val()
-	
+						B1_COD: $(el).closest("tr").find("[name*=B1_COD___]").val().trim(),
+						B1_DESC: $(el).closest("tr").find("[name*=B1_DESC___]").val(),
+						B1_PAI: $(el).closest("tr").find("[name*=B1_PAI___]").val().trim(),
+						B1_ZMARCA: $(el).closest("tr").find("[name*=B1_ZMARCA___]").val(),
+						ZPM_DESC: $(el).closest("tr").find("[name*=ZPM_DESC___]").val(),
+						B1_UPRC: $(el).closest("tr").find("[name*=produto_vlUnitario___]").val() != "" ? parseFloat($(el).closest("tr").find("[name^=produto_vlUnitario___]").val()) : 0,
+						B1_UCOM: $(el).closest("tr").find("[name*=B1_UCOM___]").val()
+
 					}]
-					
-					let pTemp = prodTmp.filter(function(pT){return pT.B1_COD == $(el).closest("tr").find("[name*=B1_COD___]").val().trim()})[0];
-					
+
+					let pTemp = prodTmp.filter(function (pT) { return pT.B1_COD == $(el).closest("tr").find("[name*=B1_COD___]").val().trim() })[0];
+
 					aDados.produtos.push({
-						B1_COD	: $(el).closest("tr").find("[name*=B1_COD___]").val().trim(),
-						B1_DESC	: $(el).closest("tr").find("[name*=B1_DESC___]").val(),
-						QTD		: $("[name*=codigoProduto___][value='" + $(el).closest("tr").find("[name*=B1_COD___]").val() + "']").closest("tr").find("[name*=produto_qtd___]").val(),
-						UM		: $("[name*=codigoProduto___][value='" + $(el).closest("tr").find("[name*=B1_COD___]").val() + "']").closest("tr").find("[name*=unidadeMedidaProduto___]").val(),
-						B1_UPRC	: pTemp.B1_UPRC,
-						B1_UCOM	: pTemp.B1_UCOM,
-						vlUnit	: pTemp.vlUnit,
-						marcas	: pTemp.marcas,
-						FILHOS	: filterFilhos
+						B1_COD: $(el).closest("tr").find("[name*=B1_COD___]").val().trim(),
+						B1_DESC: $(el).closest("tr").find("[name*=B1_DESC___]").val(),
+						QTD: $("[name*=codigoProduto___][value='" + $(el).closest("tr").find("[name*=B1_COD___]").val() + "']").closest("tr").find("[name*=produto_qtd___]").val(),
+						UM: $("[name*=codigoProduto___][value='" + $(el).closest("tr").find("[name*=B1_COD___]").val() + "']").closest("tr").find("[name*=unidadeMedidaProduto___]").val(),
+						B1_UPRC: pTemp.B1_UPRC,
+						B1_UCOM: pTemp.B1_UCOM,
+						vlUnit: pTemp.vlUnit,
+						marcas: pTemp.marcas,
+						FILHOS: filterFilhos
 					})
 
 				}
@@ -2654,7 +2662,7 @@ var tools = {
 			}
 		},
 		limpaFilhos: function (B1_COD) {
-			if(B1_COD != ""){
+			if (B1_COD != "") {
 				$("[name*=B1_PAI___]").each(function (idx, el) {
 					if (el.value == B1_COD || $(el).closest("tr").find("[name^=B1_COD___]").val() == B1_COD) {
 						console.log(el);
@@ -2676,7 +2684,7 @@ var tools = {
 			return data_entrega != "" && idEmpresa != "";
 		}
 	},
-	rateio:{
+	rateio: {
 		dinamica: function () {
 			$(".semRateio,.comRateio").hide();
 
@@ -2691,7 +2699,7 @@ var tools = {
 				$("[name^=pRateioCCusto___]").each(function (id, el) { fnWdkRemoveChild(el); })
 			}
 		},
-		validaDuplicidade: function(index,COD_EMPRES){
+		validaDuplicidade: function (index, COD_EMPRES) {
 			let retorno = true;
 			$("[name^=codigoEmpresaRateio___]").not("#codigoEmpresaRateio___" + index + ",#_codigoEmpresaRateio___" + index).each(function (idx, el) {
 				if (el.value == COD_EMPRES) retorno = false;
@@ -2739,8 +2747,20 @@ var tools = {
 		carregaDiv() {
 			if ($("[name*=tipoSc]:checked").val() != "5" || aDados.cotacoes.length > 0) {
 				let temp = $("#tmpl5").html();
-				let html = Mustache.render(temp, aDados);
+				let tempDados = {
+					fornecedoresAtivo: null,
+					TES: null,
+					produtos: null,
+				}
+				tempDados.fornecedoresAtivo = aDados.fornecedoresAtivo
+				tempDados.TES = []
+				tempDados.produtos = aDados.produtos
+				let html = Mustache.render(temp, tempDados);
 
+				/**
+				 * @todo, enviar TES em branco e preencher os selects somente após a apresentação do modal
+					aDados.TES; 
+				*/
 				FLUIGC.modal({
 					title: 'Preencher dados TES',
 					content: html,
@@ -2752,6 +2772,19 @@ var tools = {
 					$(".tes").on("change", tools.TES.processa);
 					tools.TES.selecao.todos();
 					tools.TES.carregaNecessarios();
+
+					aDados.TES.forEach(function (elem) {
+						$('.tes').append($('<option>', {
+							value: elem.CODIGO,
+							text: elem.DISPLAY,
+							"data-cfop": elem.CFOP,
+							"data-descricao": elem.DESCRICAO,
+							"data-estoque": elem.ESTOQUE,
+							"data-codigo": elem.CODIGO,
+							"data-finalidade": elem.FINALIDADE,
+						}));
+
+					})
 				})
 			} else {
 				FLUIGC.toast({
@@ -2777,10 +2810,13 @@ var tools = {
 			aDados["TES"] = aDados["TES"].sort(function (el1, el2) { return el1.CODIGO - el2.CODIGO })
 		},
 		init() {
-			if ([26,65,21,163,76,80,105,148].includes(WKNumState)) {
+			if ([26, 65, 21, 163, 76, 80, 105, 148].includes(WKNumState)) {
 				if (aDados.fornecedores.length == 0) tools.mapa.carregaBase()
 				if (!aDados.TES) tools.TES.carregaOptions();
-				$("#btnTES").on("click", tools.TES.carregaDiv)
+				if (![26].includes(WKNumState))
+					$("#btnTES").on("click", tools.TES.carregaDiv)
+				else
+					$("#btnTES").hide();
 			} else {
 				$("#btnTES").hide();
 			}
@@ -2816,7 +2852,7 @@ var tools = {
 			delete aDados.obj;
 
 			if (obj.tipo == "produto") {
-				tools.TES.gravaLinha(obj.A2_COD, obj.A2_LOJA, obj.A2_CGC, obj.B1_COD.substring(0,8), obj.CODIGO);
+				tools.TES.gravaLinha(obj.A2_COD, obj.A2_LOJA, obj.A2_CGC, obj.B1_COD.substring(0, 8), obj.CODIGO);
 				if (obj.CODIGO != "") {
 					$("[data-a2cgc=" + obj.A2_CGC + "][data-b1cod=" + obj.B1_COD + "]").addClass("preenchido")
 				} else {
@@ -2825,26 +2861,26 @@ var tools = {
 
 			} else {
 				aDados.produtos.forEach(function (produto) {
-					tools.TES.gravaLinha(obj.A2_COD, obj.A2_LOJA, obj.A2_CGC, produto.B1_COD.substring(0,8), obj.CODIGO);
-					tools.TES.selecao.linha(obj.A2_CGC, produto.B1_COD.substring(0,8), obj.CODIGO);
+					tools.TES.gravaLinha(obj.A2_COD, obj.A2_LOJA, obj.A2_CGC, produto.B1_COD.substring(0, 8), obj.CODIGO);
+					tools.TES.selecao.linha(obj.A2_CGC, produto.B1_COD.substring(0, 8), obj.CODIGO);
 				})
 			}
 		},
 		processa() {
 			let _this = this;
 			aDados["obj"] = {
-				A2_COD		: $(this).attr("data-a2cod"),
-				A2_LOJA		: $(this).attr("data-a2loja"),
-				A2_NOME		: $(this).attr("data-a2nome"),
-				A2_CGC		: $(this).attr("data-a2cgc"),
-				B1_COD		: $(this).attr("data-b1cod"),
-				B1_DESC		: $(this).attr("data-b1desc"),
-				tipo		: $(this).attr("data-b1desc") != undefined ? "produto" : "fornecedor",
-				CFOP		: $(this).find("option:selected").attr("data-cfop"),
-				DESCRICAO	: $(this).find("option:selected").attr("data-descricao"),
-				ESTOQUE		: $(this).find("option:selected").attr("data-estoque"),
-				CODIGO		: $(this).find("option:selected").attr("data-codigo"),
-				FINALIDADE	: $(this).find("option:selected").attr("data-finalidade")
+				A2_COD: $(this).attr("data-a2cod"),
+				A2_LOJA: $(this).attr("data-a2loja"),
+				A2_NOME: $(this).attr("data-a2nome"),
+				A2_CGC: $(this).attr("data-a2cgc"),
+				B1_COD: $(this).attr("data-b1cod"),
+				B1_DESC: $(this).attr("data-b1desc"),
+				tipo: $(this).attr("data-b1desc") != undefined ? "produto" : "fornecedor",
+				CFOP: $(this).find("option:selected").attr("data-cfop"),
+				DESCRICAO: $(this).find("option:selected").attr("data-descricao"),
+				ESTOQUE: $(this).find("option:selected").attr("data-estoque"),
+				CODIGO: $(this).find("option:selected").attr("data-codigo"),
+				FINALIDADE: $(this).find("option:selected").attr("data-finalidade")
 			}
 
 			let txtTES = `	
@@ -2893,10 +2929,28 @@ var tools = {
 				}
 			},
 			linha(A2_CGC, B1_COD, CODIGO) {
-				$("[data-a2cgc=" + A2_CGC + "][data-b1cod=" + B1_COD + "]").val(CODIGO);
-				$("[data-a2cgc=" + A2_CGC + "][data-b1cod=" + B1_COD + "]").addClass("preenchido")
+
+				let elem = aDados.TES.filter(function (elem, indx) {
+					return elem.CODIGO == CODIGO;
+				})
+				if (elem.length > 0) {
+					elem = elem[0];
+					$("select[data-a2cgc=" + A2_CGC + "][data-b1cod=" + B1_COD + "]").append($('<option>', {
+						value: elem.CODIGO,
+						text: elem.DISPLAY,
+						"data-cfop": elem.CFOP,
+						"data-descricao": elem.DESCRICAO,
+						"data-estoque": elem.ESTOQUE,
+						"data-codigo": elem.CODIGO,
+						"data-finalidade": elem.FINALIDADE,
+					}));
+					$("select[data-a2cgc=" + A2_CGC + "][data-b1cod=" + B1_COD + "]").val(CODIGO);
+					$("[data-a2cgc=" + A2_CGC + "][data-b1cod=" + B1_COD + "]").addClass("preenchido")
+				}
 			},
 			todos() {
+
+				/** @todo, aqui está bugado e não recupera os já existentes, travando 100% */
 				$("[name^=TES_A2_CGC___]").toArray().forEach(function (el) {
 					if (el.value != "" && $(el).closest("tr").find("[name^=TES_B1_COD___]").val() != "" && $(el).closest("tr").find("[name^=TES_CODIGO___]").val() != "") {
 						tools.TES.selecao.linha(el.value, $(el).closest("tr").find("[name^=TES_B1_COD___]").val(), $(el).closest("tr").find("[name^=TES_CODIGO___]").val())
@@ -2910,14 +2964,14 @@ var tools = {
 	validacaoTecnica: {
 		init: function () {
 			tools.validacaoTecnica.carregaDados();
-			if ([26,76,80,105,148].includes(WKNumState) && usuarioCompras) {
+			if ([26, 76, 80, 105, 148].includes(WKNumState) && usuarioCompras) {
 				tools.validacaoTecnica.habilitaAcoes();
 				tools.validacaoTecnica.view.read();
 			} else if (aDados.validacaoTecnica.associacoes.length > 0) {
 				tools.validacaoTecnica.view.edit();
 			}
 			tools.validacaoTecnica.view.panel();
-			$("#validacao_tecnica_necessaria").on("change",tools.validacaoTecnica.view.panel);
+			$("#validacao_tecnica_necessaria").on("change", tools.validacaoTecnica.view.panel);
 		},
 		acoes: {
 			adicionaAnexos: function () {
@@ -2951,7 +3005,7 @@ var tools = {
 					actions: [{
 						'label': 'Confirmar',
 						'bind': 'btn-incluiAssociacao'
-					},{
+					}, {
 						'label': 'Cancelar',
 						'autoClose': true
 					}]
@@ -2965,19 +3019,19 @@ var tools = {
 					}
 				});
 			},
-			excluiAssociacao: function(){
+			excluiAssociacao: function () {
 				let idx = $(this).attr("data-idx");
-				
-				if(idx){
+
+				if (idx) {
 					FLUIGC.message.confirm({
-					    message: 'Confirma a exclusão desta associação?',
-					    labelYes: 'Confirma',
-					    labelNo: 'Cancela'
-					}, function(result, el, ev) {
-					    if(result){
-					    	fnWdkRemoveChild(document.getElementById("VT_A2CGC___"+idx));
-					    	tools.validacaoTecnica.view.read();
-					    }
+						message: 'Confirma a exclusão desta associação?',
+						labelYes: 'Confirma',
+						labelNo: 'Cancela'
+					}, function (result, el, ev) {
+						if (result) {
+							fnWdkRemoveChild(document.getElementById("VT_A2CGC___" + idx));
+							tools.validacaoTecnica.view.read();
+						}
 					});
 				}
 			},
@@ -3019,69 +3073,69 @@ var tools = {
 				}
 
 			},
-			salvaDecisao: function(){
-				let A2_COD 	= $(this).attr("data-cod");
+			salvaDecisao: function () {
+				let A2_COD = $(this).attr("data-cod");
 				let A2_LOJA = $(this).attr("data-loja");
-				var A2_CGC 	= $(this).attr("data-cgc");
-				let ACAO 	= $(this).attr("data-acao");
-				
-				if(ACAO == "ok"){
+				var A2_CGC = $(this).attr("data-cgc");
+				let ACAO = $(this).attr("data-acao");
+
+				if (ACAO == "ok") {
 					$("[name^=VT_A2CGC___].form-control,[name^=_VT_A2CGC___].form-control").toArray()
-					.forEach(function(file){
-						if($(file).closest("tr").find("[name*='" + "VT_A2CGC" + "___']").val() == A2_CGC && $(file).closest("tr").find("[name*='" + "VT_EXECUTADA" + "___']").val() == ""){
-							$(file).closest("tr").find("[name*='" + "VT_DECISAO" + "___']").val("APROVADO");
-							$(file).closest("tr").find("[name*='" + "VT_DECISAOOBS" + "___']").val("");
-							$(file).closest("tr").find("[name*='" + "VT_DATA_HORA" + "___']").val(new Date().toLocaleString("pt-br"));
-						}
-					})
-					$("[name^=A2_CGC___].form-control[value='"+A2_CGC+"'],[name^=_A2_CGC___].form-control[value='"+A2_CGC+"']").toArray()
-					.forEach(function(fornec){
-						$(fornec).closest("tr").find("[name*='"+"VALIDACAO_DECISAO"+"___']").val("true");
-					})
+						.forEach(function (file) {
+							if ($(file).closest("tr").find("[name*='" + "VT_A2CGC" + "___']").val() == A2_CGC && $(file).closest("tr").find("[name*='" + "VT_EXECUTADA" + "___']").val() == "") {
+								$(file).closest("tr").find("[name*='" + "VT_DECISAO" + "___']").val("APROVADO");
+								$(file).closest("tr").find("[name*='" + "VT_DECISAOOBS" + "___']").val("");
+								$(file).closest("tr").find("[name*='" + "VT_DATA_HORA" + "___']").val(new Date().toLocaleString("pt-br"));
+							}
+						})
+					$("[name^=A2_CGC___].form-control[value='" + A2_CGC + "'],[name^=_A2_CGC___].form-control[value='" + A2_CGC + "']").toArray()
+						.forEach(function (fornec) {
+							$(fornec).closest("tr").find("[name*='" + "VALIDACAO_DECISAO" + "___']").val("true");
+						})
 					tools.fornecedores.carregaDados();
 					tools.validacaoTecnica.view.edit();
 				}
-				else if(ACAO == "nok"){
+				else if (ACAO == "nok") {
 					tools.validacaoTecnica["modalAssociaAnexo"] = FLUIGC.modal({
 						title: 'Confirma reprovação',
-						content: '<div class="row col-md-12 form-group"><label>Observação</label><textarea class="form-control" data-cgc="'+A2_CGC+'" id="DECISAOOBS" rows="5"></textarea></div>',
+						content: '<div class="row col-md-12 form-group"><label>Observação</label><textarea class="form-control" data-cgc="' + A2_CGC + '" id="DECISAOOBS" rows="5"></textarea></div>',
 						id: 'fluig-confirmaReprova',
 						size: 'full',
 						actions: [{
 							'label': 'Confirmar',
 							'bind': 'btn-confirmaReprova'
-						},{
+						}, {
 							'label': 'Cancelar',
 							'autoClose': true
 						}]
 					}, function (err, data) {
 						console.log(err, data);
-						$("[btn-confirmareprova]").on("click",function(){
-							let A2_CGC 	= $("#DECISAOOBS").attr("data-cgc");
-							let OBS 	= $("#DECISAOOBS").val();
-							
+						$("[btn-confirmareprova]").on("click", function () {
+							let A2_CGC = $("#DECISAOOBS").attr("data-cgc");
+							let OBS = $("#DECISAOOBS").val();
+
 							$("[name^=VT_A2CGC___].form-control,[name^=_VT_A2CGC___].form-control").toArray()
-							.forEach(function(file){
-								if($(file).closest("tr").find("[name*='" + "VT_A2CGC" + "___']").val() == A2_CGC && $(file).closest("tr").find("[name*='" + "VT_EXECUTADA" + "___']").val() == ""){
-									$(file).closest("tr").find("[name*='" + "VT_DECISAO" + "___']").val("REPROVADO");
-									$(file).closest("tr").find("[name*='" + "VT_DECISAOOBS" + "___']").val(OBS);
-									$(file).closest("tr").find("[name*='" + "VT_DATA_HORA" + "___']").val(new Date().toLocaleString("pt-br"));
-								}
-							})
-							
-							$("[name^=A2_CGC___].form-control[value='"+A2_CGC+"'],[name^=_A2_CGC___].form-control[value='"+A2_CGC+"']").toArray()
-							.forEach(function(fornec){
-								$(fornec).closest("tr").find("[name*='"+"VALIDACAO_DECISAO"+"___']").val("false");
-								$(fornec).closest("tr").find("[name*='"+"VALIDACAO_OBS"+"___']").val(OBS);
-							})
-								
+								.forEach(function (file) {
+									if ($(file).closest("tr").find("[name*='" + "VT_A2CGC" + "___']").val() == A2_CGC && $(file).closest("tr").find("[name*='" + "VT_EXECUTADA" + "___']").val() == "") {
+										$(file).closest("tr").find("[name*='" + "VT_DECISAO" + "___']").val("REPROVADO");
+										$(file).closest("tr").find("[name*='" + "VT_DECISAOOBS" + "___']").val(OBS);
+										$(file).closest("tr").find("[name*='" + "VT_DATA_HORA" + "___']").val(new Date().toLocaleString("pt-br"));
+									}
+								})
+
+							$("[name^=A2_CGC___].form-control[value='" + A2_CGC + "'],[name^=_A2_CGC___].form-control[value='" + A2_CGC + "']").toArray()
+								.forEach(function (fornec) {
+									$(fornec).closest("tr").find("[name*='" + "VALIDACAO_DECISAO" + "___']").val("false");
+									$(fornec).closest("tr").find("[name*='" + "VALIDACAO_OBS" + "___']").val(OBS);
+								})
+
 							tools.fornecedores.carregaDados();
 							tools.validacaoTecnica.view.edit();
 							tools.validacaoTecnica["modalAssociaAnexo"].remove();
 						})
 					});
 				}
-				
+
 				//tools.validacaoTecnica.view.edit();
 			}
 		},
@@ -3094,76 +3148,79 @@ var tools = {
 					"FILE_IDX": $(file).closest("tr").find("[name*='" + "FILE_IDX" + "___']").val()
 				}
 			});
-			
+
 			aDados.validacaoTecnica["associacoes"] = $("[name^=VT_A2CGC___].form-control,[name^=_VT_A2CGC___].form-control").toArray().map(function (file) {
 				return {
-					"idx"				: $(file).attr("id").split("___")[1],
-					"VT_A2CGC"			: $(file).closest("tr").find("[name*='" + "VT_A2CGC" + "___']").val(),
-					"VT_B1COD"			: $(file).closest("tr").find("[name*='" + "VT_B1COD" + "___']").val(),
-					"VT_FILEIDX"		: $(file).closest("tr").find("[name*='" + "VT_FILEIDX" + "___']").val(),
-					"FILE_DESCRIPTION"	: $(file).closest("tr").find("[name*='" + "VT_FILEIDX" + "___']").val() != "" ? aDados.validacaoTecnica.files.filter(function(f){return f.FILE_IDX == $(file).closest("tr").find("[name*='" + "VT_FILEIDX" + "___']").val()})[0].FILE_DESCRIPTION : "",
-					"FILE_ID"			: $(file).closest("tr").find("[name*='" + "VT_FILEIDX" + "___']").val() != "" ? aDados.validacaoTecnica.files.filter(function(f){return f.FILE_IDX == $(file).closest("tr").find("[name*='" + "VT_FILEIDX" + "___']").val()})[0].FILE_ID : "",
-					"VT_DETALHAMENTO"	: $(file).closest("tr").find("[name*='" + "VT_DETALHAMENTO" + "___']").val(),
-					"VT_DECISAO"		: $(file).closest("tr").find("[name*='" + "VT_DECISAO" + "___']").val(),
-					"VT_DECISAOOBS"		: $(file).closest("tr").find("[name*='" + "VT_DECISAOOBS" + "___']").val(),
-					"VT_DATA_HORA"		: $(file).closest("tr").find("[name*='" + "VT_DATA_HORA" + "___']").val(),
-					"exibeFile"			: $(file).closest("tr").find("[name*='" + "VT_FILEIDX" + "___']").val() != "",
-					"exibeDetalhe"		: $(file).closest("tr").find("[name*='" + "VT_DETALHAMENTO" + "___']").val() != "",
-					"exibeExcluir"		: $(file).closest("tr").find("[name*='" + "VT_EXECUTADA" + "___']").val() == "" && [26,76,80,105,148].includes(WKNumState),
-					"APROVADO"			: $(file).closest("tr").find("[name*='" + "VT_DECISAO" + "___']").val() == "APROVADO",
-					"REPROVADO"			: $(file).closest("tr").find("[name*='" + "VT_DECISAO" + "___']").val() == "REPROVADO",
-					"exibeDecisao"		: $(file).closest("tr").find("[name*='" + "VT_DECISAO" + "___']").val() != ""
+					"idx": $(file).attr("id").split("___")[1],
+					"VT_A2CGC": $(file).closest("tr").find("[name*='" + "VT_A2CGC" + "___']").val(),
+					"VT_B1COD": $(file).closest("tr").find("[name*='" + "VT_B1COD" + "___']").val(),
+					"VT_FILEIDX": $(file).closest("tr").find("[name*='" + "VT_FILEIDX" + "___']").val(),
+					"FILE_DESCRIPTION": $(file).closest("tr").find("[name*='" + "VT_FILEIDX" + "___']").val() != "" ? aDados.validacaoTecnica.files.filter(function (f) { return f.FILE_IDX == $(file).closest("tr").find("[name*='" + "VT_FILEIDX" + "___']").val() })[0].FILE_DESCRIPTION : "",
+					"FILE_ID": $(file).closest("tr").find("[name*='" + "VT_FILEIDX" + "___']").val() != "" ? aDados.validacaoTecnica.files.filter(function (f) { return f.FILE_IDX == $(file).closest("tr").find("[name*='" + "VT_FILEIDX" + "___']").val() })[0].FILE_ID : "",
+					"VT_DETALHAMENTO": $(file).closest("tr").find("[name*='" + "VT_DETALHAMENTO" + "___']").val(),
+					"VT_DECISAO": $(file).closest("tr").find("[name*='" + "VT_DECISAO" + "___']").val(),
+					"VT_DECISAOOBS": $(file).closest("tr").find("[name*='" + "VT_DECISAOOBS" + "___']").val(),
+					"VT_DATA_HORA": $(file).closest("tr").find("[name*='" + "VT_DATA_HORA" + "___']").val(),
+					"exibeFile": $(file).closest("tr").find("[name*='" + "VT_FILEIDX" + "___']").val() != "",
+					"exibeDetalhe": $(file).closest("tr").find("[name*='" + "VT_DETALHAMENTO" + "___']").val() != "",
+					"exibeExcluir": $(file).closest("tr").find("[name*='" + "VT_EXECUTADA" + "___']").val() == "" && [26, 76, 80, 105, 148].includes(WKNumState),
+					"APROVADO": $(file).closest("tr").find("[name*='" + "VT_DECISAO" + "___']").val() == "APROVADO",
+					"REPROVADO": $(file).closest("tr").find("[name*='" + "VT_DECISAO" + "___']").val() == "REPROVADO",
+					"exibeDecisao": $(file).closest("tr").find("[name*='" + "VT_DECISAO" + "___']").val() != ""
 				}
 			});
-			
+
 			aDados.validacaoTecnica["fornecedores"] = aDados.fornecedores
-			.filter(function(el){return aDados.validacaoTecnica["associacoes"].filter(function(a){return el.A2_CGC == a.VT_A2CGC}).length > 0})
-			.map(function(el){
-				return {
-					"A2_COD"	: el.A2_COD,
-					"A2_LOJA"	: el.A2_LOJA,
-					"A2_NOME"	: el.A2_NOME.trim(),
-					"A2_CGC"	: el.A2_CGC,
-					"A2_EST"	: el.A2_EST,
-					"APROVADO"	: el.VALIDACAO_DECISAO == "true",
-					"REPROVADO" : el.VALIDACAO_DECISAO == "false",
-					"MSGREPROV" : el.VALIDACAO_OBS,
-					"associacoes"	: aDados.validacaoTecnica.associacoes.filter(function(a){return a.VT_A2CGC == el.A2_CGC && a.VT_B1COD == ""}),
-					"produtos"		: aDados.produtos.map(function(p){return {
-						"B1_COD"	: p.B1_COD,
-						"B1_DESC"	: p.B1_DESC,
-						"associacoes" : aDados.validacaoTecnica.associacoes.filter(function(a){return a.VT_A2CGC == el.A2_CGC && a.VT_B1COD == p.B1_COD})
-					}}).filter(function(p){return p.associacoes.length > 0})
-				}}
-			)
-			.filter(function(el){return el.associacoes.length > 0 || el.produtos.length > 0})
+				.filter(function (el) { return aDados.validacaoTecnica["associacoes"].filter(function (a) { return el.A2_CGC == a.VT_A2CGC }).length > 0 })
+				.map(function (el) {
+					return {
+						"A2_COD": el.A2_COD,
+						"A2_LOJA": el.A2_LOJA,
+						"A2_NOME": el.A2_NOME.trim(),
+						"A2_CGC": el.A2_CGC,
+						"A2_EST": el.A2_EST,
+						"APROVADO": el.VALIDACAO_DECISAO == "true",
+						"REPROVADO": el.VALIDACAO_DECISAO == "false",
+						"MSGREPROV": el.VALIDACAO_OBS,
+						"associacoes": aDados.validacaoTecnica.associacoes.filter(function (a) { return a.VT_A2CGC == el.A2_CGC && a.VT_B1COD == "" }),
+						"produtos": aDados.produtos.map(function (p) {
+							return {
+								"B1_COD": p.B1_COD,
+								"B1_DESC": p.B1_DESC,
+								"associacoes": aDados.validacaoTecnica.associacoes.filter(function (a) { return a.VT_A2CGC == el.A2_CGC && a.VT_B1COD == p.B1_COD })
+							}
+						}).filter(function (p) { return p.associacoes.length > 0 })
+					}
+				}
+				)
+				.filter(function (el) { return el.associacoes.length > 0 || el.produtos.length > 0 })
 		},
 		view: {
 			edit() {
 				tools.validacaoTecnica.carregaDados()
-				if(aDados.validacaoTecnica.fornecedores.length > 0){
+				if (aDados.validacaoTecnica.fornecedores.length > 0) {
 					let temp = $("#tmpl13").html();
-					let html = Mustache.render(temp,aDados.validacaoTecnica.fornecedores);
+					let html = Mustache.render(temp, aDados.validacaoTecnica.fornecedores);
 					$("#tabValidacaoTecnica").html(html);
-					$("[file-id]").on("click",tools.validacaoTecnica.anexos.abre);
-					$("[data-validafornecedor]").on("click",tools.validacaoTecnica.acoes.salvaDecisao);
+					$("[file-id]").on("click", tools.validacaoTecnica.anexos.abre);
+					$("[data-validafornecedor]").on("click", tools.validacaoTecnica.acoes.salvaDecisao);
 				}
 			},
 			read() {
 				tools.validacaoTecnica.carregaDados()
-				if(aDados.validacaoTecnica.fornecedores.length > 0){
+				if (aDados.validacaoTecnica.fornecedores.length > 0) {
 					let temp = $("#tmpl13").html();
-					let html = Mustache.render(temp,aDados.validacaoTecnica.fornecedores);
+					let html = Mustache.render(temp, aDados.validacaoTecnica.fornecedores);
 					$("#tabValidacaoTecnica").html(html);
-					$("[file-id]").on("click",tools.validacaoTecnica.anexos.abre);
-					$(".delAssocValid").on("click",tools.validacaoTecnica.acoes.excluiAssociacao);
+					$("[file-id]").on("click", tools.validacaoTecnica.anexos.abre);
+					$(".delAssocValid").on("click", tools.validacaoTecnica.acoes.excluiAssociacao);
 				}
-				
+
 			},
-			panel(){
-				if($("[name*=validacao_tecnica_necessaria]:checked").val() == "true"){
+			panel() {
+				if ($("[name*=validacao_tecnica_necessaria]:checked").val() == "true") {
 					$("#panelValidacaoTecnica").show()
-				}else{
+				} else {
 					$("#panelValidacaoTecnica").hide()
 				}
 			}
@@ -3173,26 +3230,26 @@ var tools = {
 			$("#btnAssociaAnexos").removeClass("hide").on("click", tools.validacaoTecnica.acoes.associaAnexos);
 		},
 		anexos: {
-			abre:function(){
+			abre: function () {
 				tools.validacaoTecnica.anexos.openAttachment($(this).attr("file-id"))
 			},
-			recuperaId: function(documentDescription){
+			recuperaId: function (documentDescription) {
 				let dsAttach = DatasetFactory.getDataset(
 					"processAttachment",
 					["documentId"],
 					[
-						DatasetFactory.createConstraint("processAttachmentPK.attachmentSequence","1","1",ConstraintType.MUST_NOT),
-						DatasetFactory.createConstraint("processAttachmentPK.processInstanceId",$("#numeroSolicitacao,#_numeroSolicitacao").val(),$("#numeroSolicitacao,#_numeroSolicitacao").val(),ConstraintType.MUST)
+						DatasetFactory.createConstraint("processAttachmentPK.attachmentSequence", "1", "1", ConstraintType.MUST_NOT),
+						DatasetFactory.createConstraint("processAttachmentPK.processInstanceId", $("#numeroSolicitacao,#_numeroSolicitacao").val(), $("#numeroSolicitacao,#_numeroSolicitacao").val(), ConstraintType.MUST)
 					],
 					["documentId"]
 				)
-				
-				if(dsAttach.values != undefined && dsAttach.values.length > 0){
-					let c = [DatasetFactory.createConstraint("documentDescription",documentDescription,documentDescription,ConstraintType.MUST)]
-					dsAttach.values.forEach(function(at){
-						c.push(DatasetFactory.createConstraint("documentPK.documentId",at.documentId,at.documentId,ConstraintType.SHOULD))
+
+				if (dsAttach.values != undefined && dsAttach.values.length > 0) {
+					let c = [DatasetFactory.createConstraint("documentDescription", documentDescription, documentDescription, ConstraintType.MUST)]
+					dsAttach.values.forEach(function (at) {
+						c.push(DatasetFactory.createConstraint("documentPK.documentId", at.documentId, at.documentId, ConstraintType.SHOULD))
 					})
-					let dsDoc = DatasetFactory.getDataset("document",null,c,["documentPK.documentId"])
+					let dsDoc = DatasetFactory.getDataset("document", null, c, ["documentPK.documentId"])
 					return dsDoc.values[dsDoc.values.length - 1]["documentPK.documentId"];
 				}
 				return "";
@@ -3210,15 +3267,15 @@ var tools = {
 								$('.ecm-navigation-silverlight', parent.document).show('fade').css('top', 0);
 								$('#ecm-navigation-silverlight', parent.document).attr({
 									'data-on-camera': 'true',
-									'data-file-name-camera': fileDescription+"_"+tim,
+									'data-file-name-camera': fileDescription + "_" + tim,
 								});
 								$(parent.document).on('keyup', this.actionKeyup);
 							} else {
 								var element = parent.document.getElementById('ecm-navigation-inputFile-clone');
 								if (element && document.createEvent) {
-									element.setAttribute('data-on-camera','true');
+									element.setAttribute('data-on-camera', 'true');
 									if (fileDescription && idInput) {
-										element.setAttribute('data-file-name-camera', fileDescription+"_"+tim);
+										element.setAttribute('data-file-name-camera', fileDescription + "_" + tim);
 									}
 									//Realiza o click no botão "Carregar arquivos" que tem na aba de anexos
 									element.click();
@@ -3333,7 +3390,7 @@ var tools = {
 				}, function (err, data) {
 					if (!err) {
 						$("#modFornecedor").DataTable({
-							data: fluigMapa.fornecedores.filter(function(el){return el.A2_COND != ""}),
+							data: fluigMapa.fornecedores.filter(function (el) { return el.A2_COND != "" }),
 							columns: [
 								{ data: "A2_COD" },
 								{ data: "A2_LOJA" },
@@ -3342,17 +3399,17 @@ var tools = {
 								{ data: "A2_EST" }
 							],
 							createdRow: function (row, data, dataIndex) {
-								$(row).attr('data-cgc'	, data.A2_CGC);
-								$(row).attr('data-cod'	, data.A2_COD);
-								$(row).attr('data-loja'	, data.A2_LOJA);
-								$(row).attr('data-nome'	, data.A2_NOME);
-								$(row).attr('data-uf'	, data.A2_EST);
+								$(row).attr('data-cgc', data.A2_CGC);
+								$(row).attr('data-cod', data.A2_COD);
+								$(row).attr('data-loja', data.A2_LOJA);
+								$(row).attr('data-nome', data.A2_NOME);
+								$(row).attr('data-uf', data.A2_EST);
 								$(row).on("click", function () {
-									let cgc 	= $(this).attr("data-cgc");
-									let cod 	= $(this).attr("data-cod");
-									let loja 	= $(this).attr("data-loja");
-									let nome 	= $(this).attr("data-nome");
-									let uf 		= $(this).attr("data-uf");
+									let cgc = $(this).attr("data-cgc");
+									let cod = $(this).attr("data-cod");
+									let loja = $(this).attr("data-loja");
+									let nome = $(this).attr("data-nome");
+									let uf = $(this).attr("data-uf");
 
 									$("[data-panel='edit'][data-id='B1_DESC']").val("");
 									$("[data-panel='edit'][data-id='A2_NOME']").val(nome);
@@ -3451,11 +3508,11 @@ var tools = {
 			var obj = [];
 			$("[name^=_A2_COD___]").each((idx, el) => {
 				obj.push({
-					A2_COD		: $(el).val(),
-					A2_LOJA		: $(el).closest("tr").find("[name^=_A2_LOJA___]").val(),
-					A2_NOME		: $(el).closest("tr").find("[name^=_A2_NOME___]").val(),
-					A2_CGC		: $(el).closest("tr").find("[name^=_A2_CGC___]").val(),
-					A2_EST		: $(el).closest("tr").find("[name^=_A2_EST___]").val()
+					A2_COD: $(el).val(),
+					A2_LOJA: $(el).closest("tr").find("[name^=_A2_LOJA___]").val(),
+					A2_NOME: $(el).closest("tr").find("[name^=_A2_NOME___]").val(),
+					A2_CGC: $(el).closest("tr").find("[name^=_A2_CGC___]").val(),
+					A2_EST: $(el).closest("tr").find("[name^=_A2_EST___]").val()
 				})
 			});
 			return obj;
