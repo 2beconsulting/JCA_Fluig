@@ -1,28 +1,8 @@
-{
-    "COTACAO": [
-        {
-            "C8_NUMERO": "000064",
-            "EMPRESA": "00100289",
-            "FORNECE": [
-                {
-                    "ITEM": [
-                        {
-                            "C8_PRECO": "10.00",
-                            "C8_PRODUTO": "010000020003",
-                            "C8_QTDISP": "11.00",
-                            "C8_TES": "001",
-                            "C8_PRAZO": "0"
-                        }
-                    ],
-                    "C8_FORNECE": "00048101",
-                    "C8_TPFRETE": "C",
-                    "C8_DESPESA": "0.00",
-                    "C8_COND": "010",
-                    "C8_TOTFRE": "10.00",
-                    "C8_VLDESC": "0.00",
-                    "C8_SEGURO": "0.00"
-                }
-            ]
-        }
-    ]
-}
+-----BEGIN OPENSSH PRIVATE KEY-----
+b3BlbnNzaC1rZXktdjEAAAAACmFlczI1Ni1jdHIAAAAGYmNyeXB0AAAAGAAAABCvaAufvr
+2H8cutgjnSUWxvAAAAGAAAAAEAAAAzAAAAC3NzaC1lZDI1NTE5AAAAIImvnjDm7Y8N0YvV
+SFju4aewCLZIrLGV3wLYySMh+uBOAAAAoOccmmkHH64AFoQcnwYU83cotMWqGQ07o79rii
+K5IlNqNo1UR2g7gHRT5oNLvXlEwkl6ZuVCwxkMg44N6v8xP1Ad/QzB97VAOsazOQ71//V8
+jLQDVpn4IJl9I6GzFLDZCdc+2BqkOPVRURCS+AZwnLK/7jpYh2XFU6JUBIjfdE6P33Za1n
+DSI1TrjksMHSJL6PZ2Li/cgSEc+1W87VD8jpo=
+-----END OPENSSH PRIVATE KEY-----
