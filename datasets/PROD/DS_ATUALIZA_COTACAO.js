@@ -125,7 +125,7 @@ function createDataset(fields, constraints, sortFields) {
 								"FORNECE": FORNECE
 							}]
 
-							retorno = postProtheus("/JWSSC8A2/2", { "COTACAO": COTACAO }, "01," + idEmpresa);
+							retorno = postProtheus("/JWSSC802/2", { "COTACAO": COTACAO }, "01," + idEmpresa);
 
 							if (retorno.ok) {
 								var dadosProtheus = getProtheus("/JWSSC803/3/" + idEmpresa + "/" + C8_NUM, "01," + idEmpresa);
