@@ -1129,6 +1129,9 @@ var tools = {
 					tools.log("++ obj");
 					log.dir(obj);
 					tools.log(">> tools.cotacao.getData [#1159]");
+					obj.dados.sort(function (a, b) {
+						return parseInt(a.C8_ITEM) - parseInt(b.C8_ITEM)
+					})
 					if (obj.dados.length > 0) {
 
 						var updateFields = {};
