@@ -35,6 +35,7 @@ $("input[id^='C8_FORNECE'][value='008674']").each((idx, elem) => {
             preco: $("#C8_PRECO___" + linha).val(),
             quantidade: $("#C8_QUANT___" + linha).val(),
             prazo: $("#C8_PRAZO___" + linha).val(),
+            total: $("#C8_TOTAL___" + linha).val()
         }
     )
 })
@@ -49,6 +50,7 @@ fornecedores["00867403"].forEach(element => {
         $("#C8_PRECO___" + linha).val(item.preco)
         $("#C8_QUANT___" + linha).val(item.quantidade)
         $("#C8_PRAZO___" + linha).val(item.prazo)
+        $("#C8_TOTAL___" + linha).val(item.total)
     }
 });
 

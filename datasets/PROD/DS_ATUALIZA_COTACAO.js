@@ -125,7 +125,7 @@ function createDataset(fields, constraints, sortFields) {
 								"FORNECE": FORNECE
 							}]
 
-							retorno = postProtheus("/JWSSC8A2/2", { "COTACAO": COTACAO }, "01," + idEmpresa);
+							retorno = postProtheus("/JWSSC802/2", { "COTACAO": COTACAO }, "01," + idEmpresa);
 
 							if (retorno.ok) {
 								var dadosProtheus = getProtheus("/JWSSC803/3/" + idEmpresa + "/" + C8_NUM, "01," + idEmpresa);
@@ -171,7 +171,6 @@ function createDataset(fields, constraints, sortFields) {
 												reg.C8_VALISS = filProtheus[0].C8_VALISS;
 												reg.C8_VALSOL = filProtheus[0].C8_VALSOL;
 												reg.C8_TOTAL = filProtheus[0].C8_TOTAL;
-												//reg.VENCEDOR = filProtheus[0].C8_STATUS;
 
 												log.info("formFields>>" + C8_FORNECE + ":" + C8_PRODUTO + ":" + C8_LOJA);
 												log.dir(formFields);
@@ -204,43 +203,7 @@ function createDataset(fields, constraints, sortFields) {
 							else {
 								return dsError(retorno.error, [])
 							}
-							/* PRECISA ALTERAR MESMO QUANDO A QUANTIDADE DO COMPRADOR É IGUAL A DO FORNECEDOR
-							}
-							else{
-								var formFields = {
-										"values":[
-											{"fieldId":"QTD_COMPRADOR"+"___"+reg.idx 			, "value":QTD_COMPRADOR},
-											{"fieldId":"COMPRADOR"+"___"+reg.idx 				, "value":COMPRADOR},
-											{"fieldId":"VENCEDOR_COMPRADOR"+"___"+reg.idx 		, "value":VENCEDOR_COMPRADOR},
-											{"fieldId":"COMPRADOR_JUSTIFICATIVA"+"___"+reg.idx 	, "value":COMPRADOR_JUSTIFICATIVA},
-										]
-									}
-									
-									log.info("formFields");
-									log.dir(formFields);
-									
-									if(reg.documentid != "" && reg.documentid != undefined){
-										var integrado = putFluig("/ecm-forms/api/v2/cardindex/"+formCotacao+"/cards/"+reg.documentid+"/children/"+reg.idx,formFields);
-										log.info("integrado 195");
-										log.dir(integrado);
-										return integrado.ok ? 
-											DatasetFactory.getDataset(
-												"DS_CONSULTA_COTACOES",
-												null,
-												[
-													DatasetFactory.createConstraint("idEmpresaEntrega",idEmpresaEntrega,idEmpresaEntrega,ConstraintType.MUST),
-													DatasetFactory.createConstraint("C8_NUM",C8_NUM,C8_NUM,ConstraintType.MUST),
-													DatasetFactory.createConstraint("C8_CICLO",C8_CICLO,C8_CICLO,ConstraintType.MUST)
-												],
-												null
-											)
-											: dsError(integrado.error,[])
-									}
-									else{
-										return dsError("Não foi encontrado a cotação para atualizar!",[])
-									}
-							}
-							*/
+
 						}
 						else {
 							return dsError("Falta enviar campos obrigatórios!", [])
