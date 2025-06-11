@@ -876,7 +876,7 @@ var tools = {
 
 				if (obj.ok) {
 
-					var fornecedoresAtivo = tools.cotacao.getTabFornecedor(cardData)
+					var fornecedoresAtivo = tools.cotacao.getTabFornecedor(cardData, false)
 
 					log.info(">> fornecedoresAtivo");
 					log.dir(fornecedoresAtivo);
@@ -1469,8 +1469,7 @@ var tools = {
 		getItensCotacao: function (cardData) {
 			var obj = [];
 
-			//var tabFornecedorProduto = tools.cotacao.getTabFornecedorProduto(cardData);
-			var tabFornecedor = tools.cotacao.getTabFornecedor(cardData);
+			var tabFornecedor = tools.cotacao.getTabFornecedor(cardData, false);
 			var tabSC = tools.cotacao.getTabSC(cardData);
 
 			log.dir(tabFornecedor)
@@ -1491,14 +1490,20 @@ var tools = {
 
 			return obj;
 		},
-		getTabFornecedor: function (cardData) {
+		getTabFornecedor: function (cardData, isInserido) {
 			var tableFornecedores = tools.getTableFilho(
 				cardData || hAPI.getCardData(getValue("WKNumProces")),
 				["A2_COD", "A2_CGC", "A2_LOJA", "A2_NOME", "CICLO_REMOVIDO", "A2_COND",
-					"A2_TPFRETE", "A2_VALFRE"]
+					"A2_TPFRETE", "A2_VALFRE", "CICLO_INSERIDO"]
 			);
+			tools.log("tableFornecedores");
+			log.dir(tableFornecedores);
+
 			return tableFornecedores
 				.filter(function (linha) {
+					if (isInserido) {
+						return linha["CICLO_INSERIDO"].value == ""
+					}
 					return linha["CICLO_REMOVIDO"].value == ""
 				})
 				.map(function (linha) {
@@ -1655,7 +1660,7 @@ var tools = {
 		incluiCotacao: function (ciclo_atual, cardData) {
 			log.info(">> tools.fornecedores.incluiCotacao [#1329]")
 			var retorno = { ok: true, obj: [] };
-			var fornecedores = tools.cotacao.getTabFornecedor(cardData)
+			var fornecedores = tools.cotacao.getTabFornecedor(cardData, true)
 			log.dir(fornecedores);
 
 			if (fornecedores.length > 0) {
@@ -1985,7 +1990,8 @@ var tools = {
 					"SELECT COT.C8_ITEM, COT.C8_FORNECE, COT.C8_LOJA FROM " + hAPI.getAdvancedProperty("mlFormCotacao") + " ML \
 						INNER JOIN DOCUMENTO DOC ON DOC.NR_DOCUMENTO = ML.DOCUMENTID AND DOC.NR_VERSAO = ML.VERSION \
 						INNER JOIN "+ hAPI.getAdvancedProperty("mlTabCotacao") + " COT ON COT.DOCUMENTID = ML.DOCUMENTID AND COT.VERSION = ML.VERSION \
-					WHERE ML.C8_NUM = '"+ hAPI.getCardValue("C8_NUM") + "' AND ML.idEmpresa = '" + hAPI.getCardValue("idEmpresa") + "' AND ML.C8_CICLO = '" + hAPI.getCardValue("ciclo_atual") + "' AND COT.VENCEDOR_COMPRADOR = 'true' AND DOC.VERSAO_ATIVA = 1"
+					WHERE ML.C8_NUM = '"+ hAPI.getCardValue("C8_NUM") + "' AND ML.idEmpresa = '" + hAPI.getCardValue("idEmpresa") + "' AND ML.C8_CICLO = '" + hAPI.getCardValue("ciclo_atual")
+					+ "' AND COT.VENCEDOR_COMPRADOR = 'true' AND DOC.VERSAO_ATIVA = 1"
 				)
 				dsItens = dsItens.map(function (item) {
 					return {
@@ -2054,7 +2060,7 @@ var tools = {
 		atualizaCotacao: function (cardData) {
 			var retorno = { ok: true };
 			var ciclo_atual = cardData.get("ciclo_atual");
-			var tabFornecedor = tools.cotacao.getTabFornecedor(cardData);
+			var tabFornecedor = tools.cotacao.getTabFornecedor(cardData, false);
 
 			var tableTES = tools.getTableFilho(
 				cardData || hAPI.getCardData(getValue("WKNumProces")),
@@ -2360,7 +2366,7 @@ var tools = {
 			var arrAdiciona = [];
 			var tableTES = tools.getTableFilho(
 				cardData || hAPI.getCardData(getValue("WKNumProces")),
-				["TES_A2_COD", "TES_A2_LOJA", "TES_B1_COD", "TES_A2_CGC"]
+				["TES_A2_COD", "TES_A2_LOJA", "TES_B1_COD", "TES_A2_CGC", "TES_CODIGO"]
 			);
 			var tes = tableTES.map(function (linha) {
 				var idx = linha["TES_A2_COD"].index;
@@ -2369,13 +2375,14 @@ var tools = {
 					"TES_A2_COD": "" + linha["TES_A2_COD"].value,
 					"TES_A2_LOJA": "" + linha["TES_A2_LOJA"].value,
 					"TES_B1_COD": "" + linha["TES_B1_COD"].value,
-					"TES_A2_CGC": "" + linha["TES_A2_CGC"].value
+					"TES_A2_CGC": "" + linha["TES_A2_CGC"].value,
+					"TES_CODIGO": "" + linha["TES_CODIGO"].value
 				}
 			})
 			log.info(">> tes <<");
 			log.dir(tes);
 
-			var tesVazias = tes.filter(function (el) { return el.TES_A2_COD == "" })
+			var tesVazias = tes.filter(function (el) { return el.TES_CODIGO == "" })
 			log.info(">> tesVazias <<");
 			log.dir(tesVazias);
 			if (tesVazias.length > 0) {
@@ -2384,7 +2391,7 @@ var tools = {
 				}
 			}
 
-			var fornecedores = tools.cotacao.getTabFornecedor(cardData);
+			var fornecedores = tools.cotacao.getTabFornecedor(cardData, false);
 			log.info(">> fornecedores <<");
 			log.dir(fornecedores);
 
