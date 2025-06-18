@@ -1217,7 +1217,7 @@ var tools = {
 			return v;
 		},
 		floatToMoney6: function (v) {
-			v = tools.formata.floatToMoney(v)
+			v = tools.formata.floatToMoney(v, 6)
 			return v;
 		}
 	},
@@ -1685,7 +1685,7 @@ var tools = {
 				if (mapa.length > 0) {
 					let temp = $("#tmpl1").html();
 					let html = Mustache.render(temp, mapa);
-					//$("#tabMapa").html(html);
+
 					if ([26, 76, 80, 105, 148].includes(WKNumState)) $("[data-vencedor]").on("click", tools.mapa.setaVencedor);
 				}
 
@@ -1700,26 +1700,28 @@ var tools = {
 					})
 					mapa[0].cotacoes.forEach(function (cotacao) {
 						cotacao["TOTAL_GERAL"] = tools.formata.toFloat(cotacao.C8_TOTAL) + tools.formata.toFloat(cotacao.C8_DIFAL) + tools.formata.toFloat(cotacao.C8_VALIPI) + tools.formata.toFloat(cotacao.C8_VALISS) + tools.formata.toFloat(cotacao.C8_VALSOL)
-						cotacao.C8_TOTAL = tools.formata.floatToMoney(tools.formata.toFloat(cotacao.C8_TOTAL));
-						cotacao.C8_PRECO = tools.formata.floatToMoney(tools.formata.toFloat(cotacao.C8_PRECO));
+						cotacao.C8_TOTAL = tools.formata.floatToMoney6(tools.formata.toFloat(cotacao.C8_TOTAL));
+						cotacao.C8_PRECO = tools.formata.floatToMoney6(tools.formata.toFloat(cotacao.C8_PRECO));
 						cotacao.C8_DIFAL = tools.formata.floatToMoney(tools.formata.toFloat(cotacao.C8_DIFAL));
 						cotacao.C8_VALICM = tools.formata.floatToMoney(tools.formata.toFloat(cotacao.C8_VALICM));
 						cotacao.C8_VALIPI = tools.formata.floatToMoney(tools.formata.toFloat(cotacao.C8_VALIPI));
 						cotacao.C8_VALISS = tools.formata.floatToMoney(tools.formata.toFloat(cotacao.C8_VALISS));
 						cotacao.C8_VALSOL = tools.formata.floatToMoney(tools.formata.toFloat(cotacao.C8_VALSOL));
-						cotacao.TOTAL_GERAL = tools.formata.floatToMoney(tools.formata.toFloat(cotacao.TOTAL_GERAL));
+						cotacao.TOTAL_GERAL = tools.formata.floatToMoney6(tools.formata.toFloat(cotacao.TOTAL_GERAL));
 					})
 					let temp = $("#tmpl2").html();
 					let html = Mustache.render(temp, mapa);
 					if (tools.mapa["modalMapaProduto"] != undefined) tools.mapa["modalMapaProduto"].remove()
-					tools.mapa["modalMapaProduto"] = FLUIGC.modal({
+					tools.mapa["modalMapaProduto"] = parent.FLUIGC.modal({
 						title: 'Detalhe produto',
 						content: html,
 						size: 'full',
 						id: 'fluig-mapaProduto'
 					}, function (err, data) {
 						if (!err) {
-							if ([26, 76, 80, 105, 148].includes(WKNumState)) $("[data-vencedor]").on("click", tools.mapa.setaVencedor);
+							if ([26, 76, 80, 105, 148].includes(WKNumState))
+								parent.$("#fluig-mapaProduto [data-vencedor]")
+									.on("click", tools.mapa.setaVencedor);
 							//tools.mapaCompradores.exibe();
 						}
 						else {
@@ -1727,12 +1729,10 @@ var tools = {
 						}
 
 					})
-					//$("#tabMapa").html(html);
 
 				}
 				return
 			}
-			//$("#tabMapa").html("");
 
 		},
 		carregaMapaOutros: function () {
@@ -1780,7 +1780,7 @@ var tools = {
 						"C8_DIFAL": C8_DIFAL,
 						"C8_VALSOL": C8_VALSOL,
 						"C8_IMPOSTOS": C8_VALIPI + C8_VALSOL + C8_DIFAL,
-						"C8_TOTAL": tools.formata.floatToMoney(C8_PRECO + C8_VALIPI + C8_VALSOL + C8_DIFAL),
+						"C8_TOTAL": tools.formata.floatToMoney6(C8_PRECO + C8_VALIPI + C8_VALSOL + C8_DIFAL),
 					}
 				}).sort(function (a, b) { return a.FORNECEDOR - b.FORNECEDOR })
 
@@ -1800,15 +1800,15 @@ var tools = {
 				})
 				obj.totalOrcado += prd["vlOrcado"];
 				obj.totalPedido += prd["vlPedido"];
-				prd["vlOrcado"] = tools.formata.floatToMoney(prd["vlOrcado"]);
-				prd["vlPedido"] = tools.formata.floatToMoney(prd["vlPedido"]);
+				prd["vlOrcado"] = tools.formata.floatToMoney6(prd["vlOrcado"]);
+				prd["vlPedido"] = tools.formata.floatToMoney6(prd["vlPedido"]);
 				return prd;
 			})
 
 			if (mapa.length > 0) {
 				obj["produtos"] = mapa;
 				obj["totalOrcado"] = tools.formata.floatToMoney(obj["totalOrcado"]);
-				obj["totalPedido"] = tools.formata.floatToMoney(obj["totalPedido"]);
+				obj["totalPedido"] = tools.formata.floatToMoney6(obj["totalPedido"]);
 				obj["percDiferenca"] = tools.formata.floatToMoney((tools.formata.fluigToFloat(obj["totalPedido"]) - tools.formata.fluigToFloat(obj["totalOrcado"])) / tools.formata.fluigToFloat(obj["totalOrcado"]) * 100);
 
 				let temp = $("#tmpl9").html();
@@ -1825,10 +1825,11 @@ var tools = {
 				tools.mapa.atualizaComplemento();
 			}
 		},
-		setaVencedor: function () {
-			let fornecedor = $(this).attr("fornecedor");
-			let loja = $(this).attr("loja");
-			let produto = $(this).attr("produto");
+		setaVencedor: function (event) {
+			let btn = $(event.target).closest("span")
+			let fornecedor = $(btn).attr("fornecedor");
+			let loja = $(btn).attr("loja");
+			let produto = $(btn).attr("produto");
 			let ciclo_mapa = $("#ciclo_mapa").val()
 
 			let dataFiltered = aDados.cotacoes.filter(function (el) { return el.C8_CICLO == ciclo_mapa && el.C8_FORNECE == fornecedor && el.C8_LOJA == loja && el.C8_PRODUTO == produto })
@@ -1836,7 +1837,7 @@ var tools = {
 			if (dataFiltered.length > 0) {
 				let temp = $("#tmpl3").html();
 				let html = Mustache.render(temp, dataFiltered[0]);
-				tools.mapa["modalConfirm"] = FLUIGC.modal({
+				tools.mapa["modalConfirm"] = parent.FLUIGC.modal({
 					title: 'Confirmar vencedor',
 					content: html,
 					size: 'full',
@@ -1864,16 +1865,19 @@ var tools = {
 						let confirm_qtd = qtdSolic - qtdVenc;
 						$("#confirm_qtd").val(confirm_qtd <= C8_QUANT ? confirm_qtd : C8_QUANT);
 
-						$("[data-confirm-modal]").on("click", function (ev) {
+						parent.$("[data-confirm-modal]").on("click", function (ev) {
 							ev.stopPropagation();
+							let modal = $(ev.target).closest("#fluig-confirma");
 							aDados["loading"] = FLUIGC.loading(window);
 							aDados.loading.show();
 							setTimeout(() => {
 								let problems = "";
-								if ($("#confirm_qtd").val() == "") problems += "O campo Quantidade é obrigatório <br>";
-								if ($("#confirm_justificativa").val() == "" && $("#confirm_vencedor").val() != "true" && $("#confirm_qtd").val() != "0") problems += "O campo Justificativa é obrigatório <br>";
+								if ($(modal).find("#confirm_qtd").val() == "") problems += "O campo Quantidade é obrigatório <br>";
+								if ($(modal).find("#confirm_justificativa").val() == ""
+									&& $(modal).find("#confirm_vencedor").val() != "true"
+									&& $(modal).find("#confirm_qtd").val() != "0") problems += "O campo Justificativa é obrigatório <br>";
 								if (problems != "") {
-									FLUIGC.modal({
+									parent.FLUIGC.modal({
 										title: 'Campos obrigatórios',
 										content: problems,
 										id: 'fluig-problem',
@@ -1894,8 +1898,8 @@ var tools = {
 									vencedores_comp.forEach(function (el) {
 										qtdVenc += parseInt(el.QTD_COMPRADOR != "" && el.QTD_COMPRADOR != "null" ? el.QTD_COMPRADOR : 0)
 									})
-									if ((qtdSolic - qtdVenc - parseInt($("#confirm_qtd").val())) < 0) {
-										FLUIGC.toast({
+									if ((qtdSolic - qtdVenc - parseInt($(modal).find("#confirm_qtd").val())) < 0) {
+										parent.FLUIGC.toast({
 											message: 'Quantidade excede a solicitada! Verifique o mapa de cotação',
 											type: 'danger'
 										});
@@ -1913,8 +1917,8 @@ var tools = {
 									if (dataFiltered.length > 0) {
 										let filtForn = aDados.fornecedores.filter(function (el) { return el.A2_COD == fornecedor && el.A2_LOJA == loja });
 										let idx = dataFiltered[0]["IDX"];
-										if (parseInt(dataFiltered[0]["C8_QUANT"]) < parseInt($("#confirm_qtd").val())) {
-											FLUIGC.toast({
+										if (parseInt(dataFiltered[0]["C8_QUANT"]) < parseInt($(modal).find("#confirm_qtd").val())) {
+											parent.FLUIGC.toast({
 												message: 'Quantidade é superior a fornecida! Verifique o campo Quantidade',
 												type: 'danger'
 											});
@@ -1931,23 +1935,23 @@ var tools = {
 													DatasetFactory.createConstraint("IDX", idx, "", ConstraintType.MUST),
 													DatasetFactory.createConstraint("C8_FORNECE", fornecedor, "", ConstraintType.MUST),
 													DatasetFactory.createConstraint("C8_LOJA", loja, "", ConstraintType.MUST),
-													DatasetFactory.createConstraint("C8_PRODUTO", $("#confirm_produto_id").val(), "", ConstraintType.MUST),
+													DatasetFactory.createConstraint("C8_PRODUTO", $(modal).find("#confirm_produto_id").val(), "", ConstraintType.MUST),
 
 													DatasetFactory.createConstraint("C8_COND", filtForn.length > 0 ? filtForn[0]["A2_COND"] : undefined, "", ConstraintType.MUST),
 													DatasetFactory.createConstraint("C8_TPFRETE", filtForn.length > 0 ? filtForn[0]["A2_TPFRETE"] : undefined, "", ConstraintType.MUST),
 													DatasetFactory.createConstraint("C8_TOTFRE", filtForn.length > 0 ? filtForn[0]["A2_VALFRE"] : undefined, "", ConstraintType.MUST),
 
-													DatasetFactory.createConstraint("C8_QUANT", $("#confirm_quantidade").val(), "", ConstraintType.MUST),
-													DatasetFactory.createConstraint("COMPRADOR", $("#confirm_qtd").val() != "" && $("#confirm_qtd").val() != "0" ? usuarioAtual : "", "", ConstraintType.MUST),
-													DatasetFactory.createConstraint("VENCEDOR_COMPRADOR", $("#confirm_qtd").val() != "" && $("#confirm_qtd").val() != "0" ? "true" : "", "", ConstraintType.MUST),
-													DatasetFactory.createConstraint("QTD_COMPRADOR", $("#confirm_qtd").val() != "" ? $("#confirm_qtd").val() : "0", "", ConstraintType.MUST),
-													DatasetFactory.createConstraint("COMPRADOR_JUSTIFICATIVA", $("#confirm_qtd").val() != "" ? $("#confirm_justificativa").val() : "", "", ConstraintType.MUST)
+													DatasetFactory.createConstraint("C8_QUANT", $(modal).find("#confirm_quantidade").val(), "", ConstraintType.MUST),
+													DatasetFactory.createConstraint("COMPRADOR", $(modal).find("#confirm_qtd").val() != "" && $(modal).find("#confirm_qtd").val() != "0" ? usuarioAtual : "", "", ConstraintType.MUST),
+													DatasetFactory.createConstraint("VENCEDOR_COMPRADOR", $(modal).find("#confirm_qtd").val() != "" && $(modal).find("#confirm_qtd").val() != "0" ? "true" : "", "", ConstraintType.MUST),
+													DatasetFactory.createConstraint("QTD_COMPRADOR", $(modal).find("#confirm_qtd").val() != "" ? $(modal).find("#confirm_qtd").val() : "0", "", ConstraintType.MUST),
+													DatasetFactory.createConstraint("COMPRADOR_JUSTIFICATIVA", $(modal).find("#confirm_qtd").val() != "" ? $(modal).find("#confirm_justificativa").val() : "", "", ConstraintType.MUST)
 												],
 												null,
 												{
 													success: function (ds) {
 														if (ds.columns.includes("ERROR")) {
-															FLUIGC.toast({
+															parent.FLUIGC.toast({
 																message: ds.values[0]["ERROR"],
 																type: 'danger'
 															});
@@ -1963,7 +1967,7 @@ var tools = {
 													},
 													error: function (jqXHR, textStatus, errorThrown) {
 														console.log(jqXHR, textStatus, errorThrown)
-														FLUIGC.toast({
+														parent.FLUIGC.toast({
 															message: "Ocorreu um problema na atualização da cotação. Favor confirmar novamente!",
 															type: 'danger'
 														});
@@ -2244,20 +2248,20 @@ var tools = {
 		formata: function () {
 			fluigMapa.produtos.forEach(function (prd) {
 				prd.FORNECEDORES.forEach(function (forn) {
-					forn.PRIMEIRA = tools.formata.floatToMoney(forn.PRIMEIRA);
-					forn.NEGOCIADA = tools.formata.floatToMoney(forn.NEGOCIADA);
+					forn.PRIMEIRA = tools.formata.floatToMoney6(forn.PRIMEIRA);
+					forn.NEGOCIADA = tools.formata.floatToMoney6(forn.NEGOCIADA);
 					forn.ATUAL.forEach(function (at) {
-						at.C8_PRECO = tools.formata.floatToMoney(at.C8_PRECO);
-						at.C8_TOTAL = tools.formata.floatToMoney(at.C8_TOTAL);
+						at.C8_PRECO = tools.formata.floatToMoney6(at.C8_PRECO);
+						at.C8_TOTAL = tools.formata.floatToMoney6(at.C8_TOTAL);
 					})
 				})
 			})
 
 			aDados.produtos.forEach(function (prd) {
 				prd.cotacoes.forEach(function (cot) {
-					cot.C8_PRECO = tools.formata.floatToMoney(cot.C8_PRECO, 6);
+					cot.C8_PRECO = tools.formata.floatToMoney6(cot.C8_PRECO);
 					cot.C8_DIFAL = tools.formata.floatToMoney(cot.C8_DIFAL);
-					cot.C8_TOTAL = tools.formata.floatToMoney(cot.C8_TOTAL);
+					cot.C8_TOTAL = tools.formata.floatToMoney6(cot.C8_TOTAL);
 					cot.C8_VALIPI = tools.formata.floatToMoney(cot.C8_VALIPI);
 					cot.C8_VALISS = tools.formata.floatToMoney(cot.C8_VALISS);
 					cot.C8_VALSOL = tools.formata.floatToMoney(cot.C8_VALSOL);
@@ -2265,8 +2269,8 @@ var tools = {
 			})
 
 			fluigMapa.fornecedores.forEach(function (forn) {
-				forn.TOTAIS.PRIMEIRA = tools.formata.floatToMoney(forn.TOTAIS.PRIMEIRA);
-				forn.TOTAIS.NEGOCIADA = tools.formata.floatToMoney(forn.TOTAIS.NEGOCIADA);
+				forn.TOTAIS.PRIMEIRA = tools.formata.floatToMoney6(forn.TOTAIS.PRIMEIRA);
+				forn.TOTAIS.NEGOCIADA = tools.formata.floatToMoney6(forn.TOTAIS.NEGOCIADA);
 				forn.TOTAIS.ATUAL = tools.formata.floatToMoney(forn.TOTAIS.ATUAL);
 				forn.TOTAIS.C8_IMPOSTOS = tools.formata.floatToMoney(forn.TOTAIS.C8_IMPOSTOS);
 				forn.TOTAIS.C8_VALIPI = tools.formata.floatToMoney(forn.TOTAIS.C8_VALIPI);
@@ -2274,7 +2278,7 @@ var tools = {
 				forn.TOTAIS.C8_VALSOL = tools.formata.floatToMoney(forn.TOTAIS.C8_VALSOL);
 				forn.TOTAIS.C8_DIFAL = tools.formata.floatToMoney(forn.TOTAIS.C8_DIFAL);
 				//forn.TOTAIS.C8_IMPOSTOS = tools.formata.floatToMoney(forn.TOTAIS.C8_IMPOSTOS);
-				forn.TOTAIS.TOTAL = tools.formata.floatToMoney(forn.TOTAIS.TOTAL);
+				forn.TOTAIS.TOTAL = tools.formata.floatToMoney6(forn.TOTAIS.TOTAL);
 				forn.TOTAIS.C8_VALFRE = tools.formata.floatToMoney(forn.TOTAIS.C8_VALFRE);
 				forn.TOTAIS.TOTALGERAL = tools.formata.floatToMoney6(forn.TOTAIS.TOTALGERAL);
 				forn.TOTAIS.varFinalBaseLine = tools.formata.floatToMoney(forn.TOTAIS.varFinalBaseLine);
@@ -2402,10 +2406,10 @@ var tools = {
 				pedido["C7_VALCSL"] = tools.formata.floatToMoney(pedido["C7_VALCSL"]);
 				pedido["C7_VALCOF"] = tools.formata.floatToMoney(pedido["C7_VALCOF"]);
 				pedido["C7_VALPIS"] = tools.formata.floatToMoney(pedido["C7_VALPIS"]);
-				pedido["C7_TOTAL"] = tools.formata.floatToMoney(pedido["C7_TOTAL"]);
+				pedido["C7_TOTAL"] = tools.formata.floatToMoney6(pedido["C7_TOTAL"]);
 				pedido["C7_IMPOSTOS"] = tools.formata.floatToMoney(pedido["C7_IMPOSTOS"]);
 				pedido["C7_FRETE"] = tools.formata.floatToMoney(pedido["C7_FRETE"]);
-				pedido["C7_TOTALGERAL"] = tools.formata.floatToMoney(pedido["C7_TOTALGERAL"]);
+				pedido["C7_TOTALGERAL"] = tools.formata.floatToMoney6(pedido["C7_TOTALGERAL"]);
 			})
 		},
 		funcs: {
@@ -2431,8 +2435,8 @@ var tools = {
 						"C7_UM": obj.C7_UM,
 						"C7_QTDSOL": obj.C7_QTDSOL,
 						"C7_QUANT": obj.C7_QUANT,
-						"C7_PRECO": tools.formata.floatToMoney(parseFloat(obj.C7_PRECO)),
-						"C7_TOTAL": tools.formata.floatToMoney(parseFloat(obj.C7_TOTAL)),
+						"C7_PRECO": tools.formata.floatToMoney6(parseFloat(obj.C7_PRECO)),
+						"C7_TOTAL": tools.formata.floatToMoney6(parseFloat(obj.C7_TOTAL)),
 						"C7_TES": obj.C7_TES,
 					})
 				}
@@ -2468,8 +2472,8 @@ var tools = {
 							"C7_UM": obj.C7_UM,
 							"C7_QTDSOL": obj.C7_QTDSOL,
 							"C7_QUANT": obj.C7_QUANT,
-							"C7_PRECO": tools.formata.floatToMoney(parseFloat(obj.C7_PRECO)),
-							"C7_TOTAL": tools.formata.floatToMoney(parseFloat(obj.C7_TOTAL)),
+							"C7_PRECO": tools.formata.floatToMoney6(parseFloat(obj.C7_PRECO)),
+							"C7_TOTAL": tools.formata.floatToMoney6(parseFloat(obj.C7_TOTAL)),
 							"C7_TES": obj.C7_TES,
 						}]
 					})
@@ -2756,11 +2760,6 @@ var tools = {
 				tempDados.TES = []
 				tempDados.produtos = aDados.produtos
 				let html = Mustache.render(temp, tempDados);
-
-				/**
-				 * @todo, enviar TES em branco e preencher os selects somente após a apresentação do modal
-					aDados.TES; 
-				*/
 				FLUIGC.modal({
 					title: 'Preencher dados TES',
 					content: html,
@@ -2826,8 +2825,8 @@ var tools = {
 			$("[name^=TES_A2_CGC___]").toArray().forEach(function (el, i, arr) {
 				if (el.value == TES_A2_CGC) {
 					let idx = el.id.split("___")[1]
+					linha = idx;
 					if ($("#TES_B1_COD___" + idx).val() == TES_B1_COD) {
-						linha = idx;
 						arr.length = i
 					}
 				}
@@ -2858,15 +2857,14 @@ var tools = {
 				} else {
 					$("[data-a2cgc=" + obj.A2_CGC + "][data-b1cod=" + obj.B1_COD + "]").removeClass("preenchido")
 				}
-
 			} else {
-				aDados.produtos.forEach(function (produto) {
-					tools.TES.gravaLinha(obj.A2_COD, obj.A2_LOJA, obj.A2_CGC, produto.B1_COD.substring(0, 8), obj.CODIGO);
-					tools.TES.selecao.linha(obj.A2_CGC, produto.B1_COD.substring(0, 8), obj.CODIGO);
-				})
+				tools.TES.gravaLinha(obj.A2_COD, obj.A2_LOJA, obj.A2_CGC, "", obj.CODIGO);
+				tools.TES.selecao.linha(obj.A2_CGC, undefined, obj.CODIGO);
 			}
 		},
-		processa() {
+		processa(event) {
+			event.stopPropagation();
+			event.preventDefault();
 			let _this = this;
 			aDados["obj"] = {
 				A2_COD: $(this).attr("data-a2cod"),
@@ -2909,7 +2907,7 @@ var tools = {
 				labelNo: 'Cancela'
 			}, function (result, el, ev) {
 				if (result) {
-					tools.TES.gravaSelecao();
+					tools.TES.gravaSelecao(aDados["obj"]);
 				} else {
 					if (aDados.obj != undefined && aDados.obj.tipo == "produto") {
 						tools.TES.selecao.limpezaCancelada()
@@ -2933,19 +2931,15 @@ var tools = {
 				let elem = aDados.TES.filter(function (elem, indx) {
 					return elem.CODIGO == CODIGO;
 				})
-				if (elem.length > 0) {
-					elem = elem[0];
-					$("select[data-a2cgc=" + A2_CGC + "][data-b1cod=" + B1_COD + "]").append($('<option>', {
-						value: elem.CODIGO,
-						text: elem.DISPLAY,
-						"data-cfop": elem.CFOP,
-						"data-descricao": elem.DESCRICAO,
-						"data-estoque": elem.ESTOQUE,
-						"data-codigo": elem.CODIGO,
-						"data-finalidade": elem.FINALIDADE,
-					}));
-					$("select[data-a2cgc=" + A2_CGC + "][data-b1cod=" + B1_COD + "]").val(CODIGO);
-					$("[data-a2cgc=" + A2_CGC + "][data-b1cod=" + B1_COD + "]").addClass("preenchido")
+				if (B1_COD != undefined) {
+					$("[data-b1cod=" + B1_COD + "]").val(CODIGO);
+					$("[data-b1cod=" + B1_COD + "]").addClass("preenchido")
+				} if (A2_CGC != undefined) {
+					$("[data-a2cgc=" + A2_CGC + "]").val(CODIGO);
+					$("[data-a2cgc=" + A2_CGC + "]").addClass("preenchido")
+				} else {
+					$("[data-global]").val(CODIGO);
+					$("[data-global]").addClass("preenchido")
 				}
 			},
 			todos() {
@@ -2955,11 +2949,9 @@ var tools = {
 					if (el.value != "" && $(el).closest("tr").find("[name^=TES_B1_COD___]").val() != "" && $(el).closest("tr").find("[name^=TES_CODIGO___]").val() != "") {
 						tools.TES.selecao.linha(el.value, $(el).closest("tr").find("[name^=TES_B1_COD___]").val(), $(el).closest("tr").find("[name^=TES_CODIGO___]").val())
 					}
-
 				})
 			}
 		}
-
 	},
 	validacaoTecnica: {
 		init: function () {

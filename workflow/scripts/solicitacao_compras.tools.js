@@ -719,6 +719,9 @@ var tools = {
 				})
 			})
 
+			var TESPADRAO = tools.getDataset("DS_COMPRAS_PRAZOS_ENTREGA",
+				null, null, true)
+			TESPADRAO = TESPADRAO[0]["tesPadrao"];
 			dadosFluig.dados.forEach(function (el) {
 				var tmpFornece = "" + el.C8_FORNECE + el.C8_LOJA;
 				log.info(">> tmpFornece : " + tmpFornece);
@@ -735,7 +738,10 @@ var tools = {
 							"C8_PRECO": tools.formata.toProtheus(el.C8_PRECO),
 							"C8_QTDISP": el.C8_QUANT != "" ? el.C8_QUANT : "0",
 							"C8_PRAZO": el.C8_PRAZO != "" ? el.C8_PRAZO : "1",
-							"C8_TES": tools.tes.get(dadosFluig.TES, el.C8_FORNECE, el.C8_LOJA, el.C8_PRODUTO)
+							"C8_TES": tools.tes.get(dadosFluig.TES,
+								el.C8_FORNECE,
+								el.C8_LOJA,
+								el.C8_PRODUTO, TESPADRAO)
 						})
 					}
 				} /*else {
@@ -876,7 +882,7 @@ var tools = {
 
 				if (obj.ok) {
 
-					var fornecedoresAtivo = tools.cotacao.getTabFornecedor(cardData)
+					var fornecedoresAtivo = tools.cotacao.getTabFornecedor(cardData, false)
 
 					log.info(">> fornecedoresAtivo");
 					log.dir(fornecedoresAtivo);
@@ -1063,15 +1069,17 @@ var tools = {
 					while (iteratorChild.hasNext()) {
 						var id = "" + iteratorChild.next(); if (id.indexOf("TES_A2_COD___") == 0) {
 							var idx = id.replace("TES_A2_COD___", "");
-
-							obj.TES.push({
-								"TES_A2_COD": "" + (mapChildren.get("TES_A2_COD" + "___" + idx) != null && mapChildren.get("TES_A2_COD" + "___" + idx) != "null") ? mapChildren.get("TES_A2_COD" + "___" + idx) : "",
-								"TES_A2_LOJA": "" + (mapChildren.get("TES_A2_LOJA" + "___" + idx) != null && mapChildren.get("TES_A2_LOJA" + "___" + idx) != "null") ? mapChildren.get("TES_A2_LOJA" + "___" + idx) : "",
-								"TES_A2_CGC": "" + (mapChildren.get("TES_A2_CGC" + "___" + idx) != null && mapChildren.get("TES_A2_CGC" + "___" + idx) != "null") ? mapChildren.get("TES_A2_CGC" + "___" + idx) : "",
-								"TES_B1_COD": "" + (mapChildren.get("TES_B1_COD" + "___" + idx) != null && mapChildren.get("TES_B1_COD" + "___" + idx) != "null") ? mapChildren.get("TES_B1_COD" + "___" + idx) : "",
-								"TES_CODIGO": "" + (mapChildren.get("TES_CODIGO" + "___" + idx) != null && mapChildren.get("TES_CODIGO" + "___" + idx) != "null") ? mapChildren.get("TES_CODIGO" + "___" + idx) : "",
-								"TES_COMPRADOR": "" + (mapChildren.get("TES_COMPRADOR" + "___" + idx) != null && mapChildren.get("TES_COMPRADOR" + "___" + idx) != "null") ? mapChildren.get("TES_COMPRADOR" + "___" + idx) : ""
-							})
+							var hasTES = (mapChildren.get("TES_CODIGO" + "___" + idx) != null && mapChildren.get("TES_CODIGO" + "___" + idx) != "null") ? mapChildren.get("TES_CODIGO" + "___" + idx) : ""
+							hasTES = hasTES != "";
+							if (hasTES)
+								obj.TES.push({
+									"TES_A2_COD": "" + (mapChildren.get("TES_A2_COD" + "___" + idx) != null && mapChildren.get("TES_A2_COD" + "___" + idx) != "null") ? mapChildren.get("TES_A2_COD" + "___" + idx) : "",
+									"TES_A2_LOJA": "" + (mapChildren.get("TES_A2_LOJA" + "___" + idx) != null && mapChildren.get("TES_A2_LOJA" + "___" + idx) != "null") ? mapChildren.get("TES_A2_LOJA" + "___" + idx) : "",
+									"TES_A2_CGC": "" + (mapChildren.get("TES_A2_CGC" + "___" + idx) != null && mapChildren.get("TES_A2_CGC" + "___" + idx) != "null") ? mapChildren.get("TES_A2_CGC" + "___" + idx) : "",
+									"TES_B1_COD": "" + (mapChildren.get("TES_B1_COD" + "___" + idx) != null && mapChildren.get("TES_B1_COD" + "___" + idx) != "null") ? mapChildren.get("TES_B1_COD" + "___" + idx) : "",
+									"TES_CODIGO": "" + (mapChildren.get("TES_CODIGO" + "___" + idx) != null && mapChildren.get("TES_CODIGO" + "___" + idx) != "null") ? mapChildren.get("TES_CODIGO" + "___" + idx) : "",
+									"TES_COMPRADOR": "" + (mapChildren.get("TES_COMPRADOR" + "___" + idx) != null && mapChildren.get("TES_COMPRADOR" + "___" + idx) != "null") ? mapChildren.get("TES_COMPRADOR" + "___" + idx) : ""
+								})
 						}
 						else if (id.indexOf("A2_COD___") == 0) {
 							var idx = id.replace("A2_COD___", "");
@@ -1203,7 +1211,24 @@ var tools = {
 
 
 						obj.TES.forEach(function (el) {
-							var filtTES = tabTES.filter(function (t) { return t.TES_A2_COD == el.TES_A2_COD && t.TES_A2_LOJA == el.TES_A2_LOJA && t.TES_B1_COD == el.TES_B1_COD });
+							var filtTES = tabTES.filter(function (t) {
+								return t.TES_A2_COD == el.TES_A2_COD
+									&& t.TES_A2_LOJA == el.TES_A2_LOJA
+							});
+
+							if (filtTES.length > 0) {
+								updateFields["TES_A2_COD" + "___" + filtTES[0].idx] = el["TES_A2_COD"];
+								updateFields["TES_A2_LOJA" + "___" + filtTES[0].idx] = el["TES_A2_LOJA"];
+								updateFields["TES_A2_CGC" + "___" + filtTES[0].idx] = el["TES_A2_CGC"];
+								updateFields["TES_B1_COD" + "___" + filtTES[0].idx] = el["TES_B1_COD"];
+								updateFields["TES_CODIGO" + "___" + filtTES[0].idx] = el["TES_CODIGO"];
+								updateFields["TES_COMPRADOR" + "___" + filtTES[0].idx] = el["TES_COMPRADOR"];
+							}
+						})
+						obj.TES.forEach(function (el) {
+							var filtTES = tabTES.filter(function (t) {
+								return t.TES_B1_COD == el.TES_B1_COD
+							});
 
 							if (filtTES.length > 0) {
 								updateFields["TES_A2_COD" + "___" + filtTES[0].idx] = el["TES_A2_COD"];
@@ -1469,8 +1494,7 @@ var tools = {
 		getItensCotacao: function (cardData) {
 			var obj = [];
 
-			//var tabFornecedorProduto = tools.cotacao.getTabFornecedorProduto(cardData);
-			var tabFornecedor = tools.cotacao.getTabFornecedor(cardData);
+			var tabFornecedor = tools.cotacao.getTabFornecedor(cardData, false);
 			var tabSC = tools.cotacao.getTabSC(cardData);
 
 			log.dir(tabFornecedor)
@@ -1491,14 +1515,20 @@ var tools = {
 
 			return obj;
 		},
-		getTabFornecedor: function (cardData) {
+		getTabFornecedor: function (cardData, isInserido) {
 			var tableFornecedores = tools.getTableFilho(
 				cardData || hAPI.getCardData(getValue("WKNumProces")),
 				["A2_COD", "A2_CGC", "A2_LOJA", "A2_NOME", "CICLO_REMOVIDO", "A2_COND",
-					"A2_TPFRETE", "A2_VALFRE"]
+					"A2_TPFRETE", "A2_VALFRE", "CICLO_INSERIDO"]
 			);
+			tools.log("tableFornecedores");
+			log.dir(tableFornecedores);
+
 			return tableFornecedores
 				.filter(function (linha) {
+					if (isInserido) {
+						return linha["CICLO_INSERIDO"].value == ""
+					}
 					return linha["CICLO_REMOVIDO"].value == ""
 				})
 				.map(function (linha) {
@@ -1655,7 +1685,8 @@ var tools = {
 		incluiCotacao: function (ciclo_atual, cardData) {
 			log.info(">> tools.fornecedores.incluiCotacao [#1329]")
 			var retorno = { ok: true, obj: [] };
-			var fornecedores = tools.cotacao.getTabFornecedor(cardData)
+
+			var fornecedores = tools.cotacao.getTabFornecedor(cardData, true)
 			log.dir(fornecedores);
 
 			if (fornecedores.length > 0) {
@@ -1985,7 +2016,8 @@ var tools = {
 					"SELECT COT.C8_ITEM, COT.C8_FORNECE, COT.C8_LOJA FROM " + hAPI.getAdvancedProperty("mlFormCotacao") + " ML \
 						INNER JOIN DOCUMENTO DOC ON DOC.NR_DOCUMENTO = ML.DOCUMENTID AND DOC.NR_VERSAO = ML.VERSION \
 						INNER JOIN "+ hAPI.getAdvancedProperty("mlTabCotacao") + " COT ON COT.DOCUMENTID = ML.DOCUMENTID AND COT.VERSION = ML.VERSION \
-					WHERE ML.C8_NUM = '"+ hAPI.getCardValue("C8_NUM") + "' AND ML.idEmpresa = '" + hAPI.getCardValue("idEmpresa") + "' AND ML.C8_CICLO = '" + hAPI.getCardValue("ciclo_atual") + "' AND COT.VENCEDOR_COMPRADOR = 'true' AND DOC.VERSAO_ATIVA = 1"
+					WHERE ML.C8_NUM = '"+ hAPI.getCardValue("C8_NUM") + "' AND ML.idEmpresa = '" + hAPI.getCardValue("idEmpresa") + "' AND ML.C8_CICLO = '" + hAPI.getCardValue("ciclo_atual")
+					+ "' AND COT.VENCEDOR_COMPRADOR = 'true' AND DOC.VERSAO_ATIVA = 1"
 				)
 				dsItens = dsItens.map(function (item) {
 					return {
@@ -2054,7 +2086,7 @@ var tools = {
 		atualizaCotacao: function (cardData) {
 			var retorno = { ok: true };
 			var ciclo_atual = cardData.get("ciclo_atual");
-			var tabFornecedor = tools.cotacao.getTabFornecedor(cardData);
+			var tabFornecedor = tools.cotacao.getTabFornecedor(cardData, false);
 
 			var tableTES = tools.getTableFilho(
 				cardData || hAPI.getCardData(getValue("WKNumProces")),
@@ -2103,6 +2135,9 @@ var tools = {
 				})
 			}
 
+			var TESPADRAO = tools.getDataset("DS_COMPRAS_PRAZOS_ENTREGA",
+				null, null, true)
+			TESPADRAO = TESPADRAO[0]["tesPadrao"];
 			cotacoes.forEach(function (cotacao) {
 				if (tools.formata.toBranco(cotacao["C8_PRECO"]) != ""
 					&& tools.formata.toBranco(cotacao["C8_QUANT"]) != ""
@@ -2116,7 +2151,11 @@ var tools = {
 							"C8_PRECO": tools.formata.toProtheus(cotacao["C8_PRECO"]),
 							"C8_QTDISP": cotacao["QTD_COMPRADOR"] != "" ? cotacao["QTD_COMPRADOR"] : (cotacao["C8_QUANT"] != "" ? cotacao["C8_QUANT"] : "0"),
 							"C8_PRAZO": cotacao["C8_PRAZO"] != "" ? cotacao["C8_PRAZO"] : "0",
-							"C8_TES": tools.tes.get(tabTES, cotacao["C8_FORNECE"], cotacao["C8_LOJA"], cotacao["C8_PRODUTO"])
+							"C8_TES": tools.tes.get(tabTES,
+								cotacao["C8_FORNECE"],
+								cotacao["C8_LOJA"],
+								cotacao["C8_PRODUTO"],
+								TESPADRAO)
 						})
 					} else {
 						var fForn = tabFornecedor.filter(function (el) { { return el.A2_COD == cotacao["C8_FORNECE"] && el.A2_LOJA == cotacao["C8_LOJA"] } })
@@ -2133,7 +2172,11 @@ var tools = {
 								"C8_PRECO": tools.formata.toProtheus(cotacao["C8_PRECO"]),
 								"C8_QTDISP": cotacao["QTD_COMPRADOR"] != "" ? cotacao["QTD_COMPRADOR"] : (cotacao["C8_QUANT"] != "" ? cotacao["C8_QUANT"] : "0"),
 								"C8_PRAZO": cotacao["C8_PRAZO"] != "" ? cotacao["C8_PRAZO"] : "0",
-								"C8_TES": tools.tes.get(tabTES, cotacao["C8_FORNECE"], cotacao["C8_LOJA"], cotacao["C8_PRODUTO"])
+								"C8_TES": tools.tes.get(tabTES,
+									cotacao["C8_FORNECE"],
+									cotacao["C8_LOJA"],
+									cotacao["C8_PRODUTO"],
+									TESPADRAO)
 							}]
 						})
 					}
@@ -2349,18 +2392,18 @@ var tools = {
 		}
 	},
 	tes: {
-		get: function (tabTES, A2_COD, A2_LOJA, B1_COD) {
+		get: function (tabTES, A2_COD, A2_LOJA, B1_COD, TESPADRAO) {
 			log.info("++ tools.tes.get ++ \n A2_COD: " + A2_COD + " \n A2_LOJA: " + A2_LOJA + " \n B1_COD: " + B1_COD)
 			var filtTES = tabTES.filter(function (el) { return el.TES_A2_COD == A2_COD && el.TES_A2_LOJA == A2_LOJA && el.TES_B1_COD == B1_COD.substring(0, 8) && el.TES_CODIGO != "" })
 			log.dir(filtTES);
-			return filtTES.length > 0 ? filtTES[0].TES_CODIGO : "022";
+			return filtTES.length > 0 ? filtTES[0].TES_CODIGO : "" + TESPADRAO;
 		},
 		regulariza: function (cardData) {
 			log.info("-- tools.tes.regulariza")
 			var arrAdiciona = [];
 			var tableTES = tools.getTableFilho(
 				cardData || hAPI.getCardData(getValue("WKNumProces")),
-				["TES_A2_COD", "TES_A2_LOJA", "TES_B1_COD", "TES_A2_CGC"]
+				["TES_A2_COD", "TES_A2_LOJA", "TES_B1_COD", "TES_A2_CGC", "TES_CODIGO"]
 			);
 			var tes = tableTES.map(function (linha) {
 				var idx = linha["TES_A2_COD"].index;
@@ -2369,13 +2412,14 @@ var tools = {
 					"TES_A2_COD": "" + linha["TES_A2_COD"].value,
 					"TES_A2_LOJA": "" + linha["TES_A2_LOJA"].value,
 					"TES_B1_COD": "" + linha["TES_B1_COD"].value,
-					"TES_A2_CGC": "" + linha["TES_A2_CGC"].value
+					"TES_A2_CGC": "" + linha["TES_A2_CGC"].value,
+					"TES_CODIGO": "" + linha["TES_CODIGO"].value
 				}
 			})
 			log.info(">> tes <<");
 			log.dir(tes);
 
-			var tesVazias = tes.filter(function (el) { return el.TES_A2_COD == "" })
+			var tesVazias = tes.filter(function (el) { return el.TES_CODIGO == "" })
 			log.info(">> tesVazias <<");
 			log.dir(tesVazias);
 			if (tesVazias.length > 0) {
@@ -2384,7 +2428,7 @@ var tools = {
 				}
 			}
 
-			var fornecedores = tools.cotacao.getTabFornecedor(cardData);
+			var fornecedores = tools.cotacao.getTabFornecedor(cardData, false);
 			log.info(">> fornecedores <<");
 			log.dir(fornecedores);
 
@@ -2407,18 +2451,26 @@ var tools = {
 			log.dir(produtos);
 
 			fornecedores.forEach(function (f) {
-				produtos.forEach(function (p) {
-					var filtTES = tes.filter(function (el) { return el.TES_A2_COD == f.A2_COD && el.TES_A2_LOJA == f.A2_LOJA && el.TES_B1_COD == p.B1_COD })
-
-					if (filtTES.length == 0) {
-						arrAdiciona.push({
-							"TES_A2_COD": f.A2_COD,
-							"TES_A2_LOJA": f.A2_LOJA,
-							"TES_A2_CGC": f.A2_CGC,
-							"TES_B1_COD": p.B1_COD
-						})
-					}
+				var filtTES = tes.filter(function (el) {
+					return el.TES_A2_COD == f.A2_COD
+						&& el.TES_A2_LOJA == f.A2_LOJA
 				})
+				if (filtTES.length == 0) {
+					arrAdiciona.push({
+						"TES_A2_COD": f.A2_COD,
+						"TES_A2_LOJA": f.A2_LOJA,
+						"TES_A2_CGC": f.A2_CGC,
+					})
+				}
+			})
+			produtos.forEach(function (p) {
+				var filtTES = tes.filter(function (el) { return el.TES_B1_COD == p.B1_COD })
+
+				if (filtTES.length == 0) {
+					arrAdiciona.push({
+						"TES_B1_COD": p.B1_COD
+					})
+				}
 			})
 
 			log.info(">> arrAdiciona <<");

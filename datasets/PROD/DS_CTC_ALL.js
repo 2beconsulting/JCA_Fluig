@@ -25,9 +25,13 @@ function createDataset(fields, constraints, sortFields) {
   dataset.addColumn("Pedido");
   dataset.addColumn("ItemPedido");
   dataset.addColumn("BeneficioFiscal");
+  dataset.addColumn("IDX");
   dataset.addColumn("documentId");
+  dataset.addColumn("documentVersion");
 
   var solicitacao = getConstraintValue(constraints, "numeroSolicitacao");
+  var fornecedor = getConstraintValue(constraints, "fornecedor");
+  var loja = getConstraintValue(constraints, "loja");
 
   var constraints = new Array();
 
@@ -72,6 +76,23 @@ function createDataset(fields, constraints, sortFields) {
       )
     );
 
+    /*    constraintsFilhos.push(
+         DatasetFactory.createConstraint(
+           "C8_FORNECE",
+           fornecedor,
+           fornecedor,
+           ConstraintType.MUST
+         )
+       );
+       constraintsFilhos.push(
+         DatasetFactory.createConstraint(
+           "C8_LOJA",
+           loja,
+           loja,
+           ConstraintType.MUST
+         )
+       ); */
+
     constraintsFilhos.push(
       DatasetFactory.createConstraint(
         "metadata#id",
@@ -97,7 +118,10 @@ function createDataset(fields, constraints, sortFields) {
       null
     );
 
+    var seq = 0
+
     for (var j = 0; j < datasetFilhos.rowsCount; j++) {
+      seq = seq + 1;
       dataset.addRow(
         new Array(
           datasetFilhos.getValue(j, "C8_CICLO"),
@@ -125,7 +149,9 @@ function createDataset(fields, constraints, sortFields) {
           datasetFilhos.getValue(j, "C8_NUMPED"),
           datasetFilhos.getValue(j, "C8_ITEMPED"),
           datasetFilhos.getValue(j, "BEN_FISCAL"),
-          documentId
+          seq,
+          documentId,
+          documentVersion
         )
       );
     }

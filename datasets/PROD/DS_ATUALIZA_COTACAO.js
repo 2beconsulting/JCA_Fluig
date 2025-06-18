@@ -2,12 +2,11 @@ var mlSolicitacao = "ML001722";
 var mlTES = "ML001739";
 var formCotacao = "746756";
 
+
 function createDataset(fields, constraints, sortFields) {
 	try {
 		var jConstr = constraintToJson(constraints);
 		log.dir(jConstr);
-
-		var WKCardId = "";
 
 		//Identificador da ficha
 		var idEmpresa = jConstr.IDEMPRESA;
@@ -30,6 +29,9 @@ function createDataset(fields, constraints, sortFields) {
 		var C8_TOTFRE = jConstr.C8_TOTFRE;
 		var COMPRADOR_JUSTIFICATIVA = jConstr.COMPRADOR_JUSTIFICATIVA;
 
+		var TESPADRAO = tools.getDataset("DS_COMPRAS_PRAZOS_ENTREGA",
+			null, null, true)
+		TESPADRAO = TESPADRAO[0]["tesPadrao"];
 		if ((idEmpresa != undefined && C8_NUM != undefined && C8_CICLO != undefined) || IDX != undefined) {
 			if (C8_QUANT != undefined && QTD_COMPRADOR != undefined) {
 				var ds = DatasetFactory.getDataset(
@@ -107,15 +109,15 @@ function createDataset(fields, constraints, sortFields) {
 										&& el.TES_B1_COD == produto
 
 								})
-								TES = filtTES.length != 0 ? filtTES[0]["TES_CODIGO"] : "022"
-								TES = (TES != '' && TES != ' ') ? TES : "022"
+								TES = filtTES.length != 0 ? filtTES[0]["TES_CODIGO"] : "" + TESPADRAO;
+								TES = (TES != '' && TES != ' ') ? TES : "" + TESPADRAO;
 
 								FORNECE[0].ITEM.push({
 									"C8_PRODUTO": C8_PRODUTO,
 									"C8_PRECO": regForn["C8_PRECO"],
 									"C8_QTDISP": regForn["QTD_COMPRADOR"] != "" && regForn["QTD_COMPRADOR"] != "null" && regForn["QTD_COMPRADOR"] != "0" ? regForn["QTD_COMPRADOR"] : regForn["C8_QUANT"],
 									"C8_PRAZO": regForn["C8_PRAZO"],
-									"C8_TES": filtTES.length != 0 ? filtTES[0]["TES_CODIGO"] : "022"
+									"C8_TES": filtTES.length != 0 ? filtTES[0]["TES_CODIGO"] : "" + TESPADRAO
 								})
 							})
 
@@ -125,6 +127,15 @@ function createDataset(fields, constraints, sortFields) {
 								"FORNECE": FORNECE
 							}]
 
+							/**
+							 * Orçamentos
+								- item, 01    - qtd solicitado de 10
+									- fornecedor 01    -  C8_QTDISP comprada de 5   >>> A2
+									- fornecedor 02    -  C8_QTDISP comprada de 5  >>> A2
+									- fornecedor 03    -  C8_QTDISP comprada de 0  
+									- fornecedor 04
+									- fornecedor 05  
+							 */
 							retorno = postProtheus("/JWSSC802/2", { "COTACAO": COTACAO }, "01," + idEmpresa);
 
 							if (retorno.ok) {
@@ -171,6 +182,7 @@ function createDataset(fields, constraints, sortFields) {
 												reg.C8_VALISS = filProtheus[0].C8_VALISS;
 												reg.C8_VALSOL = filProtheus[0].C8_VALSOL;
 												reg.C8_TOTAL = filProtheus[0].C8_TOTAL;
+												//reg.VENCEDOR = filProtheus[0].C8_STATUS;
 
 												log.info("formFields>>" + C8_FORNECE + ":" + C8_PRODUTO + ":" + C8_LOJA);
 												log.dir(formFields);
@@ -203,7 +215,6 @@ function createDataset(fields, constraints, sortFields) {
 							else {
 								return dsError(retorno.error, [])
 							}
-
 						}
 						else {
 							return dsError("Falta enviar campos obrigatórios!", [])
@@ -504,4 +515,54 @@ function postProtheus(endpoint, params, tenantid) {
 	log.info("** integra.postProtheus **");
 	return obj;
 
+}
+
+var tools = {
+	getDataset: function (name, campos, filtros, isInternal) {
+
+		var constraints = [];
+
+		if (isInternal) {
+			constraints.push(DatasetFactory.createConstraint('metadata#active', true, true, ConstraintType.MUST));
+		}
+
+		if (filtros) {
+			filtros.forEach(function (filtro) {
+				constraints.push(DatasetFactory.createConstraint(filtro.field, filtro.value, filtro.value, filtro.type || ConstraintType.MUST));
+			});
+		}
+
+		var result = [];
+		try {
+
+			var dataset = DatasetFactory.getDataset(name, null, constraints, null);
+
+			if (dataset == null) {
+				return result;
+			}
+			if (dataset.rowsCount > 0) {
+
+				var _loop = function _loop() {
+					var o = {};
+
+					if (!campos) {
+						campos = dataset.getColumnsName();
+					}
+
+					campos.forEach(function (campo) {
+						o[campo] = dataset.getValue(i, campo);
+					});
+
+					result.push(o);
+				};
+
+				for (var i = 0; i < dataset.rowsCount; i++) {
+					_loop();
+				}
+			}
+			return result;
+		} catch (error) {
+			return result
+		}
+	}
 }
