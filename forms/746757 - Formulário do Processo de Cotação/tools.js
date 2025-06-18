@@ -319,13 +319,18 @@ var tools = {
 
 	},
 	TES: {
+		modal: null,
 		carregaDiv() {
 			if ($("[name*=tipoSc]:checked").val() != "5" || aDados.cotacoes.length > 0) {
 				let temp = $("#tmpl5").html();
 				//let html = Mustache.render(temp, aDados);
+				/**
+				 * @todo limpar o aDadosCot, deixando somente os produtos e os forncedores.
+				 */
+
 				let html = Mustache.render(temp, tools.aDadosCot)
 
-				FLUIGC.modal({
+				tools.TES.modal = FLUIGC.modal({
 					title: 'Preencher dados TES',
 					content: html,
 					size: 'full',
@@ -367,20 +372,12 @@ var tools = {
 						let a2_cod = ds.values[i].C8_FORNECE;
 						let a2_loja = ds.values[i].C8_LOJA;
 						let b1_cod = ds.values[i].C8_PRODUTO.substring(0, 8);
-
-						$("[data-a2cod='" + a2_cod + "'][data-a2loja='" + a2_loja + "'][data-b1cod='" + b1_cod + "']").addClass("necessario");
+						$("[data-a2cod='" + a2_cod + "'][data-a2loja='" + a2_loja + "']").addClass("necessario");
+						$("[data-b1cod='" + b1_cod + "']").addClass("necessario");
 					}
 
 				}
 			}
-
-			/*$("[name^=C8_CICLO___][value='"+$("#ciclo_atual").val()+"'].form-control,[name^=_C8_CICLO___][value='"+$("#ciclo_atual").val()+"'].form-control").closest("tr").find("[name*=C8_PRECO___]").not("[value=''],[value='0.00']").toArray().forEach(function(el){
-				let a2_cod 	= $(el).closest("tr").find("[name*=C8_FORNECE___]").val();
-				let a2_loja = $(el).closest("tr").find("[name*=C8_LOJA___]").val();
-				let b1_cod 	= $(el).closest("tr").find("[name*=C8_PRODUTO___]").val().substring(0,8);
-				
-				$("[data-a2cod='"+a2_cod+"'][data-a2loja='"+a2_loja+"'][data-b1cod='"+b1_cod+"']").addClass("necessario");
-			})*/
 		},
 		carregaOptions() {
 			var ds = DatasetFactory.getDataset("DS_TES", null, null, null)
@@ -399,30 +396,34 @@ var tools = {
 				$("#btnTES").hide();
 			}
 		},
-		identificaLinha(TES_A2_CGC, TES_B1_COD) {
+		identificaLinha(TES_A2_CGC, TES_B1_COD, tipo) {
 			let linha = null;
-
-			//var elemento = $("[name^=TES_A2_CGC___]").toArray().filter((el)=>el.value == TES_A2_CGC) 
-			let elemento = $("tr").has("[name^=TES_A2_CGC___][value='" + TES_A2_CGC + "']").has("[name^=TES_B1_COD___][value='" + TES_B1_COD + "']").toArray()
-			if (elemento != null && elemento != undefined) {
-				linha = elemento[0].sectionRowIndex;
-
-			}
-			return linha;
-
-			/*$("[name^=TES_A2_CGC___]").toArray().forEach(function(el,i,arr){
-				if(el.value == TES_A2_CGC){
-					let idx = el.id.split("___")[1]
-						if($("#TES_B1_COD___"+idx).val() == TES_B1_COD){
-							linha = idx;
-							arr.length = i;
-							return linha
-						}
+			let elemento;
+			if (tipo == "fornecedor") {
+				elemento = $("tr").has("[name^=TES_A2_CGC___][value='" + TES_A2_CGC + "']").toArray()
+				if (elemento != null && elemento != undefined
+					&& elemento.length > 0
+				) {
+					linha = elemento[0].sectionRowIndex;
+					return linha;
 				}
-			})*/
+			}
+			elemento = $("tr").has("[name^=TES_B1_COD___][value='" + TES_B1_COD + "']").toArray()
+			if (elemento != null && elemento != undefined
+				&& elemento.length > 0
+			) {
+				linha = elemento[0].sectionRowIndex;
+				return linha;
+			}
 		},
-		gravaLinha(TES_A2_COD, TES_A2_LOJA, TES_A2_CGC, TES_B1_COD, TES_CODIGO) {
-			let linha = tools.TES.identificaLinha(TES_A2_CGC, TES_B1_COD);
+		gravaLinha(TES_A2_COD, TES_A2_LOJA, TES_A2_CGC, TES_B1_COD, TES_CODIGO, tipo) {
+
+			if (tipo == "global") {
+				$("[name^=TES_CODIGO___]").val(TES_CODIGO);
+				$("[name^=TES_COMPRADOR___]").val(usuarioAtual);
+				return
+			}
+			let linha = tools.TES.identificaLinha(TES_A2_CGC, TES_B1_COD, tipo);
 
 			if (linha == null) linha = wdkAddChild("tabTES");
 
@@ -438,21 +439,28 @@ var tools = {
 			delete aDados.obj;
 
 			if (obj.tipo == "produto") {
-				tools.TES.gravaLinha(obj.A2_COD, obj.A2_LOJA, obj.A2_CGC, obj.B1_COD, obj.CODIGO);
+				tools.TES.gravaLinha(obj.A2_COD, obj.A2_LOJA, obj.A2_CGC, obj.B1_COD, obj.CODIGO, "produto");
 				if (obj.CODIGO != "") {
-					$("[data-a2cgc='" + obj.A2_CGC + "'][data-b1cod='" + obj.B1_COD + "']").addClass("preenchido")
+					$("[data-b1cod='" + obj.B1_COD + "']").addClass("preenchido")
 				} else {
-					$("[data-a2cgc='" + obj.A2_CGC + "'][data-b1cod='" + obj.B1_COD + "']").removeClass("preenchido")
+					$("[data-b1cod='" + obj.B1_COD + "']").removeClass("preenchido")
 				}
-
+			} else if (obj.tipo == "fornecedor") {
+				tools.TES.gravaLinha(obj.A2_COD, obj.A2_LOJA, obj.A2_CGC, obj.B1_COD, obj.CODIGO, "fornecedor");
+				if (obj.CODIGO != "") {
+					$("[data-a2cgc='" + obj.A2_CGC + "']").addClass("preenchido")
+				} else {
+					$("[data-a2cgc='" + obj.A2_CGC + "']").removeClass("preenchido")
+				}
 			} else {
-				aDados.produtos.forEach(function (produto) {
-					tools.TES.gravaLinha(obj.A2_COD, obj.A2_LOJA, obj.A2_CGC, produto.B1_COD, obj.CODIGO);
-					tools.TES.selecao.linha(obj.A2_CGC, produto.B1_COD, obj.CODIGO);
-				})
+				tools.TES.gravaLinha(obj.A2_COD, obj.A2_LOJA, obj.A2_CGC, produto.B1_COD, obj.CODIGO, "global");
+				tools.TES.selecao.linha(obj.A2_CGC, produto.B1_COD, obj.CODIGO);
+				tools.TES.modal.isOpen() ? tools.TES.modal.remove() : 0;
 			}
 		},
-		processa() {
+		processa(event) {
+			event.stopPropagation();
+			event.preventDefault();
 			let _this = this;
 			aDados["obj"] = {
 				A2_COD: $(this).attr("data-a2cod"),
@@ -461,16 +469,15 @@ var tools = {
 				A2_CGC: $(this).attr("data-a2cgc"),
 				B1_COD: $(this).attr("data-b1cod"),
 				B1_DESC: $(this).attr("data-b1desc"),
-				tipo: $(this).attr("data-b1desc") != undefined ? "produto" : "fornecedor",
 				CFOP: $(this).find("option:selected").attr("data-cfop"),
 				DESCRICAO: $(this).find("option:selected").attr("data-descricao"),
 				ESTOQUE: $(this).find("option:selected").attr("data-estoque"),
 				CODIGO: $(this).find("option:selected").attr("data-codigo"),
-				FINALIDADE: $(this).find("option:selected").attr("data-finalidade")
+				FINALIDADE: $(this).find("option:selected").attr("data-finalidade"),
+				tipo: null
 			}
 
-			let txtTES = `	
-								<br><strong>Código: </strong>	${aDados.obj.CODIGO}
+			let txtTES = `		<br><strong>Código: </strong>	${aDados.obj.CODIGO}
 								<strong>Descrição: </strong>	${aDados.obj.DESCRICAO}
 								<strong>CFOP: </strong>			${aDados.obj.CFOP}
 								<strong>Estoque: </strong>		${aDados.obj.ESTOQUE}
@@ -478,14 +485,32 @@ var tools = {
 			let message;
 
 			if (aDados.obj.CODIGO != "") {
+				aDados.obj.tipo = "global";
+				let complemento = ""
+				if (aDados.obj.B1_COD != undefined) {
+					aDados.obj.tipo = "produto";
+					complemento = "ao produto <br><strong>" + aDados.obj.B1_COD + " | " + aDados.obj.B1_DESC + "</strong>"
+				}
+				if (aDados.obj.A2_COD != undefined) {
+					aDados.obj.tipo = "fornecedor";
+					complemento = "ao fornecedor <br><strong>" + aDados.obj.A2_CGC + ":" + aDados.obj.A2_LOJA + " | " + aDados.obj.A2_NOME + "</strong>"
+				}
 				message = "Confirma a aplicação da TES abaixo ";
-				message += (aDados.obj.tipo == "produto" ? "ao produto <br><strong>" + aDados.obj.B1_COD + " | " + aDados.obj.B1_DESC + "</strong> do fornecedor <br><strong>" : " aos produtos do fornecedor <br><strong>")
-				message += aDados.obj.A2_CGC + " | " + aDados.obj.A2_NOME + "</strong> ?" + txtTES
+				message += complemento
+				message += txtTES
 			} else {
-				if (aDados.obj.tipo == "produto")
-					message = "Confirma a limpeza da TES  ";
-				message += "ao produto <br><strong>" + aDados.obj.B1_COD + " | " + aDados.obj.B1_DESC + "</strong> do fornecedor <br><strong>";
-				message += aDados.obj.A2_CGC + " | " + aDados.obj.A2_NOME + "</strong> ?"
+				aDados.obj.tipo = "global";
+				let complemento = ""
+				if (aDados.obj.B1_COD != undefined) {
+					aDados.obj.tipo = "produto";
+					complemento = "do produto <br><strong>" + aDados.obj.B1_COD + " | " + aDados.obj.B1_DESC + "</strong> ?"
+				}
+				if (aDados.obj.A2_COD != undefined) {
+					aDados.obj.tipo = "fornecedor";
+					complemento = "do fornecedor <br><strong>" + aDados.obj.A2_CGC + ":" + aDados.obj.A2_LOJA + " | " + aDados.obj.A2_NOME + "</strong>?"
+				}
+				message = "Confirma a limpeza da TES  ";
+				message += complemento;
 			}
 
 			FLUIGC.message.confirm({
@@ -497,7 +522,7 @@ var tools = {
 				if (result) {
 					tools.TES.gravaSelecao();
 				} else {
-					if (aDados.obj != undefined && aDados.obj.tipo == "produto") {
+					if (aDados.obj != undefined) {
 						tools.TES.selecao.limpezaCancelada()
 					}
 				}
@@ -507,21 +532,47 @@ var tools = {
 			limpezaCancelada() {
 				let obj = aDados.obj;
 				delete aDados.obj;
-
-				let codigo = $("[name^=TES_A2_COD][value='" + obj.A2_COD + "']").closest("tr").find("[name^=TES_A2_LOJA][value='" + obj.A2_LOJA + "']").closest("tr").find("[name^=TES_B1_COD][value='" + obj.B1_COD + "']").closest("tr").find("[name^=TES_CODIGO]").val();
-
+				let codigo = "";
+				if (obj.tipo == "produto") {
+					codigo = $("[name^=TES_B1_COD][value='" + obj.B1_COD + "']")
+						.closest("tr").find("[name^=TES_CODIGO]").val();
+				}
+				if (obj.tipo == "fornecedor") {
+					codigo = $("[name^=TES_A2_COD][value='" + obj.A2_COD + "']")
+						.closest("tr").find("[name^=TES_CODIGO]").val();
+				}
 				if (codigo != "") {
 					tools.TES.selecao.linha(obj.A2_CGC, obj.B1_COD, codigo)
 				}
 			},
 			linha(A2_CGC, B1_COD, CODIGO) {
-				$("[data-a2cgc=" + A2_CGC + "][data-b1cod=" + B1_COD + "]").val(CODIGO);
-				$("[data-a2cgc=" + A2_CGC + "][data-b1cod=" + B1_COD + "]").addClass("preenchido")
+				if (B1_COD != undefined) {
+					$("[data-b1cod=" + B1_COD + "]").val(CODIGO);
+					$("[data-b1cod=" + B1_COD + "]").addClass("preenchido")
+				} if (A2_CGC != undefined) {
+					$("[data-a2cgc=" + A2_CGC + "]").val(CODIGO);
+					$("[data-a2cgc=" + A2_CGC + "]").addClass("preenchido")
+				} else {
+					$("[data-global]").val(CODIGO);
+					$("[data-global]").addClass("preenchido")
+				}
 			},
 			todos() {
 				$("[name^=TES_A2_CGC___]").toArray().forEach(function (el) {
-					if (el.value != "" && $(el).closest("tr").find("[name^=TES_B1_COD___]").val() != "" && $(el).closest("tr").find("[name^=TES_CODIGO___]").val() != "") {
-						tools.TES.selecao.linha(el.value, $(el).closest("tr").find("[name^=TES_B1_COD___]").val(), $(el).closest("tr").find("[name^=TES_CODIGO___]").val())
+					if (el.value != ""
+						&& $(el).closest("tr").find("[name^=TES_CODIGO___]").val() != "") {
+						tools.TES.selecao.linha(el.value,
+							undefined,
+							$(el).closest("tr").find("[name^=TES_CODIGO___]").val())
+					}
+
+				})
+				$("[name^=TES_B1_COD___]").toArray().forEach(function (el) {
+					if (el.value != ""
+						&& $(el).closest("tr").find("[name^=TES_CODIGO___]").val() != "") {
+						tools.TES.selecao.linha(undefined,
+							$(el).closest("tr").find("[name^=TES_B1_COD___]").val(),
+							$(el).closest("tr").find("[name^=TES_CODIGO___]").val())
 					}
 
 				})

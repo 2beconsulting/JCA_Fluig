@@ -647,39 +647,6 @@
 
 						</div>
 					</div>
-					<div class="panel panel-primary" id="divTabelaFornecedor">
-						<div class="panel-heading">
-							<h3 class="panel-title">Sugestão de fornecedores</h3>
-						</div>
-						<div class="panel-body">
-							<div class="row">
-								<div class="col-md-3 form-group">
-									<input type="button" class="btn btn-default hideInserir" id="inserirFornecedor"
-										value="INSERIR FORNECEDOR" />
-								</div>
-							</div>
-							<table class="table table-stripped" tablename="tabelaFornecedor" id="tabelaFornecedor"
-								noaddbutton="true" nodeletebutton="true">
-								<thead>
-									<tr>
-										<th>Fornecedor</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr>
-										<td class="bpm-mobile-trash-column hideLixeira">
-											<span class="fluig-style-guide fs-display-block fs-md-space">
-												<i class="fluigicon fluigicon-trash fluigicon-md" id="excluirFornecedor"
-													onClick="customRemoveChild(this);" style="cursor: pointer"></i>
-											</span>
-										</td>
-										<td><input type="text" class="form-control" name="fornec_sugerido"
-												id="fornec_sugerido"></td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
-					</div>
 				</div>
 			</div>
 			<!-- APROVAR SOLICITACAO -->
@@ -2174,7 +2141,7 @@
 									<label>Observações</label>
 									<textarea class="form-control" readonly value="{{C8_OBS}}"></textarea>
 								</div>
-								<button class="btn btn-primary" data-vencedor fornecedor="{{A2_COD}}" loja="{{A2_LOJA}}" produto="{{C8_PRODUTO}}">Vencedor</button>
+								<span class="btn btn-primary" data-vencedor fornecedor="{{A2_COD}}" loja="{{A2_LOJA}}" produto="{{C8_PRODUTO}}">Vencedor</span>
 							</div>
 						{{/cotacoes}}
 						</div>
@@ -2186,6 +2153,21 @@
 		</div>
 	</script>
 <script type="text/template" id="tmpl2">
+		<style>
+			
+				.vencedor{
+					background-color:#F0E68C !important;
+				}
+
+				.vencedor_comprador{
+					background-color:#87CEFA !important;
+				}
+
+				.vencedor.vencedor_comprador{
+					background-color:#90EE90 !important;
+				}
+		</style>
+	
 		<div class="panel-group" id="accordion">
 			{{#.}}
 			<div class="panel panel-default">
@@ -2199,7 +2181,7 @@
 				<div id="collapse{{B1_COD}}" class="panel-collapse collapse in">
 					<div class="panel-body">
 						<div class="detalheProd">
-						<div width="4000px">
+						<div style="overflow-x: scroll !important;">
 						<table class="table table-stripped">
 							<thead>
 								<tr>
@@ -2222,7 +2204,7 @@
 							<tbody>
 								{{#cotacoes}}
 									<tr class="{{#VENCEDOR}}vencedor{{/VENCEDOR}} {{#VENCEDOR_COMP}}vencedor_comprador{{/VENCEDOR_COMP}}">
-										<td><span data-vencedor fornecedor="{{C8_FORNECE}}" loja="{{C8_LOJA}}" produto="{{C8_PRODUTO}}"><i class="flaticon flaticon-file-awards" aria-hidden="true"></i></span></td>
+										<td><span class="btn btn-primary" data-vencedor fornecedor="{{C8_FORNECE}}" loja="{{C8_LOJA}}" produto="{{C8_PRODUTO}}"><i class="flaticon flaticon-file-awards" aria-hidden="true"></i></span></td>
 										<td>{{C8_FORNECE}}:{{C8_LOJA}} - {{A2_NOME}}</td>
 										<td {{#COMPRADOR}}title="{{COMPRADOR}}{{#COMPRADOR_JUSTIFICATIVA}} : {{COMPRADOR_JUSTIFICATIVA}}{{/COMPRADOR_JUSTIFICATIVA}}"{{/COMPRADOR}}>{{QTD_COMPRADOR}}</td>
 										<td>{{MARCA}}</td>
@@ -2249,6 +2231,20 @@
 		</div>
 	</script>
 <script type="text/template" id="tmpl3">
+			<style>
+			
+				.vencedor{
+					background-color:#F0E68C !important;
+				}
+
+				.vencedor_comprador{
+					background-color:#87CEFA !important;
+				}
+
+				.vencedor.vencedor_comprador{
+					background-color:#90EE90 !important;
+				}
+		</style>
 		<div>
 			<input type="hidden" id="confirm_vencedor" value="{{VENCEDOR}}">
 			<div class="row">
@@ -2748,6 +2744,7 @@
     {{/.}}
 	</script>
 <script type="text/template" id="tmpl9">
+
 		<div class="panel-group" id="accordion">
 			{{#produtos}}
 			<div class="panel panel-default">
