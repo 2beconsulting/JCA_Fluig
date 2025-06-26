@@ -1,8 +1,692 @@
------BEGIN OPENSSH PRIVATE KEY-----
-b3BlbnNzaC1rZXktdjEAAAAACmFlczI1Ni1jdHIAAAAGYmNyeXB0AAAAGAAAABCvaAufvr
-2H8cutgjnSUWxvAAAAGAAAAAEAAAAzAAAAC3NzaC1lZDI1NTE5AAAAIImvnjDm7Y8N0YvV
-SFju4aewCLZIrLGV3wLYySMh+uBOAAAAoOccmmkHH64AFoQcnwYU83cotMWqGQ07o79rii
-K5IlNqNo1UR2g7gHRT5oNLvXlEwkl6ZuVCwxkMg44N6v8xP1Ad/QzB97VAOsazOQ71//V8
-jLQDVpn4IJl9I6GzFLDZCdc+2BqkOPVRURCS+AZwnLK/7jpYh2XFU6JUBIjfdE6P33Za1n
-DSI1TrjksMHSJL6PZ2Li/cgSEc+1W87VD8jpo=
------END OPENSSH PRIVATE KEY-----
+{
+  "companyId" : null,
+  "serviceCode" : "PROTHEUS_SERVICE_REST",
+  "description" : "PROTHEUS_SERVICE_REST:SUCCESS",
+  "httpStatusResult" : 500,
+  "result" : "{\"detailedMessage\":\"\",\"code\":500,\"message\":\"Internal Server Error\"}",
+  "method" : "post",
+  "endpoint" : "/JWSSC802/2",
+  "strParams" : null,
+  "timeoutService" : null,
+  "params" : {
+    "COTACAO" : [ {
+      "C8_NUMERO" : "000330",
+      "EMPRESA" : "00100289",
+      "FORNECE" : [ {
+        "ITEM" : [ {
+          "C8_PRECO" : "184.160000",
+          "C8_ITEM" : "0002",
+          "C8_PRODUTO" : "050101220926",
+          "C8_QTDISP" : "8",
+          "C8_TES" : "022",
+          "C8_PRAZO" : "5"
+        }, {
+          "C8_PRECO" : "22.930000",
+          "C8_ITEM" : "0011",
+          "C8_PRODUTO" : "070501242192",
+          "C8_QTDISP" : "10",
+          "C8_TES" : "022",
+          "C8_PRAZO" : "5"
+        }, {
+          "C8_PRECO" : "20.140000",
+          "C8_ITEM" : "0015",
+          "C8_PRODUTO" : "070501232192",
+          "C8_QTDISP" : "10",
+          "C8_TES" : "022",
+          "C8_PRAZO" : "5"
+        } ],
+        "C8_FORNECE" : "00177801",
+        "C8_TPFRETE" : "C",
+        "C8_DESPESA" : "0.00",
+        "C8_COND" : "009",
+        "C8_TOTFRE" : "0.00",
+        "C8_VLDESC" : "0.00",
+        "C8_SEGURO" : "0.00"
+      }, {
+        "ITEM" : [ {
+          "C8_PRECO" : "18.050000",
+          "C8_ITEM" : "0020",
+          "C8_PRODUTO" : "090201851509",
+          "C8_QTDISP" : "20",
+          "C8_TES" : "022",
+          "C8_PRAZO" : "1"
+        }, {
+          "C8_PRECO" : "22.350000",
+          "C8_ITEM" : "0025",
+          "C8_PRODUTO" : "090201861509",
+          "C8_QTDISP" : "20",
+          "C8_TES" : "022",
+          "C8_PRAZO" : "1"
+        }, {
+          "C8_PRECO" : "18.020000",
+          "C8_ITEM" : "0031",
+          "C8_PRODUTO" : "090201800393",
+          "C8_QTDISP" : "20",
+          "C8_TES" : "022",
+          "C8_PRAZO" : "1"
+        } ],
+        "C8_FORNECE" : "00192502",
+        "C8_TPFRETE" : "C",
+        "C8_DESPESA" : "0.00",
+        "C8_COND" : "010",
+        "C8_TOTFRE" : "0.00",
+        "C8_VLDESC" : "0.00",
+        "C8_SEGURO" : "0.00"
+      }, {
+        "ITEM" : [ {
+          "C8_PRECO" : "32.000000",
+          "C8_ITEM" : "0011",
+          "C8_PRODUTO" : "070501242192",
+          "C8_QTDISP" : "10",
+          "C8_TES" : "022",
+          "C8_PRAZO" : "1"
+        }, {
+          "C8_PRECO" : "21.480000",
+          "C8_ITEM" : "0015",
+          "C8_PRODUTO" : "070501232192",
+          "C8_QTDISP" : "10",
+          "C8_TES" : "022",
+          "C8_PRAZO" : "1"
+        }, {
+          "C8_PRECO" : "18.000000",
+          "C8_ITEM" : "0030",
+          "C8_PRODUTO" : "090200992801",
+          "C8_QTDISP" : "10",
+          "C8_TES" : "022",
+          "C8_PRAZO" : "1"
+        }, {
+          "C8_PRECO" : "909.000000",
+          "C8_ITEM" : "0042",
+          "C8_PRODUTO" : "010300740003",
+          "C8_QTDISP" : "2",
+          "C8_TES" : "022",
+          "C8_PRAZO" : "1"
+        } ],
+        "C8_FORNECE" : "00276202",
+        "C8_TPFRETE" : "C",
+        "C8_DESPESA" : "0.00",
+        "C8_COND" : "010",
+        "C8_TOTFRE" : "0.00",
+        "C8_VLDESC" : "0.00",
+        "C8_SEGURO" : "0.00"
+      }, {
+        "ITEM" : [ {
+          "C8_PRECO" : "19.200000",
+          "C8_ITEM" : "0009",
+          "C8_PRODUTO" : "070501240496",
+          "C8_QTDISP" : "10",
+          "C8_TES" : "022",
+          "C8_PRAZO" : "10"
+        }, {
+          "C8_PRECO" : "2.190000",
+          "C8_ITEM" : "0005",
+          "C8_PRODUTO" : "070501251718",
+          "C8_QTDISP" : "10",
+          "C8_TES" : "022",
+          "C8_PRAZO" : "10"
+        }, {
+          "C8_PRECO" : "3.100000",
+          "C8_ITEM" : "0016",
+          "C8_PRODUTO" : "090500910798",
+          "C8_QTDISP" : "20",
+          "C8_TES" : "022",
+          "C8_PRAZO" : "10"
+        }, {
+          "C8_PRECO" : "11.600000",
+          "C8_ITEM" : "0020",
+          "C8_PRODUTO" : "090201851509",
+          "C8_QTDISP" : "20",
+          "C8_TES" : "022",
+          "C8_PRAZO" : "10"
+        }, {
+          "C8_PRECO" : "15.000000",
+          "C8_ITEM" : "0025",
+          "C8_PRODUTO" : "090201861509",
+          "C8_QTDISP" : "20",
+          "C8_TES" : "022",
+          "C8_PRAZO" : "10"
+        }, {
+          "C8_PRECO" : "16.650000",
+          "C8_ITEM" : "0030",
+          "C8_PRODUTO" : "090200992801",
+          "C8_QTDISP" : "10",
+          "C8_TES" : "022",
+          "C8_PRAZO" : "10"
+        }, {
+          "C8_PRECO" : "16.300000",
+          "C8_ITEM" : "0034",
+          "C8_PRODUTO" : "090201801718",
+          "C8_QTDISP" : "20",
+          "C8_TES" : "022",
+          "C8_PRAZO" : "10"
+        } ],
+        "C8_FORNECE" : "00284401",
+        "C8_TPFRETE" : "C",
+        "C8_DESPESA" : "0.00",
+        "C8_COND" : "010",
+        "C8_TOTFRE" : "0.00",
+        "C8_VLDESC" : "0.00",
+        "C8_SEGURO" : "0.00"
+      }, {
+        "ITEM" : [ {
+          "C8_PRECO" : "9.800000",
+          "C8_ITEM" : "0018",
+          "C8_PRODUTO" : "090201850926",
+          "C8_QTDISP" : "20",
+          "C8_TES" : "022",
+          "C8_PRAZO" : "1"
+        }, {
+          "C8_PRECO" : "1.700000",
+          "C8_ITEM" : "0016",
+          "C8_PRODUTO" : "090500910798",
+          "C8_QTDISP" : "20",
+          "C8_TES" : "022",
+          "C8_PRAZO" : "1"
+        }, {
+          "C8_PRECO" : "16.300000",
+          "C8_ITEM" : "0017",
+          "C8_PRODUTO" : "090200550926",
+          "C8_QTDISP" : "10",
+          "C8_TES" : "022",
+          "C8_PRAZO" : "1"
+        }, {
+          "C8_PRECO" : "14.800000",
+          "C8_ITEM" : "0023",
+          "C8_PRODUTO" : "090201860926",
+          "C8_QTDISP" : "20",
+          "C8_TES" : "022",
+          "C8_PRAZO" : "1"
+        }, {
+          "C8_PRECO" : "12.000000",
+          "C8_ITEM" : "0033",
+          "C8_PRODUTO" : "090201800926",
+          "C8_QTDISP" : "20",
+          "C8_TES" : "022",
+          "C8_PRAZO" : "1"
+        }, {
+          "C8_PRECO" : "1.700000",
+          "C8_ITEM" : "0037",
+          "C8_PRODUTO" : "090600320926",
+          "C8_QTDISP" : "30",
+          "C8_TES" : "022",
+          "C8_PRAZO" : "1"
+        }, {
+          "C8_PRECO" : "4.600000",
+          "C8_ITEM" : "0040",
+          "C8_PRODUTO" : "090600370926",
+          "C8_QTDISP" : "10",
+          "C8_TES" : "022",
+          "C8_PRAZO" : "1"
+        } ],
+        "C8_FORNECE" : "00285701",
+        "C8_TPFRETE" : "F",
+        "C8_DESPESA" : "0.00",
+        "C8_COND" : "007",
+        "C8_TOTFRE" : "0.01",
+        "C8_VLDESC" : "0.00",
+        "C8_SEGURO" : "0.00"
+      }, {
+        "ITEM" : [ {
+          "C8_PRECO" : "189.600000",
+          "C8_ITEM" : "0002",
+          "C8_PRODUTO" : "050101220926",
+          "C8_QTDISP" : "7",
+          "C8_TES" : "022",
+          "C8_PRAZO" : "1"
+        }, {
+          "C8_PRECO" : "157.150000",
+          "C8_ITEM" : "0006",
+          "C8_PRODUTO" : "070400040757",
+          "C8_QTDISP" : "8",
+          "C8_TES" : "022",
+          "C8_PRAZO" : "1"
+        }, {
+          "C8_PRECO" : "26.260000",
+          "C8_ITEM" : "0011",
+          "C8_PRODUTO" : "070501242192",
+          "C8_QTDISP" : "10",
+          "C8_TES" : "022",
+          "C8_PRAZO" : "1"
+        }, {
+          "C8_PRECO" : "2.300000",
+          "C8_ITEM" : "0016",
+          "C8_PRODUTO" : "090500910798",
+          "C8_QTDISP" : "20",
+          "C8_TES" : "022",
+          "C8_PRAZO" : "1"
+        }, {
+          "C8_PRECO" : "20.000000",
+          "C8_ITEM" : "0020",
+          "C8_PRODUTO" : "090201851509",
+          "C8_QTDISP" : "20",
+          "C8_TES" : "022",
+          "C8_PRAZO" : "1"
+        }, {
+          "C8_PRECO" : "26.600000",
+          "C8_ITEM" : "0025",
+          "C8_PRODUTO" : "090201861509",
+          "C8_QTDISP" : "20",
+          "C8_TES" : "022",
+          "C8_PRAZO" : "1"
+        }, {
+          "C8_PRECO" : "20.350000",
+          "C8_ITEM" : "0030",
+          "C8_PRODUTO" : "090200992801",
+          "C8_QTDISP" : "10",
+          "C8_TES" : "022",
+          "C8_PRAZO" : "1"
+        }, {
+          "C8_PRECO" : "810.000000",
+          "C8_ITEM" : "0042",
+          "C8_PRODUTO" : "010300740003",
+          "C8_QTDISP" : "2",
+          "C8_TES" : "022",
+          "C8_PRAZO" : "1"
+        } ],
+        "C8_FORNECE" : "00323403",
+        "C8_TPFRETE" : "",
+        "C8_DESPESA" : "0.00",
+        "C8_COND" : "001",
+        "C8_TOTFRE" : "0.00",
+        "C8_VLDESC" : "0.00",
+        "C8_SEGURO" : "0.00"
+      }, {
+        "ITEM" : [ {
+          "C8_PRECO" : "169.350000",
+          "C8_ITEM" : "0001",
+          "C8_PRODUTO" : "050101220757",
+          "C8_QTDISP" : "8",
+          "C8_TES" : "022",
+          "C8_PRAZO" : "1"
+        }, {
+          "C8_PRECO" : "1.880000",
+          "C8_ITEM" : "0016",
+          "C8_PRODUTO" : "090500910798",
+          "C8_QTDISP" : "20",
+          "C8_TES" : "022",
+          "C8_PRAZO" : "1"
+        }, {
+          "C8_PRECO" : "18.790000",
+          "C8_ITEM" : "0020",
+          "C8_PRODUTO" : "090201851509",
+          "C8_QTDISP" : "20",
+          "C8_TES" : "022",
+          "C8_PRAZO" : "1"
+        }, {
+          "C8_PRECO" : "23.000000",
+          "C8_ITEM" : "0025",
+          "C8_PRODUTO" : "090201861509",
+          "C8_QTDISP" : "20",
+          "C8_TES" : "022",
+          "C8_PRAZO" : "1"
+        }, {
+          "C8_PRECO" : "18.800000",
+          "C8_ITEM" : "0030",
+          "C8_PRODUTO" : "090200992801",
+          "C8_QTDISP" : "10",
+          "C8_TES" : "022",
+          "C8_PRAZO" : "1"
+        } ],
+        "C8_FORNECE" : "00323401",
+        "C8_TPFRETE" : "",
+        "C8_DESPESA" : "0.00",
+        "C8_COND" : "001",
+        "C8_TOTFRE" : "0.00",
+        "C8_VLDESC" : "0.00",
+        "C8_SEGURO" : "0.00"
+      }, {
+        "ITEM" : [ {
+          "C8_PRECO" : "14.480000",
+          "C8_ITEM" : "0004",
+          "C8_PRODUTO" : "070501250926",
+          "C8_QTDISP" : "10",
+          "C8_TES" : "022",
+          "C8_PRAZO" : "1"
+        }, {
+          "C8_PRECO" : "1074.850000",
+          "C8_ITEM" : "0042",
+          "C8_PRODUTO" : "010300740003",
+          "C8_QTDISP" : "2",
+          "C8_TES" : "022",
+          "C8_PRAZO" : "1"
+        } ],
+        "C8_FORNECE" : "00590501",
+        "C8_TPFRETE" : "",
+        "C8_DESPESA" : "0.00",
+        "C8_COND" : "001",
+        "C8_TOTFRE" : "0.00",
+        "C8_VLDESC" : "0.00",
+        "C8_SEGURO" : "0.00"
+      }, {
+        "ITEM" : [ {
+          "C8_PRECO" : "18.350000",
+          "C8_ITEM" : "0004",
+          "C8_PRODUTO" : "070501250926",
+          "C8_QTDISP" : "10",
+          "C8_TES" : "022",
+          "C8_PRAZO" : "1"
+        }, {
+          "C8_PRECO" : "62.400000",
+          "C8_ITEM" : "0010",
+          "C8_PRODUTO" : "070501240926",
+          "C8_QTDISP" : "10",
+          "C8_TES" : "022",
+          "C8_PRAZO" : "1"
+        }, {
+          "C8_PRECO" : "106.200000",
+          "C8_ITEM" : "0042",
+          "C8_PRODUTO" : "010300740003",
+          "C8_QTDISP" : "2",
+          "C8_TES" : "022",
+          "C8_PRAZO" : "1"
+        }, {
+          "C8_PRECO" : "968.000000",
+          "C8_ITEM" : "0043",
+          "C8_PRODUTO" : "090401850926",
+          "C8_QTDISP" : "2",
+          "C8_TES" : "022",
+          "C8_PRAZO" : "4"
+        } ],
+        "C8_FORNECE" : "00867402",
+        "C8_TPFRETE" : "C",
+        "C8_DESPESA" : "0.00",
+        "C8_COND" : "010",
+        "C8_TOTFRE" : "0.00",
+        "C8_VLDESC" : "0.00",
+        "C8_SEGURO" : "0.00"
+      }, {
+        "ITEM" : [ {
+          "C8_PRECO" : "774.000000",
+          "C8_ITEM" : "0002",
+          "C8_PRODUTO" : "050101220926",
+          "C8_QTDISP" : "8",
+          "C8_TES" : "022",
+          "C8_PRAZO" : "10"
+        }, {
+          "C8_PRECO" : "450.000000",
+          "C8_ITEM" : "0028",
+          "C8_PRODUTO" : "090200990926",
+          "C8_QTDISP" : "10",
+          "C8_TES" : "022",
+          "C8_PRAZO" : "3"
+        }, {
+          "C8_PRECO" : "14.000000",
+          "C8_ITEM" : "0004",
+          "C8_PRODUTO" : "070501250926",
+          "C8_QTDISP" : "10",
+          "C8_TES" : "022",
+          "C8_PRAZO" : "3"
+        }, {
+          "C8_PRECO" : "930.000000",
+          "C8_ITEM" : "0007",
+          "C8_PRODUTO" : "070400040926",
+          "C8_QTDISP" : "8",
+          "C8_TES" : "022",
+          "C8_PRAZO" : "3"
+        }, {
+          "C8_PRECO" : "49.000000",
+          "C8_ITEM" : "0010",
+          "C8_PRODUTO" : "070501240926",
+          "C8_QTDISP" : "10",
+          "C8_TES" : "022",
+          "C8_PRAZO" : "3"
+        }, {
+          "C8_PRECO" : "1050.000000",
+          "C8_ITEM" : "0042",
+          "C8_PRODUTO" : "010300740003",
+          "C8_QTDISP" : "2",
+          "C8_TES" : "022",
+          "C8_PRAZO" : "3"
+        }, {
+          "C8_PRECO" : "770.000000",
+          "C8_ITEM" : "0043",
+          "C8_PRODUTO" : "090401850926",
+          "C8_QTDISP" : "2",
+          "C8_TES" : "022",
+          "C8_PRAZO" : "3"
+        } ],
+        "C8_FORNECE" : "00867403",
+        "C8_TPFRETE" : "C",
+        "C8_DESPESA" : "0.00",
+        "C8_COND" : "009",
+        "C8_TOTFRE" : "0.00",
+        "C8_VLDESC" : "0.00",
+        "C8_SEGURO" : "0.00"
+      }, {
+        "ITEM" : [ {
+          "C8_PRECO" : "276.000000",
+          "C8_ITEM" : "0001",
+          "C8_PRODUTO" : "050101220757",
+          "C8_QTDISP" : "8",
+          "C8_TES" : "022",
+          "C8_PRAZO" : "2"
+        }, {
+          "C8_PRECO" : "8.750000",
+          "C8_ITEM" : "0039",
+          "C8_PRODUTO" : "090600370798",
+          "C8_QTDISP" : "10",
+          "C8_TES" : "022",
+          "C8_PRAZO" : "2"
+        }, {
+          "C8_PRECO" : "3.220000",
+          "C8_ITEM" : "0005",
+          "C8_PRODUTO" : "070501251718",
+          "C8_QTDISP" : "10",
+          "C8_TES" : "022",
+          "C8_PRAZO" : "2"
+        }, {
+          "C8_PRECO" : "39.900000",
+          "C8_ITEM" : "0011",
+          "C8_PRODUTO" : "070501242192",
+          "C8_QTDISP" : "10",
+          "C8_TES" : "022",
+          "C8_PRAZO" : "2"
+        }, {
+          "C8_PRECO" : "32.500000",
+          "C8_ITEM" : "0015",
+          "C8_PRODUTO" : "070501232192",
+          "C8_QTDISP" : "10",
+          "C8_TES" : "022",
+          "C8_PRAZO" : "2"
+        }, {
+          "C8_PRECO" : "2.600000",
+          "C8_ITEM" : "0016",
+          "C8_PRODUTO" : "090500910798",
+          "C8_QTDISP" : "20",
+          "C8_TES" : "022",
+          "C8_PRAZO" : "2"
+        }, {
+          "C8_PRECO" : "22.000000",
+          "C8_ITEM" : "0026",
+          "C8_PRODUTO" : "090201861718",
+          "C8_QTDISP" : "20",
+          "C8_TES" : "022",
+          "C8_PRAZO" : "2"
+        }, {
+          "C8_PRECO" : "28.150000",
+          "C8_ITEM" : "0030",
+          "C8_PRODUTO" : "090200992801",
+          "C8_QTDISP" : "10",
+          "C8_TES" : "022",
+          "C8_PRAZO" : "2"
+        }, {
+          "C8_PRECO" : "22.950000",
+          "C8_ITEM" : "0031",
+          "C8_PRODUTO" : "090201800393",
+          "C8_QTDISP" : "20",
+          "C8_TES" : "022",
+          "C8_PRAZO" : "2"
+        }, {
+          "C8_PRECO" : "2.600000",
+          "C8_ITEM" : "0036",
+          "C8_PRODUTO" : "090600320798",
+          "C8_QTDISP" : "30",
+          "C8_TES" : "022",
+          "C8_PRAZO" : "2"
+        } ],
+        "C8_FORNECE" : "00913601",
+        "C8_TPFRETE" : "",
+        "C8_DESPESA" : "0.00",
+        "C8_COND" : "001",
+        "C8_TOTFRE" : "0.00",
+        "C8_VLDESC" : "0.00",
+        "C8_SEGURO" : "0.00"
+      }, {
+        "ITEM" : [ {
+          "C8_PRECO" : "169.500000",
+          "C8_ITEM" : "0001",
+          "C8_PRODUTO" : "050101220757",
+          "C8_QTDISP" : "8",
+          "C8_TES" : "022",
+          "C8_PRAZO" : "2"
+        }, {
+          "C8_PRECO" : "66.000000",
+          "C8_ITEM" : "0006",
+          "C8_PRODUTO" : "070400040757",
+          "C8_QTDISP" : "8",
+          "C8_TES" : "022",
+          "C8_PRAZO" : "2"
+        }, {
+          "C8_PRECO" : "24.450000",
+          "C8_ITEM" : "0011",
+          "C8_PRODUTO" : "070501242192",
+          "C8_QTDISP" : "10",
+          "C8_TES" : "022",
+          "C8_PRAZO" : "2"
+        }, {
+          "C8_PRECO" : "20.300000",
+          "C8_ITEM" : "0015",
+          "C8_PRODUTO" : "070501232192",
+          "C8_QTDISP" : "10",
+          "C8_TES" : "022",
+          "C8_PRAZO" : "2"
+        }, {
+          "C8_PRECO" : "17.500000",
+          "C8_ITEM" : "0020",
+          "C8_PRODUTO" : "090201851509",
+          "C8_QTDISP" : "20",
+          "C8_TES" : "022",
+          "C8_PRAZO" : "2"
+        }, {
+          "C8_PRECO" : "21.450000",
+          "C8_ITEM" : "0025",
+          "C8_PRODUTO" : "090201861509",
+          "C8_QTDISP" : "20",
+          "C8_TES" : "022",
+          "C8_PRAZO" : "2"
+        } ],
+        "C8_FORNECE" : "01003803",
+        "C8_TPFRETE" : "",
+        "C8_DESPESA" : "0.00",
+        "C8_COND" : "001",
+        "C8_TOTFRE" : "0.00",
+        "C8_VLDESC" : "0.00",
+        "C8_SEGURO" : "0.00"
+      }, {
+        "ITEM" : [ {
+          "C8_PRECO" : "188.040000",
+          "C8_ITEM" : "0001",
+          "C8_PRODUTO" : "050101220757",
+          "C8_QTDISP" : "8",
+          "C8_TES" : "022",
+          "C8_PRAZO" : "45"
+        }, {
+          "C8_PRECO" : "27.770000",
+          "C8_ITEM" : "0011",
+          "C8_PRODUTO" : "070501242192",
+          "C8_QTDISP" : "10",
+          "C8_TES" : "022",
+          "C8_PRAZO" : "45"
+        }, {
+          "C8_PRECO" : "27.850000",
+          "C8_ITEM" : "0015",
+          "C8_PRODUTO" : "070501232192",
+          "C8_QTDISP" : "10",
+          "C8_TES" : "022",
+          "C8_PRAZO" : "45"
+        } ],
+        "C8_FORNECE" : "01027301",
+        "C8_TPFRETE" : "C",
+        "C8_DESPESA" : "0.00",
+        "C8_COND" : "009",
+        "C8_TOTFRE" : "0.00",
+        "C8_VLDESC" : "0.00",
+        "C8_SEGURO" : "0.00"
+      }, {
+        "ITEM" : [ {
+          "C8_PRECO" : "295.000000",
+          "C8_ITEM" : "0001",
+          "C8_PRODUTO" : "050101220757",
+          "C8_QTDISP" : "8",
+          "C8_TES" : "022",
+          "C8_PRAZO" : "10"
+        }, {
+          "C8_PRECO" : "150.000000",
+          "C8_ITEM" : "0006",
+          "C8_PRODUTO" : "070400040757",
+          "C8_QTDISP" : "8",
+          "C8_TES" : "022",
+          "C8_PRAZO" : "10"
+        }, {
+          "C8_PRECO" : "30.000000",
+          "C8_ITEM" : "0015",
+          "C8_PRODUTO" : "070501232192",
+          "C8_QTDISP" : "10",
+          "C8_TES" : "022",
+          "C8_PRAZO" : "10"
+        }, {
+          "C8_PRECO" : "9.000000",
+          "C8_ITEM" : "0016",
+          "C8_PRODUTO" : "090500910798",
+          "C8_QTDISP" : "20",
+          "C8_TES" : "022",
+          "C8_PRAZO" : "10"
+        }, {
+          "C8_PRECO" : "25.000000",
+          "C8_ITEM" : "0031",
+          "C8_PRODUTO" : "090201800393",
+          "C8_QTDISP" : "20",
+          "C8_TES" : "022",
+          "C8_PRAZO" : "10"
+        }, {
+          "C8_PRECO" : "7.500000",
+          "C8_ITEM" : "0037",
+          "C8_PRODUTO" : "090600320926",
+          "C8_QTDISP" : "30",
+          "C8_TES" : "022",
+          "C8_PRAZO" : "10"
+        }, {
+          "C8_PRECO" : "15.000000",
+          "C8_ITEM" : "0040",
+          "C8_PRODUTO" : "090600370926",
+          "C8_QTDISP" : "10",
+          "C8_TES" : "022",
+          "C8_PRAZO" : "10"
+        }, {
+          "C8_PRECO" : "1500.000000",
+          "C8_ITEM" : "0042",
+          "C8_PRODUTO" : "010300740003",
+          "C8_QTDISP" : "2",
+          "C8_TES" : "022",
+          "C8_PRAZO" : "10"
+        }, {
+          "C8_PRECO" : "1550.000000",
+          "C8_ITEM" : "0043",
+          "C8_PRODUTO" : "090401850926",
+          "C8_QTDISP" : "2",
+          "C8_TES" : "022",
+          "C8_PRAZO" : "10"
+        } ],
+        "C8_FORNECE" : "01298201",
+        "C8_TPFRETE" : "C",
+        "C8_DESPESA" : "0.00",
+        "C8_COND" : "010",
+        "C8_TOTFRE" : "0.00",
+        "C8_VLDESC" : "0.00",
+        "C8_SEGURO" : "0.00"
+      } ]
+    } ]
+  },
+  "options" : null,
+  "headers" : null
+}

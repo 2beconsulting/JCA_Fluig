@@ -722,12 +722,13 @@ var tools = {
 			var TESPADRAO = tools.getDataset("DS_COMPRAS_PRAZOS_ENTREGA",
 				null, null, true)
 			TESPADRAO = TESPADRAO[0]["tesPadrao"];
+			dadosFluig.dados = dadosFluig.dados.sort(function (a, b) {
+				return parseInt(a.C8_ITEM.trim()) - parseInt(b.C8_ITEM.trim())
+			})
 			dadosFluig.dados.forEach(function (el) {
 				var tmpFornece = "" + el.C8_FORNECE + el.C8_LOJA;
 				log.info(">> tmpFornece : " + tmpFornece);
 				var filtered = dadosProtheus.COTACAO[0].FORNECE.filter(function (it) { return it.C8_FORNECE == tmpFornece });
-				//log.info("-- filtered --");
-				//log.dir(filtered);
 
 				if (tools.formata.toBranco(el.C8_PRECO) != ""
 					&& tools.formata.toBranco(el.C8_QUANT) != ""
@@ -735,6 +736,7 @@ var tools = {
 					if (filtered.length > 0) {
 						filtered[0]["ITEM"].push({
 							"C8_PRODUTO": el.C8_PRODUTO.trim(),
+							"C8_ITEM": el.C8_ITEM.trim(),
 							"C8_PRECO": tools.formata.toProtheus(el.C8_PRECO),
 							"C8_QTDISP": el.C8_QUANT != "" ? el.C8_QUANT : "0",
 							"C8_PRAZO": el.C8_PRAZO != "" ? el.C8_PRAZO : "1",
@@ -759,11 +761,19 @@ var tools = {
 			})
 
 			//log.dir(dadosProtheus)
+			dadosProtheus.COTACAO[0].FORNECE = dadosProtheus.COTACAO[0].FORNECE.map(function (el) {
+				el.ITEM = el.ITEM.sort(function (a, b) {
+					return parseInt(a.C8_ITEM) - parseInt(b.C8_ITEM)
+				})
+				return el
+			})
 			var protheusFilter = {
 				"COTACAO": [{
 					"C8_NUMERO": dadosProtheus.COTACAO[0].C8_NUMERO,
 					"EMPRESA": dadosProtheus.COTACAO[0].EMPRESA,
-					"FORNECE": dadosProtheus.COTACAO[0].FORNECE.filter(function (el) { return el.ITEM.filter(function (it) { return it.C8_PRECO != "0.00" && it.C8_PRECO != "0.000000" }).length > 0 })
+					"FORNECE": dadosProtheus.COTACAO[0].FORNECE.filter(function (el) {
+						return el.ITEM.filter(function (it) { return it.C8_PRECO != "0.00" && it.C8_PRECO != "0.000000" }).length > 0
+					})
 				}]
 			}
 

@@ -29,7 +29,7 @@
     <processDefinitionVersionPK>
       <companyId>1</companyId>
       <processId>Solicitação de Compras</processId>
-      <version>10</version>
+      <version>15</version>
     </processDefinitionVersionPK>
     <versionDescription></versionDescription>
     <formId>746746</formId>
@@ -7095,7 +7095,7 @@
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <expressionOrder>1</expressionOrder>
-        <version>10</version>
+        <version>15</version>
         <sequence>4</sequence>
       </conditionProcessStatePK>
       <condition>hAPI.getCardValue(&quot;decisaoAprovador&quot;) == &quot;retornar&quot;</condition>
@@ -7107,7 +7107,7 @@
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <expressionOrder>2</expressionOrder>
-        <version>10</version>
+        <version>15</version>
         <sequence>4</sequence>
       </conditionProcessStatePK>
       <condition>hAPI.getCardValue(&quot;decisaoAprovador&quot;) == &quot;nao&quot;</condition>
@@ -7119,7 +7119,7 @@
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <expressionOrder>3</expressionOrder>
-        <version>10</version>
+        <version>15</version>
         <sequence>4</sequence>
       </conditionProcessStatePK>
       <condition>true</condition>
@@ -7131,7 +7131,7 @@
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <expressionOrder>1</expressionOrder>
-        <version>10</version>
+        <version>15</version>
         <sequence>28</sequence>
       </conditionProcessStatePK>
       <condition>hAPI.getCardValue(&quot;ciclo_aprovado&quot;) == &quot;nao&quot;</condition>
@@ -7143,7 +7143,7 @@
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <expressionOrder>2</expressionOrder>
-        <version>10</version>
+        <version>15</version>
         <sequence>28</sequence>
       </conditionProcessStatePK>
       <condition>(hAPI.getCardValue(&quot;ciclo_aprovado&quot;) == &quot;sim&quot; || hAPI.getCardValue(&quot;ciclo_aprovado&quot;) == &quot;&quot;) &amp;&amp; hAPI.getCardValue(&quot;validacao_tecnica_necessaria&quot;) == &quot;true&quot; &amp;&amp; tools.validacaoTecnica.necessario()</condition>
@@ -7155,7 +7155,7 @@
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <expressionOrder>3</expressionOrder>
-        <version>10</version>
+        <version>15</version>
         <sequence>28</sequence>
       </conditionProcessStatePK>
       <condition>hAPI.getCardValue(&quot;ciclo_aprovado&quot;) == &quot;novo&quot;</condition>
@@ -7167,7 +7167,7 @@
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <expressionOrder>4</expressionOrder>
-        <version>10</version>
+        <version>15</version>
         <sequence>28</sequence>
       </conditionProcessStatePK>
       <condition>tools.aprovacao.valorPreAprovadoMenor()</condition>
@@ -7179,7 +7179,7 @@
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <expressionOrder>5</expressionOrder>
-        <version>10</version>
+        <version>15</version>
         <sequence>28</sequence>
       </conditionProcessStatePK>
       <condition>hAPI.getCardValue(&quot;intrack_necessario&quot;) == &quot;true&quot;</condition>
@@ -7191,7 +7191,7 @@
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <expressionOrder>6</expressionOrder>
-        <version>10</version>
+        <version>15</version>
         <sequence>28</sequence>
       </conditionProcessStatePK>
       <condition>true</condition>
@@ -7203,7 +7203,7 @@
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <expressionOrder>1</expressionOrder>
-        <version>10</version>
+        <version>15</version>
         <sequence>41</sequence>
       </conditionProcessStatePK>
       <condition>hAPI.getCardValue(&quot;decisaoAprovadorValorMenor&quot;) == &quot;retornar&quot;</condition>
@@ -7215,7 +7215,7 @@
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <expressionOrder>2</expressionOrder>
-        <version>10</version>
+        <version>15</version>
         <sequence>41</sequence>
       </conditionProcessStatePK>
       <condition>hAPI.getCardValue(&quot;decisaoAprovadorValorMenor&quot;) == &quot;compras&quot;</condition>
@@ -7227,7 +7227,7 @@
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <expressionOrder>3</expressionOrder>
-        <version>10</version>
+        <version>15</version>
         <sequence>41</sequence>
       </conditionProcessStatePK>
       <condition>hAPI.getCardValue(&quot;decisaoAprovadorValorMenor&quot;) == &quot;nao&quot;</condition>
@@ -7239,7 +7239,7 @@
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <expressionOrder>4</expressionOrder>
-        <version>10</version>
+        <version>15</version>
         <sequence>41</sequence>
       </conditionProcessStatePK>
       <condition>hAPI.getCardValue(&quot;aprovacaoProxAprovador&quot;) != &quot;&quot;</condition>
@@ -7251,7 +7251,7 @@
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <expressionOrder>5</expressionOrder>
-        <version>10</version>
+        <version>15</version>
         <sequence>41</sequence>
       </conditionProcessStatePK>
       <condition>hAPI.getCardValue(&quot;intrack_necessario&quot;) == &quot;true&quot;</condition>
@@ -7263,7 +7263,7 @@
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <expressionOrder>6</expressionOrder>
-        <version>10</version>
+        <version>15</version>
         <sequence>41</sequence>
       </conditionProcessStatePK>
       <condition>true</condition>
@@ -7275,7 +7275,7 @@
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <expressionOrder>1</expressionOrder>
-        <version>10</version>
+        <version>15</version>
         <sequence>56</sequence>
       </conditionProcessStatePK>
       <condition>hAPI.getCardValue(&quot;tipo_pc_contrato&quot;) == &quot;pc&quot;</condition>
@@ -7287,7 +7287,7 @@
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <expressionOrder>2</expressionOrder>
-        <version>10</version>
+        <version>15</version>
         <sequence>56</sequence>
       </conditionProcessStatePK>
       <condition>hAPI.getCardValue(&quot;tipoSc&quot;) == &quot;5&quot;</condition>
@@ -7299,7 +7299,7 @@
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <expressionOrder>3</expressionOrder>
-        <version>10</version>
+        <version>15</version>
         <sequence>56</sequence>
       </conditionProcessStatePK>
       <condition>true</condition>
@@ -7311,7 +7311,7 @@
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <expressionOrder>1</expressionOrder>
-        <version>10</version>
+        <version>15</version>
         <sequence>131</sequence>
       </conditionProcessStatePK>
       <condition>hAPI.getCardValue(&quot;tipoSc&quot;) == &quot;5&quot;</condition>
@@ -7323,7 +7323,7 @@
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <expressionOrder>2</expressionOrder>
-        <version>10</version>
+        <version>15</version>
         <sequence>131</sequence>
       </conditionProcessStatePK>
       <condition>true</condition>
@@ -7335,7 +7335,7 @@
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <expressionOrder>1</expressionOrder>
-        <version>10</version>
+        <version>15</version>
         <sequence>167</sequence>
       </conditionProcessStatePK>
       <condition>hAPI.getCardValue(&quot;decisaoComprador&quot;) == &quot;Devolver&quot;</condition>
@@ -7347,7 +7347,7 @@
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <expressionOrder>2</expressionOrder>
-        <version>10</version>
+        <version>15</version>
         <sequence>167</sequence>
       </conditionProcessStatePK>
       <condition>hAPI.getCardValue(&quot;decisaoComprador&quot;) == &quot;Questionar&quot;</condition>
@@ -7359,7 +7359,7 @@
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <expressionOrder>3</expressionOrder>
-        <version>10</version>
+        <version>15</version>
         <sequence>167</sequence>
       </conditionProcessStatePK>
       <condition>hAPI.getCardValue(&quot;decisaoComprador&quot;) == &quot;Prosseguir&quot;</condition>
@@ -7371,7 +7371,7 @@
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <expressionOrder>1</expressionOrder>
-        <version>10</version>
+        <version>15</version>
         <sequence>182</sequence>
       </conditionProcessStatePK>
       <condition>hAPI.getCardValue(&quot;tipoSc&quot;) == &quot;5&quot;</condition>
@@ -7383,7 +7383,7 @@
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <expressionOrder>2</expressionOrder>
-        <version>10</version>
+        <version>15</version>
         <sequence>182</sequence>
       </conditionProcessStatePK>
       <condition>true</condition>
@@ -7395,7 +7395,7 @@
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <expressionOrder>1</expressionOrder>
-        <version>10</version>
+        <version>15</version>
         <sequence>187</sequence>
       </conditionProcessStatePK>
       <condition>hAPI.getCardValue(&quot;aprovacaoProblemaAprovador&quot;) != &quot;&quot;</condition>
@@ -7407,7 +7407,7 @@
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <expressionOrder>2</expressionOrder>
-        <version>10</version>
+        <version>15</version>
         <sequence>187</sequence>
       </conditionProcessStatePK>
       <condition>hAPI.getCardValue(&quot;aprovacaoProxAprovador&quot;) != &quot;&quot;</condition>
@@ -7419,7 +7419,7 @@
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <expressionOrder>3</expressionOrder>
-        <version>10</version>
+        <version>15</version>
         <sequence>187</sequence>
       </conditionProcessStatePK>
       <condition>true</condition>
@@ -7431,7 +7431,7 @@
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <expressionOrder>1</expressionOrder>
-        <version>10</version>
+        <version>15</version>
         <sequence>213</sequence>
       </conditionProcessStatePK>
       <condition>hAPI.getCardValue(&quot;decisaoAprovadorIntrack&quot;) == &quot;nao&quot;</condition>
@@ -7443,7 +7443,7 @@
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <expressionOrder>2</expressionOrder>
-        <version>10</version>
+        <version>15</version>
         <sequence>213</sequence>
       </conditionProcessStatePK>
       <condition>hAPI.getCardValue(&quot;decisaoAprovadorIntrack&quot;) == &quot;retornar&quot;</condition>
@@ -7455,7 +7455,7 @@
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <expressionOrder>3</expressionOrder>
-        <version>10</version>
+        <version>15</version>
         <sequence>213</sequence>
       </conditionProcessStatePK>
       <condition>hAPI.getCardValue(&quot;aprovacaoProxAprovador&quot;) != &quot;&quot;</condition>
@@ -7467,7 +7467,7 @@
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <expressionOrder>4</expressionOrder>
-        <version>10</version>
+        <version>15</version>
         <sequence>213</sequence>
       </conditionProcessStatePK>
       <condition>hAPI.getCardValue(&quot;matLiberaPedido&quot;) != &quot;&quot;</condition>
@@ -7479,7 +7479,7 @@
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <expressionOrder>5</expressionOrder>
-        <version>10</version>
+        <version>15</version>
         <sequence>213</sequence>
       </conditionProcessStatePK>
       <condition>true</condition>
@@ -7491,7 +7491,7 @@
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <expressionOrder>1</expressionOrder>
-        <version>10</version>
+        <version>15</version>
         <sequence>228</sequence>
       </conditionProcessStatePK>
       <condition>hAPI.getCardValue(&quot;decisaoLiberarPedido&quot;) == &quot;sim&quot;</condition>
@@ -7503,7 +7503,7 @@
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <expressionOrder>2</expressionOrder>
-        <version>10</version>
+        <version>15</version>
         <sequence>228</sequence>
       </conditionProcessStatePK>
       <condition>true</condition>
@@ -11705,12 +11705,13 @@
 			var TESPADRAO = tools.getDataset(&quot;DS_COMPRAS_PRAZOS_ENTREGA&quot;,&#xd;
 				null, null, true)&#xd;
 			TESPADRAO = TESPADRAO[0][&quot;tesPadrao&quot;];&#xd;
+			dadosFluig.dados = dadosFluig.dados.sort(function (a, b) {&#xd;
+				return parseInt(a.C8_ITEM.trim()) - parseInt(b.C8_ITEM.trim())&#xd;
+			})&#xd;
 			dadosFluig.dados.forEach(function (el) {&#xd;
 				var tmpFornece = &quot;&quot; + el.C8_FORNECE + el.C8_LOJA;&#xd;
 				log.info(&quot;&gt;&gt; tmpFornece : &quot; + tmpFornece);&#xd;
 				var filtered = dadosProtheus.COTACAO[0].FORNECE.filter(function (it) { return it.C8_FORNECE == tmpFornece });&#xd;
-				//log.info(&quot;-- filtered --&quot;);&#xd;
-				//log.dir(filtered);&#xd;
 &#xd;
 				if (tools.formata.toBranco(el.C8_PRECO) != &quot;&quot;&#xd;
 					&amp;&amp; tools.formata.toBranco(el.C8_QUANT) != &quot;&quot;&#xd;
@@ -11718,6 +11719,7 @@
 					if (filtered.length &gt; 0) {&#xd;
 						filtered[0][&quot;ITEM&quot;].push({&#xd;
 							&quot;C8_PRODUTO&quot;: el.C8_PRODUTO.trim(),&#xd;
+							&quot;C8_ITEM&quot;: el.C8_ITEM.trim(),&#xd;
 							&quot;C8_PRECO&quot;: tools.formata.toProtheus(el.C8_PRECO),&#xd;
 							&quot;C8_QTDISP&quot;: el.C8_QUANT != &quot;&quot; ? el.C8_QUANT : &quot;0&quot;,&#xd;
 							&quot;C8_PRAZO&quot;: el.C8_PRAZO != &quot;&quot; ? el.C8_PRAZO : &quot;1&quot;,&#xd;
@@ -11742,11 +11744,19 @@
 			})&#xd;
 &#xd;
 			//log.dir(dadosProtheus)&#xd;
+			dadosProtheus.COTACAO[0].FORNECE = dadosProtheus.COTACAO[0].FORNECE.map(function (el) {&#xd;
+				el.ITEM = el.ITEM.sort(function (a, b) {&#xd;
+					return parseInt(a.C8_ITEM) - parseInt(b.C8_ITEM)&#xd;
+				})&#xd;
+				return el&#xd;
+			})&#xd;
 			var protheusFilter = {&#xd;
 				&quot;COTACAO&quot;: [{&#xd;
 					&quot;C8_NUMERO&quot;: dadosProtheus.COTACAO[0].C8_NUMERO,&#xd;
 					&quot;EMPRESA&quot;: dadosProtheus.COTACAO[0].EMPRESA,&#xd;
-					&quot;FORNECE&quot;: dadosProtheus.COTACAO[0].FORNECE.filter(function (el) { return el.ITEM.filter(function (it) { return it.C8_PRECO != &quot;0.00&quot; &amp;&amp; it.C8_PRECO != &quot;0.000000&quot; }).length &gt; 0 })&#xd;
+					&quot;FORNECE&quot;: dadosProtheus.COTACAO[0].FORNECE.filter(function (el) {&#xd;
+						return el.ITEM.filter(function (it) { return it.C8_PRECO != &quot;0.00&quot; &amp;&amp; it.C8_PRECO != &quot;0.000000&quot; }).length &gt; 0&#xd;
+					})&#xd;
 				}]&#xd;
 			}&#xd;
 &#xd;
@@ -14329,7 +14339,7 @@ function setCotacao() {&#xd;
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <propertyId>centroCustoPadrao</propertyId>
-        <version>10</version>
+        <version>15</version>
       </advancedProcessPropertiesPK>
       <propertieValue>101901001</propertieValue>
     </AdvancedProcessProperties>
@@ -14338,7 +14348,7 @@ function setCotacao() {&#xd;
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <propertyId>formCotacao</propertyId>
-        <version>10</version>
+        <version>15</version>
       </advancedProcessPropertiesPK>
       <propertieValue>746756</propertieValue>
     </AdvancedProcessProperties>
@@ -14347,7 +14357,7 @@ function setCotacao() {&#xd;
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <propertyId>mlFormCotacao</propertyId>
-        <version>10</version>
+        <version>15</version>
       </advancedProcessPropertiesPK>
       <propertieValue>ML001742</propertieValue>
     </AdvancedProcessProperties>
@@ -14356,7 +14366,7 @@ function setCotacao() {&#xd;
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <propertyId>mlTabCotacao</propertyId>
-        <version>10</version>
+        <version>15</version>
       </advancedProcessPropertiesPK>
       <propertieValue>ML001743</propertieValue>
     </AdvancedProcessProperties>
@@ -14365,7 +14375,7 @@ function setCotacao() {&#xd;
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <propertyId>password</propertyId>
-        <version>10</version>
+        <version>15</version>
       </advancedProcessPropertiesPK>
       <propertieValue>jca@2024</propertieValue>
     </AdvancedProcessProperties>
@@ -14374,7 +14384,7 @@ function setCotacao() {&#xd;
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <propertyId>pastaRaiz</propertyId>
-        <version>10</version>
+        <version>15</version>
       </advancedProcessPropertiesPK>
       <propertieValue>746847</propertieValue>
     </AdvancedProcessProperties>
@@ -14383,7 +14393,7 @@ function setCotacao() {&#xd;
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <propertyId>publisherId</propertyId>
-        <version>10</version>
+        <version>15</version>
       </advancedProcessPropertiesPK>
       <propertieValue>integracao.fluig</propertieValue>
     </AdvancedProcessProperties>
@@ -14392,7 +14402,7 @@ function setCotacao() {&#xd;
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
         <propertyId>username</propertyId>
-        <version>10</version>
+        <version>15</version>
       </advancedProcessPropertiesPK>
       <propertieValue>integracao.fluig</propertieValue>
     </AdvancedProcessProperties>
@@ -14502,7 +14512,7 @@ function setCotacao() {&#xd;
       <processLinkBendPK>
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
-        <version>10</version>
+        <version>15</version>
         <linkSequence>9</linkSequence>
         <bendSequence>1</bendSequence>
       </processLinkBendPK>
@@ -14513,7 +14523,7 @@ function setCotacao() {&#xd;
       <processLinkBendPK>
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
-        <version>10</version>
+        <version>15</version>
         <linkSequence>43</linkSequence>
         <bendSequence>1</bendSequence>
       </processLinkBendPK>
@@ -14524,7 +14534,7 @@ function setCotacao() {&#xd;
       <processLinkBendPK>
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
-        <version>10</version>
+        <version>15</version>
         <linkSequence>46</linkSequence>
         <bendSequence>1</bendSequence>
       </processLinkBendPK>
@@ -14535,7 +14545,7 @@ function setCotacao() {&#xd;
       <processLinkBendPK>
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
-        <version>10</version>
+        <version>15</version>
         <linkSequence>59</linkSequence>
         <bendSequence>1</bendSequence>
       </processLinkBendPK>
@@ -14546,7 +14556,7 @@ function setCotacao() {&#xd;
       <processLinkBendPK>
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
-        <version>10</version>
+        <version>15</version>
         <linkSequence>122</linkSequence>
         <bendSequence>1</bendSequence>
       </processLinkBendPK>
@@ -14557,7 +14567,7 @@ function setCotacao() {&#xd;
       <processLinkBendPK>
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
-        <version>10</version>
+        <version>15</version>
         <linkSequence>204</linkSequence>
         <bendSequence>1</bendSequence>
       </processLinkBendPK>
@@ -14568,7 +14578,7 @@ function setCotacao() {&#xd;
       <processLinkBendPK>
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
-        <version>10</version>
+        <version>15</version>
         <linkSequence>296</linkSequence>
         <bendSequence>1</bendSequence>
       </processLinkBendPK>
@@ -14581,7 +14591,7 @@ function setCotacao() {&#xd;
       <processStateTriggerPK>
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
-        <version>10</version>
+        <version>15</version>
         <stateSequence>367</stateSequence>
         <triggerSequence>0</triggerSequence>
       </processStateTriggerPK>
@@ -14596,7 +14606,7 @@ function setCotacao() {&#xd;
       <extendedPropertyFieldPK>
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
-        <version>10</version>
+        <version>15</version>
         <stateSequence>0</stateSequence>
         <propertyName>centroCustoPadrao</propertyName>
       </extendedPropertyFieldPK>
@@ -14609,7 +14619,7 @@ function setCotacao() {&#xd;
       <extendedPropertyFieldPK>
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
-        <version>10</version>
+        <version>15</version>
         <stateSequence>0</stateSequence>
         <propertyName>formCotacao</propertyName>
       </extendedPropertyFieldPK>
@@ -14622,7 +14632,7 @@ function setCotacao() {&#xd;
       <extendedPropertyFieldPK>
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
-        <version>10</version>
+        <version>15</version>
         <stateSequence>0</stateSequence>
         <propertyName>mlFormCotacao</propertyName>
       </extendedPropertyFieldPK>
@@ -14635,7 +14645,7 @@ function setCotacao() {&#xd;
       <extendedPropertyFieldPK>
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
-        <version>10</version>
+        <version>15</version>
         <stateSequence>0</stateSequence>
         <propertyName>mlTabCotacao</propertyName>
       </extendedPropertyFieldPK>
@@ -14648,7 +14658,7 @@ function setCotacao() {&#xd;
       <extendedPropertyFieldPK>
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
-        <version>10</version>
+        <version>15</version>
         <stateSequence>0</stateSequence>
         <propertyName>password</propertyName>
       </extendedPropertyFieldPK>
@@ -14661,7 +14671,7 @@ function setCotacao() {&#xd;
       <extendedPropertyFieldPK>
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
-        <version>10</version>
+        <version>15</version>
         <stateSequence>0</stateSequence>
         <propertyName>pastaRaiz</propertyName>
       </extendedPropertyFieldPK>
@@ -14674,7 +14684,7 @@ function setCotacao() {&#xd;
       <extendedPropertyFieldPK>
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
-        <version>10</version>
+        <version>15</version>
         <stateSequence>0</stateSequence>
         <propertyName>publisherId</propertyName>
       </extendedPropertyFieldPK>
@@ -14687,7 +14697,7 @@ function setCotacao() {&#xd;
       <extendedPropertyFieldPK>
         <companyId>1</companyId>
         <processId>solicitacao_compras</processId>
-        <version>10</version>
+        <version>15</version>
         <stateSequence>0</stateSequence>
         <propertyName>username</propertyName>
       </extendedPropertyFieldPK>
