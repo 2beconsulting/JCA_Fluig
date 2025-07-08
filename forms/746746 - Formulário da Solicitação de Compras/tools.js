@@ -2562,19 +2562,23 @@ var tools = {
 
 					}]
 
-					let pTemp = prodTmp.filter(function (pT) { return pT.B1_COD == $(el).closest("tr").find("[name*=B1_COD___]").val().trim() })[0];
+					let pTemp = prodTmp.filter(function (pT) { return pT.B1_COD == $(el).closest("tr").find("[name*=B1_COD___]").val().trim() })
 
-					aDados.produtos.push({
-						B1_COD: $(el).closest("tr").find("[name*=B1_COD___]").val().trim(),
-						B1_DESC: $(el).closest("tr").find("[name*=B1_DESC___]").val(),
-						QTD: $("[name*=codigoProduto___][value='" + $(el).closest("tr").find("[name*=B1_COD___]").val() + "']").closest("tr").find("[name*=produto_qtd___]").val(),
-						UM: $("[name*=codigoProduto___][value='" + $(el).closest("tr").find("[name*=B1_COD___]").val() + "']").closest("tr").find("[name*=unidadeMedidaProduto___]").val(),
-						B1_UPRC: pTemp.B1_UPRC,
-						B1_UCOM: pTemp.B1_UCOM,
-						vlUnit: pTemp.vlUnit,
-						marcas: pTemp.marcas,
-						FILHOS: filterFilhos
-					})
+
+					if (pTemp.length > 0) {
+						pTemp = pTemp[0];
+						aDados.produtos.push({
+							B1_COD: $(el).closest("tr").find("[name*=B1_COD___]").val().trim(),
+							B1_DESC: $(el).closest("tr").find("[name*=B1_DESC___]").val(),
+							QTD: $("[name*=codigoProduto___][value='" + $(el).closest("tr").find("[name*=B1_COD___]").val() + "']").closest("tr").find("[name*=produto_qtd___]").val(),
+							UM: $("[name*=codigoProduto___][value='" + $(el).closest("tr").find("[name*=B1_COD___]").val() + "']").closest("tr").find("[name*=unidadeMedidaProduto___]").val(),
+							B1_UPRC: pTemp.B1_UPRC,
+							B1_UCOM: pTemp.B1_UCOM,
+							vlUnit: pTemp.vlUnit,
+							marcas: pTemp.marcas,
+							FILHOS: filterFilhos
+						})
+					}
 
 				}
 			})

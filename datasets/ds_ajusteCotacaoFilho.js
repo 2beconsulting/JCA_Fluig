@@ -21,9 +21,9 @@ function createDataset(fields, constraints, sortFields) {
     var mlTabCotacao = "ML001741";
 
     var CODFOMCOTACAOCOTACOES = '746754'
-    var idFichaCotacaoCotacoes = "854105";
+    var idFichaCotacaoCotacoes = "908337";
     var CICLOATUAL = "1";
-    var CODCOTACOESREF = "853812";
+    var CODCOTACOESREF = "901683";
 
     query = "SELECT DISTINCT ML.C8_CICLO, COT.documentid, COT.version, COT.VENCEDOR, COT.VENCEDOR_COMPRADOR, COT.COMPRADOR, \
                            COT.QTD_COMPRADOR, COT.COMPRADOR_JUSTIFICATIVA, COT.C8_ITEM, COT.C8_PRODUTO, COT.C8_UM, COT.C8_FORNECE, \

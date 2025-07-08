@@ -19,10 +19,12 @@ function createDataset(fields, constraints, sortFields) {
      * 
      */
 
-    var codFormCotacoes = "746756";
-    var CICLODESTINO = "1"
+    var codFormCotacoes = "746754"; //cotacoes no processo filho
+    var CICLODESTINO = "4"
     var idEmpresa = "00100289"
     var c8Num = "000327"
+    var solCompras = "62111"
+    var numeroSolicitacao = "64571"
 
 
     log.info("ds_ajusteCotacaoOrcamentoCiclo")
@@ -45,12 +47,12 @@ function createDataset(fields, constraints, sortFields) {
                         "value": "" + idEmpresa
                     },
                     {
-                        "fieldId": "C8_NUM",
-                        "value": "" + c8Num
+                        "fieldId": "numeroSolicitacao",
+                        "value": "" + numeroSolicitacao
                     },
                     {
-                        "fieldId": "C8_CICLO",
-                        "value": CICLODESTINO
+                        "fieldId": "solCompras",
+                        "value": solCompras
                     }
                 ]
             })
@@ -75,6 +77,7 @@ function createDataset(fields, constraints, sortFields) {
                             && C8_LOJA.indexOf(elem.C8_LOJA) > -1
                             && C8_PRODUTO.indexOf(elem.C8_PRODUTO) > -1
                     })
+                    formFields.values.push({ "fieldId": "C8_CICLO" + "___" + seq, "value": "" + CICLODESTINO });
                     formFields.values.push({ "fieldId": "C8_ITEM" + "___" + seq, "value": "" + el["C8_ITEM"] + "".trim() });
                     formFields.values.push({ "fieldId": "C8_PRODUTO" + "___" + seq, "value": "" + el["C8_PRODUTO"] + "".trim() });
                     formFields.values.push({ "fieldId": "C8_UM" + "___" + seq, "value": "" + el["C8_UM"] + "".trim() });
@@ -85,7 +88,6 @@ function createDataset(fields, constraints, sortFields) {
                     formFields.values.push({ "fieldId": "C8_QUANT" + "___" + seq, "value": "" + el["C8_QUANT"] + "".trim() });
                     formFields.values.push({ "fieldId": "C8_PRECO" + "___" + seq, "value": "" + el["C8_PRECO"] + "".trim() });
                     formFields.values.push({ "fieldId": "C8_PRAZO" + "___" + seq, "value": "" + el["C8_PRAZO"] + "".trim() });
-                    formFields.values.push({ "fieldId": "C8_TES" + "___" + seq, "value": "" + el["C8_TES"] + "".trim() });
 
                     log.dir(filtered);
                     if (filtered.length > 0) {
@@ -95,7 +97,6 @@ function createDataset(fields, constraints, sortFields) {
                         formFields.values.push({ "fieldId": "C8_VALISS" + "___" + seq, "value": filtered[0]["C8_VALISS"] + "".trim() });
                         formFields.values.push({ "fieldId": "C8_VALSOL" + "___" + seq, "value": filtered[0]["C8_VALSOL"] + "".trim() });
                         formFields.values.push({ "fieldId": "C8_TOTAL" + "___" + seq, "value": filtered[0]["C8_TOTAL"] + "".trim() });
-                        formFields.values.push({ "fieldId": "VENCEDOR" + "___" + seq, "value": filtered[0]["C8_STATUS"] + "".trim() });
 
                     }
                     seq++

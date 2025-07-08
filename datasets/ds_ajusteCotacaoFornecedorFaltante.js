@@ -4,9 +4,22 @@ function defineStructure() {
 function onSync(lastSyncDate) {
 
 }
+/**
+ * 
+ * @param {*} fields 
+ * @param {*} constraints 
+ * @param {*} sortFields 
+ * 
+ * Adiciona e regulariza os fornecedores que foram adiconados no ciclo atual, 
+ * e não subiram para as cotações
+ * @uso     recuparar o id do documento do processo
+ *          recuparar o id do documento da cotação
+ *          recuperar os valores do ciclo, empresa e cotação
+ * 
+ */
 function createDataset(fields, constraints, sortFields) {
 
-    log.info("ds_ajusteCotacaoOrcamentoCiclo")
+    log.info("ds_ajusteCotacaoFornecedorFaltante")
     /**
      * PROD
      * 
@@ -19,91 +32,71 @@ function createDataset(fields, constraints, sortFields) {
      * 
      */
 
-    var codFormCotacoes = "746756";
-    var CICLODESTINO = "1"
+    var CODFORMPROCESSOPRINCIPAL = "746756"
+    var IDFICHACOTACAOPRINCIPAL = "912929"
+
+    var CODFORMPROCESSOFILHO = "746754"
+    var IDFICHACOTACAOFILHO = "912932"
+
+
+    var fornecedor = "008629"
+    var lojaFornecedor = "04"
+    var CICLODESTINO = "3"
+    var IDXREF = 9; /** id da linha a ser criada */
     var idEmpresa = "00100289"
-    var c8Num = "000327"
+    var c8Num = "000365"
+    var c1Num = "001228"
 
-
-    log.info("ds_ajusteCotacaoOrcamentoCiclo")
+    log.info("ds_ajusteCotacaoFornecedorFaltante")
 
     var dataset = DatasetBuilder.newDataset();
     try {
 
+        var cotacaoFields = { "values": [] };
+        var fornecedores = [{
+            A2_COD: fornecedor, A2_LOJA: lojaFornecedor
+        }]
+        var idx = 1
+
         cotacao = tools.getProtheus("/JWSSC803/1/" + idEmpresa + "/" + c8Num, idEmpresa);
-        log.info(">> tools.ds_ajusteCotacaoOrcamentoCiclo [#1371]")
+        log.info(">> tools.ds_ajusteCotacaoFornecedorFaltante [#1371]")
+        log.dir(fornecedores);
         var formAtualizado;
         if (cotacao.ok) {
-            var filtCotacao = cotacao.retorno.DADOS
-            log.info(">> tools.ds_ajusteCotacaoOrcamentoCiclo [#70]")
-            log.dir(filtCotacao)
-
-            var cardCreated = tools.postFluig("/ecm-forms/api/v2/cardindex/" + codFormCotacoes + "/cards", {
-                "values": [
-                    {
-                        "fieldId": "idEmpresa",
-                        "value": "" + idEmpresa
-                    },
-                    {
-                        "fieldId": "C8_NUM",
-                        "value": "" + c8Num
-                    },
-                    {
-                        "fieldId": "C8_CICLO",
-                        "value": CICLODESTINO
-                    }
-                ]
-            })
-
-            if (cardCreated.ok) {
-                log.info(">> tools.ds_ajusteCotacaoOrcamentoCiclo [#61]")
-                var formFields = { "values": [] };
-                var seq = 1;
-
-                dadosProtheus = tools.getProtheus("/JWSSC803/3/" + idEmpresa + "/" + c8Num, idEmpresa);
-
-                log.info(">> tools.ds_ajusteCotacaoOrcamentoCiclo [#70]")
-                log.dir(dadosProtheus)
-                filtCotacao.forEach(function (el) {
-                    var C8_FORNECE = el["C8_FORNECE"] + "".trim()
-                    var C8_LOJA = el["C8_LOJA"] + "".trim()
-                    var C8_PRODUTO = el["C8_PRODUTO"] + "".trim()
-
-                    log.info(">> tools.ds_ajusteCotacaoOrcamentoCiclo " + C8_FORNECE + ":" + C8_LOJA + ">>:" + C8_PRODUTO)
-                    var filtered = dadosProtheus.retorno.filter(function (elem) {
-                        return C8_FORNECE.indexOf(elem.C8_FORNECE) > -1
-                            && C8_LOJA.indexOf(elem.C8_LOJA) > -1
-                            && C8_PRODUTO.indexOf(elem.C8_PRODUTO) > -1
+            fornecedores.forEach(function (f) {
+                var filtCotacao = cotacao.retorno
+                    .DADOS.filter(function (el) {
+                        return "" + el.C8_FORNECE == f.A2_COD
+                            && "" + el.C8_LOJA == f.A2_LOJA
                     })
-                    formFields.values.push({ "fieldId": "C8_ITEM" + "___" + seq, "value": "" + el["C8_ITEM"] + "".trim() });
-                    formFields.values.push({ "fieldId": "C8_PRODUTO" + "___" + seq, "value": "" + el["C8_PRODUTO"] + "".trim() });
-                    formFields.values.push({ "fieldId": "C8_UM" + "___" + seq, "value": "" + el["C8_UM"] + "".trim() });
-                    formFields.values.push({ "fieldId": "C8_FORNECE" + "___" + seq, "value": "" + el["C8_FORNECE"] + "".trim() });
-                    formFields.values.push({ "fieldId": "C8_LOJA" + "___" + seq, "value": "" + el["C8_LOJA"] + "".trim() });
-                    formFields.values.push({ "fieldId": "C8_VALIDA" + "___" + seq, "value": "" + el["C8_VALIDA"] + "".trim() });
+                log.info(">> tools.ds_ajusteCotacaoFornecedorFaltante [#70]")
+                log.dir(filtCotacao)
 
-                    formFields.values.push({ "fieldId": "C8_QUANT" + "___" + seq, "value": "" + el["C8_QUANT"] + "".trim() });
-                    formFields.values.push({ "fieldId": "C8_PRECO" + "___" + seq, "value": "" + el["C8_PRECO"] + "".trim() });
-                    formFields.values.push({ "fieldId": "C8_PRAZO" + "___" + seq, "value": "" + el["C8_PRAZO"] + "".trim() });
-                    formFields.values.push({ "fieldId": "C8_TES" + "___" + seq, "value": "" + el["C8_TES"] + "".trim() });
+                filtCotacao.forEach(function (el) {
+                    seq = IDXREF;
+                    /**
+                     * 
+                    cotacaoFields.values.push({ "fieldId": "C8_ITEM" + "___" + seq, "value": "" + el["C8_ITEM"] });
+                    cotacaoFields.values.push({ "fieldId": "C8_PRODUTO" + "___" + seq, "value": "" + el["C8_PRODUTO"].trim() });
+                    cotacaoFields.values.push({ "fieldId": "C8_UM" + "___" + seq, "value": "" + el["C8_UM"] });
+                    cotacaoFields.values.push({ "fieldId": "C8_FORNECE" + "___" + seq, "value": "" + el["C8_FORNECE"] });
+                    cotacaoFields.values.push({ "fieldId": "C8_LOJA" + "___" + seq, "value": "" + el["C8_LOJA"] });
+                    cotacaoFields.values.push({ "fieldId": "C8_VALIDA" + "___" + seq, "value": "" + el["C8_VALIDA"] });
+                     */
+                    cotacaoFields.values.push({ "fieldId": "C8_CICLO", "value": "" + CICLODESTINO });
+                    cotacaoFields.values.push({ "fieldId": "C8_ITEM", "value": "" + el["C8_ITEM"] });
+                    cotacaoFields.values.push({ "fieldId": "C8_PRODUTO", "value": "" + el["C8_PRODUTO"].trim() });
+                    cotacaoFields.values.push({ "fieldId": "C8_UM", "value": "" + el["C8_UM"] });
+                    cotacaoFields.values.push({ "fieldId": "C8_FORNECE", "value": "" + el["C8_FORNECE"] });
+                    cotacaoFields.values.push({ "fieldId": "C8_LOJA", "value": "" + el["C8_LOJA"] });
+                    cotacaoFields.values.push({ "fieldId": "C8_VALIDA", "value": "" + el["C8_VALIDA"] });
 
-                    log.dir(filtered);
-                    if (filtered.length > 0) {
-                        formFields.values.push({ "fieldId": "C8_DIFAL" + "___" + seq, "value": filtered[0]["C8_ICMSCOM"] + "".trim() });
-                        formFields.values.push({ "fieldId": "C8_VALICM" + "___" + seq, "value": filtered[0]["C8_VALICM"] + "".trim() });
-                        formFields.values.push({ "fieldId": "C8_VALIPI" + "___" + seq, "value": filtered[0]["C8_VALIPI"] + "".trim() });
-                        formFields.values.push({ "fieldId": "C8_VALISS" + "___" + seq, "value": filtered[0]["C8_VALISS"] + "".trim() });
-                        formFields.values.push({ "fieldId": "C8_VALSOL" + "___" + seq, "value": filtered[0]["C8_VALSOL"] + "".trim() });
-                        formFields.values.push({ "fieldId": "C8_TOTAL" + "___" + seq, "value": filtered[0]["C8_TOTAL"] + "".trim() });
-                        formFields.values.push({ "fieldId": "VENCEDOR" + "___" + seq, "value": filtered[0]["C8_STATUS"] + "".trim() });
-
-                    }
-                    seq++
+                    formAtualizado = tools.atualizaForm(IDFICHACOTACAOPRINCIPAL, CODFORMPROCESSOPRINCIPAL, cotacaoFields);
+                    log.info(">> tools.ds_ajusteCotacaoFornecedorFaltante [#92]")
+                    log.dir(formAtualizado)
                 })
-                formAtualizado = tools.atualizaForm(cardCreated.retorno.cardId, codFormCotacoes, formFields);
-                log.info(">> tools.ds_ajusteCotacaoOrcamentoCiclo [#92]")
-                log.dir(formAtualizado)
-            }
+
+            })
 
             if (!formAtualizado.ok) {
 
@@ -118,9 +111,10 @@ function createDataset(fields, constraints, sortFields) {
 
         return dataset
     } catch (error) {
-        log.info(error)
         dataset.addColumn("resultado");
         dataset.addRow([error]);
+
+    } finally {
 
     }
 
@@ -180,10 +174,10 @@ var tools = {
         }
     },
     atualizaForm: function (cardID, formId, formFields) {
-        log.info(">> tools.ds_ajusteCotacaoOrcamentoCiclo"); //Atualiza o formulário auxililar da cotação
+        log.info(">> tools.cotacao.atualizaForm"); //Atualiza o formulário auxililar da cotação
         var obj = { "ok": false, "error": "" };
 
-        obj = tools.putFluig("/ecm-forms/api/v2/cardindex/" + formId + "/cards/" + cardID + "", formFields);//tools.putFluig("/ecm-forms/api/v2/cardindex/" + formId + "/cards/" + cardID, formFields);
+        obj = tools.postFluig("/ecm-forms/api/v2/cardindex/" + formId + "/cards/" + cardID + "/children", formFields);//tools.putFluig("/ecm-forms/api/v2/cardindex/" + formId + "/cards/" + cardID, formFields);
 
         return obj;
     },
@@ -308,7 +302,7 @@ var tools = {
     },
 
     getProtheus: function (endpoint, empresa) {
-        log.info(">> ds_ajusteCotacaoOrcamentoCiclo <<");
+        log.info(">> ds_ajusteCotacaoFornecedorFaltante <<");
         //log.info("-- endpoint: " + endpoint);
         var obj = { "ok": false };
 
@@ -366,7 +360,7 @@ var tools = {
 
         }
 
-        log.info("** ds_ajusteCotacaoOrcamentoCiclo **")
+        log.info("** ds_ajusteCotacaoFornecedorFaltante **")
         log.dir(obj);
         return obj;
 

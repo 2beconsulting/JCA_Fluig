@@ -772,7 +772,11 @@ var tools = {
 					"C8_NUMERO": dadosProtheus.COTACAO[0].C8_NUMERO,
 					"EMPRESA": dadosProtheus.COTACAO[0].EMPRESA,
 					"FORNECE": dadosProtheus.COTACAO[0].FORNECE.filter(function (el) {
-						return el.ITEM.filter(function (it) { return it.C8_PRECO != "0.00" && it.C8_PRECO != "0.000000" }).length > 0
+						return el.ITEM.filter(function (it) {
+							return it.C8_PRECO != "0.00"
+								&& it.C8_PRECO != "0.000000"
+								&& it.C8_PRECO != "0"
+						}).length > 0
 					})
 				}]
 			}
@@ -1161,7 +1165,11 @@ var tools = {
 							var idx = 1 * cotacoes.getValue(i, "idx");
 							log.info(">> indexesChildren linha: " + idx)
 							log.info(" || C8_PRODUTO: " + cotacoes.getValue(i, "C8_PRODUTO") + " || C8_FORNECE: " + cotacoes.getValue(i, "C8_FORNECE") + " || C8_LOJA: " + cotacoes.getValue(i, "C8_LOJA"))
-							var dataFiltered = obj.dados.filter(function (el) { return el.C8_PRODUTO == cotacoes.getValue(i, "C8_PRODUTO") && el.C8_FORNECE == cotacoes.getValue(i, "C8_FORNECE") && el.C8_LOJA == cotacoes.getValue(i, "C8_LOJA") });
+							var dataFiltered = obj.dados.filter(function (el) {
+								return el.C8_PRODUTO == cotacoes.getValue(i, "C8_PRODUTO")
+									&& el.C8_FORNECE == cotacoes.getValue(i, "C8_FORNECE")
+									&& el.C8_LOJA == cotacoes.getValue(i, "C8_LOJA")
+							});
 							if (dataFiltered.length > 0 /*&& dataFiltered[0]["C8_PRECO"] != "" && dataFiltered[0]["C8_PRECO"] != "0.00 && dataFiltered[0]["C8_PRECO"] != "0.000000"*/) {
 								log.info(">> dataFiltered <<");
 								log.dir(dataFiltered);

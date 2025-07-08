@@ -10,15 +10,18 @@ var tools = {
 			aDados["fornecedores"] = [];
 
 			$("[name^=A2_COD___].form-control,[name^=_A2_COD___].form-control").not("[value=''],[value='0.00']").each((e, it) => {
-				aDados.fornecedores.push({
-					A2_COD: $(it).closest("tr").find("[name*=A2_COD___]").val(),
-					A2_LOJA: $(it).closest("tr").find("[name*=A2_LOJA___]").val(),
-					A2_NOME: $(it).closest("tr").find("[name*=A2_NOME___]").val(),
-					A2_CGC: $(it).closest("tr").find("[name*=A2_CGC___]").val(),
-					A2_EST: $(it).closest("tr").find("[name*=A2_EST___]").val(),
-					ATIVO: $(it).closest("tr").find("[name*=CICLO_REMOVIDO___]").val() == "",
-					CICLO_REMOV: $(it).closest("tr").find("[name*=CICLO_REMOVIDO___]").val()
-				})
+				if (aDados.fornecedores.filter(function (el) {
+					return el.A2_CGC == $(it).closest("tr").find("[name*=A2_CGC___]").val()
+				}).length == 0)
+					aDados.fornecedores.push({
+						A2_COD: $(it).closest("tr").find("[name*=A2_COD___]").val(),
+						A2_LOJA: $(it).closest("tr").find("[name*=A2_LOJA___]").val(),
+						A2_NOME: $(it).closest("tr").find("[name*=A2_NOME___]").val(),
+						A2_CGC: $(it).closest("tr").find("[name*=A2_CGC___]").val(),
+						A2_EST: $(it).closest("tr").find("[name*=A2_EST___]").val(),
+						ATIVO: $(it).closest("tr").find("[name*=CICLO_REMOVIDO___]").val() == "",
+						CICLO_REMOV: $(it).closest("tr").find("[name*=CICLO_REMOVIDO___]").val()
+					})
 			});
 
 			aDados["fornecedoresAtivo"] = aDados["fornecedores"].filter(function (el) { return el.ATIVO })
@@ -262,18 +265,33 @@ var tools = {
 
 			$("[name^=_B1_COD___]").each((e, it) => {
 				if ($(it).closest("tr").find("[name^=_" + "B1_PAI" + "___]").val() == "") {
-					aDados.produtos.push({
-						B1_COD: $(it).closest("tr").find("[name^=_" + "B1_COD" + "___]").val(),
-						B1_DESC: $(it).closest("tr").find("[name^=_" + "B1_DESC" + "___]").val(),
-						FILHOS: $("[name^=_B1_COD___]").toArray().filter(function (prod) { return $(prod).closest("tr").find("[name^=_B1_PAI___]").val() == $(it).closest("tr").find("[name^=_" + "B1_COD" + "___]").val() }).map(function (prod) {
-							return {
-								"B1_COD": $(prod).closest("tr").find("[name^=_" + "B1_COD" + "___]").val(),
-								"B1_DESC": $(prod).closest("tr").find("[name^=_" + "B1_DESC" + "___]").val(),
-								"B1_ZMARCA": $(prod).closest("tr").find("[name^=_" + "B1_ZMARCA" + "___]").val(),
-								"ZPM_DESC": $(prod).closest("tr").find("[name^=_" + "ZPM_DESC" + "___]").val()
-							}
+					if (aDados.produtos.filter(function (el) {
+						return el.B1_COD == $(it).closest("tr").find("[name^=_" + "B1_COD" + "___]").val()
+					}).length == 0)
+						aDados.produtos.push({
+							B1_COD: $(it).closest("tr").find("[name^=_" + "B1_COD" + "___]").val(),
+							B1_DESC: $(it).closest("tr").find("[name^=_" + "B1_DESC" + "___]").val(),
+							FILHOS: $("[name^=_B1_COD___]").toArray().filter(function (prod) {
+								return $(prod).closest("tr").find("[name^=_B1_PAI___]").val()
+									== $(it).closest("tr").find("[name^=_" + "B1_COD" + "___]").val()
+							}).reduce(function (acc, prod, index, array) {
+
+								if (acc.filter(function (el) {
+									return el.value == prod.value
+								}).length == 0) {
+									acc.push(prod)
+								}
+								return acc;
+							}, [])
+								.map(function (prod) {
+									return {
+										"B1_COD": $(prod).closest("tr").find("[name^=_" + "B1_COD" + "___]").val(),
+										"B1_DESC": $(prod).closest("tr").find("[name^=_" + "B1_DESC" + "___]").val(),
+										"B1_ZMARCA": $(prod).closest("tr").find("[name^=_" + "B1_ZMARCA" + "___]").val(),
+										"ZPM_DESC": $(prod).closest("tr").find("[name^=_" + "ZPM_DESC" + "___]").val()
+									}
+								})
 						})
-					})
 				}
 			});
 			/*

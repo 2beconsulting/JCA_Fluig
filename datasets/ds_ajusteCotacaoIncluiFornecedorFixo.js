@@ -4,9 +4,21 @@ function defineStructure() {
 function onSync(lastSyncDate) {
 
 }
+/**
+ * 
+ * @param {*} fields 
+ * @param {*} constraints 
+ * @param {*} sortFields 
+ * 
+ * Adiciona e regulariza fornecedores especificos na cotaçaõ do processo pai e do processo filho
+ * @uso     recuparar o id da ficha das cotações no processo principal
+ *          recuparar o id do documento da cotação no processo filho
+ *          recuperar os valores do ciclo, empresa e cotação
+ * 
+ */
 function createDataset(fields, constraints, sortFields) {
 
-    log.info("ds_ajusteCotacaoOrcamentoCiclo")
+    log.info("ds_ajusteCotacaoIncluiFornecedorFixo")
     /**
      * PROD
      * 
@@ -18,109 +30,82 @@ function createDataset(fields, constraints, sortFields) {
      * 
      * 
      */
+    var mlFormCotacao = "ML001742";
+    var mlTabCotacao = "ML001743";
+    var mlTabFornecedor = "ML001727";
 
-    var codFormCotacoes = "746756";
-    var CICLODESTINO = "1"
+    var CICLOREFERENCIA = "1";
+    var IDDOCPROCESSOREF = "837424"; /** id ficha do processo principal  */
+
+    var codFormCotacoes = "746754"; /** codigo do fichario do processo principal */
+
+    var IDDOCCOTDESTINO = "850535"; /** id ficha do cotacoes  no processo de cotaçõesprincipal  */
+
+    var CODFORMPROCESSOPRINCIPAL = ""
+    var IDFICHACOTACAOPRINCIPAL = ""
+    var CODFORMPROCESSOFILHO = ""
+    var IDFICHACOTACAOFILHO = ""
+
+
+    var fornecedor = "008629"
+    var lojaFornecedor = "04"
+    var CICLODESTINO = "3"
+    var IDXREF = 1223; /** id da linha a ser criada */
     var idEmpresa = "00100289"
-    var c8Num = "000327"
+    var c8Num = "000365"
+    var c1Num = "001228"
 
-
-    log.info("ds_ajusteCotacaoOrcamentoCiclo")
-
+    log.info("ds_ajusteCotacaoIncluiFornecedorFixo >> new Dataset")
     var dataset = DatasetBuilder.newDataset();
     try {
 
-        cotacao = tools.getProtheus("/JWSSC803/1/" + idEmpresa + "/" + c8Num, idEmpresa);
-        log.info(">> tools.ds_ajusteCotacaoOrcamentoCiclo [#1371]")
-        var formAtualizado;
-        if (cotacao.ok) {
-            var filtCotacao = cotacao.retorno.DADOS
-            log.info(">> tools.ds_ajusteCotacaoOrcamentoCiclo [#70]")
-            log.dir(filtCotacao)
+        var cotacaoFields = { "values": [] };
+        var fornecedores = []
+        var idx = 1
 
-            var cardCreated = tools.postFluig("/ecm-forms/api/v2/cardindex/" + codFormCotacoes + "/cards", {
-                "values": [
-                    {
-                        "fieldId": "idEmpresa",
-                        "value": "" + idEmpresa
-                    },
-                    {
-                        "fieldId": "C8_NUM",
-                        "value": "" + c8Num
-                    },
-                    {
-                        "fieldId": "C8_CICLO",
-                        "value": CICLODESTINO
-                    }
-                ]
+
+        var obj = {
+            "ok": false,
+            "error": ""
+        }
+        var SC = tools.getProtheus("/JWSSC102/" + idEmpresa + "/" + c1Num, idEmpresa)
+        log.dir(SC)
+        var produtos = []
+        if (SC.ok) {
+            SC.retorno.DADOS.forEach(function (el) {
+                var C1_PRODUTO = el.C1_PRODUTO + "";
+                C1_PRODUTO = C1_PRODUTO.trim();
+                if (C1_PRODUTO.length > 8)
+                    produtos.push({ "C8_PRODUTO": "" + C1_PRODUTO });
             })
-
-            if (cardCreated.ok) {
-                log.info(">> tools.ds_ajusteCotacaoOrcamentoCiclo [#61]")
-                var formFields = { "values": [] };
-                var seq = 1;
-
-                dadosProtheus = tools.getProtheus("/JWSSC803/3/" + idEmpresa + "/" + c8Num, idEmpresa);
-
-                log.info(">> tools.ds_ajusteCotacaoOrcamentoCiclo [#70]")
-                log.dir(dadosProtheus)
-                filtCotacao.forEach(function (el) {
-                    var C8_FORNECE = el["C8_FORNECE"] + "".trim()
-                    var C8_LOJA = el["C8_LOJA"] + "".trim()
-                    var C8_PRODUTO = el["C8_PRODUTO"] + "".trim()
-
-                    log.info(">> tools.ds_ajusteCotacaoOrcamentoCiclo " + C8_FORNECE + ":" + C8_LOJA + ">>:" + C8_PRODUTO)
-                    var filtered = dadosProtheus.retorno.filter(function (elem) {
-                        return C8_FORNECE.indexOf(elem.C8_FORNECE) > -1
-                            && C8_LOJA.indexOf(elem.C8_LOJA) > -1
-                            && C8_PRODUTO.indexOf(elem.C8_PRODUTO) > -1
-                    })
-                    formFields.values.push({ "fieldId": "C8_ITEM" + "___" + seq, "value": "" + el["C8_ITEM"] + "".trim() });
-                    formFields.values.push({ "fieldId": "C8_PRODUTO" + "___" + seq, "value": "" + el["C8_PRODUTO"] + "".trim() });
-                    formFields.values.push({ "fieldId": "C8_UM" + "___" + seq, "value": "" + el["C8_UM"] + "".trim() });
-                    formFields.values.push({ "fieldId": "C8_FORNECE" + "___" + seq, "value": "" + el["C8_FORNECE"] + "".trim() });
-                    formFields.values.push({ "fieldId": "C8_LOJA" + "___" + seq, "value": "" + el["C8_LOJA"] + "".trim() });
-                    formFields.values.push({ "fieldId": "C8_VALIDA" + "___" + seq, "value": "" + el["C8_VALIDA"] + "".trim() });
-
-                    formFields.values.push({ "fieldId": "C8_QUANT" + "___" + seq, "value": "" + el["C8_QUANT"] + "".trim() });
-                    formFields.values.push({ "fieldId": "C8_PRECO" + "___" + seq, "value": "" + el["C8_PRECO"] + "".trim() });
-                    formFields.values.push({ "fieldId": "C8_PRAZO" + "___" + seq, "value": "" + el["C8_PRAZO"] + "".trim() });
-                    formFields.values.push({ "fieldId": "C8_TES" + "___" + seq, "value": "" + el["C8_TES"] + "".trim() });
-
-                    log.dir(filtered);
-                    if (filtered.length > 0) {
-                        formFields.values.push({ "fieldId": "C8_DIFAL" + "___" + seq, "value": filtered[0]["C8_ICMSCOM"] + "".trim() });
-                        formFields.values.push({ "fieldId": "C8_VALICM" + "___" + seq, "value": filtered[0]["C8_VALICM"] + "".trim() });
-                        formFields.values.push({ "fieldId": "C8_VALIPI" + "___" + seq, "value": filtered[0]["C8_VALIPI"] + "".trim() });
-                        formFields.values.push({ "fieldId": "C8_VALISS" + "___" + seq, "value": filtered[0]["C8_VALISS"] + "".trim() });
-                        formFields.values.push({ "fieldId": "C8_VALSOL" + "___" + seq, "value": filtered[0]["C8_VALSOL"] + "".trim() });
-                        formFields.values.push({ "fieldId": "C8_TOTAL" + "___" + seq, "value": filtered[0]["C8_TOTAL"] + "".trim() });
-                        formFields.values.push({ "fieldId": "VENCEDOR" + "___" + seq, "value": filtered[0]["C8_STATUS"] + "".trim() });
-
-                    }
-                    seq++
-                })
-                formAtualizado = tools.atualizaForm(cardCreated.retorno.cardId, codFormCotacoes, formFields);
-                log.info(">> tools.ds_ajusteCotacaoOrcamentoCiclo [#92]")
-                log.dir(formAtualizado)
-            }
-
-            if (!formAtualizado.ok) {
-
-                dataset.addColumn("erro");
-                dataset.addRow(["Erro na atualização do formulário > " + formAtualizado.error]);
-            } else {
-                dataset.addColumn("resultado");
-                dataset.addRow([JSON.stringify(formAtualizado)]);
-            }
+        }
+        var obj = {
+            "COTACAO": [{
+                "EMPRESA": idEmpresa,
+                "C8_NUMERO": c8Num,
+                "FORNECE": []
+            }]
         }
 
+        obj.COTACAO[0].FORNECE.push({
+            "C8_FORNECE": fornecedor + lojaFornecedor,
+            "C8_COND": "001",
+            "ITEM": produtos
+        })
+
+        log.info(">> ds_ajusteCotacaoIncluiFornecedorFixo >> JWSSC802");
+        log.dir(obj);
+
+        retorno = tools.postProtheus("/JWSSC802/1", obj, idEmpresa)
+
+        // cotacao = tools.getProtheus("/JWSSC803/1/" + idEmpresa + "/" + c8Num, idEmpresa);
 
         return dataset
     } catch (error) {
-        log.info(error)
         dataset.addColumn("resultado");
         dataset.addRow([error]);
+
+    } finally {
 
     }
 
@@ -180,10 +165,10 @@ var tools = {
         }
     },
     atualizaForm: function (cardID, formId, formFields) {
-        log.info(">> tools.ds_ajusteCotacaoOrcamentoCiclo"); //Atualiza o formulário auxililar da cotação
+        log.info(">> tools.cotacao.atualizaForm"); //Atualiza o formulário auxililar da cotação
         var obj = { "ok": false, "error": "" };
 
-        obj = tools.putFluig("/ecm-forms/api/v2/cardindex/" + formId + "/cards/" + cardID + "", formFields);//tools.putFluig("/ecm-forms/api/v2/cardindex/" + formId + "/cards/" + cardID, formFields);
+        obj = tools.postFluig("/ecm-forms/api/v2/cardindex/" + formId + "/cards/" + cardID + "/children", formFields);//tools.putFluig("/ecm-forms/api/v2/cardindex/" + formId + "/cards/" + cardID, formFields);
 
         return obj;
     },
@@ -308,7 +293,7 @@ var tools = {
     },
 
     getProtheus: function (endpoint, empresa) {
-        log.info(">> ds_ajusteCotacaoOrcamentoCiclo <<");
+        log.info(">> ds_ajusteCotacaoIncluiFornecedorFixo <<");
         //log.info("-- endpoint: " + endpoint);
         var obj = { "ok": false };
 
@@ -366,11 +351,69 @@ var tools = {
 
         }
 
-        log.info("** ds_ajusteCotacaoOrcamentoCiclo **")
+        log.info("** ds_ajusteCotacaoIncluiFornecedorFixo **")
         log.dir(obj);
         return obj;
 
     },
+    postProtheus: function (endpoint, params, idEmpresa) {
+        log.info(">> integra.postProtheus <<");
+        //log.info("-- endpoint: " + endpoint);
+        //log.dir(params);
+        var obj = { "ok": false };
+
+        try {
+
+            var data = {
+                companyId: getValue("WKCompany") + '',
+                serviceCode: 'PROTHEUS_SERVICE_REST',
+                endpoint: endpoint,
+                method: 'post',
+                timeout: '3600000',
+                async: false,
+                params: params,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'tenantId': '01,' + idEmpresa
+                }
+            }
+            log.dir(data);
+
+            var clientService = fluigAPI.getAuthorizeClientService();
+
+            var result = clientService.invoke(new org.json.JSONObject(data).toString());
+            log.info("<<<<<<<LOGDIR>>>>>>>>>")
+            log.dir(result);
+            if (result.getHttpStatusResult() >= 200 && result.getHttpStatusResult() < 300) {
+                if (result.getResult() != null && !result.getResult().isEmpty()) {
+
+                    if (result.getResult().indexOf("com.fluig.authorize.client.exception.ClientBasicAuthorizeException: java.net.SocketTimeoutException: Read timed out") > 0) {
+                        obj["ok"] = false;
+                        obj["error"] = result.getResult();
+                    }
+                    else if (JSON.parse(result.getResult()).errorMessage != undefined) {
+                        obj["ok"] = false;
+                        obj["error"] = JSON.parse(result.getResult()).errorMessage;
+                    }
+                    else {
+                        obj["ok"] = true;
+                        obj["retorno"] = JSON.parse(result.getResult());
+                    }
+                } else {
+                    obj["error"] = "Não encontrou nenhum registro para a consulta!";
+                }
+            } else {
+                obj["ok"] = false;
+                obj["error"] = result.getResult()
+            }
+        } catch (e) {
+            obj["error"] = (e.message != undefined && e.message != null) ? e.message : e;
+        }
+        //log.dir(obj);
+        log.info("** integra.postProtheus **");
+        return obj;
+
+    }
 
 
 }

@@ -42,7 +42,7 @@ function createDataset(fields, constraints, sortFields) {
 
     var IDDOCCOTDESTINO = "850535"; /** id ficha do cotacoes  no processo de cotaçõesprincipal  */
     var CICLODESTINO = "2"
-    var IDXREF = 1223;
+    var IDXREF = 1223; /** id da linha a ser criada */
     var idEmpresa = "00100289"
     var c8Num = "000207"
 

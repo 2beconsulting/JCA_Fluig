@@ -6,120 +6,94 @@ function onSync(lastSyncDate) {
 }
 function createDataset(fields, constraints, sortFields) {
 
-    log.info("ds_ajusteCotacaoOrcamentoCiclo")
+    log.info("ds_ajusteCotacaoCotacoesCiclo");
+
     /**
      * PROD
-     * 
-    var mlFormCotacao = "ML001742";
-    var mlTabCotacao = "ML001743";
+        var mlFormCotacao = "ML001742";
+        var mlTabCotacao = "ML001743";
      * QA
-    var mlFormCotacao = "ML001990";
-    var mlTabCotacao = "ML001991";
-     * 
-     * 
+        var mlFormCotacao = "ML001990";
+        var mlTabCotacao = "ML001991";
+     */
+    /**
+     * ajusta as cotações no processo de cotação para regularizar as linhas 
      */
 
-    var codFormCotacoes = "746756";
-    var CICLODESTINO = "1"
-    var idEmpresa = "00100289"
-    var c8Num = "000327"
+    var codFormCotScs = "746756"; //form de cotação nas SCs
+    var codFichaCotSC = "898431"; //ficha de origem da cotação na SC para referencia
+    var codFormCotCotacao = "746754"; //ficha de cotações na cotação
+    var codFichaDestinoCotCotacao = "890925"; //form de cotacoes na cotação
 
-
-    log.info("ds_ajusteCotacaoOrcamentoCiclo")
+    log.info("ds_ajusteCotacaoCotacoesCiclo")
 
     var dataset = DatasetBuilder.newDataset();
     try {
 
-        cotacao = tools.getProtheus("/JWSSC803/1/" + idEmpresa + "/" + c8Num, idEmpresa);
-        log.info(">> tools.ds_ajusteCotacaoOrcamentoCiclo [#1371]")
-        var formAtualizado;
-        if (cotacao.ok) {
-            var filtCotacao = cotacao.retorno.DADOS
-            log.info(">> tools.ds_ajusteCotacaoOrcamentoCiclo [#70]")
-            log.dir(filtCotacao)
+        var dsCotCotacoes = tools.getFluig("/ecm-forms/api/v2/cardindex/" + codFormCotCotacao + "/cards/" + codFichaDestinoCotCotacao + "/childrens?page=1&pageSize=9999999");
+        var dsCotScs = tools.getFluig("/ecm-forms/api/v2/cardindex/" + codFormCotScs + "/cards/" + codFichaCotSC + "/childrens?page=1&pageSize=9999999");
+        log.info(">> tools.ds_ajusteCotacaoCotacoesCiclo [#1371]")
 
-            var cardCreated = tools.postFluig("/ecm-forms/api/v2/cardindex/" + codFormCotacoes + "/cards", {
-                "values": [
-                    {
-                        "fieldId": "idEmpresa",
-                        "value": "" + idEmpresa
-                    },
-                    {
-                        "fieldId": "C8_NUM",
-                        "value": "" + c8Num
-                    },
-                    {
-                        "fieldId": "C8_CICLO",
-                        "value": CICLODESTINO
-                    }
-                ]
-            })
+        if (!dsCotCotacoes.ok) {
+            log.info("================> ds_ajusteCotacaoCotacoesCiclo ERRO" + e.toString());
+            log.info("================> LINHA" + e.lineNumber);
+            log.dir(dsCotCotacoes)
 
-            if (cardCreated.ok) {
-                log.info(">> tools.ds_ajusteCotacaoOrcamentoCiclo [#61]")
-                var formFields = { "values": [] };
-                var seq = 1;
+            dataset.addColumn("result")
+            dataset.addColumn("erro");
+            dataset.addRow(["nok", e.message + e.lineNumber + " - "]);
+            return dataset;
+        }
+        dsCotCotacoes = dsCotCotacoes.retorno
+        dsCotScs = dsCotScs.retorno
+        var formFields = {
+            "values": []
+        };
+        for (var i = 0; i < dsCotScs.items.length; i++) {
+            var row = dsCotScs.items[i].values;
+            row = tools.getValueInRowField(row)
+            rowValues = row.values;
 
-                dadosProtheus = tools.getProtheus("/JWSSC803/3/" + idEmpresa + "/" + c8Num, idEmpresa);
-
-                log.info(">> tools.ds_ajusteCotacaoOrcamentoCiclo [#70]")
-                log.dir(dadosProtheus)
-                filtCotacao.forEach(function (el) {
-                    var C8_FORNECE = el["C8_FORNECE"] + "".trim()
-                    var C8_LOJA = el["C8_LOJA"] + "".trim()
-                    var C8_PRODUTO = el["C8_PRODUTO"] + "".trim()
-
-                    log.info(">> tools.ds_ajusteCotacaoOrcamentoCiclo " + C8_FORNECE + ":" + C8_LOJA + ">>:" + C8_PRODUTO)
-                    var filtered = dadosProtheus.retorno.filter(function (elem) {
-                        return C8_FORNECE.indexOf(elem.C8_FORNECE) > -1
-                            && C8_LOJA.indexOf(elem.C8_LOJA) > -1
-                            && C8_PRODUTO.indexOf(elem.C8_PRODUTO) > -1
-                    })
-                    formFields.values.push({ "fieldId": "C8_ITEM" + "___" + seq, "value": "" + el["C8_ITEM"] + "".trim() });
-                    formFields.values.push({ "fieldId": "C8_PRODUTO" + "___" + seq, "value": "" + el["C8_PRODUTO"] + "".trim() });
-                    formFields.values.push({ "fieldId": "C8_UM" + "___" + seq, "value": "" + el["C8_UM"] + "".trim() });
-                    formFields.values.push({ "fieldId": "C8_FORNECE" + "___" + seq, "value": "" + el["C8_FORNECE"] + "".trim() });
-                    formFields.values.push({ "fieldId": "C8_LOJA" + "___" + seq, "value": "" + el["C8_LOJA"] + "".trim() });
-                    formFields.values.push({ "fieldId": "C8_VALIDA" + "___" + seq, "value": "" + el["C8_VALIDA"] + "".trim() });
-
-                    formFields.values.push({ "fieldId": "C8_QUANT" + "___" + seq, "value": "" + el["C8_QUANT"] + "".trim() });
-                    formFields.values.push({ "fieldId": "C8_PRECO" + "___" + seq, "value": "" + el["C8_PRECO"] + "".trim() });
-                    formFields.values.push({ "fieldId": "C8_PRAZO" + "___" + seq, "value": "" + el["C8_PRAZO"] + "".trim() });
-                    formFields.values.push({ "fieldId": "C8_TES" + "___" + seq, "value": "" + el["C8_TES"] + "".trim() });
-
-                    log.dir(filtered);
-                    if (filtered.length > 0) {
-                        formFields.values.push({ "fieldId": "C8_DIFAL" + "___" + seq, "value": filtered[0]["C8_ICMSCOM"] + "".trim() });
-                        formFields.values.push({ "fieldId": "C8_VALICM" + "___" + seq, "value": filtered[0]["C8_VALICM"] + "".trim() });
-                        formFields.values.push({ "fieldId": "C8_VALIPI" + "___" + seq, "value": filtered[0]["C8_VALIPI"] + "".trim() });
-                        formFields.values.push({ "fieldId": "C8_VALISS" + "___" + seq, "value": filtered[0]["C8_VALISS"] + "".trim() });
-                        formFields.values.push({ "fieldId": "C8_VALSOL" + "___" + seq, "value": filtered[0]["C8_VALSOL"] + "".trim() });
-                        formFields.values.push({ "fieldId": "C8_TOTAL" + "___" + seq, "value": filtered[0]["C8_TOTAL"] + "".trim() });
-                        formFields.values.push({ "fieldId": "VENCEDOR" + "___" + seq, "value": filtered[0]["C8_STATUS"] + "".trim() });
-
-                    }
-                    seq++
-                })
-                formAtualizado = tools.atualizaForm(cardCreated.retorno.cardId, codFormCotacoes, formFields);
-                log.info(">> tools.ds_ajusteCotacaoOrcamentoCiclo [#92]")
-                log.dir(formAtualizado)
+            seq = row.index;
+            linhaCot = tools.findValueInCotacoes(dsCotCotacoes, rowValues)
+            if (linhaCot.status) {
+                rowValues = linhaCot.dado;
             }
-
-            if (!formAtualizado.ok) {
-
-                dataset.addColumn("erro");
-                dataset.addRow(["Erro na atualização do formulário > " + formAtualizado.error]);
-            } else {
-                dataset.addColumn("resultado");
-                dataset.addRow([JSON.stringify(formAtualizado)]);
-            }
+            formFields.values.push({ "fieldId": "C8_ITEM" + "___" + seq, "value": "" + rowValues["C8_ITEM"] });
+            formFields.values.push({ "fieldId": "C8_CICLO" + "___" + seq, "value": "" + rowValues["C8_CICLO"] });
+            formFields.values.push({ "fieldId": "C8_PRODUTO" + "___" + seq, "value": "" + rowValues["C8_PRODUTO"] });
+            formFields.values.push({ "fieldId": "C8_UM" + "___" + seq, "value": "" + rowValues["C8_UM"] });
+            formFields.values.push({ "fieldId": "C8_FORNECE" + "___" + seq, "value": "" + rowValues["C8_FORNECE"] });
+            formFields.values.push({ "fieldId": "C8_LOJA" + "___" + seq, "value": "" + rowValues["C8_LOJA"] });
+            formFields.values.push({ "fieldId": "C8_VALIDA" + "___" + seq, "value": "" + rowValues["C8_VALIDA"] });
+            formFields.values.push({ "fieldId": "C8_QUANT" + "___" + seq, "value": "" + rowValues.C8_QUANT });
+            formFields.values.push({ "fieldId": "C8_DIFAL" + "___" + seq, "value": "" + rowValues["C8_DIFAL"] });
+            formFields.values.push({ "fieldId": "C8_PRECO" + "___" + seq, "value": "" + rowValues.C8_PRECO });
+            formFields.values.push({ "fieldId": "C8_PRAZO" + "___" + seq, "value": "" + rowValues.C8_PRAZO });
+            formFields.values.push({ "fieldId": "C8_VALICM" + "___" + seq, "value": "" + rowValues["C8_VALICM"] });
+            formFields.values.push({ "fieldId": "C8_VALIPI" + "___" + seq, "value": "" + rowValues["C8_VALIPI"] });
+            formFields.values.push({ "fieldId": "C8_VALISS" + "___" + seq, "value": "" + rowValues["C8_VALISS"] });
+            formFields.values.push({ "fieldId": "C8_TOTAL" + "___" + seq, "value": "" + rowValues.C8_TOTAL });
         }
 
+        /* var integrado = tools.putFluig("/ecm-forms/api/v2/cardindex/"
+             + codFormCotCotacao
+             + "/cards/" + codFichaDestinoCotCotacao
+             , formFields);
+         log.info(">> ds_ajusteCotacaoCotacoesCiclo");
+         log.dir(integrado);*/
+        if (false || integrado.ok) {
+            dataset.addColumn("result");
+            dataset.addRow(["" + JSON.stringify(formFields)]);
+            return dataset
+        }
 
+        dataset.addColumn("ERROR");
+        dataset.addRow(["" + JSON.stringify(formFields)]);
         return dataset
     } catch (error) {
         log.info(error)
-        dataset.addColumn("resultado");
+        dataset.addColumn("ERROR");
         dataset.addRow([error]);
 
     }
@@ -180,14 +154,56 @@ var tools = {
         }
     },
     atualizaForm: function (cardID, formId, formFields) {
-        log.info(">> tools.ds_ajusteCotacaoOrcamentoCiclo"); //Atualiza o formulário auxililar da cotação
+        log.info(">> tools.ds_ajusteCotacaoCotacoesCiclo"); //Atualiza o formulário auxililar da cotação
         var obj = { "ok": false, "error": "" };
 
         obj = tools.putFluig("/ecm-forms/api/v2/cardindex/" + formId + "/cards/" + cardID + "", formFields);//tools.putFluig("/ecm-forms/api/v2/cardindex/" + formId + "/cards/" + cardID, formFields);
 
         return obj;
     },
+    findValueInCotacoes: function (dsCotCotacoes, rowValues) {
+        var objeto = {
+            status: false,
+            dado: null
+        }
+        for (var i = 0; i < dsCotCotacoes.items.length; i++) {
+            var rowCot = dsCotCotacoes.items[i].values;
+            rowCot = tools.getValueInRowField(rowCot)
+            rowCotValues = rowCot.values
+            if (rowValues['C8_ITEM'] == rowCotValues["C8_ITEM"]
+                && rowValues['C8_PRODUTO'] == rowCotValues["C8_PRODUTO"]
+                && rowValues['C8_FORNECE'] == rowCotValues["C8_FORNECE"]
+                && rowValues['C8_LOJA'] == rowCotValues["C8_LOJA"]) {
+                objeto.dado = rowCotValues;
+                objeto.status = true;
+                return objeto;
+            }
+        }
+        return objeto
+    },
+    getValueInRowField: function (row) {
 
+        var value = {
+            index: 0,
+            values: {}
+        }
+        if (row && row.length > 0) {
+            for (var i = 0; i < row.length; i++) {
+                var fieldId = row[i].fieldId;
+                var fieldValue = row[i].value;
+                if (fieldId == "rowId") {
+                    value.index = fieldValue
+                    continue
+                }
+                var idCampo = fieldId.split("___");
+                if (idCampo.length > 1) {
+                    value.values[idCampo[0]] = fieldValue;
+                }
+            }
+        }
+
+        return value;
+    },
     postFluig: function (endpoint, params) {
         log.info(">> integra.postFormFluig <<");
         //log.info("-- endpoint: " + endpoint);
@@ -308,7 +324,7 @@ var tools = {
     },
 
     getProtheus: function (endpoint, empresa) {
-        log.info(">> ds_ajusteCotacaoOrcamentoCiclo <<");
+        log.info(">> ds_ajusteCotacaoCotacoesCiclo <<");
         //log.info("-- endpoint: " + endpoint);
         var obj = { "ok": false };
 
@@ -366,8 +382,63 @@ var tools = {
 
         }
 
-        log.info("** ds_ajusteCotacaoOrcamentoCiclo **")
+        log.info("** ds_ajusteCotacaoCotacoesCiclo **")
         log.dir(obj);
+        return obj;
+
+    },
+    getFluig: function (endpoint) {
+        log.info(">> integra.getFluig <<");
+        //log.info("-- endpoint: " + endpoint);
+        //log.dir(params)
+
+        var obj = { "ok": false, "retorno": null, "error": null };
+
+        try {
+
+            var data = {
+                companyId: getValue("WKCompany") + '',
+                serviceCode: 'FLUIG_REST',
+                endpoint: endpoint,
+                method: 'get',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }
+
+            var clientService = fluigAPI.getAuthorizeClientService();
+
+            var result = clientService.invoke(new org.json.JSONObject(data).toString());
+            log.info("** integra.getFluig **");
+            log.dir(result);
+            if (result.getHttpStatusResult() >= 200 && result.getHttpStatusResult() < 300) {
+                if (result.getResult() != null && !result.getResult().isEmpty()) {
+
+                    if (result.getResult().indexOf("com.fluig.authorize.client.exception.ClientBasicAuthorizeException: java.net.SocketTimeoutException: Read timed out") > 0) {
+                        obj["ok"] = false;
+                        obj["error"] = result.getResult();
+                    }
+                    else if (JSON.parse(result.getResult()).errorMessage != undefined) {
+                        obj["ok"] = false;
+                        obj["error"] = JSON.parse(result.getResult()).errorMessage;
+                    }
+                    else {
+                        obj["ok"] = true;
+                        obj["retorno"] = JSON.parse(result.getResult());
+                    }
+                } else {
+                    obj["error"] = "Não encontrou nenhum registro para a consulta!";
+                }
+            } else {
+                obj["ok"] = false;
+                obj["error"] = result.getResult()
+            }
+        } catch (e) {
+            obj["error"] = (e.message != undefined && e.message != null) ? e.message : e;
+        }
+
+        //log.dir(obj);
+        log.info("** integra.postFormFluig **");
         return obj;
 
     },

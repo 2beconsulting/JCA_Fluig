@@ -44,69 +44,64 @@ function createDataset(fields, constraints, sortFields) {
         }
         cardId = parseInt(cardId);
 
-        var svc = ServiceManager.getServiceInstance("ECMCardService");
-        var cardServiceLocator = svc.instantiate('com.totvs.ECMCardServiceService');
-        var cardService = cardServiceLocator.getCardServicePort();
-
-        var properties = {};
-        properties["disable.chunking"] = "true";
-        properties["log.soap.messages"] = "true";
-
-        var customClient = svc.getCustomClient(cardService, "com.totvs.CardService", properties);
-
-        var dsDocument = tools.getDataset("document", null, [
-            { field: "documentPK.documentId", value: cardId },
-            { field: "activeVersion", value: "true" }
-        ], false);
-
-        if (dsDocument.length > 0) {
-            version = dsDocument[0]["documentPK.version"];
-        }
-        /**@todo pegar um dataset para trazer a versão mais atual no momento da recuperação */
-        var cardDtoArray = customClient.getCardVersion(companyId, user, password, cardId, version, user);
-        var cardDto = cardDtoArray.getItem().get(0);
-        var cardData = cardDto.getCardData();
-
-        var tabela = tools.getTableFilho(cardData, [
-            'C8_UM', 'C8_LOJA', 'C8_CICLO', 'C8_SEGURO', 'C8_VALFRE', 'C8_ITEM', 'C8_TPFRETE',
-            'C8_DESPESA', 'C8_TOTAL', 'C8_VALIPI', 'BEN_FISCAL', 'C8_EMISSAO', 'C8_FILENT',
-            'C8_VALIDA', 'C8_VALISS', 'C8_COND', 'C8_DIFAL', 'C8_VALSOL', 'C8_VALICM', 'C8_PRECO', 'C8_FORNECE',
-            'C8_FORNOME', 'C8_NUMPED', 'C8_PRODUTO', 'C8_QUANT', 'C8_ITEMPED', 'C8_PRAZO'
-        ]);
+        var dsDocument = tools.getFluig("/ecm-forms/api/v2/cardindex/" + formCotacao + "/cards/" + cardId + "/childrens?page=1&pageSize=9999999");
 
         var formFields = {
             "values": []
         };
 
         var seq = 0;
-        for (var i = 0; i < tabela.length; i++) {
-            var row = tabela[i];
-            log.dir(row)
-            if (row['C8_ITEM'].value == C8_ITEM
-                && row['C8_PRODUTO'].value == C8_PRODUTO
-                && row['C8_FORNECE'].value == C8_FORNECE
-                && row['C8_LOJA'].value == C8_LOJA
-            ) {
-                formFields.values.push({ "fieldId": "C8_ITEM" + "___" + seq, "value": "" + row["C8_ITEM"].value });
-                formFields.values.push({ "fieldId": "C8_PRODUTO" + "___" + seq, "value": "" + row["C8_PRODUTO"].value });
-                formFields.values.push({ "fieldId": "C8_UM" + "___" + seq, "value": "" + row["C8_UM"].value });
-                formFields.values.push({ "fieldId": "C8_FORNECE" + "___" + seq, "value": "" + row["C8_FORNECE"].value });
-                formFields.values.push({ "fieldId": "C8_LOJA" + "___" + seq, "value": "" + row["C8_LOJA"].value });
-                formFields.values.push({ "fieldId": "C8_VALIDA" + "___" + seq, "value": "" + row["C8_VALIDA"].value });
+        if (!dsDocument.ok) {
+            log.info("================> ds_atualiza_filho_ficha ERRO" + e.toString());
+            log.info("================> LINHA" + e.lineNumber);
+            log.dir(dsDocument)
 
+            dataset.addColumn("result")
+            dataset.addColumn("erro");
+            dataset.addRow(["nok", e.message + e.lineNumber + " - "]);
+            return dataset;
+        }
+        dsDocument = dsDocument.retorno
+        for (var i = 0; i < dsDocument.items.length; i++) {
+            var row = dsDocument.items[i].values;
+            row = tools.getValueInRowField(row)
+            rowValues = row.values
+            log.info(">> ds_atualiza_filho_ficha: " +
+                "C8_ITEM: " + rowValues['C8_ITEM'] + " ::: " + C8_ITEM + " || "
+                + "C8_PRODUTO: " + rowValues['C8_PRODUTO'] + " ::: " + C8_PRODUTO + " || "
+                + "C8_FORNECE: " + rowValues['C8_FORNECE'] + " ::: " + C8_FORNECE + " || "
+                + "C8_LOJA: " + rowValues['C8_LOJA'] + " ::: " + C8_LOJA + " .\n" + (rowValues['C8_ITEM'] == C8_ITEM
+                    && rowValues['C8_PRODUTO'] == C8_PRODUTO
+                    && rowValues['C8_FORNECE'] == C8_FORNECE
+                    && rowValues['C8_LOJA'] == C8_LOJA
+                ))
+            if (rowValues['C8_ITEM'] == C8_ITEM
+                && rowValues['C8_PRODUTO'] == C8_PRODUTO
+                && rowValues['C8_FORNECE'] == C8_FORNECE
+                && rowValues['C8_LOJA'] == C8_LOJA
+            ) {
+                log.dir(row)
+                seq = row.index;
+                formFields.values.push({ "fieldId": "C8_ITEM" + "___" + seq, "value": "" + rowValues["C8_ITEM"] });
+                formFields.values.push({ "fieldId": "C8_PRODUTO" + "___" + seq, "value": "" + rowValues["C8_PRODUTO"] });
+                formFields.values.push({ "fieldId": "C8_UM" + "___" + seq, "value": "" + rowValues["C8_UM"] });
+                formFields.values.push({ "fieldId": "C8_FORNECE" + "___" + seq, "value": "" + rowValues["C8_FORNECE"] });
+                formFields.values.push({ "fieldId": "C8_LOJA" + "___" + seq, "value": "" + rowValues["C8_LOJA"] });
+                formFields.values.push({ "fieldId": "C8_VALIDA" + "___" + seq, "value": "" + rowValues["C8_VALIDA"] });
                 formFields.values.push({ "fieldId": "C8_QUANT" + "___" + seq, "value": "" + C8_QUANT });
-                formFields.values.push({ "fieldId": "C8_DIFAL" + "___" + seq, "value": "" + row["C8_DIFAL"].value });
+                formFields.values.push({ "fieldId": "C8_DIFAL" + "___" + seq, "value": "" + rowValues["C8_DIFAL"] });
                 formFields.values.push({ "fieldId": "C8_PRECO" + "___" + seq, "value": "" + C8_PRECO });
                 formFields.values.push({ "fieldId": "C8_PRAZO" + "___" + seq, "value": "" + C8_PRAZO });
-                formFields.values.push({ "fieldId": "C8_VALICM" + "___" + seq, "value": row["C8_VALICM"].value });
-                formFields.values.push({ "fieldId": "C8_VALIPI" + "___" + seq, "value": row["C8_VALIPI"].value });
-                formFields.values.push({ "fieldId": "C8_VALISS" + "___" + seq, "value": row["C8_VALISS"].value });
+                formFields.values.push({ "fieldId": "C8_VALICM" + "___" + seq, "value": rowValues["C8_VALICM"] });
+                formFields.values.push({ "fieldId": "C8_VALIPI" + "___" + seq, "value": rowValues["C8_VALIPI"] });
+                formFields.values.push({ "fieldId": "C8_VALISS" + "___" + seq, "value": rowValues["C8_VALISS"] });
                 formFields.values.push({ "fieldId": "C8_TOTAL" + "___" + seq, "value": C8_TOTAL });
-                seq = row['C8_ITEM'].index
-                break
+                break;
             }
         }
         if (formFields.values.length > 0) {
+
+            log.dir(formFields)
             var integrado = tools.putFluig("/ecm-forms/api/v2/cardindex/" + formCotacao
                 + "/cards/" + cardId
                 + "/children/" + seq, formFields);
@@ -119,12 +114,8 @@ function createDataset(fields, constraints, sortFields) {
                 return dataset
 
             }
-            else {
-                return dsError(integrado.error, []);
-            }
         }
         log.info("######## Inicio ds_atualiza_filho_ficha  ########");
-        log.dir(tabela)
     }
     catch (e) {
         log.info("================> ERRO" + e.toString());
@@ -132,7 +123,7 @@ function createDataset(fields, constraints, sortFields) {
 
         dataset.addColumn("result")
         dataset.addColumn("erro");
-        dataset.addRow(["nok", e.message + e.lineNumber + " - " + tabela]);
+        dataset.addRow(["nok", e.message + e.lineNumber + " - "]);
         return dataset;
     }
 
@@ -251,6 +242,34 @@ var tools = {
         }
         return obj;
     },
+    /**
+     * 
+     * @param {*} row 
+     * @return { index: String, values: {}  } 
+     */
+    getValueInRowField: function (row) {
+
+        var value = {
+            index: 0,
+            values: {}
+        }
+        if (row && row.length > 0) {
+            for (var i = 0; i < row.length; i++) {
+                var fieldId = row[i].fieldId;
+                var fieldValue = row[i].value;
+                if (fieldId == "rowId") {
+                    value.index = fieldValue
+                    continue
+                }
+                var idCampo = fieldId.split("___");
+                if (idCampo.length > 1) {
+                    value.values[idCampo[0]] = fieldValue;
+                }
+            }
+        }
+
+        return value;
+    },
     getTableFilho: function (cardData, fields) {
         var it = cardData.iterator();
         var listaFilho = [];
@@ -273,9 +292,64 @@ var tools = {
 
             }
         }
-        
+
         listaFilho.push(row);
         return listaFilho;
 
-    }
+    },
+    getFluig: function (endpoint) {
+        log.info(">> integra.getFluig <<");
+        //log.info("-- endpoint: " + endpoint);
+        //log.dir(params)
+
+        var obj = { "ok": false, "retorno": null, "error": null };
+
+        try {
+
+            var data = {
+                companyId: getValue("WKCompany") + '',
+                serviceCode: 'FLUIG_REST',
+                endpoint: endpoint,
+                method: 'get',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }
+
+            var clientService = fluigAPI.getAuthorizeClientService();
+
+            var result = clientService.invoke(new org.json.JSONObject(data).toString());
+            log.info("** integra.getFluig **");
+            log.dir(result);
+            if (result.getHttpStatusResult() >= 200 && result.getHttpStatusResult() < 300) {
+                if (result.getResult() != null && !result.getResult().isEmpty()) {
+
+                    if (result.getResult().indexOf("com.fluig.authorize.client.exception.ClientBasicAuthorizeException: java.net.SocketTimeoutException: Read timed out") > 0) {
+                        obj["ok"] = false;
+                        obj["error"] = result.getResult();
+                    }
+                    else if (JSON.parse(result.getResult()).errorMessage != undefined) {
+                        obj["ok"] = false;
+                        obj["error"] = JSON.parse(result.getResult()).errorMessage;
+                    }
+                    else {
+                        obj["ok"] = true;
+                        obj["retorno"] = JSON.parse(result.getResult());
+                    }
+                } else {
+                    obj["error"] = "Não encontrou nenhum registro para a consulta!";
+                }
+            } else {
+                obj["ok"] = false;
+                obj["error"] = result.getResult()
+            }
+        } catch (e) {
+            obj["error"] = (e.message != undefined && e.message != null) ? e.message : e;
+        }
+
+        //log.dir(obj);
+        log.info("** integra.postFormFluig **");
+        return obj;
+
+    },
 }
