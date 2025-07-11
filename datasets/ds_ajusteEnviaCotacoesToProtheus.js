@@ -10,7 +10,7 @@ function onSync(lastSyncDate) {
  * @param {*} constraints 
  * @param {*} sortFields 
  * 
- * Adiciona e regulariza fornecedores especificos na cotaçaõ do processo pai e do processo filho
+ * envia todas as cotações que estão na etapa de ciclo aberto para o protheus
  * @uso     recuparar o id da ficha das cotações no processo principal
  *          recuparar o id do documento da cotação no processo filho
  *          recuperar os valores do ciclo, empresa e cotação
@@ -18,7 +18,7 @@ function onSync(lastSyncDate) {
  */
 function createDataset(fields, constraints, sortFields) {
 
-    log.info("ds_ajusteCotacaoIncluiFornecedorFixo")
+    log.info("ds_ajusteEnviaCotacoesToProtheus")
     /**
      * PROD
      * 
@@ -30,32 +30,15 @@ function createDataset(fields, constraints, sortFields) {
      * 
      * 
      */
-    var mlFormCotacao = "ML001742";
-    var mlTabCotacao = "ML001743";
-    var mlTabFornecedor = "ML001727";
-
-    var CICLOREFERENCIA = "1";
-    var IDDOCPROCESSOREF = "837424"; /** id ficha do processo principal  */
-
-    var codFormCotacoes = "746754"; /** codigo do fichario do processo principal */
-
-    var IDDOCCOTDESTINO = "850535"; /** id ficha do cotacoes  no processo de cotaçõesprincipal  */
-
-    var CODFORMPROCESSOPRINCIPAL = ""
-    var IDFICHACOTACAOPRINCIPAL = ""
-    var CODFORMPROCESSOFILHO = ""
-    var IDFICHACOTACAOFILHO = ""
 
 
-    var fornecedor = "008629"
-    var lojaFornecedor = "04"
-    var CICLODESTINO = "3"
-    var IDXREF = 1223; /** id da linha a ser criada */
     var idEmpresa = "00100289"
-    var c8Num = "000365"
-    var c1Num = "001228"
+    var c8Num = "000331"
+    var c1Num = "001075"
+    var sCompras = "62097"
+    var sCotacao = "62512"
 
-    log.info("ds_ajusteCotacaoIncluiFornecedorFixo >> new Dataset")
+    log.info("ds_ajusteEnviaCotacoesToProtheus >> new Dataset")
     var dataset = DatasetBuilder.newDataset();
     try {
 
@@ -69,40 +52,136 @@ function createDataset(fields, constraints, sortFields) {
             "error": ""
         }
 
-        dsOrcamentos = tools.getDataset();
+        var dsOrcamentos = tools.getDataset("DS_CONSULTA_AUXILIAR_COTACAO", null, [
+            { field: "S_COTACAO", value: sCotacao },
+            { field: "IDEMPRESA", value: idEmpresa },
+            { field: "S_COMPRA", value: sCompras }
+        ], false);
 
 
-        var SC = tools.getProtheus("/JWSSC102/" + idEmpresa + "/" + c1Num, idEmpresa)
-        log.dir(SC)
         var produtos = []
-        if (SC.ok) {
-            SC.retorno.DADOS.forEach(function (el) {
-                var C1_PRODUTO = el.C1_PRODUTO + "";
-                C1_PRODUTO = C1_PRODUTO.trim();
-                if (C1_PRODUTO.length > 8)
-                    produtos.push({ "C8_PRODUTO": "" + C1_PRODUTO });
+
+        if (dsOrcamentos.length > 0) {
+            var dsOrcamentosComPreco = dsOrcamentos.filter(function (orcamento) {
+                var preco = orcamento.C8_PRECO;
+                preco += ""
+                preco = preco.trim();
+                log.info("c8Preco >> " + preco)
+                log.info("c8Preco >> " + (preco != "0.00"))
+                log.info("c8Preco >> " + (preco != "0.00"))
+                log.info("c8Preco >> " + (preco != "0.00"))
+                log.info("c8Preco >> " + (preco != "null"))
+                log.info("c8Preco >> " + (preco != null))
+                log.info("c8Preco >> " + (preco != "0.00"
+                    && preco != "0.000000"
+                    && preco != "0"
+                    && preco != "null"
+                    && preco != null))
+                return preco != ""
+                    && preco != "0.00"
+                    && preco != "0.000000"
+                    && preco != "0"
+                    && preco != "null"
+                    && preco != null
             })
+            fornecedores = dsOrcamentosComPreco.reduce(function (acc, item) {
+                if (acc.filter(function (elem) {
+                    return elem.C8_FORNECE == item.C8_FORNECE
+                        && elem.C8_LOJA == item.C8_LOJA
+                }).length == 0) {
+                    acc.push({
+                        "C8_FORNECE": item.C8_FORNECE,
+                        "C8_LOJA": item.C8_LOJA
+                    });
+                }
+                return acc;
+            }, [])
+
+
+            /*var SC = tools.getProtheus("/JWSSC102/" + idEmpresa + "/" + c1Num, idEmpresa)
+            log.dir(SC)
+            var produtos = []
+            if (SC.ok) {
+                SC.retorno.DADOS.forEach(function (el) {
+                    var C1_PRODUTO = el.C1_PRODUTO + "";
+                    C1_PRODUTO = C1_PRODUTO.trim();
+                    if (C1_PRODUTO.length > 8)
+                        produtos.push({ "C8_PRODUTO": "" + C1_PRODUTO });
+                })
+            }
+            var obj = {
+                "COTACAO": [{
+                    "EMPRESA": idEmpresa,
+                    "C8_NUMERO": c8Num,
+                    "FORNECE": []
+                }]
+            }
+
+
+            for (var index = 0; index < fornecedores.length; index++) {
+                var element = fornecedores[index];
+                obj.COTACAO[0].FORNECE.push({
+                    "C8_FORNECE": element.C8_FORNECE + element.C8_LOJA,
+                    "C8_COND": "001",
+                    "ITEM": produtos
+                })
+            }
+
+            log.info(">> ds_ajusteCotacaoIncluiFornecedorFixo >> JWSSC802");
+            log.dir(obj);
+
+            retorno = tools.postProtheus("/JWSSC802/1", obj, idEmpresa)*/
+
+
+            if (true) {
+
+                var obj = {
+                    "COTACAO": [{
+                        "EMPRESA": idEmpresa,
+                        "C8_NUMERO": c8Num,
+                        "FORNECE": []
+                    }]
+                }
+                for (var index = 0; index < fornecedores.length; index++) {
+                    var element = fornecedores[index];
+
+                    produtos = []
+                    var filtered = dsOrcamentosComPreco.filter(function (orcamento) {
+                        return orcamento.C8_FORNECE == element.C8_FORNECE
+                            && orcamento.C8_LOJA == element.C8_LOJA
+                    })
+
+                    produtos = filtered.map(function (orcamento) {
+                        return {
+                            "C8_PRODUTO": orcamento.C8_PRODUTO.trim(),
+                            "C8_ITEM": orcamento.C8_ITEM.trim(),
+                            "C8_PRECO": tools.toProtheus(orcamento.C8_PRECO),
+                            "C8_QTDISP": orcamento.C8_QUANT != "" ? orcamento.C8_QUANT : "0",
+                            "C8_PRAZO": orcamento.C8_PRAZO != "" ? orcamento.C8_PRAZO : "1",
+                            "C8_TES": "022"
+                        }
+                    })
+                    if (produtos.length > 0)
+                        obj.COTACAO[0].FORNECE.push({
+                            "C8_FORNECE": element.C8_FORNECE + element.C8_LOJA,
+                            "C8_COND": "001",
+                            "ITEM": produtos
+                        })
+                }
+
+                log.info(">> ds_ajusteEnviaCotacoesToProtheus >> JWSSC802");
+                log.dir(obj);
+
+                retorno = tools.postProtheus("/JWSSC802/2", obj, idEmpresa)
+            }
+
         }
-        var obj = {
-            "COTACAO": [{
-                "EMPRESA": idEmpresa,
-                "C8_NUMERO": c8Num,
-                "FORNECE": []
-            }]
-        }
 
-        obj.COTACAO[0].FORNECE.push({
-            "C8_FORNECE": fornecedor + lojaFornecedor,
-            "C8_COND": "001",
-            "ITEM": produtos
-        })
+        dataset.addColumn("resultado");
+        dataset.addColumn("teste");
+        dataset.addColumn("teste2");
 
-        log.info(">> ds_ajusteCotacaoIncluiFornecedorFixo >> JWSSC802");
-        log.dir(obj);
-
-        retorno = tools.postProtheus("/JWSSC802/1", obj, idEmpresa)
-
-        // cotacao = tools.getProtheus("/JWSSC803/1/" + idEmpresa + "/" + c8Num, idEmpresa);
+        dataset.addRow([retorno, JSON.stringify(retorno), JSON.stringify(retorno)]);
 
         return dataset
     } catch (error) {
@@ -118,6 +197,13 @@ function createDataset(fields, constraints, sortFields) {
 }
 
 var tools = {
+    toProtheus: function (oldValue) {
+
+        var newValue = oldValue != "" ? oldValue : "0.00";
+        if (oldValue.indexOf(",") > -1) newValue = oldValue.replace(".", "").replace(".", "").replace(".", "").replace(",", ".");
+
+        return newValue;
+    },
     getDataset: function (name, campos, filtros, isInternal) {
 
         var constraints = [];
@@ -297,7 +383,7 @@ var tools = {
     },
 
     getProtheus: function (endpoint, empresa) {
-        log.info(">> ds_ajusteCotacaoIncluiFornecedorFixo <<");
+        log.info(">> ds_ajusteEnviaCotacoesToProtheus <<");
         //log.info("-- endpoint: " + endpoint);
         var obj = { "ok": false };
 
@@ -355,7 +441,7 @@ var tools = {
 
         }
 
-        log.info("** ds_ajusteCotacaoIncluiFornecedorFixo **")
+        log.info("** ds_ajusteEnviaCotacoesToProtheus **")
         log.dir(obj);
         return obj;
 
